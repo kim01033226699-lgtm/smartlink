@@ -19,7 +19,7 @@ export default function InfoGfePage() {
 
   return (
     <>
-      <div style={{ width: '100vw', height: '100vh', overflow: 'hidden', margin: 0, padding: 0, paddingBottom: '62px' }}>
+      <div style={{ width: '100vw', height: 'calc(100vh - 62px)', overflow: 'hidden', margin: 0, padding: 0 }}>
         <iframe
           src={iframeSrc}
           style={{

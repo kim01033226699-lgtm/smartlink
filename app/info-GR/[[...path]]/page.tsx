@@ -10,19 +10,16 @@ export default function InfoGRPage({
   const resolvedParams = use(params);
   const pathSegments = resolvedParams.path || [];
 
-  // 개발 환경에서는 Vite dev server 사용
-  const isDev = process.env.NODE_ENV === 'development';
-  const iframeSrc = isDev
-    ? 'http://localhost:5173/'
-    : (pathSegments.length > 0
-        ? `/info-GR/${pathSegments.join('/')}`
-        : '/info-GR/');
+  // 정적 파일 사용 - index.html을 직접 가리킴
+  const iframeSrc = pathSegments.length > 0
+    ? `/info-GR/${pathSegments.join('/')}`
+    : '/info-GR/index.html';
 
   useEffect(() => {
     // 외부 body 스크롤 제거
     document.body.style.overflow = 'hidden';
     document.documentElement.style.overflow = 'hidden';
-    
+
     return () => {
       // 컴포넌트 언마운트 시 원래대로 복구
       document.body.style.overflow = '';
@@ -32,7 +29,7 @@ export default function InfoGRPage({
 
   return (
     <>
-      <div style={{ width: '100vw', height: '100vh', overflow: 'hidden', margin: 0, padding: 0, paddingBottom: '62px' }}>
+      <div style={{ width: '100vw', height: 'calc(100vh - 62px)', overflow: 'hidden', margin: 0, padding: 0 }}>
         <iframe
           src={iframeSrc}
           style={{
