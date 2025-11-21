@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <meta name="description" content="굿리치 금융캠퍼스 지원 안내 - 무경력 신입 금융전문가 양성 프로그램">
+  <title>굿리치 금융캠퍼스 지원 안내</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="./B1-01.svg">
+
+  <!-- Pretendard Font -->
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+
+  <style>
+    /* ==================== CSS Variables ==================== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary-color: #ff9c00;
+      --primary-hover: #e68a00;
+      --secondary-color: #00a874;
+      --text-color: #1f2937;
+      --text-light: #6b7280;
+      --border-color: #e5e7eb;
+      --bg-color: #ffffff;
+      --bg-light: #f5f5f5;
+      --bg-section: #f0f0f0;
+      --shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
+      --shadow-md: 0 4px 12px 0 rgba(0, 0, 0, 0.1);
+      --shadow-lg: 0 8px 24px 0 rgba(0, 0, 0, 0.12);
+
+      font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
+      line-height: 1.6;
+      font-size: 16px;
+    }
+
+    body {
+      color: var(--text-color);
+      background-color: var(--bg-light);
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* ==================== Page Management ==================== */
+    .page {
+      display: none;
+      min-height: 100vh;
+      flex-direction: column;
+    }
+
+    .page.active {
+      display: flex;
+    }
+
+    /* ==================== Header ==================== */
+    .page-header {
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
+      color: white;
+      padding: 3rem 0;
+      text-align: center;
+      box-shadow: var(--shadow-md);
+    }
+
+    .page-title {
+      font-size: 2.5rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+    }
+
+    .page-subtitle {
+      font-size: 1.25rem;
+      opacity: 0.95;
+      font-weight: 400;
+    }
+
+    /* ==================== Main Content ==================== */
+    .page-content {
+      flex: 1;
+      padding: 4rem 0;
+    }
+
+    /* ==================== Tab Navigation ==================== */
+    .tab-nav {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      background: transparent;
+      padding: 0;
+      border-radius: 0;
+      max-width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .tab-button {
+      flex: 1;
+      padding: 1.5rem 2rem;
+      border: none;
+      background: #e5e7eb;
+      color: var(--text-color);
+      font-weight: 600;
+      cursor: pointer;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      font-size: 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 80px;
+    }
+
+    .tab-button.active {
+      background: var(--primary-color);
+      color: white;
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+
+    .tab-button:hover:not(.active) {
+      background: #d1d5db;
+    }
+
+    /* ==================== Tab Content ==================== */
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* ==================== Info Section ==================== */
+    .info-section {
+      background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+      border-radius: 1.5rem;
+      padding: 2rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      margin-bottom: 2rem;
+      transition: all 0.3s ease;
+    }
+
+    .info-section:hover {
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+    }
+
+    .info-section h3 {
+      color: var(--primary-color);
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .info-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .info-list li {
+      padding: 0.75rem 0;
+      padding-left: 1.5rem;
+      position: relative;
+      color: var(--text-color);
+      line-height: 1.8;
+    }
+
+    .info-list li::before {
+      content: '•';
+      position: absolute;
+      left: 0;
+      color: var(--primary-color);
+      font-weight: 700;
+      font-size: 1.2rem;
+    }
+
+    /* ==================== Detail Card ==================== */
+    .detail-card {
+      display: none;
+      margin-top: 1.5rem;
+    }
+
+    .detail-card.active {
+      display: block;
+    }
+
+    .detail-box {
+      background: linear-gradient(135deg, rgba(227, 242, 253, 1) 0%, rgba(187, 222, 251, 1) 100%);
+      border-radius: 1rem;
+      padding: 2rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+      transition: all 0.3s ease;
+    }
+
+    .detail-box:hover {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .detail-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .detail-item:last-child {
+      border-bottom: none;
+    }
+
+    .detail-item strong {
+      color: var(--text-color);
+      font-weight: 600;
+      min-width: 120px;
+    }
+
+    .detail-item span {
+      flex: 1;
+      text-align: left;
+      color: var(--text-color);
+      line-height: 1.8;
+    }
+
+    .detail-item .info-list {
+      flex: 1;
+      margin: 0;
+    }
+
+    .detail-item .info-list li {
+      padding: 0.5rem 0;
+      padding-left: 1.5rem;
+    }
+
+    /* ==================== Footer ==================== */
+    .page-footer {
+      background: var(--bg-light);
+      color: var(--text-color);
+      padding: 2rem 0;
+      text-align: center;
+      margin-top: auto;
+    }
+
+    .page-footer p {
+      margin: 0;
+      opacity: 0.8;
+    }
+
+    /* ==================== Bottom Navigation ==================== */
+    .bottom-navigation {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #f8f9fa;
+      border-top: 1px solid #1f2937;
+      z-index: 1000;
+      display: none;
+      padding-bottom: env(safe-area-inset-bottom);
+      min-width: 375px;
+    }
+
+    .bottom-nav-wrapper {
+      position: relative;
+      max-width: 768px;
+      margin: 0 auto;
+    }
+
+    .bottom-nav-container {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      height: 62px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      padding: 0 4px;
+      gap: 0;
+    }
+
+    .bottom-nav-container::-webkit-scrollbar {
+      display: none;
+    }
+
+    .bottom-nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+      height: 100%;
+      text-decoration: none;
+      color: #6b7280;
+      transition: all 0.25s ease;
+      position: relative;
+      gap: 0.25rem;
+      padding: 0.5rem 0.5rem;
+      border-radius: 20px;
+      background: transparent;
+      max-width: 120px;
+    }
+
+    .bottom-nav-item:active {
+      transform: scale(0.95);
+    }
+
+    .bottom-nav-icon {
+      font-size: 1.35rem;
+      line-height: 1;
+      transition: all 0.25s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .bottom-nav-icon svg {
+      width: 26px;
+      height: 26px;
+      stroke-width: 2.2;
+      transition: all 0.25s ease;
+    }
+
+    .bottom-nav-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      line-height: 1;
+      transition: all 0.25s ease;
+      white-space: nowrap;
+    }
+
+    .bottom-nav-item.active {
+      color: #1f2937;
+      background: #e0e7ff;
+    }
+
+    .bottom-nav-item.active .bottom-nav-icon svg {
+      transform: scale(1.1);
+    }
+
+    /* ==================== Responsive ==================== */
+    @media (max-width: 768px) {
+      :root {
+        font-size: 14px;
+      }
+
+      .page-title {
+        font-size: 2rem;
+      }
+
+      .page-subtitle {
+        font-size: 1rem;
+      }
+
+      .detail-item {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .detail-item strong {
+        min-width: auto;
+      }
+
+      .detail-item .info-list li {
+        padding: 0.4rem 0;
+        padding-left: 1.5rem;
+      }
+
+      /* 모바일에서 하단 네비게이션 표시 */
+      .bottom-navigation {
+        display: block;
+      }
+
+      .page {
+        padding-bottom: 64px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      :root {
+        font-size: 13px;
+      }
+
+      .bottom-nav-container {
+        height: 57px;
+      }
+
+      .bottom-nav-item {
+        padding: 0.5rem 0.25rem;
+      }
+
+      .bottom-nav-icon svg {
+        width: 24px;
+        height: 24px;
+        stroke-width: 2.2;
+      }
+
+      .bottom-nav-label {
+        font-size: 0.7rem;
+        font-weight: 700;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== Main Page ==================== -->
+  <div id="page-main" class="page active">
+    <header class="page-header">
+      <div class="container">
+        <h1 class="page-title">금융캠퍼스</h1>
+        <p class="page-subtitle">이해를 돕기 위한 요약으로, 정확한 내용은 관련 규정을 확인해 주세요.</p>
+      </div>
+    </header>
+
+    <main class="page-content">
+      <div class="container">
+        <!-- Main Tab Navigation -->
+        <div class="tab-nav">
+          <button class="tab-button active" onclick="switchMainTab('campus')">
+            <div style="font-size: 1.32rem; font-weight: 700;">금융캠퍼스</div>
+          </button>
+          <button class="tab-button" onclick="switchMainTab('basic')">
+            <div style="font-size: 1.32rem; font-weight: 700;">베이직</div>
+          </button>
+        </div>
+
+        <!-- 금융캠퍼스 Content -->
+        <div id="content-campus" class="tab-content active">
+          <!-- 조건 섹션 -->
+          <div class="info-section">
+            <h3>조건</h3>
+            <ul class="info-list">
+              <li>보험 경력이 없거나, 직전 3년 이내 경력일수 0일 이면 입과 신청 가능 (단, 3년 초과자는 불가) </li>
+              <li>학력 : 초대졸 이상(경단녀 및 특화시장 출신자는 고졸 가능) </li>
+              <li>특화시장 : 군장교 및 부사관, 간호사, 학원강사, 학습지 교사, (자동차/카드)대출 영업직 등</li>
+            </ul>
+          </div>
+
+          <!-- 지원나이 섹션 -->
+          <div class="info-section">
+            <h3>지원나이</h3>
+            <ul class="info-list">
+              <li>만 20세~45세 (2025년 기준 1980년 출생까지)</li>
+            </ul>
+          </div>
+
+          <!-- 혜택 섹션 -->
+          <div class="info-section">
+            <h3>혜택</h3>
+
+            <!-- DB 옵션 탭 -->
+            <div class="tab-nav">
+              <button class="tab-button active" onclick="selectDBOption('db-select')">DB선택형</button>
+              <button class="tab-button" onclick="selectDBOption('db-no-select')">DB미선택형</button>
+            </div>
+
+            <!-- DB선택형 상세 -->
+            <div id="detail-db-select" class="detail-card active">
+              <div class="detail-box">
+                <div class="detail-item">
+                  <strong>지원금</strong>
+                  <ul class="info-list">
+                    <li>1-6차월 : 120만원 (각월 정산평가업적 30만 원 이상 시)</li>
+                    <li>7-12차월 : 100만원 (6개 월 통산 정산평가업적 600만 원 초과 달성자 신청 가능, 단 각월 정산평가업적 50만원 이상 시 지급하며 13차월에 업적 미달시 환수)</li>
+                  </ul>
+                </div>
+                <div class="detail-item">
+                  <strong>DB</strong>
+                  <ul class="info-list">
+                    <li>매월 10건 x 12개 월</li>
+                    <li>단, 초기 3개월 지급 ( 1차평가(4차월):30만 이상 시 ,2차평가(7차월):50만원 이상 시 계속 지급(직전 3개월 평균 정산평가업적 기준) .</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <!-- DB미선택형 상세 -->
+            <div id="detail-db-no-select" class="detail-card">
+              <div class="detail-box">
+                <div class="detail-item">
+                  <strong>지원금</strong>
+                  <ul class="info-list">
+                    <li>1차 지원금(1-6차월) : 월 170만 원(지원금 120만 원 + 시장개발비 50만 원, 각월 정산평가업적 50만 원 이상 시 지급) 단, 6개월 통산 정산평가업적 기준 미달시 50% 환수</li>
+                    <li>2차 지원금(7-12차월) : 월 120만 원, 초기 6개월 통산 정산평가업적 720만 원 초과 달성자에 한해 신청 가능, 단, 7-12차월 통산 정산평가업적 기준 미달시 환수</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 안내사항 섹션 -->
+          <div class="info-section">
+            <h3>안내사항</h3>
+            <ul class="info-list">
+              <li>지원금에 대한 재정보증이 필요하며 보증보험 가입불가자는 지원이 불가합니다.</li>
+              <li>지원 기간 종료 후 전체 계약에 대한 유지율 평가를 진행하여 환수합니다.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 베이직 Content -->
+        <div id="content-basic" class="tab-content">
+          <!-- 조건 섹션 -->
+          <div class="info-section">
+            <h3>조건</h3>
+            <ul class="info-list">
+              <li>보험경력 1년 이하 또는 보험경력 1-5년인 경우, 직전 1년 보험영업 소득금액 500만원 미만</li>
+              <li>학력: 초대졸 이상(경단녀 및 특화시장 출신자는 고졸 가능)</li>
+              <li>특화시장 : 군장교 및 부사관, 간호사, 학원강사, 학습지 교사, (자동차/카드)대출 영업직 등</li>
+              
+            </ul>
+          </div>
+
+          <!-- 지원나이 섹션 -->
+          <div class="info-section">
+            <h3>지원나이</h3>
+            <ul class="info-list">
+              <li>만 20세~만 50세 (2025년 기준 1975년 출생까지)</li>
+            </ul>
+          </div>
+
+          <!-- 혜택 섹션 -->
+          <div class="info-section">
+            <h3>혜택</h3>
+            <div class="detail-box">
+              <div class="detail-item">
+                <strong>지원금</strong>
+                <ul class="info-list">
+                  <li>6개월간 정산평가업적의 100% 지급</li>
+                  <li>단, 월 최저 정산평가업적 30만원 이상시 지급, 최대한도 100만원</li>
+                </ul>
+              </div>
+              <div class="detail-item">
+                <strong>DB</strong>
+                <ul class="info-list">
+                  <li>매월 7건 x 6개월</li>
+                  <li>단, 초기 3개월 지급 후 직전 3개월 평균 정산평가업적 30만원 이상자에 한하여 추가 3개월간 매월 지원</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+                     <!-- 안내사항 섹션 -->
+          <div class="info-section">
+            <h3>안내사항</h3>
+            <ul class="info-list">
+              <li>지원 기간 종료 후 전체 계약에 대한 유지율 평가를 진행하여 환수합니다.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="page-footer">
+      <div class="container">
+      </div>
+    </footer>
+
+    <!-- 모바일 하단 네비게이션 -->
+    <!-- <nav class="bottom-navigation">
+      <div class="bottom-nav-wrapper">
+        <div class="bottom-nav-container">
+          <a href="https://kim01033226699-lgtm.github.io/goodrich-info-a/" class="bottom-nav-item">
+            <div class="bottom-nav-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                <line x1="12" y1="17" x2="12.01" y2="17"/>
+              </svg>
+            </div>
+            <span class="bottom-nav-label">지원금</span>
+          </a>
+          <a href="https://kim01033226699-lgtm.github.io/gfe" class="bottom-nav-item active">
+            <div class="bottom-nav-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+              </svg>
+            </div>
+            <span class="bottom-nav-label">금융캠퍼스</span>
+          </a>
+          <a href="https://kim01033226699-lgtm.github.io/appoint_info/" class="bottom-nav-item">
+            <div class="bottom-nav-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/>
+                <rect x="8" y="2" width="8" height="4" rx="1" ry="1"/>
+              </svg>
+            </div>
+            <span class="bottom-nav-label">스마트위촉</span>
+          </a>
+        </div>
+      </div>
+    </nav> -->
+  </div>
+
+  <!-- ==================== JavaScript ==================== -->
+  <script>
+    // Main Tab Switching (금융캠퍼스 / 베이직)
+    function switchMainTab(tabId) {
+      // Get main tab navigation
+      const mainTabNav = document.querySelector('.tab-nav');
+
+      // Remove active class from all main tab buttons
+      mainTabNav.querySelectorAll('.tab-button').forEach(btn => {
+        btn.classList.remove('active');
+      });
+
+      // Hide all tab contents
+      document.querySelectorAll('.tab-content').forEach(content => {
+        content.classList.remove('active');
+      });
+
+      // Find and activate the clicked tab
+      const clickedTab = Array.from(mainTabNav.querySelectorAll('.tab-button')).find(btn =>
+        btn.getAttribute('onclick').includes(tabId)
+      );
+      if (clickedTab) {
+        clickedTab.classList.add('active');
+      }
+
+      // Show selected tab content
+      document.getElementById(`content-${tabId}`).classList.add('active');
+
+      // Scroll to top
+      window.scrollTo(0, 0);
+    }
+
+    // DB Option Selection (금융캠퍼스 내 DB선택형/미선택형)
+    function selectDBOption(optionId) {
+      // Get the DB option tab nav (second tab-nav in campus content)
+      const campusContent = document.getElementById('content-campus');
+      const dbTabNav = campusContent.querySelector('.info-section .tab-nav');
+
+      // Remove active class from all DB tab buttons
+      dbTabNav.querySelectorAll('.tab-button').forEach(btn => {
+        btn.classList.remove('active');
+      });
+
+      // Hide all detail cards
+      campusContent.querySelectorAll('.detail-card').forEach(card => {
+        card.classList.remove('active');
+      });
+
+      // Find and activate the clicked tab
+      const clickedTab = Array.from(dbTabNav.querySelectorAll('.tab-button')).find(btn =>
+        btn.getAttribute('onclick').includes(optionId)
+      );
+      if (clickedTab) {
+        clickedTab.classList.add('active');
+      }
+
+      // Show selected detail card
+      document.getElementById(`detail-${optionId}`).classList.add('active');
+    }
+  </script>
+
+</body>
+</html>
