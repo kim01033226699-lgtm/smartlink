@@ -3,9 +3,8 @@ import { useEffect } from 'react';
 import BottomNavigation from '@/app/components/BottomNavigation';
 
 export default function InfoGRPage() {
-  // basePath 고려한 경로 설정
-  const basePath = process.env.NODE_ENV === 'production' ? '/smartlink' : '';
-  const iframeSrc = `${basePath}/info-GR/index.html`;
+  // 정적 HTML 파일 직접 참조
+  const iframeSrc = '/info-GR/index.html';
 
   useEffect(() => {
     // 외부 body 스크롤 제거
