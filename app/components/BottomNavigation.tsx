@@ -1,7 +1,6 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import { useState, useEffect, useRef } from 'react';
 import './BottomNavigation.css';
 
 // 아이콘 컴포넌트 - lucide-react 스타일과 동일하게
@@ -56,42 +55,9 @@ const navItems: NavItem[] = [
 
 export default function BottomNavigation() {
   const pathname = usePathname();
-  const [isVisible, setIsVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
-  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-
-      // 스크롤 중일 때 숨김
-      setIsVisible(false);
-
-      // 이전 타이머 취소
-      if (scrollTimeoutRef.current) {
-        clearTimeout(scrollTimeoutRef.current);
-      }
-
-      // 스크롤이 멈춘 후 500ms 후에 다시 표시
-      scrollTimeoutRef.current = setTimeout(() => {
-        setIsVisible(true);
-      }, 500);
-
-      setLastScrollY(currentScrollY);
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      if (scrollTimeoutRef.current) {
-        clearTimeout(scrollTimeoutRef.current);
-      }
-    };
-  }, [lastScrollY]);
 
   return (
-    <nav className={`bottom-navigation ${isVisible ? 'visible' : 'hidden'}`}>
+    <nav className="bottom-navigation visible">
       <div className="bottom-nav-wrapper">
         <div className="bottom-nav-container">
           {navItems.map((item, index) => {
