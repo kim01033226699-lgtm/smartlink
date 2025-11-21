@@ -5,7 +5,7 @@ import BottomNavigation from '@/app/components/BottomNavigation';
 export default function InfoGRPage() {
   // 개발 환경에서는 Vite dev server 사용
   const isDev = process.env.NODE_ENV === 'development';
-  const iframeSrc = isDev ? 'http://localhost:5173/' : '/info-GR/index.html';
+  const iframeSrc = isDev ? 'http://localhost:5173/' : '/info-GR/';
 
   useEffect(() => {
     // 외부 body 스크롤 제거
@@ -39,3 +39,4 @@ export default function InfoGRPage() {
     </>
   );
 }
+

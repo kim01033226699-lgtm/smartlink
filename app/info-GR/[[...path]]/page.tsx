@@ -2,11 +2,6 @@
 import { use, useEffect } from 'react';
 import BottomNavigation from '@/app/components/BottomNavigation';
 
-export async function generateStaticParams() {
-  // 정적 경로 생성: 루트 경로만 생성
-  return [{ path: [] }];
-}
-
 export default function InfoGRPage({
   params,
 }: {
@@ -21,7 +16,7 @@ export default function InfoGRPage({
     ? 'http://localhost:5173/'
     : (pathSegments.length > 0
         ? `/info-GR/${pathSegments.join('/')}`
-        : '/info-GR/index.html');
+        : '/info-GR/');
 
   useEffect(() => {
     // 외부 body 스크롤 제거
