@@ -1,19 +1,11 @@
 'use client';
-import { use, useEffect } from 'react';
+import { useEffect } from 'react';
 import BottomNavigation from '@/app/components/BottomNavigation';
 
-export default function InfoGRPage({
-  params,
-}: {
-  params: Promise<{ path?: string[] }>;
-}) {
-  const resolvedParams = use(params);
-  const pathSegments = resolvedParams.path || [];
-
-  // 정적 파일 사용 - index.html을 직접 가리킴
-  const iframeSrc = pathSegments.length > 0
-    ? `/info-GR/${pathSegments.join('/')}`
-    : '/info-GR/index.html';
+export default function InfoGRPage() {
+  // basePath 고려한 경로 설정
+  const basePath = process.env.NODE_ENV === 'production' ? '/smartlink' : '';
+  const iframeSrc = `${basePath}/info-GR/index.html`;
 
   useEffect(() => {
     // 외부 body 스크롤 제거

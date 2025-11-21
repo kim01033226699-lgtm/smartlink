@@ -3,7 +3,9 @@ import { useEffect } from 'react';
 import BottomNavigation from '@/app/components/BottomNavigation';
 
 export default function InfoGfePage() {
-  const iframeSrc = '/info-gfe/index.html';
+  // basePath 고려한 경로 설정
+  const basePath = process.env.NODE_ENV === 'production' ? '/smartlink' : '';
+  const iframeSrc = `${basePath}/info-gfe/index.html`;
 
   useEffect(() => {
     // 외부 body 스크롤 제거

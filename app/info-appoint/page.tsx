@@ -3,7 +3,9 @@ import { useEffect } from 'react';
 import BottomNavigation from '@/app/components/BottomNavigation';
 
 export default function InfoAppointPage() {
-  const iframeSrc = '/info-appoint/index.html';
+  // basePath 고려한 경로 설정
+  const basePath = process.env.NODE_ENV === 'production' ? '/smartlink' : '';
+  const iframeSrc = `${basePath}/info-appoint/index.html`;
 
   useEffect(() => {
     // 외부 body 스크롤 제거
