@@ -177,11 +177,36 @@
   }
 }
 
-/* Extra small devices */
+/* Small devices */
 @media (max-width: 480px) {
   .smart-link-page {
-    padding: 0.5rem;
+    padding: 0.75rem;
     padding-bottom: 80px; /* 푸터 네비게이션 공간 확보 */
+  }
+
+  .smart-link-header {
+    margin-bottom: 1.5rem;
+  }
+
+  .smart-link-title {
+    font-size: 1.75rem;
+  }
+
+  .smart-link-subtitle {
+    font-size: 0.9rem;
+  }
+
+  .link-cards {
+    gap: 0.625rem;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Extra small devices - 400px and below */
+@media (max-width: 400px) {
+  .smart-link-page {
+    padding: 0.5rem;
+    padding-bottom: 75px; /* 푸터 네비게이션 공간 확보 */
   }
 
   .smart-link-header {
@@ -190,28 +215,41 @@
 
   .smart-link-title {
     font-size: 1.5rem;
+    margin-bottom: 0.5rem;
   }
 
   .smart-link-subtitle {
-    font-size: 0.875rem;
+    font-size: 0.8rem;
   }
 
   .link-cards {
     gap: 0.5rem;
     grid-template-columns: repeat(2, 1fr);
   }
+}
 
-  .link-card {
-    padding: 1.25rem 0.75rem;
-    min-height: 100px;
+/* Very small devices - 320px and below */
+@media (max-width: 320px) {
+  .smart-link-page {
+    padding: 0.375rem;
+    padding-bottom: 70px;
   }
 
-  .link-card-title {
-    font-size: 1rem;
+  .smart-link-header {
+    margin-bottom: 1rem;
   }
 
-  .link-card-description {
-    font-size: 0.7rem;
-    line-height: 1.4;
+  .smart-link-title {
+    font-size: 1.25rem;
+    margin-bottom: 0.375rem;
+  }
+
+  .smart-link-subtitle {
+    font-size: 0.75rem;
+  }
+
+  .link-cards {
+    gap: 0.375rem;
+    grid-template-columns: repeat(2, 1fr);
   }
 }

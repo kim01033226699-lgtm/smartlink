@@ -1,6 +1,7 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
+import Link from 'next/link';
 import './BottomNavigation.css';
 
 // 아이콘 컴포넌트 - lucide-react 스타일과 동일하게
@@ -69,7 +70,7 @@ export default function BottomNavigation() {
             const IconComponent = iconMap[item.icon];
 
             return (
-              <a
+              <Link
                 key={index}
                 href={item.path}
                 className={`bottom-nav-item ${isActive ? 'active' : ''}`}
@@ -78,7 +79,7 @@ export default function BottomNavigation() {
                   {IconComponent ? <IconComponent /> : item.icon}
                 </div>
                 <span className="bottom-nav-label">{item.label}</span>
-              </a>
+              </Link>
             );
           })}
         </div>
