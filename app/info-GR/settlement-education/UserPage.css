@@ -103,6 +103,7 @@
   border-radius: 12px;
   transition: all 0.3s ease;
   background: var(--bg-light);
+  color: #111827;
 }
 
 .text-input:focus {
@@ -494,12 +495,24 @@
 
 /* Responsive */
 @media (max-width: 768px) {
+  .container {
+    padding: 0 1rem;
+  }
+
   .title {
     font-size: 2rem;
   }
 
   .step-card {
-    padding: 2rem 1.5rem;
+    padding: 1.5rem 1rem;
+  }
+
+  .result-card {
+    padding: 1.5rem;
+  }
+
+  .goal-block {
+    padding: 1rem;
   }
 
   .step-title {
@@ -543,6 +556,22 @@
 }
 
 @media (max-width: 490px) {
+  .container {
+    padding: 0 0.75rem;
+  }
+
+  .step-card {
+    padding: 1.25rem 0.75rem;
+  }
+
+  .result-card {
+    padding: 1.25rem;
+  }
+
+  .goal-block {
+    padding: 0.75rem;
+  }
+
   .select-input {
     min-width: 240px;
     padding: 1rem;

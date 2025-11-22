@@ -59,6 +59,18 @@ body {
   padding: 0 1.5rem;
 }
 
+@media (max-width: 768px) {
+  .container {
+    padding: 0 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0 0.75rem;
+  }
+}
+
 /* Calendar custom styles */
 .rdp-day_selected.wednesday {
   background-color: #ef4444;
