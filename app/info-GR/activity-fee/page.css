@@ -115,7 +115,7 @@
 }
 
 .tab-title {
-  font-size: 1.5rem;
+  font-size: 1.275rem;
   font-weight: 700;
   line-height: 1.2;
   transition: color 0.3s ease;
@@ -597,7 +597,7 @@
   }
 
   .tab-title {
-    font-size: 1.3rem;
+    font-size: 1.105rem;
   }
 
   .tab-subtitle {

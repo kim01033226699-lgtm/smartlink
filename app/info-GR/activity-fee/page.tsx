@@ -129,7 +129,7 @@ export default function ActivityFeePage() {
                 onClick={() => setActiveTab('type2')}
               >
                 <span className="tab-title">활동수수료 II</span>
-                <span className="tab-subtitle">소득 2천만원이상</span>
+                <span className="tab-subtitle">소득 2천만원↑</span>
               </button>
             </div>
 

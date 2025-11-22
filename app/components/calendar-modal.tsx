@@ -157,6 +157,9 @@ export default function CalendarModal({ open, onOpenChange, events }: CalendarMo
       <DialogContent className="max-w-full md:max-w-6xl max-h-[90vh] overflow-y-auto pt-12">
         <DialogHeader>
           <DialogTitle>전체 일정 캘린더</DialogTitle>
+          <DialogDescription className="sr-only">
+            모든 일정을 확인할 수 있는 캘린더입니다.
+          </DialogDescription>
         </DialogHeader>
 
         <div className="hidden md:block">

@@ -73,7 +73,7 @@
 }
 
 .step-title {
-  font-size: 2rem;
+  font-size: 1.6rem;
   font-weight: 700;
   color: var(--text-color);
   text-align: center;
@@ -94,7 +94,7 @@
 
 .text-input {
   width: 100%;
-  padding: 1.25rem;
+  padding: 1rem;
   padding-right: 5rem;
   font-size: 1.5rem;
   font-weight: 600;
@@ -127,7 +127,7 @@
   right: 1.5rem;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 1.3rem;
+  font-size: 1.04rem;
   font-weight: 600;
   color: var(--text-light);
   pointer-events: none;
@@ -199,13 +199,16 @@
   font-weight: 700;
   color: var(--text-color);
   white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .option-selection-row .form-group {
-  flex: 1;
+  flex: 0 1 auto;
   max-width: 500px;
   margin-bottom: 0;
-  width: 100%;
+  width: auto;
+  display: flex;
+  justify-content: center;
 }
 
 .select-input {
@@ -500,7 +503,7 @@
   }
 
   .step-title {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
   }
 
   .text-input {

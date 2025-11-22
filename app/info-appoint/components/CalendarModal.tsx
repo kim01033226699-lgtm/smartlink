@@ -169,26 +169,28 @@ export default function CalendarModal({ open, onOpenChange, events }: CalendarMo
         return;
       }
 
-      // DialogContent 요소 직접 찾기 (data-radix-dialog-content 속성 사용)
-      const dialogContent = document.querySelector('[role="dialog"] [data-radix-scroll-area-viewport], [role="dialog"] > div');
+      // DialogContent 요소 찾기 - overflow-y-auto를 가진 요소가 스크롤 컨테이너
+      const dialogContent = document.querySelector('[role="dialog"]')?.querySelector('[class*="overflow-y-auto"]');
 
       if (dialogContent && dialogContent.scrollTo) {
         const targetElement = currentMonthRef.current;
         const offsetTop = targetElement.offsetTop;
 
-        console.log('Scrolling to current month, offset:', offsetTop);
+        console.log('Scrolling to current month, offset:', offsetTop, 'container:', dialogContent);
 
         dialogContent.scrollTo({
-          top: offsetTop - 80, // 상단 여백
+          top: offsetTop - 100, // 상단 여백
           behavior: 'smooth'
         });
       } else {
-        console.log('Scroll container not found');
+        console.log('Scroll container not found, trying alternative method');
+        // 대체 방법: scrollIntoView 사용
+        currentMonthRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     };
 
     // DOM이 완전히 렌더링된 후 스크롤
-    const timeoutId = setTimeout(scrollToCurrentMonth, 500);
+    const timeoutId = setTimeout(scrollToCurrentMonth, 600);
 
     return () => clearTimeout(timeoutId);
   }, [open, currentMonthFirstIndex]);
@@ -196,18 +198,20 @@ export default function CalendarModal({ open, onOpenChange, events }: CalendarMo
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-full md:max-w-6xl max-h-[90vh] overflow-y-auto pt-8">
-        <DialogHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
-          <DialogTitle className="text-xl font-semibold">전체 일정 캘린더</DialogTitle>
+        <DialogHeader className="pb-4">
+          <div className="flex flex-row items-center justify-between">
+            <DialogTitle className="text-xl font-semibold">전체 일정 캘린더</DialogTitle>
+            <button
+              onClick={() => onOpenChange(false)}
+              className="rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground mt-10"
+            >
+              <X className="h-5 w-5" />
+              <span className="sr-only">Close</span>
+            </button>
+          </div>
           <DialogDescription className="sr-only">
             모든 일정을 확인할 수 있는 캘린더입니다.
           </DialogDescription>
-          <button
-            onClick={() => onOpenChange(false)}
-            className="rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground"
-          >
-            <X className="h-5 w-5" />
-            <span className="sr-only">Close</span>
-          </button>
         </DialogHeader>
 
         {/* PC 버전: 캘린더 뷰 */}

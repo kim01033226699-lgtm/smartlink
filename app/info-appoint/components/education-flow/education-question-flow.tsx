@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Button } from "@/app/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/components/ui/card";
 import { CheckCircle2, ExternalLink, X } from "lucide-react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/app/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/app/components/ui/dialog";
 
 interface Question {
   id: string;
@@ -216,6 +216,9 @@ export default function EducationQuestionFlow() {
                 <DialogTitle className="text-2xl font-bold">
                   신규 등록교육 신청과목 확인
                 </DialogTitle>
+                <DialogDescription className="sr-only">
+                  교육 신청 과목을 확인하는 화면입니다.
+                </DialogDescription>
               </DialogHeader>
 
               <div className="flex-1 overflow-y-auto px-2">
@@ -683,6 +686,9 @@ export default function EducationQuestionFlow() {
               <DialogTitle className="text-2xl font-bold">
                 경력 등록교육 신청과목 확인
               </DialogTitle>
+              <DialogDescription className="sr-only">
+                교육 신청 과목을 확인하는 화면입니다.
+              </DialogDescription>
             </DialogHeader>
 
             <div className="flex-1 overflow-y-auto px-2">
@@ -915,6 +921,9 @@ export default function EducationQuestionFlow() {
               <DialogTitle className="text-2xl font-bold">
                 경력 등록교육 신청과목 확인
               </DialogTitle>
+              <DialogDescription className="sr-only">
+                교육 신청 과목을 확인하는 화면입니다.
+              </DialogDescription>
             </DialogHeader>
 
             <div className="flex-1 overflow-y-auto px-2">
