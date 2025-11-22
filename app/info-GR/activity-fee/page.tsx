@@ -28,7 +28,8 @@ export default function ActivityFeePage() {
 
   // config.json 로드
   useEffect(() => {
-    fetch('/config.json')
+    const basePath = process.env.NODE_ENV === 'production' ? '/smartlink' : '';
+    fetch(`${basePath}/config.json`)
       .then(res => res.json())
       .then(data => setConfig(data))
       .catch(err => console.error('Failed to load config:', err));
