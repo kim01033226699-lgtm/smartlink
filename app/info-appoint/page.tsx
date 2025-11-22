@@ -144,7 +144,7 @@ export default function InfoAppointPage() {
               className="gap-2 bg-goodrich-yellow-light transition-all duration-150 active:scale-95 hover:opacity-90"
               onClick={() => router.push("/info-appoint/application-flow")}
             >
-              신청말소하셨나요?
+              협회말소하셨나요?
             </Button>
           </div>
 
@@ -219,6 +219,7 @@ export default function InfoAppointPage() {
                       disabled={disableNonWednesdays}
                       initialFocus
                       locale={ko}
+                      weekStartsOn={0}
                       modifiers={{
                         wednesday: (date) => isWednesday(date),
                       }}
