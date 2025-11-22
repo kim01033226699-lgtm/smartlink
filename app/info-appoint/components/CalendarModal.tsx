@@ -161,41 +161,46 @@ export default function CalendarModal({ open, onOpenChange, events }: CalendarMo
 
   // 모달이 열릴 때 현재 월로 스크롤 (모바일)
   useEffect(() => {
-    if (open && currentMonthRef.current) {
-      setTimeout(() => {
-        if (currentMonthRef.current) {
-          // 스크롤 가능한 부모 컨테이너 찾기 (DialogContent)
-          let scrollContainer = currentMonthRef.current.parentElement;
-          while (scrollContainer) {
-            const hasOverflow = scrollContainer.scrollHeight > scrollContainer.clientHeight;
-            const overflowY = window.getComputedStyle(scrollContainer).overflowY;
-            if (hasOverflow && (overflowY === 'auto' || overflowY === 'scroll')) {
-              break;
-            }
-            scrollContainer = scrollContainer.parentElement;
-          }
+    if (!open) return;
 
-          if (scrollContainer) {
-            const target = currentMonthRef.current;
-            const containerRect = scrollContainer.getBoundingClientRect();
-            const targetRect = target.getBoundingClientRect();
-            const offsetTop = targetRect.top - containerRect.top + scrollContainer.scrollTop;
+    const scrollToCurrentMonth = () => {
+      if (!currentMonthRef.current) {
+        console.log('Current month ref not found');
+        return;
+      }
 
-            scrollContainer.scrollTo({
-              top: offsetTop - 100, // 상단 여백 (제목 + 설명 고려)
-              behavior: 'smooth'
-            });
-          }
-        }
-      }, 300);
-    }
-  }, [open]);
+      // DialogContent 요소 직접 찾기 (data-radix-dialog-content 속성 사용)
+      const dialogContent = document.querySelector('[role="dialog"] [data-radix-scroll-area-viewport], [role="dialog"] > div');
+
+      if (dialogContent && dialogContent.scrollTo) {
+        const targetElement = currentMonthRef.current;
+        const offsetTop = targetElement.offsetTop;
+
+        console.log('Scrolling to current month, offset:', offsetTop);
+
+        dialogContent.scrollTo({
+          top: offsetTop - 80, // 상단 여백
+          behavior: 'smooth'
+        });
+      } else {
+        console.log('Scroll container not found');
+      }
+    };
+
+    // DOM이 완전히 렌더링된 후 스크롤
+    const timeoutId = setTimeout(scrollToCurrentMonth, 500);
+
+    return () => clearTimeout(timeoutId);
+  }, [open, currentMonthFirstIndex]);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-full md:max-w-6xl max-h-[90vh] overflow-y-auto pt-8">
         <DialogHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
           <DialogTitle className="text-xl font-semibold">전체 일정 캘린더</DialogTitle>
+          <DialogDescription className="sr-only">
+            모든 일정을 확인할 수 있는 캘린더입니다.
+          </DialogDescription>
           <button
             onClick={() => onOpenChange(false)}
             className="rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground"

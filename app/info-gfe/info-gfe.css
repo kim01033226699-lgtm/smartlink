@@ -104,6 +104,7 @@
       align-items: center;
       justify-content: center;
       min-height: 52px;
+      opacity: 0.7;
     }
 
     .tab-button.active {
@@ -111,6 +112,7 @@
       color: white;
       box-shadow: var(--shadow-md);
       transform: translateY(-2px);
+      opacity: 1;
     }
 
     .tab-button:hover:not(.active) {

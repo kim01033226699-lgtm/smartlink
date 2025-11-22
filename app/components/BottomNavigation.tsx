@@ -1,6 +1,7 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import './BottomNavigation.css';
 
@@ -56,9 +57,29 @@ const navItems: NavItem[] = [
 
 export default function BottomNavigation() {
   const pathname = usePathname();
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      // 스크롤 내릴 때 숨기기, 올릴 때 보이기
+      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        setIsVisible(false);
+      } else {
+        setIsVisible(true);
+      }
+
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [lastScrollY]);
 
   return (
-    <nav className="bottom-navigation visible">
+    <nav className={`bottom-navigation ${isVisible ? 'visible' : 'hidden'}`}>
       <div className="bottom-nav-wrapper">
         <div className="bottom-nav-container">
           {navItems.map((item, index) => {

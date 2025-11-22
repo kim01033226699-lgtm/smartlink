@@ -174,13 +174,14 @@
 }
 
 .mproject-page .btn-large {
-  padding: 0 2rem;
-  font-size: 1.1rem;
+  padding: 0 1.5rem;
+  font-size: 1rem;
   flex: 1;
   height: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
+  white-space: nowrap;
 }
 
 /* Form Elements */
@@ -535,7 +536,7 @@
   justify-content: space-between;
   gap: 1rem;
   margin-bottom: 1.5rem;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   max-width: 800px;
   margin-left: auto;
   margin-right: auto;
@@ -543,11 +544,13 @@
 
 .step-title-container .step-title {
   margin-bottom: 0;
+  flex: 1;
+  min-width: 0;
 }
 
 .btn-grade-info {
-  padding: 0.75rem 1.5rem;
-  font-size: 0.95rem;
+  padding: 0.625rem 1.25rem;
+  font-size: 0.9rem;
   font-weight: 600;
   background: var(--primary-color);
   color: white;
@@ -557,6 +560,7 @@
   transition: all 0.3s ease;
   white-space: nowrap;
   box-shadow: var(--shadow);
+  flex-shrink: 0;
 }
 
 .btn-grade-info:hover {
@@ -875,21 +879,26 @@
 
   .step-title-container {
     gap: 0.5rem;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     max-width: 800px;
     margin-left: auto;
     margin-right: auto;
-    padding: 0 1.5rem;
+    padding: 0 1rem;
   }
 
   .step-title-container .step-title {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
   }
 
   .btn-grade-info {
-    padding: 0.6rem 1rem;
-    font-size: 0.85rem;
+    padding: 0.5rem 0.875rem;
+    font-size: 0.8rem;
     white-space: nowrap;
+  }
+
+  .mproject-page .btn-large {
+    font-size: 0.9rem !important;
+    padding: 0 1rem !important;
   }
 
   .modal-content-wide {

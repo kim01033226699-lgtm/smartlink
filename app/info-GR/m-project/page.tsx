@@ -247,7 +247,7 @@ export default function MProjectPage() {
                 <div className="step-title-container">
                   <h2 className="step-title">위임 자격 확인</h2>
                   <button onClick={() => setShowGradeModal(true)} className="btn-grade-info">
-                    기준보기
+                    기준
                   </button>
                 </div>
 
