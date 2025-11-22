@@ -36,6 +36,7 @@ export default function ResultPage({ selectedDate }: ResultPageProps) {
           )
         );
 
+        // 선택한 날짜 이후의 자격추가/전산승인마감 이벤트 찾기
         const candidates = data.calendarEvents.filter((event) => {
           const eventDate = new Date(event.date);
           const normalizedEventDate = new Date(
@@ -43,15 +44,15 @@ export default function ResultPage({ selectedDate }: ResultPageProps) {
           );
 
           const isCandidateContent =
-            event.title.includes("?�격추�?/?�산?�인마감") ||
-            event.title.includes("?�격추�?") ||
-            event.title.includes("?�산?�인마감");
+            event.title.includes("자격추가/전산승인마감") ||
+            event.title.includes("자격추가") ||
+            event.title.includes("전산승인마감");
 
           return (
             normalizedEventDate.getTime() >= normalizedSelectedDate.getTime() &&
             event.type === "goodrich" &&
             isCandidateContent &&
-            event.title.match(/(\d+)??\d+)�?)
+            event.title.match(/(\d+)월(\d+)차/)
           );
         });
 
@@ -67,13 +68,13 @@ export default function ResultPage({ selectedDate }: ResultPageProps) {
         const closestEvent = candidates[0];
         let foundSchedule = data.schedules[0];
 
-        const roundMatch = closestEvent.title.match(/(\d+)??\d+)�?);
+        const roundMatch = closestEvent.title.match(/(\d+)월(\d+)차/);
         if (roundMatch) {
           const month = roundMatch[1];
           const round = roundMatch[2];
           const targetRound = `${month}-${round}`;
           const matchedSchedule = data.schedules.find(
-            (s) => s.round === targetRound || s.round === `${targetRound}�?
+            (s) => s.round === targetRound || s.round === `${targetRound}차`
           );
           if (matchedSchedule) {
             foundSchedule = matchedSchedule;
@@ -84,7 +85,7 @@ export default function ResultPage({ selectedDate }: ResultPageProps) {
         setLoading(false);
       })
       .catch((err) => {
-        console.error("?�이??로드 ?�패:", err);
+        console.error("데이터 로드 실패:", err);
         setLoading(false);
       });
   }, [selectedDate]);
@@ -124,13 +125,13 @@ export default function ResultPage({ selectedDate }: ResultPageProps) {
     const imgWidth = 210;
     const imgHeight = (canvas.height * imgWidth) / canvas.width;
     pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
-    pdf.save(`?�촉?�정_${schedule.round}.pdf`);
+    pdf.save(`위촉일정_${schedule.round}.pdf`);
   };
 
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 p-4 md:p-8 flex items-center justify-center">
-        <div className="text-gray-600">?�이??로딩 �?..</div>
+        <div className="text-gray-600">데이터 로딩 중...</div>
       </div>
     );
   }
@@ -138,7 +139,7 @@ export default function ResultPage({ selectedDate }: ResultPageProps) {
   if (!schedule) {
     return (
       <div className="min-h-screen bg-gray-50 p-4 md:p-8 flex items-center justify-center">
-        <div className="text-red-600">?�정??찾을 ???�습?�다.</div>
+        <div className="text-red-600">일정을 찾을 수 없습니다.</div>
       </div>
     );
   }
@@ -148,25 +149,25 @@ export default function ResultPage({ selectedDate }: ResultPageProps) {
       <div className="max-w-6xl mx-auto">
         <div id="result-content">
           <h1 className="text-2xl md:text-3xl font-bold text-center mb-8">
-            ?�촉?�정:{schedule.round}�?{schedule.gpOpenDate})
+            위촉일정:{schedule.round}차({schedule.gpOpenDate})
           </h1>
 
           <Card className="mb-6">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Star className="h-5 w-5 text-yellow-500 fill-yellow-500" />
-                굿리�??�보코드
+                굿리치/손보코드
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-2">
               <div>
-                <span className="font-semibold">?�정: </span>
+                <span className="font-semibold">일정: </span>
                 <span>
-                  {schedule.gpOpenDate} GP ?�픈 ?�정 ({schedule.gpOpenTime})
+                  {schedule.gpOpenDate} GP 오픈 예정 ({schedule.gpOpenTime})
                 </span>
               </div>
               <div className="text-orange-600 text-sm">
-                *?�해보험 코드??GP-?�사?�보?�서 ?�인 가??
+                *손해보험 코드는 GP-인사정보에서 확인 가능
               </div>
             </CardContent>
           </Card>
@@ -175,22 +176,22 @@ export default function ResultPage({ selectedDate }: ResultPageProps) {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Star className="h-5 w-5 text-yellow-500 fill-yellow-500" />
-                ?�명보험???�촉 ?�정
+                생명보험사 위촉 일정
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-sm text-orange-600 space-y-1 mb-4">
                 <div>
-                  * ?�양?�명/?�이?�생�??�브라?�프?�명?� ?�촉 ???�출??보험???�류�?
-                  진행?�니??(별도 ?�촉 문자/?�림???�음)
+                  * 동양생명/라이나생명/저브라이프생명은 위촉 시 제출한 보험사 서류로
+                  진행합니다.(별도 위촉 문자/알림톡 없음)
                 </div>
                 <div>
-                  * 차수�??�정?�의 보험???�촉 마감???�후 D+1~2???�내???�촉?�내가
-                  문자·?�림?�으�?발송?�니??(?�사�?방법 참고)
+                  * 차수별 일정표의 보험사 위촉 마감일 이후 D+1~2일 이내에 위촉안내가
+                  문자·알림톡으로 발송됩니다.(회사별 방법 참고)
                 </div>
                 <div>
-                  * 문자·?�림?�을 ?�인?�시�??�사별로 ?�촉 진행??반드????주셔??
-                  보험??코드 발급??진행?�니??
+                  * 문자·알림톡을 확인하시고 회사별로 위촉 진행을 반드시 해 주셔야
+                  보험사 코드 발급이 진행됩니다.
                 </div>
               </div>
 
@@ -199,22 +200,22 @@ export default function ResultPage({ selectedDate }: ResultPageProps) {
                   <thead>
                     <tr className="bg-gray-100">
                       <th className="border border-gray-300 p-2 w-[15%] min-w-[80px]">
-                        ?�사
+                        회사
                       </th>
                       <th className="border border-gray-300 p-2 w-[10%] min-w-[60px]">
                         차수
                       </th>
                       <th className="border border-gray-300 p-2 w-[15%] min-w-[90px]">
-                        ?�수마감??
+                        접수마감일
                       </th>
                       <th className="border border-gray-300 p-2 w-[15%] min-w-[90px]">
-                        GP?�로??
+                        GP업로드
                       </th>
                       <th className="border border-gray-300 p-2 w-[18%] min-w-[120px]">
-                        ?�촉방법
+                        위촉방법
                       </th>
                       <th className="border border-gray-300 p-2 w-[27%] min-w-[180px]">
-                        ?�당??
+                        담당자
                       </th>
                     </tr>
                   </thead>
@@ -222,7 +223,7 @@ export default function ResultPage({ selectedDate }: ResultPageProps) {
                     {schedule.companies.map((company, idx) => (
                       <tr key={idx} className="hover:bg-gray-50">
                         <td className="border border-gray-300 p-2">{company.company}</td>
-                        <td className="border border-gray-300 p-2">{company.round}�?/td>
+                        <td className="border border-gray-300 p-2">{company.round}차</td>
                         <td className="border border-gray-300 p-2">
                           {company.acceptanceDeadline}
                         </td>
@@ -240,7 +241,7 @@ export default function ResultPage({ selectedDate }: ResultPageProps) {
               </div>
 
               <div className="text-sm text-gray-600 mt-4 text-center md:text-right">
-                * 좌우�??�크�?
+                * 좌우로 스크롤
               </div>
             </CardContent>
           </Card>
@@ -249,15 +250,14 @@ export default function ResultPage({ selectedDate }: ResultPageProps) {
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Button variant="outline" className="gap-2" onClick={() => router.push("/info-appoint")}>
             <ArrowLeft className="h-4 w-4" />
-            ?�전?�로
+            이전으로
           </Button>
           <Button className="gap-2 bg-blue-500 hover:bg-blue-600" onClick={handlePdfDownload}>
             <Download className="h-4 w-4" />
-            ?�촉차수PDF?�??
+            위촉차수PDF저장
           </Button>
         </div>
       </div>
     </div>
   );
 }
-

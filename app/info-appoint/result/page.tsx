@@ -1,15 +1,21 @@
 "use client";
 
-import ResultPage from "@/app/components/result-page";
+import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
+import ResultPage from "@/app/info-appoint/components/ResultPage";
 
-interface ResultRouteProps {
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
-}
-
-export default async function InfoAppointResultPage({ searchParams }: ResultRouteProps) {
-  const params = await searchParams;
-  const dateParam = typeof params.date === "string" ? params.date : "";
+function ResultPageWrapper() {
+  const searchParams = useSearchParams();
+  const dateParam = searchParams.get("date") || "YYYY-MM-DD";
 
   return <ResultPage selectedDate={dateParam} />;
+}
+
+export default function InfoAppointResultPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-gray-50 p-4 md:p-8 flex items-center justify-center"><div className="text-gray-600">로딩 중...</div></div>}>
+      <ResultPageWrapper />
+    </Suspense>
+  );
 }
 

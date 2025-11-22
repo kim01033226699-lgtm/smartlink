@@ -23,7 +23,7 @@ export default function SubmissionDateSelector({
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const [showResults, setShowResults] = useState(false);
 
-  // ?�택???�후 11?�자 계산
+  // 선택일 이후 11일자 계산
   const calculateDates = (startDate: Date) => {
     const dates = [];
     for (let i = 1; i <= 11; i++) {
@@ -50,17 +50,17 @@ export default function SubmissionDateSelector({
     <div className="space-y-4">
       <Card>
         <CardHeader>
-          <CardTitle>?�기 발송 ?�자 ?�택</CardTitle>
+          <CardTitle>등기 발송 일자 선택</CardTitle>
           <CardDescription>
-            ?�기�?발송???�짜�??�택??주세??
+            등기를 발송한 날짜를 선택해 주세요
           </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            {/* ?�짜 ?�택 */}
+            {/* 날짜 선택 */}
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                ?�출 ?�정??
+                제출 예정일
               </label>
               <Popover open={isCalendarOpen} onOpenChange={setIsCalendarOpen}>
                 <PopoverTrigger asChild>
@@ -75,7 +75,7 @@ export default function SubmissionDateSelector({
                     {selectedDate ? (
                       format(selectedDate, "PPP", { locale: ko })
                     ) : (
-                      <span>?�짜�??�택?�주?�요</span>
+                      <span>날짜를 선택해주세요</span>
                     )}
                   </Button>
                 </PopoverTrigger>
@@ -105,14 +105,14 @@ export default function SubmissionDateSelector({
                   className="flex-1"
                 >
                   <ArrowLeft className="h-4 w-4 mr-2" />
-                  ?�전?�로
+                  이전으로
                 </Button>
                 <Button
                   onClick={handleConfirm}
                   className="flex-1 bg-blue-600 hover:bg-blue-700"
                   disabled={!selectedDate}
                 >
-                  ?�인
+                  확인
                 </Button>
               </div>
             )}
@@ -120,24 +120,24 @@ export default function SubmissionDateSelector({
         </CardContent>
       </Card>
 
-      {/* 결과 ?�시 */}
+      {/* 결과 표시 */}
       {showResults && selectedDate && (
         <Card className="border-blue-500">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <AlertCircle className="h-5 w-5 text-blue-600" />
-              중요 ?�정 ?�내
+              중요 일정 안내
             </CardTitle>
             <CardDescription>
-              ?�출??{format(selectedDate, "yyyy??MM??dd??, { locale: ko })}) ?�후 11?�간???�정?�니??
+              제출일({format(selectedDate, "yyyy년 MM월 dd일", { locale: ko })}) 이후 11일간의 일정입니다.
             </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              {/* ?�짜 목록 */}
+              {/* 날짜 목록 */}
               <div className="bg-blue-50 p-4 rounded-lg">
                 <h3 className="font-semibold text-gray-900 mb-3">
-                  ?�인?�야 ???�짜??
+                  확인해야 할 날짜들:
                 </h3>
                 <div className="grid grid-cols-2 gap-2">
                   {calculatedDates.map((date, index) => (
@@ -146,27 +146,27 @@ export default function SubmissionDateSelector({
                       className="bg-white p-2 rounded border border-blue-200 text-sm"
                     >
                       <span className="font-medium text-blue-600">
-                        {index + 1}?�차:
+                        {index + 1}일차:
                       </span>{" "}
-                      {format(date, "MM??dd??(E)", { locale: ko })}
+                      {format(date, "MM월 dd일 (E)", { locale: ko })}
                     </div>
                   ))}
                 </div>
               </div>
-              {/* 최종 ?�인 버튼 */}
+              {/* 최종 확인 버튼 */}
               <div className="flex gap-3 pt-2">
                 <Button
                   variant="outline"
                   onClick={() => setShowResults(false)}
                   className="flex-1"
                 >
-                  ?�짜 ?�시 ?�택
+                  날짜 다시 선택
                 </Button>
                 <Button
                   onClick={handleFinalConfirm}
                   className="flex-1 bg-blue-600 hover:bg-blue-700"
                 >
-                  ?�인 ?�료
+                  확인 완료
                 </Button>
               </div>
             </div>
