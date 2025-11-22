@@ -4,24 +4,25 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2rem;
+  padding: 4rem;
 }
 
 .smart-link-container {
   width: 100%;
-  max-width: 800px;
+  max-width: 700px;
   margin: 0 auto;
+  padding: 0 2rem;
 }
 
 /* Header */
 .smart-link-header {
   text-align: center;
-  margin-bottom: 4rem;
+  margin-bottom: 20rem;
   animation: fadeInDown 0.6s ease;
 }
 
 .smart-link-title {
-  font-size: 3rem;
+  font-size: 2.5rem;
   font-weight: 800;
   color: white;
   margin-bottom: 1rem;
@@ -29,7 +30,7 @@
 }
 
 .smart-link-subtitle {
-  font-size: 1.5rem;
+  font-size: 1.1rem;
   color: rgba(255, 255, 255, 0.9);
   font-weight: 500;
 }
@@ -38,7 +39,7 @@
 .link-cards {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 2.5rem;
+  gap: 4rem;
   margin-bottom: 2rem;
 }
 
@@ -143,8 +144,11 @@
 /* Responsive - Mobile */
 @media (max-width: 768px) {
   .smart-link-page {
-    padding: 1rem;
-    padding-bottom: 80px; /* 푸터 네비게이션 공간 확보 */
+    padding: 2rem;
+  }
+
+  .smart-link-container {
+    padding: 0 1rem;
   }
 
   .smart-link-title {
@@ -156,11 +160,11 @@
   }
 
   .smart-link-header {
-    margin-bottom: 2rem;
+    margin-bottom: 8rem;
   }
 
   .link-cards {
-    gap: 0.75rem;
+    gap: 2rem;
   }
 
   .link-card {

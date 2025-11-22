@@ -16,13 +16,13 @@
 }
 
 .menu-title {
-  font-size: 3rem;
+  font-size: 2.5rem;
   font-weight: 800;
   margin-bottom: 1rem;
 }
 
 .menu-subtitle {
-  font-size: 1.25rem;
+  font-size: 1.1rem;
   opacity: 0.95;
   font-weight: 400;
 }
@@ -226,7 +226,7 @@
   }
 
   .support-card {
-    min-height: 168px;
+    min-height: 118px;
   }
 
   .support-card-plus {

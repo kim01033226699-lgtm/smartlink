@@ -3,7 +3,6 @@
 import { useRouter } from 'next/navigation';
 import { DollarSign, GraduationCap, FileCheck } from 'lucide-react';
 import { SupportCard } from './components/SupportCard';
-import BottomNavigation from './components/BottomNavigation';
 import './page.css';
 
 export default function HomePage() {
@@ -34,30 +33,27 @@ export default function HomePage() {
   ];
 
   return (
-    <>
-      <div className="smart-link-page">
-        <div className="smart-link-container">
-          <header className="smart-link-header">
-            <h1 className="smart-link-title">Smart Link</h1>
-            <p className="smart-link-subtitle">
-              Start <span style={{ color: '#ff9c00' }}>Good</span>, Grow <span style={{ color: '#ff9c00' }}>Rich</span>!
-            </p>
-          </header>
+    <div className="smart-link-page">
+      <div className="smart-link-container">
+        <header className="smart-link-header">
+          <h1 className="smart-link-title">Smart Link</h1>
+          <p className="smart-link-subtitle">
+            Start <span style={{ color: '#ff9c00' }}>Good</span>, Grow <span style={{ color: '#ff9c00' }}>Rich</span>!
+          </p>
+        </header>
 
-          <div className="link-cards">
-            {links.map((link, index) => (
-              <SupportCard
-                key={index}
-                title={link.title}
-                description={link.description}
-                icon={link.icon}
-                onClick={() => router.push(link.url)}
-              />
-            ))}
-          </div>
+        <div className="link-cards">
+          {links.map((link, index) => (
+            <SupportCard
+              key={index}
+              title={link.title}
+              description={link.description}
+              icon={link.icon}
+              onClick={() => router.push(link.url)}
+            />
+          ))}
         </div>
       </div>
-      <BottomNavigation />
-    </>
+    </div>
   );
 }
