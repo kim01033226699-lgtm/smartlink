@@ -1,6 +1,7 @@
 "use client";
 
 import NavigationHeader from "@/app/components/NavigationHeader";
+import BottomNavigation from "@/app/components/BottomNavigation";
 import EducationQuestionFlow from "@/app/info-appoint/components/education-flow/education-question-flow";
 
 export default function EducationFlowPage() {
@@ -13,6 +14,8 @@ export default function EducationFlowPage() {
           <EducationQuestionFlow />
         </div>
       </div>
+
+      <BottomNavigation />
     </div>
   );
 }

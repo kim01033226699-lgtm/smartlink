@@ -51,7 +51,7 @@ export default function PersonalInfoForm({ onComplete, onBack, selectedResults }
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
 
   useEffect(() => {
-    // 구글시트에서 가져온 수신처 데이터 로드
+    // 클라이언트에서 가져온 수신자정보 로드
     const loadRecipients = async () => {
       try {
         const basePath = process.env.__NEXT_ROUTER_BASEPATH || '';
@@ -61,7 +61,7 @@ export default function PersonalInfoForm({ onComplete, onBack, selectedResults }
           setRecipients(data.recipients || []);
         }
       } catch (error) {
-        console.error('수신처 데이터 로딩 실패:', error);
+        console.error('수신자정보 로딩 실패:', error);
       } finally {
         setLoading(false);
       }
@@ -81,7 +81,7 @@ export default function PersonalInfoForm({ onComplete, onBack, selectedResults }
   const validateForm = (): boolean => {
     const newErrors: Partial<Record<keyof PersonalInfo, string>> = {};
 
-    // 소속회사는 선택사항이므로 필수 체크 제거
+    // 소속회사는 선택항목이므로 필수 체크 제거
 
     if (!formData.residentNumber.trim()) {
       newErrors.residentNumber = '주민번호를 입력해주세요.';
@@ -115,14 +115,14 @@ export default function PersonalInfoForm({ onComplete, onBack, selectedResults }
     e.preventDefault();
 
     if (validateForm()) {
-      // 질문 결과에서 수신처 생성
+      // 질문 결과에서 수신자 생성
       const finalRecipients: string[] = [];
 
       selectedResults.forEach(result => {
-        if (result === '현재 재직회사') {
+        if (result === '현재 소속회사') {
           // 선택한 소속회사 정보 사용
           if (formData.company) {
-            // 사용자가 직접 입력한 회사 주소가 있으면 사용, 없으면 구글시트 데이터 사용
+            // 사용자가 직접 입력한 회사 주소가 있으면 사용, 없으면 구성요소 파일에서 사용
             let recipientString = formData.company;
             if (formData.companyAddress) {
               recipientString = `${formData.company} - ${formData.companyAddress}`;
@@ -135,7 +135,7 @@ export default function PersonalInfoForm({ onComplete, onBack, selectedResults }
             finalRecipients.push(recipientString);
           }
         } else {
-          // 협회 등 다른 수신처
+          // 협회 및 다른 수신자
           const matchedRecipient = recipients.find(r =>
             r.company.includes(result) || result.includes(r.company)
           );
@@ -157,12 +157,12 @@ export default function PersonalInfoForm({ onComplete, onBack, selectedResults }
       <CardHeader>
         <CardTitle>내용증명 작성하기</CardTitle>
         <CardDescription>
-          아래 사항을 입력해 주세요
+          아래 항목을 입력해 주세요
         </CardDescription>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* 수신처 */}
+          {/* 수신자 */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-3">
               내용증명 발송할 기관/회사
@@ -173,15 +173,15 @@ export default function PersonalInfoForm({ onComplete, onBack, selectedResults }
               </div>
             ) : (
               <div className="space-y-4">
-                {/* 질문 결과에 따른 수신처 표시 */}
+                {/* 질문 결과에 따른 수신자 표시 */}
                 <div className="bg-blue-50 border border-blue-200 rounded-md p-4">
-                  <p className="text-sm font-semibold text-gray-700 mb-3">제출 필요 기관:</p>
+                  <p className="text-sm font-semibold text-gray-700 mb-3">발송 예정 기관:</p>
                   <div className="space-y-2">
                     {selectedResults.map((result, index) => {
-                      // "현재 재직회사"는 선택한 소속회사로 대체
-                      if (result === '현재 재직회사') {
+                      // "현재 소속회사"가 선택된 소속회사로 대체
+                      if (result === '현재 소속회사') {
                         if (formData.company) {
-                          // 사용자가 직접 입력한 회사 주소가 있으면 사용, 없으면 구글시트 데이터 사용
+                          // 사용자가 직접 입력한 회사 주소가 있으면 사용, 없으면 구성요소 파일에서 사용
                           let recipientString = formData.company;
                           if (formData.companyAddress) {
                             recipientString = `${formData.company} - ${formData.companyAddress}`;
@@ -201,12 +201,12 @@ export default function PersonalInfoForm({ onComplete, onBack, selectedResults }
                         return (
                           <div key={index} className="flex items-center gap-2 text-sm">
                             <span className="w-2 h-2 bg-blue-600 rounded-full"></span>
-                            <span className="text-gray-800">전 소속회사 (아래에서 소속회사 정보를 입력하세요)</span>
+                            <span className="text-gray-800">본인 소속회사 (아래에서 소속회사 정보를 입력하세요)</span>
                           </div>
                         );
                       }
 
-                      // 협회는 구글시트 데이터와 매칭
+                      // 협회 및 구성요소 파일에서 매칭
                       const matchedRecipient = recipients.find(r =>
                         r.company.includes(result) || result.includes(r.company)
                       );
@@ -235,7 +235,7 @@ export default function PersonalInfoForm({ onComplete, onBack, selectedResults }
           {/* 소속회사 */}
           <div>
             <label htmlFor="company" className="block text-sm font-medium text-gray-700 mb-1">
-              전 소속회사 입력
+              본인 소속회사 입력
             </label>
             <input
               id="company"
@@ -245,7 +245,7 @@ export default function PersonalInfoForm({ onComplete, onBack, selectedResults }
               className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                 errors.company ? 'border-red-500' : 'border-gray-300'
               }`}
-              placeholder="전 소속회사 입력(미입력시 공란으로 표기됩니다)"
+              placeholder="본인 소속회사 입력(미입력시 공란으로 남기됩니다)"
             />
             {errors.company && (
               <p className="text-red-500 text-sm mt-1">{errors.company}</p>
@@ -255,7 +255,7 @@ export default function PersonalInfoForm({ onComplete, onBack, selectedResults }
           {/* 회사 주소 */}
           <div>
             <label htmlFor="companyAddress" className="block text-sm font-medium text-gray-700 mb-1">
-              전 소속회사 주소 입력
+              본인 소속회사 주소 입력
             </label>
             <input
               id="companyAddress"
@@ -263,7 +263,7 @@ export default function PersonalInfoForm({ onComplete, onBack, selectedResults }
               value={formData.companyAddress}
               onChange={(e) => handleChange('companyAddress', e.target.value)}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="전 소속회사 주소 입력(미입력시 공란으로 표기됩니다)"
+              placeholder="본인 소속회사 주소 입력(미입력시 공란으로 남기됩니다)"
             />
           </div>
 
@@ -330,7 +330,7 @@ export default function PersonalInfoForm({ onComplete, onBack, selectedResults }
               className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                 errors.address ? 'border-red-500' : 'border-gray-300'
               }`}
-              placeholder="본인의 집 주소를 입력하세요"
+              placeholder="본인의 현재 주소를 입력하세요"
             />
             {errors.address && (
               <p className="text-red-500 text-sm mt-1">{errors.address}</p>
@@ -424,4 +424,3 @@ export default function PersonalInfoForm({ onComplete, onBack, selectedResults }
     </Card>
   );
 }
-

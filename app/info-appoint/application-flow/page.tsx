@@ -3,6 +3,7 @@
 import { useState } from "react";
 
 import NavigationHeader from "@/app/components/NavigationHeader";
+import BottomNavigation from "@/app/components/BottomNavigation";
 import { Button } from "@/app/components/ui/button";
 import { Card, CardContent } from "@/app/components/ui/card";
 import ApplicationPreview from "@/app/info-appoint/components/application-flow/application-preview";
@@ -160,6 +161,8 @@ export default function ApplicationFlowPage() {
           )}
         </div>
       </div>
+
+      <BottomNavigation />
     </div>
   );
 }
