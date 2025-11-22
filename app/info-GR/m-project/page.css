@@ -30,13 +30,14 @@
 
 .title {
   font-size: 2.5rem;
-  font-weight: 700;
-  margin: 0 0 0.5rem 0;
+  font-weight: 800;
+  margin: 0 0 1rem 0;
 }
 
 .subtitle {
   font-size: 1.1rem;
-  opacity: 0.9;
+  font-weight: 400;
+  opacity: 0.95;
   margin: 0;
 }
 
@@ -108,16 +109,16 @@
 }
 
 .result-title {
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: 700;
-  color: var(--text-color);
+  color: var(--primary-color);
   margin-bottom: 2rem;
 }
 
 .step-title {
-  font-size: 1.75rem;
+  font-size: 1.5rem;
   font-weight: 700;
-  color: var(--text-color);
+  color: var(--primary-color);
   margin-bottom: 2rem;
 }
 

@@ -193,9 +193,16 @@ export default function CalendarModal({ open, onOpenChange, events }: CalendarMo
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-full md:max-w-6xl max-h-[90vh] overflow-y-auto pt-12">
-        <DialogHeader>
-          <DialogTitle>전체 일정 캘린더</DialogTitle>
+      <DialogContent className="max-w-full md:max-w-6xl max-h-[90vh] overflow-y-auto pt-8">
+        <DialogHeader className="flex flex-row items-center justify-between space-y-0 pb-4">
+          <DialogTitle className="text-xl font-semibold">전체 일정 캘린더</DialogTitle>
+          <button
+            onClick={() => onOpenChange(false)}
+            className="rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground"
+          >
+            <X className="h-5 w-5" />
+            <span className="sr-only">Close</span>
+          </button>
         </DialogHeader>
 
         {/* PC 버전: 캘린더 뷰 */}
