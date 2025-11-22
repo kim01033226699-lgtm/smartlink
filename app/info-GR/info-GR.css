@@ -226,7 +226,7 @@
   }
 
   .support-card {
-    min-height: 240px;
+    min-height: 168px;
   }
 
   .support-card-plus {
@@ -242,16 +242,22 @@
   }
 
   .support-card-content {
-    padding: 2.5rem 1.5rem 1.5rem 1.5rem;
-    gap: 1.5rem;
+    flex-direction: row;
+    padding: 2rem 1.5rem 1.5rem 1.5rem;
+    gap: 1rem;
+    align-items: center;
+    justify-content: flex-start;
   }
 
   .support-card-icon-wrapper {
-    width: 90px;
-    height: 90px;
+    width: 60px;
+    height: 60px;
+    flex-shrink: 0;
   }
 
   .support-card-title {
-    font-size: 1.25rem;
+    font-size: 1.1rem;
+    text-align: left;
+    flex: 1;
   }
 }

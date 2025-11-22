@@ -90,7 +90,7 @@
 
     .tab-button {
       flex: 1;
-      padding: 1.5rem 2rem;
+      padding: 1rem 1.5rem;
       border: none;
       background: #e5e7eb;
       color: var(--text-color);
@@ -103,7 +103,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      min-height: 80px;
+      min-height: 52px;
     }
 
     .tab-button.active {
@@ -181,7 +181,7 @@
     .detail-box {
       background: linear-gradient(135deg, rgba(227, 242, 253, 1) 0%, rgba(187, 222, 251, 1) 100%);
       border-radius: 1rem;
-      padding: 2rem;
+      padding: 1.3rem;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
       transition: all 0.3s ease;
     }
