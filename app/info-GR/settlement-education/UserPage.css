@@ -179,9 +179,7 @@
   margin-bottom: 1.5rem;
   display: flex;
   justify-content: center;
-  background: var(--bg-light);
-  padding: 2rem;
-  border-radius: 16px;
+  padding: 1rem 0;
 }
 
 .option-selection-row {
@@ -209,6 +207,7 @@
 
 .select-input {
   width: 100%;
+  min-width: 280px;
   padding: 1.25rem;
   font-size: 1rem;
   border: 1px solid var(--border-color);
@@ -381,18 +380,14 @@
 
 /* Notice Section */
 .notice-section {
-  background: rgba(251, 146, 60, 0.08);
-  border-radius: 16px;
-  padding: 2rem;
   margin-top: 2rem;
-  text-align: center;
+  text-align: left;
 }
 
 .notice-list {
   list-style: none;
   padding: 0;
   margin: 0;
-  display: inline-block;
   text-align: left;
 }
 
@@ -538,5 +533,17 @@
   .option-selection-row .form-group {
     max-width: 100%;
     width: 100%;
+  }
+}
+
+@media (max-width: 490px) {
+  .select-input {
+    min-width: 240px;
+    padding: 1rem;
+    font-size: 0.9rem;
+  }
+
+  .option-selection-row .section-title {
+    font-size: 1.1rem;
   }
 }

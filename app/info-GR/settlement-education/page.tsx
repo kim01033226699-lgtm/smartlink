@@ -182,11 +182,6 @@ export default function SettlementEducationPage() {
               <button onClick={() => router.push('/info-GR/')} className="home-link">
                 홈
               </button>
-              {step === 2 && (
-                <button onClick={handleReset} className="home-link">
-                  처음으로
-                </button>
-              )}
             </div>
           </div>
         </header>
@@ -302,7 +297,7 @@ export default function SettlementEducationPage() {
                       <div className="notice-section" style={{ marginTop: '2rem' }}>
                         <ul className="notice-list">
                           <li>
-                            <span className="notice-icon">⚠️</span>
+                            <span className="notice-icon">ℹ️</span>
                             <span>중간목표 달성에 따라 지원금 지급 및 환수가 발생할 수 있습니다.</span>
                           </li>
                           <li className="sub-item">
@@ -312,7 +307,7 @@ export default function SettlementEducationPage() {
                             <span>* B-Type : 1차 '중간목표' 미달성 시 선지급 정착교육비 일부 환수 발생</span>
                           </li>
                           <li>
-                            <span className="notice-icon">⚠️</span>
+                            <span className="notice-icon">ℹ️</span>
                             <span>목표 달성 후 유지율 평가에 따라 환수가 발생할 수 있습니다</span>
                           </li>
                         </ul>

@@ -83,7 +83,7 @@
   padding: 1rem 2rem;
   border: 2px solid #d1d5db;
   background: #f9fafb;
-  border-radius: 9999px;
+  border-radius: 12px;
   cursor: pointer;
   transition: all 0.3s ease;
   font-family: inherit;
