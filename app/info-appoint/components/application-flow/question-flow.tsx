@@ -302,6 +302,7 @@ export default function QuestionFlow({ onComplete }: QuestionFlowProps) {
                         }}
                         initialFocus
                         locale={ko}
+                        weekStartsOn={0}
                       />
                     </PopoverContent>
                   </Popover>

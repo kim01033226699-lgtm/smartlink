@@ -91,6 +91,7 @@ export default function SubmissionDateSelector({
                     disabled={(date) => date < new Date()}
                     initialFocus
                     locale={ko}
+                    weekStartsOn={0}
                   />
                 </PopoverContent>
               </Popover>

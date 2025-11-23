@@ -393,6 +393,7 @@ export default function PersonalInfoForm({ onComplete, onBack, selectedResults }
                   }}
                   initialFocus
                   locale={ko}
+                  weekStartsOn={0}
                 />
               </PopoverContent>
             </Popover>

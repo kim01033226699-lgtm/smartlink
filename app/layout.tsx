@@ -4,9 +4,6 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Smart Link - Start Good, Grow Rich!",
   description: "굿리치 통합 정보 시스템",
-  icons: {
-    icon: '/data:image/x-icon;base64,',
-  },
 };
 
 export const viewport: Viewport = {
