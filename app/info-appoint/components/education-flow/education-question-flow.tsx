@@ -1011,10 +1011,10 @@ export default function EducationQuestionFlow() {
               <div className="absolute left-2.5 top-6 w-3 h-3 bg-blue-500 rounded-full border-2 border-white"></div>
 
               <Card
-                className="bg-gray-50 border-gray-200 ml-8 cursor-pointer hover:bg-gray-100 hover:border-gray-300 transition-all duration-150 active:scale-95"
+                className="bg-gray-50 border-gray-200 ml-8 mx-4 cursor-pointer hover:bg-gray-100 hover:border-gray-300 transition-all duration-150 active:scale-95"
                 onClick={() => handleGoToStep(index)}
               >
-                <CardContent className="py-4">
+                <CardContent className="py-4 px-6">
                   <div className="flex items-center justify-between">
                     <div className="flex-1">
                       <p className="text-sm text-gray-500 mb-1">Q{index + 1}</p>
@@ -1048,8 +1048,8 @@ export default function EducationQuestionFlow() {
           </>
         )}
 
-        <Card className={`border-2 border-blue-500 shadow-lg ${history.length > 0 ? 'ml-8' : ''}`}>
-          <CardHeader className="bg-blue-50">
+        <Card className={`border-2 border-blue-500 shadow-lg mx-4 ${history.length > 0 ? 'ml-8' : ''}`}>
+          <CardHeader className="bg-blue-50 px-6">
             <div className="flex items-center gap-2 mb-2">
               <span className="text-sm font-semibold text-blue-600">
                 Q{history.length + 1}
@@ -1059,18 +1059,18 @@ export default function EducationQuestionFlow() {
               {currentQuestion.text}
             </CardTitle>
           </CardHeader>
-          <CardContent className="pt-6">
+          <CardContent className="pt-6 px-6 pb-6">
             <div className="flex flex-col sm:flex-row gap-3">
               <Button
                 onClick={() => handleAnswer('yes')}
-                className="flex-1 bg-blue-600 hover:bg-blue-700 py-6 text-lg font-semibold transition-all duration-150 active:scale-95"
+                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-4 text-base font-medium rounded-lg transition-all duration-150 active:scale-95 shadow-sm"
               >
                 네
               </Button>
               <Button
                 onClick={() => handleAnswer('no')}
                 variant="outline"
-                className="flex-1 py-6 text-lg font-semibold border-2 hover:bg-gray-100 transition-all duration-150 active:scale-95"
+                className="flex-1 py-4 text-base font-medium border border-gray-300 bg-white hover:bg-gray-50 text-gray-700 rounded-lg transition-all duration-150 active:scale-95 shadow-sm"
               >
                 아니오
               </Button>
