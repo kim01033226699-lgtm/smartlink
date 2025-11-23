@@ -2,7 +2,7 @@
 
 import { useState, useMemo, useEffect, useRef } from "react";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
-import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameMonth, isSameDay, addMonths, subMonths, getDay, startOfWeek, endOfWeek } from "date-fns";
+import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameMonth, isSameDay, addMonths, subMonths, getDay, startOfWeek, endOfWeek, isToday } from "date-fns";
 import { ko } from "date-fns/locale";
 
 import {
@@ -88,6 +88,7 @@ export default function CalendarModal({ open, onOpenChange, events }: CalendarMo
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [isDetailOpen, setIsDetailOpen] = useState(false);
   const currentMonthRef = useRef<HTMLDivElement>(null);
+  const todayRef = useRef<HTMLDivElement>(null);
 
   // 현재 달의 날짜들 가져오기
   const monthStart = startOfMonth(currentDate);
@@ -159,41 +160,51 @@ export default function CalendarModal({ open, onOpenChange, events }: CalendarMo
     return index >= 0 ? index : 0;
   }, [eventsByDateForAgenda]);
 
-  // 모달이 열릴 때 현재 월로 스크롤 (모바일)
+  // 오늘 날짜의 인덱스 찾기
+  const todayIndex = useMemo(() => {
+    const today = new Date();
+    const todayStr = format(today, 'yyyy-MM-dd');
+    return eventsByDateForAgenda.findIndex(([date]) => date === todayStr);
+  }, [eventsByDateForAgenda]);
+
+  // 오늘 날짜로 스크롤하는 함수
+  const scrollToToday = () => {
+    // 오늘 날짜가 있으면 오늘 날짜로, 없으면 가장 가까운 날짜로 스크롤
+    const targetRef = todayRef.current || currentMonthRef.current;
+    if (!targetRef) return;
+
+    const dialogContent = document.querySelector('[role="dialog"]')?.querySelector('[class*="overflow-y-auto"]');
+    
+    if (dialogContent && dialogContent.scrollTo) {
+      const targetElement = targetRef;
+      const containerRect = dialogContent.getBoundingClientRect();
+      const targetRect = targetElement.getBoundingClientRect();
+      const offsetTop = targetRect.top - containerRect.top + dialogContent.scrollTop;
+      
+      dialogContent.scrollTo({
+        top: offsetTop - 100,
+        behavior: 'smooth'
+      });
+    } else if (targetRef) {
+      targetRef.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
+  // 모달이 열릴 때 모바일에서 오늘 날짜로 자동 스크롤
   useEffect(() => {
     if (!open) return;
 
-    const scrollToCurrentMonth = () => {
-      if (!currentMonthRef.current) {
-        console.log('Current month ref not found');
-        return;
-      }
+    // 모바일에서만 자동 스크롤 실행
+    const isMobile = window.innerWidth < 768; // md breakpoint
+    if (!isMobile) return;
 
-      // DialogContent 요소 찾기 - overflow-y-auto를 가진 요소가 스크롤 컨테이너
-      const dialogContent = document.querySelector('[role="dialog"]')?.querySelector('[class*="overflow-y-auto"]');
-
-      if (dialogContent && dialogContent.scrollTo) {
-        const targetElement = currentMonthRef.current;
-        const offsetTop = targetElement.offsetTop;
-
-        console.log('Scrolling to current month, offset:', offsetTop, 'container:', dialogContent);
-
-        dialogContent.scrollTo({
-          top: offsetTop - 100, // 상단 여백
-          behavior: 'smooth'
-        });
-      } else {
-        console.log('Scroll container not found, trying alternative method');
-        // 대체 방법: scrollIntoView 사용
-        currentMonthRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    };
-
-    // DOM이 완전히 렌더링된 후 스크롤
-    const timeoutId = setTimeout(scrollToCurrentMonth, 600);
+    // 1초 후 오늘 날짜로 스크롤
+    const timeoutId = setTimeout(() => {
+      scrollToToday();
+    }, 1000);
 
     return () => clearTimeout(timeoutId);
-  }, [open, currentMonthFirstIndex]);
+  }, [open, todayIndex, currentMonthFirstIndex]);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -291,15 +302,28 @@ export default function CalendarModal({ open, onOpenChange, events }: CalendarMo
 
         {/* 모바일 버전: Agenda 뷰 */}
         <div className="md:hidden">
-          <h2 className="text-lg font-semibold mb-4">전체 일정 목록</h2>
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-lg font-semibold">전체 일정 목록</h2>
+            <Button
+              onClick={scrollToToday}
+              variant="outline"
+              size="sm"
+              className="text-sm"
+            >
+              오늘
+            </Button>
+          </div>
           <p className="text-sm text-gray-600 mb-4">모든 일정을 날짜순으로 확인합니다.</p>
 
           <div className="space-y-4">
-            {eventsByDateForAgenda.map(([date, dateEvents], idx) => (
+            {eventsByDateForAgenda.map(([date, dateEvents], idx) => {
+              const eventDate = new Date(date);
+              const isTodayDate = isToday(eventDate);
+              return (
               <div
                 key={idx}
                 className="bg-gray-100 p-4 rounded-lg"
-                ref={idx === currentMonthFirstIndex ? currentMonthRef : null}
+                ref={idx === currentMonthFirstIndex ? currentMonthRef : (isTodayDate ? todayRef : null)}
               >
                 <h3 className="font-semibold mb-2">
                   {format(new Date(date), 'M월 d일 (E)', { locale: ko })}
@@ -322,7 +346,8 @@ export default function CalendarModal({ open, onOpenChange, events }: CalendarMo
                   ))}
                 </div>
               </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </DialogContent>
