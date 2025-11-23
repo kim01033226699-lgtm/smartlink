@@ -2,6 +2,7 @@
 import { useRouter } from 'next/navigation';
 import { GraduationCap, DollarSign, UserCog, Plus } from 'lucide-react';
 import BottomNavigation from '@/app/components/BottomNavigation';
+import { SupportCard } from '@/app/components/SupportCard';
 import './info-GR.css';
 
 export default function InfoGRPage() {
@@ -52,27 +53,13 @@ export default function InfoGRPage() {
               {menus.map(menu => {
                 const IconComponent = menu.icon;
                 return menu.available ? (
-                  <div
+                  <SupportCard
                     key={menu.id}
-                    className="support-card"
+                    title={menu.title}
+                    description={menu.description}
+                    icon={IconComponent}
                     onClick={() => router.push(menu.path)}
-                  >
-                    {/* Plus Button */}
-                    <div className="support-card-plus">
-                      <Plus className="support-card-plus-icon" strokeWidth={2} />
-                    </div>
-
-                    {/* Content */}
-                    <div className="support-card-content">
-                      {/* Large Centered Icon */}
-                      <div className="support-card-icon-wrapper">
-                        <IconComponent className="support-card-icon" strokeWidth={1.5} />
-                      </div>
-
-                      {/* Title */}
-                      <h2 className="support-card-title">{menu.title}</h2>
-                    </div>
-                  </div>
+                  />
                 ) : (
                   <div
                     key={menu.id}
