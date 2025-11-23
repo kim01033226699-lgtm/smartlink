@@ -454,13 +454,21 @@
 }
 
 .notice-list-center li {
-  padding: 0.5rem 0;
+  padding: 0.75rem 0;
+  padding-left: 1.5rem;
   font-size: 1rem;
   color: var(--text-color);
-  line-height: 1.6;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
+  line-height: 1.8;
+  position: relative;
+}
+
+.notice-list-center li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: var(--primary-color);
+  font-weight: 700;
+  font-size: 1.2rem;
 }
 
 .checkmark {

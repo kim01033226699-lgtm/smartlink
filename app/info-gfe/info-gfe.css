@@ -193,6 +193,11 @@
       transform: translateY(-2px);
     }
 
+    /* 혜택 섹션 내부 detail-item 스타일 조정 (박스 없이 표시) */
+    .info-section .detail-item {
+      padding: 1rem 0;
+    }
+
     .detail-item {
       display: flex;
       justify-content: space-between;
