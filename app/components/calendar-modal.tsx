@@ -24,6 +24,7 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/app/components/ui/dialog";
+import { X } from "lucide-react";
 import { Button } from "@/app/components/ui/button";
 import type { CalendarEvent } from "@/lib/types";
 import { cn } from "@/lib/utils";
@@ -179,13 +180,27 @@ export default function CalendarModal({ open, onOpenChange, events }: CalendarMo
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-full md:max-w-6xl max-h-[90vh] overflow-y-auto pt-12">
-        <DialogHeader>
-          <DialogTitle>전체 일정 캘린더</DialogTitle>
-          <DialogDescription className="sr-only">
-            모든 일정을 확인할 수 있는 캘린더입니다.
-          </DialogDescription>
-        </DialogHeader>
+      <DialogContent className="max-w-full md:max-w-6xl max-h-[90vh] p-0 relative [&>button]:hidden flex flex-col">
+        {/* sticky 헤더 영역 - 스크롤 시에도 상단에 고정 */}
+        <div className="sticky top-0 z-50 bg-background border-b px-6 py-4 flex items-center justify-between flex-shrink-0">
+          <DialogHeader className="flex-1 m-0">
+            <DialogTitle>전체 일정 캘린더</DialogTitle>
+            <DialogDescription className="sr-only">
+              모든 일정을 확인할 수 있는 캘린더입니다.
+            </DialogDescription>
+          </DialogHeader>
+          {/* 플로팅 닫기 버튼 */}
+          <button
+            onClick={() => onOpenChange(false)}
+            className="rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 bg-background border shadow-lg p-2 flex items-center justify-center w-8 h-8 flex-shrink-0"
+            aria-label="Close"
+          >
+            <X className="h-4 w-4" />
+          </button>
+        </div>
+        
+        {/* 스크롤 가능한 콘텐츠 영역 */}
+        <div className="overflow-y-auto flex-1 px-6 pb-6">
 
         <div className="hidden md:block">
           <div className="flex items-center justify-between mb-4">
@@ -304,6 +319,7 @@ export default function CalendarModal({ open, onOpenChange, events }: CalendarMo
               );
             })}
           </div>
+        </div>
         </div>
       </DialogContent>
 
