@@ -36,8 +36,8 @@ function Calendar({
             <th className="text-muted-foreground rounded-md font-normal text-[0.8rem] w-9 text-center p-0">월</th>
             {/* 화요일 표시 */}
             <th className="text-muted-foreground rounded-md font-normal text-[0.8rem] w-9 text-center p-0">화</th>
-            {/* 수요일 표시 */}
-            <th className="text-muted-foreground rounded-md font-bold text-[0.8rem] w-9 text-center p-0">수</th>
+            {/* 수요일 표시 - 한 포인트 키우고 굵은 검정 */}
+            <th className="text-black rounded-md font-bold text-[0.9rem] w-9 text-center p-0">수</th>
             {/* 목요일 표시 */}
             <th className="text-muted-foreground rounded-md font-normal text-[0.8rem] w-9 text-center p-0">목</th>
             {/* 금요일 표시 */}
@@ -77,7 +77,9 @@ function Calendar({
           buttonVariants({ variant: "ghost" }),
           "h-9 w-9 p-0 font-normal aria-selected:opacity-100",
           // 일요일: 여린 레드, 토요일: 여린 파랑
-          "[&:nth-child(1)]:text-red-400 [&:nth-child(7)]:text-blue-400"
+          "[&:nth-child(1)]:text-red-400 [&:nth-child(7)]:text-blue-400",
+          // 수요일: 한 포인트 키우고 굵은 검정
+          "[&:nth-child(4)]:text-black [&:nth-child(4)]:font-bold [&:nth-child(4)]:text-[0.95rem]"
         ),
         day_range_end: "day-range-end",
         day_selected:
