@@ -1,11 +1,11 @@
-'use client';
+'use client'
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, Download, Star } from "lucide-react";
-import { Button } from "@/app/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/app/components/ui/card";
-import type { RecruitmentSchedule, SheetData } from "@/app/info-appoint/types";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import type { RecruitmentSchedule, SheetData } from "@/lib/types";
 
 interface ResultPageProps {
   selectedDate: string;
@@ -17,8 +17,8 @@ export default function ResultPage({ selectedDate }: ResultPageProps) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    console.log('🔄 Google Sheets에서 실시간 데이터 로딩 중...');
-    fetch('/api/sheets')
+    const basePath = process.env.__NEXT_ROUTER_BASEPATH || '';
+    fetch(`${basePath}/data.json`)
       .then(res => res.json())
       .then((data: SheetData) => {
         if (!data.schedules || data.schedules.length === 0) {
@@ -228,7 +228,7 @@ export default function ResultPage({ selectedDate }: ResultPageProps) {
           <Button
             variant="outline"
             className="gap-2"
-            onClick={() => router.push('/info-appoint')}
+            onClick={() => router.push('/')}
           >
             <ArrowLeft className="h-4 w-4" />
             이전으로

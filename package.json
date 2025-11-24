@@ -8,7 +8,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "sync": "node sync-to-appoint.js"
+    "sync": "node sync-to-appoint.js",
+    "update-data": "node update-data.js"
   },
   "private": true,
   "keywords": [],

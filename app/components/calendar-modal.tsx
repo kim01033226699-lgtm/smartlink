@@ -95,6 +95,19 @@ export default function CalendarModal({ open, onOpenChange, events }: CalendarMo
     const map = new Map<string, CalendarEvent[]>();
     sortedEvents.forEach((event) => {
       const key = event.date;
+      // Skip events with invalid dates
+      if (!key || key.trim() === '') {
+        console.warn('이벤트에 날짜가 없습니다:', event);
+        return;
+      }
+
+      // Validate date format
+      const testDate = new Date(key);
+      if (isNaN(testDate.getTime())) {
+        console.warn('유효하지 않은 날짜 형식:', key, event);
+        return;
+      }
+
       if (!map.has(key)) map.set(key, []);
       map.get(key)!.push(event);
     });
@@ -289,6 +302,17 @@ export default function CalendarModal({ open, onOpenChange, events }: CalendarMo
             {eventsByDateForAgenda.map(([date, dateEvents], idx) => {
               const eventDate = new Date(date);
               const isTodayDate = isToday(eventDate);
+
+              // Safely format date with fallback
+              let formattedDate = date;
+              try {
+                if (!isNaN(eventDate.getTime())) {
+                  formattedDate = format(eventDate, "M월 d일 (E)", { locale: ko });
+                }
+              } catch (error) {
+                console.error('날짜 포맷팅 오류:', date, error);
+              }
+
               return (
               <div
                 key={idx}
@@ -296,7 +320,7 @@ export default function CalendarModal({ open, onOpenChange, events }: CalendarMo
                 ref={idx === currentMonthFirstIndex ? currentMonthRef : (isTodayDate ? todayRef : null)}
               >
                 <h3 className="mb-2 font-semibold">
-                  {format(new Date(date), "M월 d일 (E)", { locale: ko })}
+                  {formattedDate}
                 </h3>
                 <div className="space-y-2">
                   {dateEvents.map((event, eventIdx) => (
