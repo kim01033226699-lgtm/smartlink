@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app
 import { Popover, PopoverContent, PopoverTrigger } from "@/app/components/ui/popover";
 import { Calendar } from "@/app/components/ui/calendar";
 import { ArrowLeft, CalendarIcon } from "lucide-react";
-import { format } from "date-fns";
+import { format, isWednesday } from "date-fns";
 import { ko } from "date-fns/locale";
 import { cn } from "@/lib/utils";
 import { fetchSheetsDataClient } from "@/lib/fetch-sheets-client";
@@ -50,6 +50,8 @@ export default function PersonalInfoForm({ onComplete, onBack, selectedResults }
   const [loading, setLoading] = useState(true);
   const [selectedDate, setSelectedDate] = useState<Date>();
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
+
+  const disableNonWednesdays = (date: Date) => !isWednesday(date);
 
   useEffect(() => {
     // 구글시트에서 가져온 수신처 데이터 로드
@@ -402,9 +404,16 @@ export default function PersonalInfoForm({ onComplete, onBack, selectedResults }
                     }
                     setIsCalendarOpen(false);
                   }}
+                  disabled={disableNonWednesdays}
                   initialFocus
                   locale={ko}
                   weekStartsOn={0}
+                  modifiers={{
+                    wednesday: (date) => isWednesday(date),
+                  }}
+                  modifiersClassNames={{
+                    wednesday: "text-red-600 font-bold",
+                  }}
                 />
               </PopoverContent>
             </Popover>

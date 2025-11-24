@@ -234,6 +234,7 @@ export default function InfoAppointPage() {
                       disabled={disableNonWednesdays}
                       initialFocus
                       locale={ko}
+                      weekStartsOn={0}
                       modifiers={{
                         wednesday: (date) => isWednesday(date),
                       }}
