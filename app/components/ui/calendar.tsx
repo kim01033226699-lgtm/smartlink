@@ -58,12 +58,12 @@ function Calendar({
         months:
           "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
         month: "space-y-4",
-        caption: "flex justify-center items-center pt-1 relative mb-6 w-full",
-        caption_label: "text-sm font-medium text-center mx-2",
-        nav: "flex items-center gap-2",
+        caption: "flex items-center justify-center pt-1 relative mb-6 w-full",
+        caption_label: "text-sm font-medium text-center",
+        nav: "absolute inset-0 flex items-center justify-between pointer-events-none",
         nav_button: cn(
           buttonVariants({ variant: "outline" }),
-          "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100"
+          "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100 pointer-events-auto"
         ),
         nav_button_previous: "",
         nav_button_next: "",
