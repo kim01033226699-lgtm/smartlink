@@ -17,9 +17,16 @@ export default function ResultPage({ selectedDate }: ResultPageProps) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    console.log('🔄 Google Sheets에서 실시간 데이터 로딩 중...');
-    fetch('/api/sheets')
-      .then(res => res.json())
+    // 개발 환경에서는 API Route 사용, 프로덕션에서는 정적 파일 사용
+    const isDev = process.env.NODE_ENV === 'development';
+    const apiUrl = isDev ? '/api/sheets' : '/data.json';
+    
+    console.log(`🔄 데이터 로딩 중... (${isDev ? 'API Route' : '정적 파일'})`);
+    fetch(apiUrl)
+      .then(res => {
+        if (!res.ok) throw new Error("데이터 로딩 실패");
+        return res.json();
+      })
       .then((data: SheetData) => {
         if (!data.schedules || data.schedules.length === 0) {
           setLoading(false);
