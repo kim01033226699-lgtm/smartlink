@@ -1,62 +1,24 @@
-import * as React from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import { DayPicker, Formatters } from "react-day-picker";
+import * as React from "react"
+import { ChevronLeft, ChevronRight } from "lucide-react"
+import { DayPicker } from "react-day-picker"
 
-import { cn } from "@/lib/utils";
-import { buttonVariants } from "@/app/components/ui/button";
+import { cn } from "@/lib/utils"
+import { buttonVariants } from "@/app/components/ui/button"
 
-export type CalendarProps = React.ComponentProps<typeof DayPicker>;
+export type CalendarProps = React.ComponentProps<typeof DayPicker>
 
 function Calendar({
   className,
   classNames,
   showOutsideDays = true,
-  formatters,
   ...props
 }: CalendarProps) {
-  // 요일 헤더를 일요일부터 시작하도록 커스터마이징
-  const customFormatters: Partial<Formatters> = {
-    formatWeekdayName: (weekday: Date, options?: any, dateLib?: any) => {
-      const weekdays = ['일', '월', '화', '수', '목', '금', '토'];
-      const dayIndex = weekday.getDay(); // 0=일요일, 1=월요일, ..., 6=토요일
-      return weekdays[dayIndex];
-    },
-    ...(formatters || {}),
-  };
-
-  // 모든 요일을 표시하는 Weekdays 컴포넌트
-  const CustomWeekdays = React.useMemo(() => {
-    return (props: React.HTMLAttributes<HTMLTableRowElement>) => {
-      return (
-        <thead aria-hidden="true">
-          <tr {...props} className="flex w-full">
-            {/* 일요일 표시 - 더 흐리게 */}
-            <th className="text-red-300 opacity-60 rounded-md font-normal text-[0.8rem] w-9 text-center p-0">일</th>
-            {/* 월요일 표시 */}
-            <th className="text-muted-foreground rounded-md font-normal text-[0.8rem] w-9 text-center p-0">월</th>
-            {/* 화요일 표시 */}
-            <th className="text-muted-foreground rounded-md font-normal text-[0.8rem] w-9 text-center p-0">화</th>
-            {/* 수요일 표시 - 한 포인트 키우고 굵은 검정 */}
-            <th className="text-black rounded-md font-bold text-[0.9rem] w-9 text-center p-0">수</th>
-            {/* 목요일 표시 */}
-            <th className="text-muted-foreground rounded-md font-normal text-[0.8rem] w-9 text-center p-0">목</th>
-            {/* 금요일 표시 */}
-            <th className="text-muted-foreground rounded-md font-normal text-[0.8rem] w-9 text-center p-0">금</th>
-            {/* 토요일 표시 - 더 흐리게 */}
-            <th className="text-blue-300 opacity-60 rounded-md font-normal text-[0.8rem] w-9 text-center p-0">토</th>
-          </tr>
-        </thead>
-      );
-    };
-  }, []);
-
   return (
     <DayPicker
       showOutsideDays={showOutsideDays}
       className={cn("p-3", className)}
       classNames={{
-        months:
-          "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
+        months: "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
         month: "space-y-4",
         caption: "flex justify-center pt-1 relative items-center",
         caption_label: "text-sm font-medium",
@@ -68,18 +30,14 @@ function Calendar({
         nav_button_previous: "absolute left-1",
         nav_button_next: "absolute right-1",
         table: "w-full border-collapse space-y-1",
-        head_row: "flex w-full",
+        head_row: "flex",
         head_cell:
-          "text-muted-foreground rounded-md font-normal text-[0.8rem] w-9 text-center p-0",
+          "text-muted-foreground rounded-md w-9 font-normal text-[0.8rem]",
         row: "flex w-full mt-2",
         cell: "h-9 w-9 text-center text-sm p-0 relative [&:has([aria-selected].day-range-end)]:rounded-r-md [&:has([aria-selected].day-outside)]:bg-accent/50 [&:has([aria-selected])]:bg-accent first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
         day: cn(
           buttonVariants({ variant: "ghost" }),
-          "h-9 w-9 p-0 font-normal aria-selected:opacity-100",
-          // 일요일: 더 흐리게, 토요일: 더 흐리게
-          "[&:nth-child(1)]:text-red-300 [&:nth-child(1)]:opacity-60 [&:nth-child(7)]:text-blue-300 [&:nth-child(7)]:opacity-60",
-          // 수요일: 한 포인트 키우고 굵은 검정
-          "[&:nth-child(4)]:text-black [&:nth-child(4)]:font-bold [&:nth-child(4)]:text-[0.95rem]"
+          "h-9 w-9 p-0 font-normal aria-selected:opacity-100"
         ),
         day_range_end: "day-range-end",
         day_selected:
@@ -100,14 +58,12 @@ function Calendar({
           }
           return <ChevronRight className="h-4 w-4" />;
         },
-        Weekdays: CustomWeekdays as any,
-      } as any}
-      formatters={customFormatters as Formatters}
+      }}
       {...props}
     />
-  );
+  )
 }
-Calendar.displayName = "Calendar";
+Calendar.displayName = "Calendar"
 
-export { Calendar };
+export { Calendar }
 
