@@ -193,7 +193,7 @@ export default function CalendarModal({ open, onOpenChange, events }: CalendarMo
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-full md:max-w-6xl max-h-[90vh] p-0 relative [&>button]:hidden flex flex-col !top-[5%] !translate-y-0">
+      <DialogContent className="max-w-full md:max-w-6xl max-h-[90vh] p-0 relative [&>button]:hidden flex flex-col bg-background" style={{ top: '10vh', transform: 'translate(-50%, 0)' }}>
         {/* sticky 헤더 영역 - 스크롤 시에도 상단에 고정 */}
         <div className="sticky top-0 z-50 bg-background border-b px-6 py-4 flex items-center justify-between flex-shrink-0">
           <DialogHeader className="flex-1 m-0">
