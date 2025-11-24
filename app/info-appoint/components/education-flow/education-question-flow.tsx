@@ -709,7 +709,7 @@ export default function EducationQuestionFlow() {
                   </div>
                   <div className="relative w-full bg-gray-100 rounded-lg overflow-hidden border-2 border-gray-300">
                     <img
-                      src="/info-appoint/IMG/0-신규.경력등록교육.png"
+                      src={getImagePath("0-신규.경력등록교육.png")}
                       alt="등록교육 선택"
                       className="w-full h-auto object-contain"
                     />
@@ -944,7 +944,7 @@ export default function EducationQuestionFlow() {
                   </div>
                   <div className="relative w-full bg-gray-100 rounded-lg overflow-hidden border-2 border-gray-300">
                     <img
-                      src="/info-appoint/IMG/0-신규.경력등록교육.png"
+                      src={getImagePath("0-신규.경력등록교육.png")}
                       alt="등록교육 선택"
                       className="w-full h-auto object-contain"
                     />
