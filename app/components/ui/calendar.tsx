@@ -30,8 +30,8 @@ function Calendar({
       return (
         <thead aria-hidden="true">
           <tr {...props} className="flex w-full">
-            {/* 일요일 표시 - 여린 레드 */}
-            <th className="text-red-400 rounded-md font-normal text-[0.8rem] w-9 text-center p-0">일</th>
+            {/* 일요일 표시 - 더 흐리게 */}
+            <th className="text-red-300 opacity-60 rounded-md font-normal text-[0.8rem] w-9 text-center p-0">일</th>
             {/* 월요일 표시 */}
             <th className="text-muted-foreground rounded-md font-normal text-[0.8rem] w-9 text-center p-0">월</th>
             {/* 화요일 표시 */}
@@ -42,8 +42,8 @@ function Calendar({
             <th className="text-muted-foreground rounded-md font-normal text-[0.8rem] w-9 text-center p-0">목</th>
             {/* 금요일 표시 */}
             <th className="text-muted-foreground rounded-md font-normal text-[0.8rem] w-9 text-center p-0">금</th>
-            {/* 토요일 표시 - 여린 파랑 */}
-            <th className="text-blue-400 rounded-md font-normal text-[0.8rem] w-9 text-center p-0">토</th>
+            {/* 토요일 표시 - 더 흐리게 */}
+            <th className="text-blue-300 opacity-60 rounded-md font-normal text-[0.8rem] w-9 text-center p-0">토</th>
           </tr>
         </thead>
       );
@@ -58,15 +58,15 @@ function Calendar({
         months:
           "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
         month: "space-y-4",
-        caption: "flex justify-center pt-1 relative items-center",
-        caption_label: "text-sm font-medium",
+        caption: "flex justify-center pt-1 relative items-center mb-1",
+        caption_label: "text-sm font-medium text-center",
         nav: "space-x-1 flex items-center",
         nav_button: cn(
           buttonVariants({ variant: "outline" }),
-          "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100"
+          "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100 absolute"
         ),
-        nav_button_previous: "absolute left-1",
-        nav_button_next: "absolute right-1",
+        nav_button_previous: "left-0",
+        nav_button_next: "right-0",
         table: "w-full border-collapse space-y-1",
         head_row: "flex w-full",
         head_cell:
@@ -76,8 +76,8 @@ function Calendar({
         day: cn(
           buttonVariants({ variant: "ghost" }),
           "h-9 w-9 p-0 font-normal aria-selected:opacity-100",
-          // 일요일: 여린 레드, 토요일: 여린 파랑
-          "[&:nth-child(1)]:text-red-400 [&:nth-child(7)]:text-blue-400",
+          // 일요일: 더 흐리게, 토요일: 더 흐리게
+          "[&:nth-child(1)]:text-red-300 [&:nth-child(1)]:opacity-60 [&:nth-child(7)]:text-blue-300 [&:nth-child(7)]:opacity-60",
           // 수요일: 한 포인트 키우고 굵은 검정
           "[&:nth-child(4)]:text-black [&:nth-child(4)]:font-bold [&:nth-child(4)]:text-[0.95rem]"
         ),

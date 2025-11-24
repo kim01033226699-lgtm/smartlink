@@ -188,7 +188,7 @@ export default function InfoAppointPage() {
 
           <Card>
             <CardHeader>
-              <CardTitle>위촉일정 조회</CardTitle>
+              <CardTitle className="text-orange-600">위촉일정 조회</CardTitle>
               <CardDescription>
                 위촉지원시스템 서류작성 완료는 매주 수요일 마감입니다. 서류작성 완료일을 선택해 주세요
               </CardDescription>
@@ -214,7 +214,7 @@ export default function InfoAppointPage() {
                       )}
                     </Button>
                   </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0" align="start">
+                  <PopoverContent className="w-auto p-0" align="start" side="top" sideOffset={8}>
                     <Calendar
                       mode="single"
                       selected={selectedDate}
