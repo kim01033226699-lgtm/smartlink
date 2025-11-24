@@ -6,6 +6,12 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app
 import { CheckCircle2, ExternalLink, X } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/app/components/ui/dialog";
 
+// 이미지 경로 헬퍼 함수
+const getImagePath = (imageName: string) => {
+  const basePath = process.env.NODE_ENV === 'production' ? '/smartlink' : '';
+  return `${basePath}/info-appoint/IMG/${imageName}`;
+};
+
 interface Question {
   id: string;
   text: string;
@@ -233,7 +239,7 @@ export default function EducationQuestionFlow() {
                     </div>
                     <div className="relative w-full bg-gray-100 rounded-lg overflow-hidden border-2 border-gray-300">
                       <img
-                        src="/info-appoint/IMG/0-신규.경력등록교육.png"
+                        src={getImagePath("0-신규.경력등록교육.png")}
                         alt="등록교육 선택"
                         className="w-full h-auto object-contain"
                       />
@@ -250,7 +256,7 @@ export default function EducationQuestionFlow() {
                     </div>
                     <div className="relative w-full bg-gray-100 rounded-lg overflow-hidden border-2 border-gray-300">
                       <img
-                        src="/info-appoint/IMG/1-1신규등록교육.png"
+                        src={getImagePath("1-1신규등록교육.png")}
                         alt="신규등록교육 대상자 확인"
                         className="w-full h-auto object-contain"
                       />
@@ -267,7 +273,7 @@ export default function EducationQuestionFlow() {
                     </div>
                     <div className="relative w-full bg-gray-100 rounded-lg overflow-hidden border-2 border-gray-300">
                       <img
-                        src="/info-appoint/IMG/1-2신규등록교육-3.png"
+                        src={getImagePath("1-2신규등록교육-3.png")}
                         alt="신규등록교육 과정 선택"
                         className="w-full h-auto object-contain"
                       />
@@ -720,7 +726,7 @@ export default function EducationQuestionFlow() {
                   </div>
                   <div className="relative w-full bg-gray-100 rounded-lg overflow-hidden border-2 border-gray-300">
                     <img
-                      src="/info-appoint/IMG/2-1경력등록교육.png"
+                      src={getImagePath("2-1경력등록교육.png")}
                       alt="경력등록교육 대상자 확인"
                       className="w-full h-auto object-contain"
                     />
@@ -737,7 +743,7 @@ export default function EducationQuestionFlow() {
                   </div>
                   <div className="relative w-full bg-gray-100 rounded-lg overflow-hidden border-2 border-gray-300">
                     <img
-                      src="/info-appoint/IMG/2-2경력등록교육.png"
+                      src={getImagePath("2-2경력등록교육.png")}
                       alt="경력등록교육 과정 선택"
                       className="w-full h-auto object-contain"
                     />
@@ -955,7 +961,7 @@ export default function EducationQuestionFlow() {
                   </div>
                   <div className="relative w-full bg-gray-100 rounded-lg overflow-hidden border-2 border-gray-300">
                     <img
-                      src="/info-appoint/IMG/2-1경력등록교육.png"
+                      src={getImagePath("2-1경력등록교육.png")}
                       alt="경력등록교육 대상자 확인"
                       className="w-full h-auto object-contain"
                     />
@@ -972,7 +978,7 @@ export default function EducationQuestionFlow() {
                   </div>
                   <div className="relative w-full bg-gray-100 rounded-lg overflow-hidden border-2 border-gray-300">
                     <img
-                      src="/info-appoint/IMG/2-2경력등록교육.png"
+                      src={getImagePath("2-2경력등록교육.png")}
                       alt="경력등록교육 과정 선택"
                       className="w-full h-auto object-contain"
                     />
