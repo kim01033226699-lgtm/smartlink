@@ -11,7 +11,8 @@
     "start": "next start",
     "lint": "next lint",
     "sync": "node sync-to-appoint.js",
-    "update-data": "node update-data.js"
+    "update-data": "node update-data.js",
+    "fetch-data": "node scripts/fetch-sheets-data.js"
   },
   "private": true,
   "keywords": [],
