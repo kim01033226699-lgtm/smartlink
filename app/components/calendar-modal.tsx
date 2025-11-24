@@ -193,9 +193,9 @@ export default function CalendarModal({ open, onOpenChange, events }: CalendarMo
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-full md:max-w-6xl max-h-[90vh] p-0 relative [&>button]:hidden flex flex-col bg-background" style={{ top: '10vh', transform: 'translate(-50%, 0)' }}>
+      <DialogContent className="max-w-full md:max-w-6xl max-h-[90vh] p-0 [&>button]:hidden flex flex-col bg-white">
         {/* sticky 헤더 영역 - 스크롤 시에도 상단에 고정 */}
-        <div className="sticky top-0 z-50 bg-background border-b px-6 py-4 flex items-center justify-between flex-shrink-0">
+        <div className="sticky top-0 z-50 bg-white border-b px-6 py-4 flex items-center justify-between flex-shrink-0">
           <DialogHeader className="flex-1 m-0">
             <DialogTitle>전체 일정 캘린더</DialogTitle>
             <DialogDescription className="sr-only">
@@ -213,7 +213,7 @@ export default function CalendarModal({ open, onOpenChange, events }: CalendarMo
         </div>
         
         {/* 스크롤 가능한 콘텐츠 영역 */}
-        <div className="overflow-y-auto flex-1 px-6 pb-6">
+        <div className="overflow-y-auto flex-1 px-6 pb-6 bg-white">
 
         <div className="hidden md:block">
           <div className="flex items-center justify-between mb-4">
