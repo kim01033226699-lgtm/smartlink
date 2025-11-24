@@ -23,15 +23,10 @@ export default function NavigationHeader() {
   };
 
   const isActive = (path: string) => {
-    // 경로 정규화 (trailing slash 제거)
-    const normalizedPathname = pathname?.replace(/\/$/, '') || '';
-    const normalizedPath = path.replace(/\/$/, '');
-    
-    if (normalizedPath === "/info-appoint") {
-      // 위촉차수조회: 정확히 일치하거나 하위 경로가 없는 경우만 활성화
-      return normalizedPathname === "/info-appoint" || normalizedPathname === "";
+    if (path === "/info-appoint") {
+      return pathname === "/info-appoint";
     }
-    return normalizedPathname?.startsWith(normalizedPath);
+    return pathname?.startsWith(path);
   };
 
   return (

@@ -344,9 +344,6 @@ function parseAdminSettings(rows: string[][]) {
   return settings;
 }
 
-// 정적 내보내기에서는 API Route를 사용할 수 없으므로 빌드 시 제외
-export const dynamic = 'force-dynamic';
-
 export async function GET() {
   try {
     console.log('🔄 Fetching data from Google Sheets...');

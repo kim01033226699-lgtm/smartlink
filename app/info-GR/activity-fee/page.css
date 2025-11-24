@@ -325,33 +325,22 @@
 }
 
 .notice-title {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-weight: 700;
-  color: var(--primary-color);
-  margin: 0 0 1rem 0;
+  color: var(--text-color);
+  margin: 0;
   text-align: left;
 }
 
 .notice-content {
-  font-size: 1rem;
+  font-size: 1.2rem;
   color: var(--text-color);
   line-height: 1.8;
   text-align: left;
 }
 
 .notice-content p {
-  margin: 0.75rem 0;
-  padding-left: 1.5rem;
-  position: relative;
-}
-
-.notice-content p::before {
-  content: '•';
-  position: absolute;
-  left: 0;
-  color: var(--primary-color);
-  font-weight: 700;
-  font-size: 1.2rem;
+  margin: 0.5rem 0;
 }
 
 .notice-subtitle {

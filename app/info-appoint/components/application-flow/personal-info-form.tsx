@@ -6,10 +6,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app
 import { Popover, PopoverContent, PopoverTrigger } from "@/app/components/ui/popover";
 import { Calendar } from "@/app/components/ui/calendar";
 import { ArrowLeft, CalendarIcon } from "lucide-react";
-import { format, isWednesday } from "date-fns";
+import { format } from "date-fns";
 import { ko } from "date-fns/locale";
 import { cn } from "@/lib/utils";
-import { fetchSheetsDataClient } from "@/lib/fetch-sheets-client";
 
 interface PersonalInfo {
   company: string;
@@ -51,28 +50,16 @@ export default function PersonalInfoForm({ onComplete, onBack, selectedResults }
   const [selectedDate, setSelectedDate] = useState<Date>();
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
 
-  const disableNonWednesdays = (date: Date) => !isWednesday(date);
-
   useEffect(() => {
     // 구글시트에서 가져온 수신처 데이터 로드
     const loadRecipients = async () => {
       try {
-        // 개발 환경에서는 API Route 사용, 프로덕션에서는 클라이언트에서 구글시트 직접 호출
-        const isDev = process.env.NODE_ENV === 'development';
-        
-        let data: any;
-        
-        if (isDev) {
-          // 개발환경: API Route 사용
-          const response = await fetch('/api/sheets');
-          if (!response.ok) throw new Error("데이터 로딩 실패");
-          data = await response.json();
-        } else {
-          // 프로덕션: 클라이언트에서 구글시트 직접 호출
-          data = await fetchSheetsDataClient();
+        const basePath = process.env.__NEXT_ROUTER_BASEPATH || '';
+        const response = await fetch(`${basePath}/data.json`);
+        if (response.ok) {
+          const data = await response.json();
+          setRecipients(data.recipients || []);
         }
-        
-        setRecipients(data.recipients || []);
       } catch (error) {
         console.error('수신처 데이터 로딩 실패:', error);
       } finally {
@@ -404,16 +391,9 @@ export default function PersonalInfoForm({ onComplete, onBack, selectedResults }
                     }
                     setIsCalendarOpen(false);
                   }}
-                  disabled={disableNonWednesdays}
                   initialFocus
                   locale={ko}
                   weekStartsOn={0}
-                  modifiers={{
-                    wednesday: (date) => isWednesday(date),
-                  }}
-                  modifiersClassNames={{
-                    wednesday: "text-red-600 font-bold",
-                  }}
                 />
               </PopoverContent>
             </Popover>

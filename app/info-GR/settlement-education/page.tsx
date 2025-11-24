@@ -296,14 +296,20 @@ export default function SettlementEducationPage() {
                       {/* Notice Section */}
                       <div className="notice-section" style={{ marginTop: '2rem' }}>
                         <ul className="notice-list">
-                          <li>중간목표 달성에 따라 지원금 지급 및 환수가 발생할 수 있습니다.</li>
+                          <li>
+                            <span className="notice-icon">ℹ️</span>
+                            <span>중간목표 달성에 따라 지원금 지급 및 환수가 발생할 수 있습니다.</span>
+                          </li>
                           <li className="sub-item">
                             <span>* A-Type : 1차 '중간목표' 달성 시 2회차 지급</span>
                           </li>
                           <li className="sub-item">
                             <span>* B-Type : 1차 '중간목표' 미달성 시 선지급 정착교육비 일부 환수 발생</span>
                           </li>
-                          <li>목표 달성 후 유지율 평가에 따라 환수가 발생할 수 있습니다</li>
+                          <li>
+                            <span className="notice-icon">ℹ️</span>
+                            <span>목표 달성 후 유지율 평가에 따라 환수가 발생할 수 있습니다</span>
+                          </li>
                         </ul>
                       </div>
 

@@ -68,10 +68,13 @@ export default function ApplicationFlowPage() {
 
       <div className="px-4 py-8">
         <div className="mx-auto max-w-3xl">
-          <div className="mb-6">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">협회말소 안내</h1>
-            <p className="text-gray-600">현재상황에 따라 협회말소 방법을 안내해 드립니다.</p>
-          </div>
+          <h1 className="mb-6 text-3xl font-bold text-gray-900 md:text-4xl">협회 말소처리 안내</h1>
+
+          {currentStep === "questions" && (
+            <div className="mb-8 text-center">
+              <p className="text-gray-600">본인의 상황을 알려주세요</p>
+            </div>
+          )}
 
           {currentStep === "questions" && <QuestionFlow onComplete={handleQuestionsComplete} />}
 
@@ -103,9 +106,9 @@ export default function ApplicationFlowPage() {
                   className="cursor-pointer border-2 border-gray-300 transition-all duration-150 hover:border-gray-400 hover:shadow-lg active:scale-95"
                   onClick={handleGoBack}
                 >
-                  <CardContent className="pb-4 pt-4">
+                  <CardContent className="pb-6 pt-6">
                     <div className="text-center">
-                      <h3 className="text-[0.7em] font-semibold text-gray-900">이전으로</h3>
+                      <h3 className="text-lg font-semibold text-gray-900">이전으로</h3>
                     </div>
                   </CardContent>
                 </Card>
@@ -114,9 +117,9 @@ export default function ApplicationFlowPage() {
                   className="cursor-pointer border-2 border-goodrich-yellow-light bg-orange-50 transition-all duration-150 hover:bg-orange-100 hover:shadow-lg active:scale-95"
                   onClick={handleStartWriting}
                 >
-                  <CardContent className="pb-4 pt-4">
+                  <CardContent className="pb-6 pt-6">
                     <div className="text-center">
-                      <h3 className="text-[0.7em] font-semibold text-goodrich-gray">
+                      <h3 className="text-lg font-semibold text-goodrich-gray">
                         내용증명 작성을 도와드릴까요?
                       </h3>
                     </div>

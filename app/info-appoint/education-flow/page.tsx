@@ -11,10 +11,6 @@ export default function EducationFlowPage() {
 
       <div className="py-8 px-4">
         <div className="mx-auto max-w-3xl">
-          <div className="mb-6">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">등록교육 안내</h1>
-            <p className="text-gray-600">협회등록을 위한 교육과정 안내입니다.</p>
-          </div>
           <EducationQuestionFlow />
         </div>
       </div>

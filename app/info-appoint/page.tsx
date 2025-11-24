@@ -23,7 +23,6 @@ import { Calendar } from "@/app/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/app/components/ui/popover";
 import type { SheetData } from "@/lib/types";
 import { cn } from "@/lib/utils";
-import { fetchSheetsDataClient } from "@/lib/fetch-sheets-client";
 
 export default function InfoAppointPage() {
   const router = useRouter();
@@ -39,23 +38,10 @@ export default function InfoAppointPage() {
   useEffect(() => {
     const loadData = async () => {
       try {
-        // 개발 환경에서는 API Route 사용, 프로덕션에서는 클라이언트에서 구글시트 직접 호출
-        const isDev = process.env.NODE_ENV === 'development';
-        
-        let json: SheetData;
-        
-        if (isDev) {
-          // 개발환경: API Route 사용
-          console.log(`🔄 데이터 로딩 중... (API Route)`);
-          const response = await fetch('/api/sheets');
-          if (!response.ok) throw new Error("데이터 로딩 실패");
-          json = (await response.json()) as SheetData;
-        } else {
-          // 프로덕션: 클라이언트에서 구글시트 직접 호출
-          console.log(`🔄 데이터 로딩 중... (구글시트 직접 호출)`);
-          json = await fetchSheetsDataClient() as SheetData;
-        }
-        
+        console.log('🔄 Google Sheets에서 실시간 데이터 로딩 중...');
+        const response = await fetch('/api/sheets');
+        if (!response.ok) throw new Error("데이터 로딩 실패");
+        const json = (await response.json()) as SheetData;
         console.log('✅ 데이터 로딩 완료:', json.schedules.length, '개 차수');
         setData(json);
       } catch (error) {
@@ -197,7 +183,7 @@ export default function InfoAppointPage() {
 
           <Card>
             <CardHeader>
-              <CardTitle className="text-orange-600">위촉일정 조회</CardTitle>
+              <CardTitle>위촉일정 조회</CardTitle>
               <CardDescription>
                 위촉지원시스템 서류작성 완료는 매주 수요일 마감입니다. 서류작성 완료일을 선택해 주세요
               </CardDescription>
@@ -223,7 +209,7 @@ export default function InfoAppointPage() {
                       )}
                     </Button>
                   </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0" align="start" side="top" sideOffset={8}>
+                  <PopoverContent className="w-auto p-0" align="start">
                     <Calendar
                       mode="single"
                       selected={selectedDate}
@@ -234,7 +220,6 @@ export default function InfoAppointPage() {
                       disabled={disableNonWednesdays}
                       initialFocus
                       locale={ko}
-                      weekStartsOn={0}
                       modifiers={{
                         wednesday: (date) => isWednesday(date),
                       }}

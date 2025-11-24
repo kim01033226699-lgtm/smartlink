@@ -6,7 +6,6 @@ import { ArrowLeft, Download, Star } from "lucide-react";
 import { Button } from "@/app/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/app/components/ui/card";
 import type { RecruitmentSchedule, SheetData } from "@/app/info-appoint/types";
-import { fetchSheetsDataClient } from "@/lib/fetch-sheets-client";
 
 interface ResultPageProps {
   selectedDate: string;
@@ -18,33 +17,9 @@ export default function ResultPage({ selectedDate }: ResultPageProps) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // 개발 환경에서는 API Route 사용, 프로덕션에서는 클라이언트에서 구글시트 직접 호출
-    const loadData = async () => {
-      try {
-        const isDev = process.env.NODE_ENV === 'development';
-        
-        let data: SheetData;
-        
-        if (isDev) {
-          // 개발환경: API Route 사용
-          console.log(`🔄 데이터 로딩 중... (API Route)`);
-          const response = await fetch('/api/sheets');
-          if (!response.ok) throw new Error("데이터 로딩 실패");
-          data = await response.json();
-        } else {
-          // 프로덕션: 클라이언트에서 구글시트 직접 호출
-          console.log(`🔄 데이터 로딩 중... (구글시트 직접 호출)`);
-          data = await fetchSheetsDataClient() as SheetData;
-        }
-        
-        return data;
-      } catch (error) {
-        console.error('데이터 로드 실패:', error);
-        throw error;
-      }
-    };
-
-    loadData()
+    console.log('🔄 Google Sheets에서 실시간 데이터 로딩 중...');
+    fetch('/api/sheets')
+      .then(res => res.json())
       .then((data: SheetData) => {
         if (!data.schedules || data.schedules.length === 0) {
           setLoading(false);
