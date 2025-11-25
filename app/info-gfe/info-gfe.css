@@ -171,12 +171,13 @@
     }
 
     /* ==================== Detail Card ==================== */
-    .detail-card {
+    /* 금융캠퍼스 페이지에만 적용되도록 스코프 제한 (.page.active는 금융캠퍼스 페이지에서만 사용) */
+    .page.active .detail-card {
       display: none;
       margin-top: 1.5rem;
     }
 
-    .detail-card.active {
+    .page.active .detail-card.active {
       display: block;
     }
 
