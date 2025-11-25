@@ -1,4 +1,4 @@
-import type { NextConfig } from "next";
+﻿import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   ...(process.env.NODE_ENV === 'production' && { output: 'export' }),
@@ -7,7 +7,7 @@ const nextConfig: NextConfig = {
   },
   basePath: process.env.NODE_ENV === 'production' ? '/smartlink' : '',
   assetPrefix: process.env.NODE_ENV === 'production' ? '/smartlink/' : '',
-  trailingSlash: true, // Fix GitHub Pages routing
+  trailingSlash: true,
 };
 
 export default nextConfig;

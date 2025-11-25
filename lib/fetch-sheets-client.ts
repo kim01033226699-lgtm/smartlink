@@ -1,4 +1,7 @@
-import { NextResponse } from 'next/server';
+/**
+ * 클라이언트에서 Google Sheets를 직접 가져오는 함수
+ * GitHub Pages 같은 정적 호스팅에서도 작동합니다.
+ */
 
 const SPREADSHEET_ID = '1y3-9-GswYKhSYGKHo_3yMGZvO3EHO2bzfJKkG2MNedQ';
 
@@ -344,9 +347,20 @@ function parseAdminSettings(rows: string[][]) {
   return settings;
 }
 
-export async function GET() {
+export interface SheetData {
+  requiredDocuments: string;
+  checklist: { id: string; text: string }[];
+  schedules: any[];
+  calendarEvents: any[];
+}
+
+/**
+ * 클라이언트에서 Google Sheets를 직접 가져와서 파싱하는 함수
+ * GitHub Pages 같은 정적 호스팅에서도 작동합니다.
+ */
+export async function fetchSheetsDataClient(): Promise<SheetData> {
   try {
-    console.log('🔄 Fetching data from Google Sheets...');
+    console.log('🔄 Google Sheets에서 데이터 가져오는 중...');
 
     // Fetch all sheets
     const [inputCSV, memoCSV, adminCSV] = await Promise.all([
@@ -365,26 +379,19 @@ export async function GET() {
     const schedules = parseSchedules(inputRows, memoMap);
     const calendarEvents = parseCalendarEvents(inputRows);
 
-    const data = {
+    const data: SheetData = {
       requiredDocuments: adminSettings.guidance,
       checklist: adminSettings.checklist,
       schedules: schedules,
       calendarEvents: calendarEvents,
     };
 
-    console.log(`✅ Data fetched: ${schedules.length} schedules, ${calendarEvents.length} events`);
+    console.log(`✅ 데이터 가져오기 완료: ${schedules.length}개 차수, ${calendarEvents.length}개 이벤트`);
 
-    return NextResponse.json(data, {
-      headers: {
-        'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=600',
-      },
-    });
+    return data;
 
   } catch (error) {
-    console.error('❌ Error fetching sheets:', error);
-    return NextResponse.json(
-      { error: 'Failed to fetch data from Google Sheets' },
-      { status: 500 }
-    );
+    console.error('❌ Google Sheets 데이터 가져오기 실패:', error);
+    throw error;
   }
 }

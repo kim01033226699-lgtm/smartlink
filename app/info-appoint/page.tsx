@@ -23,6 +23,7 @@ import { Calendar } from "@/app/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/app/components/ui/popover";
 import type { SheetData } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import { fetchSheetsDataClient } from "@/lib/fetch-sheets-client";
 
 export default function InfoAppointPage() {
   const router = useRouter();
@@ -39,9 +40,8 @@ export default function InfoAppointPage() {
     const loadData = async () => {
       try {
         console.log('🔄 Google Sheets에서 실시간 데이터 로딩 중...');
-        const response = await fetch('/api/sheets');
-        if (!response.ok) throw new Error("데이터 로딩 실패");
-        const json = (await response.json()) as SheetData;
+        // 클라이언트에서 직접 Google Sheets 가져오기 (GitHub Pages 호환)
+        const json = await fetchSheetsDataClient();
         console.log('✅ 데이터 로딩 완료:', json.schedules.length, '개 차수');
         setData(json);
       } catch (error) {

@@ -6,6 +6,7 @@ import { ArrowLeft, Download, Star } from "lucide-react";
 import { Button } from "@/app/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/app/components/ui/card";
 import type { RecruitmentSchedule, SheetData } from "@/app/info-appoint/types";
+import { fetchSheetsDataClient } from "@/lib/fetch-sheets-client";
 
 interface ResultPageProps {
   selectedDate: string;
@@ -17,10 +18,11 @@ export default function ResultPage({ selectedDate }: ResultPageProps) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    console.log('🔄 Google Sheets에서 실시간 데이터 로딩 중...');
-    fetch('/api/sheets')
-      .then(res => res.json())
-      .then((data: SheetData) => {
+    const loadData = async () => {
+      try {
+        console.log('🔄 Google Sheets에서 실시간 데이터 로딩 중...');
+        // 클라이언트에서 직접 Google Sheets 가져오기 (GitHub Pages 호환)
+        const data = await fetchSheetsDataClient();
         if (!data.schedules || data.schedules.length === 0) {
           setLoading(false);
           return;
@@ -78,11 +80,13 @@ export default function ResultPage({ selectedDate }: ResultPageProps) {
 
         setSchedule(foundSchedule);
         setLoading(false);
-      })
-      .catch(err => {
+      } catch (err) {
         console.error('데이터 로드 실패:', err);
         setLoading(false);
-      });
+      }
+    };
+
+    loadData();
   }, [selectedDate]);
 
   const handlePdfDownload = async () => {
