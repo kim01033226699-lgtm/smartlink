@@ -177,7 +177,7 @@ export default function SettlementEducationPage() {
         <header className="header">
           <div className="container">
             <h1 className="title">정착교육비</h1>
-            <p className="subtitle">이해를 돕기 위한 요약으로, 정확한 내용은 관련 규정을 확인해 주세요.</p>
+            <p className="subtitle">편의를 위한 참고용으로 정확한 내용은 규정을 준수합니다.</p>
             <div className="header-links">
               <button onClick={() => router.push('/info-GR/')} className="home-link">
                 홈

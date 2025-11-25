@@ -224,7 +224,7 @@ export default function InfoAppointPage() {
                         wednesday: (date) => isWednesday(date),
                       }}
                       modifiersClassNames={{
-                        wednesday: "text-red-600 font-bold",
+                        wednesday: "text-red-600 font-extrabold",
                       }}
                     />
                   </PopoverContent>

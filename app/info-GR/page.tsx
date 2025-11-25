@@ -42,7 +42,7 @@ export default function InfoGRPage() {
         <header className="menu-header">
           <div className="container">
             <h1 className="menu-title">굿리치 지원금</h1>
-            <p className="menu-subtitle">이해를 돕기 위한 요약으로, 정확한 내용은 관련 규정을 확인해 주세요</p>
+            <p className="menu-subtitle">편의를 위한 참고용으로 정확한 내용은 규정을 준수합니다.</p>
           </div>
         </header>
 

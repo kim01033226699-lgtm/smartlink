@@ -72,9 +72,13 @@ body {
 }
 
 /* Calendar custom styles */
+.rdp-day.wednesday {
+  font-weight: 900 !important;
+}
+
 .rdp-day_selected.wednesday {
   background-color: #ef4444;
-  font-weight: 700;
+  font-weight: 900;
   color: #fff;
 }
 

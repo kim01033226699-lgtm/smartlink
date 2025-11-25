@@ -37,7 +37,7 @@ function Calendar({
             {/* 화요일 표시 */}
             <th className="text-muted-foreground rounded-md font-normal text-[0.8rem] w-9 text-center p-0">화</th>
             {/* 수요일 표시 */}
-            <th className="text-muted-foreground rounded-md font-bold text-[0.8rem] w-9 text-center p-0">수</th>
+            <th className="text-muted-foreground rounded-md font-extrabold text-[0.8rem] w-9 text-center p-0">수</th>
             {/* 목요일 표시 */}
             <th className="text-muted-foreground rounded-md font-normal text-[0.8rem] w-9 text-center p-0">목</th>
             {/* 금요일 표시 */}

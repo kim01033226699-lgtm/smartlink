@@ -13,7 +13,7 @@ export default function InfoGfePage() {
         <header className="page-header">
           <div className="container">
             <h1 className="page-title">금융캠퍼스</h1>
-            <p className="page-subtitle">이해를 돕기 위한 요약으로, 정확한 내용은 관련 규정을 확인해 주세요.</p>
+            <p className="page-subtitle">편의를 위한 참고용으로 정확한 내용은 규정을 준수합니다.</p>
           </div>
         </header>
 
