@@ -89,7 +89,18 @@ export default function InfoAppointPage() {
     }, 800);
   };
 
-  const disableNonWednesdays = (date: Date) => !isWednesday(date);
+  // "전산승인마감" 일정이 있는 날짜인지 확인
+  const isSubmissionDeadline = (date: Date) => {
+    if (!data) return false;
+    const dateStr = format(date, 'yyyy-MM-dd');
+    return data.calendarEvents?.some(event =>
+      event.date === dateStr &&
+      event.title.includes('전산승인마감')
+    ) || false;
+  };
+
+  // 전산승인마감 날짜가 아닌 날은 비활성화
+  const disableNonSubmissionDates = (date: Date) => !isSubmissionDeadline(date);
 
   if (loading) {
     return (
@@ -185,7 +196,7 @@ export default function InfoAppointPage() {
             <CardHeader>
               <CardTitle>위촉일정 조회</CardTitle>
               <CardDescription>
-                위촉지원시스템 서류작성 완료는 매주 수요일 마감입니다. 서류작성 완료일을 선택해 주세요
+                붉은색으로 표시된 전산승인마감일을 선택해 주세요. 해당 날짜에 맞춰 위촉일정을 확인하실 수 있습니다.
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -217,14 +228,14 @@ export default function InfoAppointPage() {
                         setSelectedDate(date);
                         setIsCalendarOpen(false);
                       }}
-                      disabled={disableNonWednesdays}
+                      disabled={disableNonSubmissionDates}
                       initialFocus
                       locale={ko}
                       modifiers={{
-                        wednesday: (date) => isWednesday(date),
+                        submissionDeadline: (date) => isSubmissionDeadline(date),
                       }}
                       modifiersClassNames={{
-                        wednesday: "text-red-600 font-extrabold",
+                        submissionDeadline: "text-red-600 font-extrabold bg-red-50",
                       }}
                     />
                   </PopoverContent>
