@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import { GoogleAnalytics } from "@/lib/analytics";
 
 export const metadata: Metadata = {
   title: "Smart Link - Start Good, Grow Rich!",
@@ -20,6 +21,7 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body className="antialiased min-h-screen">
+        <GoogleAnalytics />
         {children}
       </body>
     </html>
