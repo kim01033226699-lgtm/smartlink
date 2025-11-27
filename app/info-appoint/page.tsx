@@ -209,7 +209,7 @@ export default function InfoAppointPage() {
                       )}
                     </Button>
                   </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0" align="start">
+                  <PopoverContent className="w-auto p-0" align="start" side="top">
                     <Calendar
                       mode="single"
                       selected={selectedDate}
@@ -231,7 +231,7 @@ export default function InfoAppointPage() {
                 </Popover>
 
                 <Button
-                  className="gap-2 bg-goodrich-yellow-light transition-all duration-150 active:scale-95 hover:opacity-90"
+                  className="gap-2 bg-orange-500 text-white transition-all duration-150 active:scale-95 hover:bg-orange-600"
                   disabled={!allChecked || !selectedDate}
                   onClick={handleSearch}
                   data-tutorial="search-button"

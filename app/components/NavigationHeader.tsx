@@ -24,7 +24,7 @@ export default function NavigationHeader() {
 
   const isActive = (path: string) => {
     if (path === "/info-appoint") {
-      return pathname === "/info-appoint";
+      return pathname === "/info-appoint" || pathname === "/info-appoint/";
     }
     return pathname?.startsWith(path);
   };
