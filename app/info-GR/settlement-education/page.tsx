@@ -130,18 +130,17 @@ export default function SettlementEducationPage() {
     if (period === 12) {
       return [
         { month: 3, amount: Math.floor(finalGoal * 0.25) },
-        { month: 6, amount: Math.floor(finalGoal * 0.50) }
+        { month: 6, amount: Math.floor(finalGoal * 0.35) }
       ];
     } else if (period === 18) {
       return [
-        { month: 6, amount: Math.floor(finalGoal * 0.33) },
-        { month: 12, amount: Math.floor(finalGoal * 0.67) }
+        { month: 6, amount: Math.floor(finalGoal * 0.20) },
+        { month: 12, amount: Math.floor(finalGoal * 0.25) }
       ];
     } else if (period === 24) {
       return [
-        { month: 6, amount: Math.floor(finalGoal * 0.25) },
-        { month: 12, amount: Math.floor(finalGoal * 0.50) },
-        { month: 18, amount: Math.floor(finalGoal * 0.75) }
+        { month: 6, amount: Math.floor(finalGoal * 0.15) },
+        { month: 12, amount: Math.floor(finalGoal * 0.20) }
       ];
     }
     return [];
