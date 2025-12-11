@@ -1,0 +1,145 @@
+'use client';
+import { useRouter } from 'next/navigation';
+import { FileText, Shield, DollarSign, GraduationCap, FileCheck, Laptop, CheckCircle, Users } from 'lucide-react';
+import BottomNavigation from '@/app/components/BottomNavigation';
+import { SupportCard } from '@/app/components/SupportCard';
+import './guidebook.css';
+
+export default function GuidebookPage() {
+  const router = useRouter();
+
+  const categories = [
+    {
+      id: 1,
+      title: '위, 해촉 업무',
+      description: '위촉 및 해촉 프로세스 안내',
+      path: '/guidebook/onboarding',
+      icon: FileText,
+      available: true
+    },
+    {
+      id: 2,
+      title: '보증 업무',
+      description: '보증 관련 업무 안내',
+      path: '/guidebook/commission',
+      icon: Shield,
+      available: false
+    },
+    {
+      id: 3,
+      title: '지원금 업무',
+      description: '각종 지원금 신청 및 계산',
+      path: '/guidebook/support',
+      icon: DollarSign,
+      available: false
+    },
+    {
+      id: 4,
+      title: '교육 업무',
+      description: '교육 관련 업무 안내',
+      path: '/guidebook/education',
+      icon: GraduationCap,
+      available: false
+    },
+    {
+      id: 5,
+      title: '보험계약 업무',
+      description: '보험계약 관련 업무 안내',
+      path: '/guidebook/insurance',
+      icon: FileCheck,
+      available: false
+    },
+    {
+      id: 6,
+      title: 'GP시스템',
+      description: 'GP시스템 사용 가이드',
+      path: '/guidebook/gp',
+      icon: Laptop,
+      available: false
+    },
+    {
+      id: 7,
+      title: '기타 업무',
+      description: '기타 업무 안내',
+      path: '/guidebook/etc',
+      icon: CheckCircle,
+      available: false
+    },
+    {
+      id: 8,
+      title: '',
+      description: '',
+      path: '',
+      icon: FileText,
+      available: false,
+      isEmpty: true
+    }
+  ];
+
+  return (
+    <>
+      <div className="guidebook-page">
+        {/* Header */}
+        <header className="guidebook-header">
+          <div className="container">
+            <div className="guidebook-logo-wrapper">
+              <img src="/GR-img.png" alt="GoodRich" className="guidebook-logo" />
+            </div>
+            <div className="guidebook-badge">업무 가이드</div>
+            <p className="guidebook-subtitle">
+              굿리치 업무 가이드는 편의를 위해 제공된 자료이며,<br />
+              자세한 기준과 절차는 담당자에게 문의해 주시기 바랍니다.
+            </p>
+          </div>
+        </header>
+
+        {/* Main Content */}
+        <main className="guidebook-content">
+          <div className="container">
+            <div className="category-grid">
+              {categories.map(category => {
+                const IconComponent = category.icon;
+
+                // Empty spacer
+                if (category.isEmpty) {
+                  return <div key={category.id} className="empty-spacer"></div>;
+                }
+
+                return category.available ? (
+                  <SupportCard
+                    key={category.id}
+                    title={category.title}
+                    description={category.description}
+                    icon={IconComponent}
+                    onClick={() => router.push(category.path)}
+                  />
+                ) : (
+                  <div
+                    key={category.id}
+                    className="category-box disabled"
+                  >
+                    <div className="category-icon">
+                      <IconComponent size={40} />
+                    </div>
+                    <h3 className="category-title">{category.title}</h3>
+                    <p className="category-desc">{category.description}</p>
+                  </div>
+                );
+              })}
+
+              {/* Special Card - Department Contact */}
+              <div className="department-card">
+                <div className="department-icon">
+                  <Users size={48} />
+                </div>
+                <h3 className="department-title">담당자 연락처</h3>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+
+      <BottomNavigation />
+    </>
+  );
+}

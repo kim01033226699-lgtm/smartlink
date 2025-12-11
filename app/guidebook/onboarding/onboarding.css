@@ -1,0 +1,660 @@
+.onboarding-page {
+  min-height: 100vh;
+  background: #f5f5f5;
+  padding-bottom: 80px;
+  margin: 0;
+}
+
+.onboarding-header {
+  background: linear-gradient(135deg, #0095FF 0%, #0077CC 100%);
+  padding: 1.5rem 0;
+  color: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin: 0;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.back-button {
+  background: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.3s;
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+}
+
+.back-button:hover {
+  opacity: 0.8;
+}
+
+.page-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+  text-align: center;
+}
+
+/* Process Tabs */
+.process-tabs-container {
+  background: white;
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.process-tabs {
+  display: flex;
+  gap: 0.75rem;
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+}
+
+/* Align back button with tabs container */
+@media (min-width: 769px) {
+  .back-button {
+    left: calc((100% - 800px) / 2 + 1rem);
+  }
+}
+
+.process-tab {
+  flex: 1;
+  background: #f5f5f5;
+  border: none;
+  padding: 1rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 12px;
+  position: relative;
+}
+
+.process-tab.experienced {
+  border: 2px solid #0095FF;
+  color: #0095FF;
+}
+
+.process-tab.inexperienced {
+  border: 2px solid #FF6B00;
+  color: #FF6B00;
+}
+
+.process-tab.experienced.active {
+  background: linear-gradient(135deg, #0095FF 0%, #0077CC 100%);
+  color: white;
+  box-shadow: 0 4px 12px rgba(0, 149, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.process-tab.inexperienced.active {
+  background: linear-gradient(135deg, #FF6B00 0%, #E65100 100%);
+  color: white;
+  box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3);
+  transform: translateY(-2px);
+}
+
+.process-tab:hover:not(.active) {
+  background: #e8e8e8;
+  transform: translateY(-1px);
+}
+
+.onboarding-content {
+  padding: 1.5rem 1rem;
+}
+
+.content-section {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.process-detail {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-top: 0;
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.detail-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #0095FF;
+}
+
+.detail-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #0095FF;
+  margin: 0;
+}
+
+.step-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* Vertical Step Styles */
+.step-accordion {
+  position: relative;
+  padding-left: 60px;
+  margin-bottom: 2rem;
+  transition: all 0.3s ease;
+}
+
+.step-accordion:last-child {
+  margin-bottom: 0;
+}
+
+/* Vertical Line Connector */
+.step-accordion::before {
+  content: '';
+  position: absolute;
+  left: 23px;
+  top: 48px;
+  width: 3px;
+  height: calc(100% + 2rem);
+  background: linear-gradient(180deg, #0095FF 0%, #E8E8E8 100%);
+  z-index: 0;
+}
+
+.step-accordion:last-child::before {
+  background: linear-gradient(180deg, #0095FF 0%, #E8E8E8 50%);
+  height: 48px;
+}
+
+.step-accordion-header {
+  width: 100%;
+  background: transparent;
+  border: none;
+  padding: 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  cursor: pointer;
+  text-align: left;
+  position: relative;
+  z-index: 1;
+}
+
+.step-accordion-number {
+  background: white;
+  border: 4px solid #0095FF;
+  color: #0095FF;
+  min-width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+  position: absolute;
+  left: -60px;
+  top: 0;
+  box-shadow: 0 0 0 8px rgba(255, 255, 255, 1);
+  transition: all 0.3s ease;
+}
+
+/* Active/Open state */
+.step-accordion-header:hover .step-accordion-number,
+.step-accordion.active .step-accordion-number {
+  background: linear-gradient(135deg, #0095FF, #0077CC);
+  color: white;
+  transform: scale(1.1);
+  box-shadow: 0 0 0 8px rgba(255, 255, 255, 1), 0 4px 12px rgba(0, 149, 255, 0.3);
+}
+
+.step-accordion-title-wrapper {
+  flex: 1;
+  background: white;
+  border: 2px solid #E8E8E8;
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.step-accordion-header:hover .step-accordion-title-wrapper {
+  border-color: #0095FF;
+  box-shadow: 0 4px 12px rgba(0, 149, 255, 0.15);
+  transform: translateX(4px);
+}
+
+.step-accordion.active .step-accordion-title-wrapper {
+  border-color: #0095FF;
+  background: linear-gradient(135deg, #F0F8FF 0%, #FFFFFF 100%);
+  box-shadow: 0 4px 16px rgba(0, 149, 255, 0.2);
+  border-radius: 12px 12px 0 0;
+  border-bottom: none;
+}
+
+.step-accordion-title {
+  font-weight: 700;
+  color: #333;
+  font-size: 1.05rem;
+  line-height: 1.4;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.step-accordion-icon {
+  flex-shrink: 0;
+  color: #0095FF;
+  margin-left: 0.5rem;
+}
+
+.step-accordion-content {
+  background: #FAFBFC;
+  border: 2px solid #0095FF;
+  border-top: 1px solid #E0E0E0;
+  border-radius: 0 0 12px 12px;
+  padding: 1.5rem;
+  margin-top: 0;
+  margin-left: 0;
+  animation: slideDown 0.3s ease-out;
+  box-shadow: 0 4px 16px rgba(0, 149, 255, 0.1);
+  overflow: hidden;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.step-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* For steps with direct content (no sub-steps) */
+.step-content > .content-text,
+.step-content > .highlight-box,
+.step-content > p {
+  margin: 0;
+}
+
+.step-content > .content-text:not(:last-child),
+.step-content > p:not(:last-child) {
+  margin-bottom: 0.75rem;
+}
+
+/* When step-content has sub-steps, remove padding from step-accordion-content */
+.step-content:has(.sub-step-accordion) {
+  padding: 0;
+}
+
+.step-accordion-content:has(.step-content > .sub-step-accordion) {
+  padding: 0;
+  background: white;
+}
+
+/* Sub Step Accordion Styles - Integrated Design */
+.sub-step-accordion {
+  background: white;
+  border: none;
+  border-bottom: 1px solid #E8E8E8;
+  transition: all 0.3s ease;
+}
+
+.sub-step-accordion:last-child {
+  border-bottom: none;
+}
+
+.sub-step-accordion:hover {
+  background: #FAFBFC;
+}
+
+.sub-step-accordion.active {
+  background: linear-gradient(135deg, #F0F8FF 0%, #FFFFFF 100%);
+}
+
+.sub-step-header {
+  width: 100%;
+  background: transparent;
+  border: none;
+  padding: 1rem 1.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: left;
+}
+
+.sub-step-header:hover {
+  background: rgba(0, 149, 255, 0.03);
+}
+
+.sub-step-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #0095FF;
+  margin: 0;
+}
+
+.sub-step-icon {
+  flex-shrink: 0;
+  color: #0095FF;
+  display: flex;
+  align-items: center;
+  margin-left: 0.5rem;
+  transition: transform 0.2s;
+}
+
+.sub-step-accordion.active .sub-step-icon {
+  transform: rotate(0deg);
+}
+
+.sub-step-content {
+  background: #FAFBFC;
+  padding: 1rem 1.5rem 1.5rem 1.5rem;
+  border-top: 1px solid #E0E0E0;
+  animation: expandDown 0.2s ease-out;
+}
+
+@keyframes expandDown {
+  from {
+    opacity: 0;
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  to {
+    opacity: 1;
+    max-height: 500px;
+    padding-top: 1rem;
+    padding-bottom: 1.5rem;
+  }
+}
+
+.sub-step-content .content-text {
+  margin: 0;
+}
+
+.sub-step-content .course-option {
+  margin-top: 0.75rem;
+}
+
+.sub-step-content .course-option:first-child {
+  margin-top: 0;
+}
+
+.content-text {
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: #333;
+}
+
+.content-text.mb-2 {
+  margin-bottom: 0.5rem;
+}
+
+.content-text.mb-3 {
+  margin-bottom: 1rem;
+}
+
+.content-text.mt-2 {
+  margin-top: 0.5rem;
+}
+
+.content-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.content-list li {
+  padding-left: 1.5rem;
+  position: relative;
+  line-height: 1.6;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.content-list li::before {
+  content: "•";
+  color: #0095FF;
+  font-weight: bold;
+  font-size: 1.2rem;
+  position: absolute;
+  left: 0;
+}
+
+.subsection {
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  border-left: 3px solid #0095FF;
+}
+
+.subsection-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #0095FF;
+  margin: 0 0 0.75rem 0;
+}
+
+.course-option {
+  background: white;
+  padding: 0.875rem;
+  border-radius: 6px;
+  border-left: 3px solid #0095FF;
+  margin-top: 0.5rem;
+}
+
+.course-title {
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.course-detail {
+  color: #666;
+  font-size: 0.85rem;
+  margin: 0.25rem 0;
+  line-height: 1.5;
+}
+
+.notice-box {
+  background: linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%);
+  padding: 0.875rem;
+  border-radius: 8px;
+  border-left: 3px solid #FF6B00;
+  margin-bottom: 1rem;
+}
+
+.notice-box p {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.highlight-box {
+  background: #FFF8E1;
+  padding: 0.875rem;
+  border-radius: 8px;
+  margin: 0.75rem 0;
+  text-align: center;
+}
+
+.highlight-red {
+  color: #FF0000;
+  font-weight: 700;
+}
+
+.highlight-blue {
+  color: #0095FF;
+  font-weight: 700;
+}
+
+.link-text {
+  color: #0095FF;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s;
+}
+
+.link-text:hover {
+  color: #0077CC;
+  text-decoration: underline;
+}
+
+.link-box {
+  margin-top: 2rem;
+  text-align: center;
+  padding-top: 1.5rem;
+  border-top: 2px solid #e8e8e8;
+}
+
+.external-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, #0095FF 0%, #0077CC 100%);
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.05rem;
+  box-shadow: 0 4px 12px rgba(0, 149, 255, 0.3);
+  transition: all 0.3s;
+}
+
+.external-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 149, 255, 0.4);
+}
+
+.empty-state {
+  background: white;
+  border-radius: 12px;
+  padding: 3rem;
+  text-align: center;
+  color: #999;
+}
+
+@media (max-width: 640px) {
+  .process-tabs {
+    gap: 0.5rem;
+  }
+
+  .process-tab {
+    padding: 0.875rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .process-detail {
+    padding: 1.5rem 1rem;
+  }
+
+  .step-accordion {
+    padding-left: 50px;
+  }
+
+  .step-accordion::before {
+    left: 19px;
+  }
+
+  .step-accordion-number {
+    min-width: 40px;
+    height: 40px;
+    font-size: 0.95rem;
+    left: -50px;
+    border-width: 3px;
+    box-shadow: 0 0 0 6px rgba(255, 255, 255, 1);
+  }
+
+  .step-accordion-header:hover .step-accordion-number,
+  .step-accordion.active .step-accordion-number {
+    box-shadow: 0 0 0 6px rgba(255, 255, 255, 1), 0 4px 12px rgba(0, 149, 255, 0.3);
+  }
+
+  .step-accordion-title-wrapper {
+    padding: 0.875rem 1rem;
+  }
+
+  .step-accordion-title {
+    font-size: 0.9rem;
+  }
+
+  .step-accordion-content {
+    padding: 1rem;
+  }
+
+  .step-accordion-content:has(.step-content > .sub-step-accordion) {
+    padding: 0;
+  }
+
+  .step-content > .content-text:not(:last-child),
+  .step-content > p:not(:last-child) {
+    margin-bottom: 0.5rem;
+  }
+
+  .subsection {
+    padding: 0.75rem;
+  }
+
+  .content-text {
+    font-size: 0.85rem;
+  }
+
+  .content-list li {
+    font-size: 0.85rem;
+  }
+
+  .external-link {
+    padding: 0.875rem 1.5rem;
+    font-size: 0.95rem;
+  }
+
+  .sub-step-header {
+    padding: 0.875rem 1rem;
+  }
+
+  .sub-step-title {
+    font-size: 0.85rem;
+  }
+
+  .sub-step-content {
+    padding: 0.875rem 1rem 1rem 1rem;
+  }
+}
