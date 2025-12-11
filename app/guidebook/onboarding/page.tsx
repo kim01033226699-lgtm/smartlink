@@ -33,13 +33,13 @@ export default function OnboardingPage() {
   };
 
   const toggleSubStep = (subStepId: string) => {
-    const newExpandedSubSteps = new Set(expandedSubSteps);
-    if (newExpandedSubSteps.has(subStepId)) {
-      newExpandedSubSteps.delete(subStepId);
+    if (expandedSubSteps.has(subStepId)) {
+      // 이미 열려있으면 닫기
+      setExpandedSubSteps(new Set());
     } else {
-      newExpandedSubSteps.add(subStepId);
+      // 다른 서브스텝은 모두 닫고 현재 서브스텝만 열기
+      setExpandedSubSteps(new Set([subStepId]));
     }
-    setExpandedSubSteps(newExpandedSubSteps);
   };
 
   return (

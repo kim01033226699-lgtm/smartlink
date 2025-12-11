@@ -11,7 +11,7 @@ export default function GuidebookPage() {
   const categories = [
     {
       id: 1,
-      title: '위, 해촉 업무',
+      title: '위•해촉 업무',
       description: '위촉 및 해촉 프로세스 안내',
       path: '/guidebook/onboarding',
       icon: FileText,
@@ -21,9 +21,9 @@ export default function GuidebookPage() {
       id: 2,
       title: '보증 업무',
       description: '보증 관련 업무 안내',
-      path: '/guidebook/commission',
+      path: '/guidebook/onboarding',
       icon: Shield,
-      available: false
+      available: true
     },
     {
       id: 3,
