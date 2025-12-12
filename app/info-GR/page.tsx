@@ -39,6 +39,7 @@ export default function InfoGRPage() {
     <>
       <div className="menu-page">
         {/* Header */}
+        {/* Header */}
         <header className="menu-header">
           <div className="container">
             <h1 className="menu-title">굿리치 지원금</h1>
@@ -65,10 +66,11 @@ export default function InfoGRPage() {
                     key={menu.id}
                     className="menu-box disabled"
                   >
-                    <div className="menu-box-inner">
-                      <h2 className="menu-box-title">{menu.title}</h2>
-                      <p className="menu-box-desc">{menu.description}</p>
+                    <div className="menu-icon">
+                      <IconComponent size={32} />
                     </div>
+                    <h2 className="menu-box-title">{menu.title}</h2>
+                    {/* description hidden in guidebook disabled items usually, but keeping structure similar to category-box */}
                   </div>
                 );
               })}
