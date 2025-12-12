@@ -1,5 +1,6 @@
 'use client';
 import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 import { FileText, Shield, DollarSign, GraduationCap, FileCheck, Laptop, CheckCircle, Users } from 'lucide-react';
 import BottomNavigation from '@/app/components/BottomNavigation';
 import { SupportCard } from '@/app/components/SupportCard';
@@ -7,6 +8,18 @@ import './guidebook.css';
 
 export default function GuidebookPage() {
   const router = useRouter();
+
+  // 스크롤 복원 비활성화 - 뒤로가기 시 레이아웃 깨짐 방지
+  useEffect(() => {
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+    return () => {
+      if ('scrollRestoration' in window.history) {
+        window.history.scrollRestoration = 'auto';
+      }
+    };
+  }, []);
 
   const categories = [
     {
@@ -21,7 +34,7 @@ export default function GuidebookPage() {
       id: 2,
       title: '재정보증',
       description: '보증 관련 업무 안내',
-      path: '/guidebook/onboarding',
+      path: '/guidebook/guarantee',
       icon: Shield,
       available: false
     },
@@ -83,7 +96,7 @@ export default function GuidebookPage() {
         <header className="guidebook-header">
           <div className="container">
             <div className="guidebook-logo-wrapper">
-              <img src="/GR-img.png" alt="GoodRich" className="guidebook-logo" />
+              <img src="/images/GR-img.png" alt="GoodRich" className="guidebook-logo" />
             </div>
             <div className="guidebook-badge">업무 가이드</div>
           </div>
@@ -115,10 +128,9 @@ export default function GuidebookPage() {
                     className="category-box disabled"
                   >
                     <div className="category-icon">
-                      <IconComponent size={40} />
+                      <IconComponent size={32} />
                     </div>
                     <h3 className="category-title">{category.title}</h3>
-                    <p className="category-desc">{category.description}</p>
                   </div>
                 );
               })}
@@ -126,7 +138,7 @@ export default function GuidebookPage() {
               {/* Special Card - Department Contact */}
               <div className="department-card">
                 <div className="department-icon">
-                  <Users size={48} />
+                  <Users size={32} />
                 </div>
                 <h3 className="department-title">담당자 연락처</h3>
               </div>

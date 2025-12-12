@@ -7,12 +7,25 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  align-self: stretch;
+  min-height: 120px;
+  height: 120px;
 }
 
 .support-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Focus/Active/Visited 상태 제거 - 뒤로가기 시 레이아웃 깨짐 방지 */
+.support-card:focus,
+.support-card:active,
+.support-card:visited {
+  outline: none !important;
+}
+
+.support-card *:focus,
+.support-card *:active {
+  outline: none !important;
 }
 
 /* Plus Button - Hidden for guidebook style */
@@ -35,11 +48,11 @@
 .support-card-icon-wrapper {
   background: #2C3E50;
   width: 100%;
-  padding: 1.2rem 1rem;
+  padding: 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 70px;
+  flex: 1;
   transition: transform 0.3s ease;
 }
 
@@ -56,13 +69,14 @@
 /* Title */
 .support-card-title {
   background: white;
-  padding: 0.75rem 0.5rem;
+  padding: 1rem 0.5rem;
   width: 100%;
   color: #2C3E50;
   margin: 0;
   font-size: 0.9rem;
   font-weight: 700;
   text-align: center;
+  flex-shrink: 0;
   transition: color 0.3s ease;
 }
 
@@ -72,9 +86,13 @@
 
 /* Responsive - Tablet */
 @media (max-width: 768px) {
+  .support-card {
+    min-height: 110px;
+    height: 110px;
+  }
+
   .support-card-icon-wrapper {
-    padding: 0.8rem 0.5rem;
-    min-height: 60px;
+    padding: 0.75rem 0.5rem;
   }
 
   .support-card-icon {
@@ -83,7 +101,7 @@
   }
 
   .support-card-title {
-    padding: 0.6rem 0.3rem;
+    padding: 0.75rem 0.3rem;
     font-size: 0.75rem;
   }
 }
@@ -91,12 +109,13 @@
 /* Responsive - Small Mobile (640px and below) */
 @media (max-width: 640px) {
   .support-card {
+    min-height: 100px;
+    height: 100px;
     border-radius: 16px;
   }
 
   .support-card-icon-wrapper {
-    padding: 0.6rem 0.3rem;
-    min-height: 50px;
+    padding: 0.65rem 0.3rem;
   }
 
   .support-card-icon {
@@ -105,7 +124,7 @@
   }
 
   .support-card-title {
-    padding: 0.5rem 0.2rem;
+    padding: 0.65rem 0.2rem;
     font-size: 0.7rem;
   }
 

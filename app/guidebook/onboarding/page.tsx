@@ -66,7 +66,7 @@ export default function OnboardingPage() {
           </button>
           <div className="container">
             <div className="onboarding-logo-wrapper">
-              <img src="/GR-img.png" alt="GoodRich" className="onboarding-logo" />
+              <img src="/images/GR-img.png" alt="GoodRich" className="onboarding-logo" />
             </div>
             <div className="onboarding-badge">위촉안내</div>
           </div>
