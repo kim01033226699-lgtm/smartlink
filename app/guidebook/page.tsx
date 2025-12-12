@@ -135,7 +135,7 @@ export default function GuidebookPage() {
             {/* Footer Notice */}
             <p className="guidebook-footer-notice">
               굿리치 업무 가이드는 편의를 위해 제공된 자료이며,<br />
-              자세한 기준과 절차는 담당자에게 문의해 주시기 바랍니다.
+              자세한 기준과 절차는 담당자에게 문의하여 주시기 바랍니다.
             </p>
           </div>
         </main>

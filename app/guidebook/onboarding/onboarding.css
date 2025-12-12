@@ -191,7 +191,7 @@
 }
 
 .category-box:nth-child(2) .category-icon {
-  color: #FF80AB;
+  color: #E1BEE7;
 }
 
 .category-title {
@@ -222,6 +222,33 @@
   box-shadow: none;
 }
 
+/* 무경력자 프로세스 - 파스텔 퍼플 색상 */
+.process-detail.inexperienced-process .step-accordion::before {
+  background: linear-gradient(180deg, #E1BEE7 0%, #E8E8E8 100%);
+}
+
+.process-detail.inexperienced-process .step-accordion:last-child::before {
+  background: linear-gradient(180deg, #E1BEE7 0%, #E8E8E8 50%);
+}
+
+.process-detail.inexperienced-process .step-accordion-number {
+  background: #E1BEE7;
+}
+
+.process-detail.inexperienced-process .step-accordion-header:hover .step-accordion-number,
+.process-detail.inexperienced-process .step-accordion.active .step-accordion-number {
+  background: linear-gradient(135deg, #E1BEE7, #CE93D8);
+  box-shadow: 0 4px 12px rgba(225, 190, 231, 0.4);
+}
+
+.process-detail.inexperienced-process .detail-header {
+  border-bottom: 2px solid #E1BEE7;
+}
+
+.process-detail.inexperienced-process .detail-title {
+  color: #9C27B0;
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -237,7 +264,7 @@
   text-align: center;
   margin-bottom: 2rem;
   padding-bottom: 1rem;
-  border-bottom: 2px solid #0095FF;
+  border-bottom: 2px solid #A8D5FF;
 }
 
 .detail-title {
@@ -256,7 +283,7 @@
 /* Vertical Step Styles */
 .step-accordion {
   position: relative;
-  padding-left: 60px;
+  padding-left: 45px;
   margin-bottom: 2rem;
   transition: all 0.3s ease;
 }
@@ -269,16 +296,16 @@
 .step-accordion::before {
   content: '';
   position: absolute;
-  left: 10px;
+  left: 12.5px;
   top: 29px;
   width: 2px;
   height: calc(100% + 2rem);
-  background: linear-gradient(180deg, #0095FF 0%, #E8E8E8 100%);
+  background: linear-gradient(180deg, #A8D5FF 0%, #E8E8E8 100%);
   z-index: 0;
 }
 
 .step-accordion:last-child::before {
-  background: linear-gradient(180deg, #0095FF 0%, #E8E8E8 50%);
+  background: linear-gradient(180deg, #A8D5FF 0%, #E8E8E8 50%);
   height: 29px;
 }
 
@@ -297,9 +324,9 @@
 }
 
 .step-accordion-number {
-  background: #0095FF;
+  background: #A8D5FF;
   border: none;
-  color: #f5f5f5;
+  color: #ffffff;
   min-width: 29px;
   height: 29px;
   border-radius: 50%;
@@ -310,7 +337,7 @@
   font-size: 0.85rem;
   flex-shrink: 0;
   position: absolute;
-  left: -60px;
+  left: -45px;
   top: 0;
   box-shadow: none;
   transition: all 0.3s ease;
@@ -319,10 +346,10 @@
 /* Active/Open state */
 .step-accordion-header:hover .step-accordion-number,
 .step-accordion.active .step-accordion-number {
-  background: linear-gradient(135deg, #0095FF, #0077CC);
-  color: #f5f5f5;
+  background: linear-gradient(135deg, #A8D5FF, #7BBFFF);
+  color: #ffffff;
   transform: scale(1.1);
-  box-shadow: 0 4px 12px rgba(0, 149, 255, 0.3);
+  box-shadow: 0 4px 12px rgba(168, 213, 255, 0.4);
 }
 
 .step-accordion-title-wrapper {
@@ -662,6 +689,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 0.5rem;
   background: linear-gradient(135deg, #0095FF 0%, #0077CC 100%);
   color: white;
   padding: 0.875rem 1.75rem;
@@ -867,11 +895,11 @@
   }
 
   .step-accordion {
-    padding-left: 50px;
+    padding-left: 38px;
   }
 
   .step-accordion::before {
-    left: 8px;
+    left: 10.5px;
     top: 24px;
     width: 1.5px;
   }
@@ -884,13 +912,13 @@
     min-width: 24px;
     height: 24px;
     font-size: 0.75rem;
-    left: -50px;
+    left: -38px;
     box-shadow: none;
   }
 
   .step-accordion-header:hover .step-accordion-number,
   .step-accordion.active .step-accordion-number {
-    box-shadow: 0 4px 12px rgba(0, 149, 255, 0.3);
+    box-shadow: 0 4px 12px rgba(168, 213, 255, 0.4);
   }
 
   .step-accordion-title-wrapper {

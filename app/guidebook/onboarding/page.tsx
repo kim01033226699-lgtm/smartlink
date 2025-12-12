@@ -228,7 +228,8 @@ export default function OnboardingPage() {
                                 rel="noopener noreferrer"
                                 className="step-action-link"
                               >
-                                수강신청
+                                <span>수강신청</span>
+                                <ExternalLink size={16} />
                               </a>
                             </div>
                           </SubStepAccordion>
@@ -281,7 +282,8 @@ export default function OnboardingPage() {
                               rel="noopener noreferrer"
                               className="step-action-link"
                             >
-                              위촉지원시스템
+                              <span>위촉지원시스템</span>
+                              <ExternalLink size={16} />
                             </a>
                           </div>
                         </div>
@@ -391,7 +393,8 @@ export default function OnboardingPage() {
                                 rel="noopener noreferrer"
                                 className="step-action-link"
                               >
-                                수강신청
+                                <span>수강신청</span>
+                                <ExternalLink size={16} />
                               </a>
                             </div>
                           </SubStepAccordion>
@@ -444,7 +447,8 @@ export default function OnboardingPage() {
                               rel="noopener noreferrer"
                               className="step-action-link"
                             >
-                              위촉지원시스템
+                              <span>위촉지원시스템</span>
+                              <ExternalLink size={16} />
                             </a>
                           </div>
                         </div>

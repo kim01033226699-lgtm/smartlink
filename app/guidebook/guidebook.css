@@ -186,44 +186,45 @@
 }
 
 .department-card {
-  background: linear-gradient(135deg, #FF9900 0%, #FF6B00 100%);
+  background: white;
   border-radius: 16px;
-  padding: 1rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  border: 3px solid white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   cursor: pointer;
   transition: all 0.3s ease;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  min-height: 120px;
-}
-
-.department-card .department-icon svg {
-  width: 40px;
-  height: 40px;
+  overflow: hidden;
+  align-self: stretch;
 }
 
 .department-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
 .department-icon {
-  flex: 1;
+  background: linear-gradient(135deg, #FF9900 0%, #FF6B00 100%);
+  padding: 1.2rem 1rem;
   display: flex;
   justify-content: center;
   align-items: center;
   color: white;
+  min-height: 70px;
+}
+
+.department-icon svg {
+  width: 32px;
+  height: 32px;
 }
 
 .department-title {
+  background: white;
+  padding: 0.75rem 0.5rem;
   font-size: 0.9rem;
   font-weight: 700;
-  color: white;
+  color: #2C3E50;
   margin: 0;
-  padding-top: 0.5rem;
+  text-align: center;
 }
 
 @media (max-width: 768px) {
@@ -260,19 +261,19 @@
     font-size: 0.75rem;
   }
 
-  .department-card {
-    min-height: 100px;
-    padding: 0.8rem;
+  .department-icon {
+    padding: 0.8rem 0.5rem;
+    min-height: 60px;
   }
 
-  .department-card .department-icon svg {
-    width: 32px;
-    height: 32px;
+  .department-icon svg {
+    width: 28px;
+    height: 28px;
   }
 
   .department-title {
+    padding: 0.6rem 0.3rem;
     font-size: 0.75rem;
-    padding-top: 0.4rem;
   }
 
   .guidebook-footer-notice {
@@ -312,19 +313,19 @@
     font-size: 0.7rem;
   }
 
-  .department-card {
-    min-height: 90px;
-    padding: 0.6rem;
+  .department-icon {
+    padding: 0.6rem 0.3rem;
+    min-height: 50px;
   }
 
-  .department-card .department-icon svg {
-    width: 28px;
-    height: 28px;
+  .department-icon svg {
+    width: 24px;
+    height: 24px;
   }
 
   .department-title {
+    padding: 0.5rem 0.2rem;
     font-size: 0.7rem;
-    padding-top: 0.3rem;
   }
 
   .guidebook-footer-notice {
