@@ -66,7 +66,7 @@ export default function OnboardingPage() {
           </button>
           <div className="container">
             <div className="onboarding-logo-wrapper">
-              <img src="/images/GR-img.png" alt="GoodRich" className="onboarding-logo" />
+              <img src="/GR-img.png" alt="GoodRich" className="onboarding-logo" />
             </div>
             <div className="onboarding-badge">위촉안내</div>
           </div>
@@ -112,21 +112,22 @@ export default function OnboardingPage() {
                         onToggle={() => toggleStep('exp-1')}
                       >
                         <div className="step-content">
-                          <p className="content-text mb-3">
-                            내용증명 발송 후 발송일 포함 <strong className="highlight-red">11일째 되는 날</strong>부터 생, 손보 협회 인터넷 말소 가능
+                          <p className="content-text mb-2">
+                            📮 내용증명 발송 후 발송일 포함 <strong className="highlight-red">11일째 되는 날</strong>부터 생, 손보 협회 인터넷 말소 가능
                           </p>
 
                           <div className="highlight-box">
-                            <p className="highlight-red">해촉신청서 양식</p>
+                            <p className="highlight-red">📝 해촉신청서 양식</p>
                           </div>
 
-                          <p className="content-text">생,손보 코드가 다 있는 경우</p>
-                          <p className="content-text">
-                            -수신처: 현재 근무회사 본점, 생보협회, 손보협회<br />
+                          <p className="content-text mt-4 mb-3">
+                            👥 생,손보 코드가 다 있는 경우<br />
+                            📌 수신처: 현재 근무회사 본점, 생보협회, 손보협회<br />
                             <span className="highlight-red">(총 5부 출력)</span>
                           </p>
-                          <p className="content-text mt-2">
-                            ※ 생손보협회 지역본부 및 보험사 본점 주소<br />
+
+                          <p className="content-text bg-blue-50 p-3 rounded-lg text-center font-bold text-blue-600">
+                            🌐 ※ 생손보협회 지역본부 및 보험사 본점 주소<br />
                             각 홈페이지에서 확인 가능
                           </p>
 
@@ -150,7 +151,7 @@ export default function OnboardingPage() {
                       >
                         <div className="step-content">
                           <p className="content-text">
-                            <strong>기본정보:</strong> 성명, 주민번호, 자택주소, 휴대폰 번호, 이메일 주소
+                            📑 <strong>기본정보:</strong> 성명, 주민번호, 자택주소, 휴대폰 번호, 이메일 주소
                           </p>
                         </div>
                       </StepAccordion>
@@ -164,7 +165,7 @@ export default function OnboardingPage() {
                       >
                         <div className="step-content">
                           <p className="content-text">
-                            모바일 서울보증보험 앱 설치 → 개인정보동의 → 1번 [예약 체결·이행을 위한 동의]
+                            📱 모바일 서울보증보험 앱 설치 → 개인정보동의 → 1번 [예약 체결·이행을 위한 동의]
                           </p>
                         </div>
                       </StepAccordion>
@@ -184,19 +185,19 @@ export default function OnboardingPage() {
                             onToggle={() => toggleSubStep('exp-4-1')}
                           >
                             <p className="content-text">
-                              협회등록일 기준 직전 <strong className="highlight-red">3년 이내</strong><br />
+                              📅 <strong className="highlight-red">협회등록일 기준 직전 3년 이내</strong><br />
                               <strong className="highlight-red">1년 이상 경력 인정</strong>
                             </p>
                           </SubStepAccordion>
 
                           <SubStepAccordion
                             subStepId="exp-4-2"
-                            title="4-2. 수강신청하기"
+                            title="4-2 교육 신청 절차"
                             isOpen={expandedSubSteps.has('exp-4-2')}
                             onToggle={() => toggleSubStep('exp-4-2')}
                           >
                             <p className="content-text">
-                              보험연수원 로그인 → 모집종사자 교육 → 보험설계사 → 경력자등록교육 → 수강신청
+                              ▶ 보험연수원 로그인 → 모집종사자 교육 → 보험설계사 → 경력자등록교육 → 수강신청
                             </p>
                           </SubStepAccordion>
 
@@ -207,16 +208,16 @@ export default function OnboardingPage() {
                             onToggle={() => toggleSubStep('exp-4-3')}
                           >
                             <div className="course-option">
-                              <p className="course-title highlight-red">생보, 손보 : 둘다 경력(총 30H)</p>
+                              <p className="course-title text-blue-600">🔷 생보, 손보 : 둘다 경력 (총 30H)</p>
                               <p className="course-detail">(경력자교육) 생명 + 손해 + 제3보험 (30H)</p>
                             </div>
                             <div className="course-option">
-                              <p className="course-title highlight-red">생보 경력, 손보 신입(총 45H)</p>
+                              <p className="course-title text-orange-500">🔶 생보 경력, 손보 신입 (총 45H)</p>
                               <p className="course-detail">(경력자교육) 생명 + 제3보험 (25H)</p>
                               <p className="course-detail">(신규등록교육) 손보 (20H)</p>
                             </div>
                             <div className="course-option">
-                              <p className="course-title highlight-red">생보 신입, 손보 경력(총 45H)</p>
+                              <p className="course-title text-orange-500">🔶 생보 신입, 손보 경력 (총 45H)</p>
                               <p className="course-detail">(경력자교육) 손보 + 제3보험 (25H)</p>
                               <p className="course-detail">(신규등록교육) 생보 (20H)</p>
                             </div>
@@ -236,12 +237,12 @@ export default function OnboardingPage() {
 
                           <SubStepAccordion
                             subStepId="exp-4-4"
-                            title="4-4. 수료증 발급방법"
+                            title="4-4 수료증 출력"
                             isOpen={expandedSubSteps.has('exp-4-4')}
                             onToggle={() => toggleSubStep('exp-4-4')}
                           >
                             <p className="content-text">
-                              나의강의실 → 수료증 출력하기 → 발급사유[협회제출용] 기재 → PDF저장
+                              ▶ 나의강의실 → 수료증 출력하기 → 발급사유[협회제출용] 기재 → PDF 저장
                             </p>
                           </SubStepAccordion>
                         </div>
@@ -255,10 +256,14 @@ export default function OnboardingPage() {
                         onToggle={() => toggleStep('exp-5')}
                       >
                         <div className="step-content">
+                          <p className="content-text mb-1">
+                            📄 신분증 사본, 통장사본, 수료증, 등본
+                          </p>
+                          <p className="content-text mb-3">
+                            <span className="highlight-red">(본인 주민번호 공개, 그 외 비공개 필)</span>
+                          </p>
                           <p className="content-text">
-                            신분증 사본, 통장사본, 수료증, 등본<br />
-                            <span className="highlight-red">(본인 주민번호 공개, 그 외 비공개 필)</span><br />
-                            경력증명서(교보생명위촉용), 이클린조회
+                            📑 경력증명서(교보생명위촉용), 이클린조회
                           </p>
                         </div>
                       </StepAccordion>
@@ -514,7 +519,7 @@ export default function OnboardingPage() {
             </div>
             <div className="modal-body">
               <div className="modal-subtitle">본인의 상황을 알려주세요</div>
-              <QuestionFlow onComplete={() => {}} />
+              <QuestionFlow onComplete={() => { }} />
             </div>
           </div>
         </div>

@@ -96,7 +96,7 @@ export default function GuidebookPage() {
         <header className="guidebook-header">
           <div className="container">
             <div className="guidebook-logo-wrapper">
-              <img src="/images/GR-img.png" alt="GoodRich" className="guidebook-logo" />
+              <img src="/GR-img.png" alt="GoodRich" className="guidebook-logo" />
             </div>
             <div className="guidebook-badge">업무 가이드</div>
           </div>

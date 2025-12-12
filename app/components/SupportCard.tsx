@@ -30,7 +30,7 @@ export function SupportCard({ title, description, icon: Icon, onClick }: Support
       <div className="support-card-content">
         {/* Large Centered Icon */}
         <div className="support-card-icon-wrapper">
-          <Icon className="support-card-icon" strokeWidth={1.5} />
+          <Icon className="support-card-icon" strokeWidth={1.5} size={32} />
         </div>
 
         {/* Title */}

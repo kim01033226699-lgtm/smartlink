@@ -159,7 +159,7 @@
   padding: 1rem;
 }
 
-.category-box {
+.onboarding-page .category-box {
   background: white;
   border-radius: 16px;
   overflow: hidden;
@@ -171,12 +171,12 @@
   align-self: stretch;
 }
 
-.category-box:hover {
+.onboarding-page .category-box:hover {
   transform: translateY(-4px);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
-.category-icon {
+.onboarding-page .category-icon {
   background: #2C3E50;
   padding: 1.5rem 1rem;
   display: flex;
@@ -186,15 +186,15 @@
   min-height: 100px;
 }
 
-.category-box:nth-child(1) .category-icon {
+.onboarding-page .category-box:nth-child(1) .category-icon {
   color: #82B1FF;
 }
 
-.category-box:nth-child(2) .category-icon {
+.onboarding-page .category-box:nth-child(2) .category-icon {
   color: #E1BEE7;
 }
 
-.category-title {
+.onboarding-page .category-title {
   background: white;
   padding: 1rem 1rem;
   font-size: 1.1rem;
@@ -254,6 +254,7 @@
     opacity: 0;
     transform: translateY(10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -410,6 +411,7 @@
     opacity: 0;
     transform: translateY(-10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -423,14 +425,14 @@
 }
 
 /* For steps with direct content (no sub-steps) */
-.step-content > .content-text,
-.step-content > .highlight-box,
-.step-content > p {
+.step-content>.content-text,
+.step-content>.highlight-box,
+.step-content>p {
   margin: 0;
 }
 
-.step-content > .content-text:not(:last-child),
-.step-content > p:not(:last-child) {
+.step-content>.content-text:not(:last-child),
+.step-content>p:not(:last-child) {
   margin-bottom: 0.75rem;
 }
 
@@ -515,6 +517,7 @@
     padding-top: 0;
     padding-bottom: 0;
   }
+
   to {
     opacity: 1;
     max-height: 500px;
@@ -822,6 +825,7 @@
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -937,8 +941,8 @@
     padding: 0;
   }
 
-  .step-content > .content-text:not(:last-child),
-  .step-content > p:not(:last-child) {
+  .step-content>.content-text:not(:last-child),
+  .step-content>p:not(:last-child) {
     margin-bottom: 0.5rem;
   }
 
