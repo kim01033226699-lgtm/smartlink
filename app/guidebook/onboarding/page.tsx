@@ -67,7 +67,7 @@ export default function OnboardingPage() {
           <div className="container">
             <div className="onboarding-logo-wrapper">
               <img
-                src="/images/GR-img.png"
+                src="/smartlink/images/GR-img.png"
                 alt="GoodRich Logo"
                 className="onboarding-logo"
               /></div>
