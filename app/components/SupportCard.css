@@ -35,11 +35,11 @@
 .support-card-icon-wrapper {
   background: #2C3E50;
   width: 100%;
-  padding: 2rem 1.5rem;
+  padding: 1.2rem 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 100px;
+  min-height: 70px;
   transition: transform 0.3s ease;
 }
 
@@ -48,19 +48,19 @@
 }
 
 .support-card-icon {
-  width: 48px;
-  height: 48px;
+  width: 32px;
+  height: 32px;
   color: #82B1FF;
 }
 
 /* Title */
 .support-card-title {
   background: white;
-  padding: 1rem 1.5rem;
+  padding: 0.75rem 0.5rem;
   width: 100%;
   color: #2C3E50;
   margin: 0;
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: 700;
   text-align: center;
   transition: color 0.3s ease;
@@ -73,40 +73,40 @@
 /* Responsive - Tablet */
 @media (max-width: 768px) {
   .support-card-icon-wrapper {
-    padding: 1.5rem 1rem;
-    min-height: 80px;
+    padding: 0.8rem 0.5rem;
+    min-height: 60px;
   }
 
   .support-card-icon {
-    width: 40px;
-    height: 40px;
+    width: 28px;
+    height: 28px;
   }
 
   .support-card-title {
-    font-size: 0.9rem;
-    padding: 0.875rem 1rem;
+    padding: 0.6rem 0.3rem;
+    font-size: 0.75rem;
   }
 }
 
-/* Responsive - Small Mobile (400px and below) */
-@media (max-width: 400px) {
+/* Responsive - Small Mobile (640px and below) */
+@media (max-width: 640px) {
   .support-card {
-    border-radius: 12px;
+    border-radius: 16px;
   }
 
   .support-card-icon-wrapper {
-    padding: 1.25rem 0.75rem;
-    min-height: 70px;
+    padding: 0.6rem 0.3rem;
+    min-height: 50px;
   }
 
   .support-card-icon {
-    width: 36px;
-    height: 36px;
+    width: 24px;
+    height: 24px;
   }
 
   .support-card-title {
-    font-size: 0.85rem;
-    padding: 0.75rem 0.875rem;
+    padding: 0.5rem 0.2rem;
+    font-size: 0.7rem;
   }
 
   .support-card:hover {
