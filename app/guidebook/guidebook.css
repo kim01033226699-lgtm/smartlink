@@ -321,13 +321,11 @@
   .category-box {
     min-height: 100px;
     height: auto;
-    min-width: 105px;
   }
 
   .department-card {
     min-height: 100px;
     height: auto;
-    min-width: 105px;
   }
 
   .guidebook-logo {
@@ -387,12 +385,5 @@
   .category-grid {
     width: 100%;
     box-sizing: border-box;
-    /* 3 columns are fine if min-width allows shrinking or screen is explicitly wide enough. 
-       If 3 columns cause overflow, items shrink. */
-  }
-
-  .category-box {
-    /* Remove rigid min-width to prevent overflow on very small screens */
-    min-width: unset;
   }
 }

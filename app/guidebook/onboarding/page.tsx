@@ -71,7 +71,7 @@ export default function OnboardingPage() {
                 alt="GoodRich Logo"
                 className="onboarding-logo"
               /></div>
-            <div className="onboarding-badge">위촉안내</div>
+            <div className="onboarding-badge">위촉</div>
           </div>
         </header>
 

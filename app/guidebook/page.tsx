@@ -24,7 +24,7 @@ export default function GuidebookPage() {
   const categories = [
     {
       id: 1,
-      title: '위촉안내',
+      title: '위촉',
       description: '위촉 및 해촉 프로세스 안내',
       path: '/guidebook/onboarding',
       icon: FileText,
