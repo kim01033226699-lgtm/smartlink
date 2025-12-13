@@ -113,7 +113,6 @@
     min-height: 100px;
     height: auto;
     border-radius: 16px;
-    min-width: 105px;
   }
 
   .support-card-icon-wrapper {
@@ -132,5 +131,25 @@
 
   .support-card:hover {
     transform: translateY(-2px);
+  }
+}
+/* Extra small devices (400px and below) */
+@media (max-width: 400px) {
+  .support-card {
+    min-height: 90px;
+  }
+
+  .support-card-icon-wrapper {
+    padding: 0.5rem 0.2rem;
+  }
+
+  .support-card-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .support-card-title {
+    padding: 0.5rem 0.15rem;
+    font-size: 0.65rem;
   }
 }

@@ -387,3 +387,45 @@
     box-sizing: border-box;
   }
 }
+/* Extra small devices (400px and below) */
+@media (max-width: 400px) {
+  .category-grid {
+    gap: 0.3rem;
+  }
+
+  .category-box {
+    min-height: 90px;
+  }
+
+  .department-card {
+    min-height: 90px;
+  }
+
+  .category-icon {
+    padding: 0.5rem 0.2rem;
+  }
+
+  .category-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .category-title {
+    padding: 0.5rem 0.15rem;
+    font-size: 0.65rem;
+  }
+
+  .department-icon {
+    padding: 0.5rem 0.2rem;
+  }
+
+  .department-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .department-title {
+    padding: 0.5rem 0.15rem;
+    font-size: 0.65rem;
+  }
+}

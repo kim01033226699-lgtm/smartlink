@@ -151,15 +151,17 @@
 
 /* Menu Grid for Selection */
 .onboarding-menu-grid {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: 0.75rem;
   max-width: 700px;
   margin: 0 auto;
   padding: 1rem;
 }
 
+.empty-spacer {
+  visibility: hidden;
+}
 .onboarding-page .category-box {
   background: white;
   border-radius: 16px;
@@ -170,10 +172,8 @@
   display: flex;
   flex-direction: column;
   align-self: stretch;
-  min-height: 180px;
+  min-height: 120px;
   height: auto;
-  min-width: 157px;
-  width: calc((100% - 1.5rem) / 2);
 }
 
 .onboarding-page .category-box:hover {
@@ -183,7 +183,7 @@
 
 .onboarding-page .category-icon {
   background: #2C3E50;
-  padding: 1.5rem;
+  padding: 1rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -192,8 +192,8 @@
 }
 
 .onboarding-page .category-icon svg {
-  width: 48px;
-  height: 48px;
+  width: 32px;
+  height: 32px;
 }
 
 .onboarding-page .category-box:nth-child(1) .category-icon {
@@ -206,8 +206,8 @@
 
 .onboarding-page .category-title {
   background: white;
-  padding: 1.5rem 0.75rem;
-  font-size: 1.35rem;
+  padding: 1rem 0.5rem;
+  font-size: 0.9rem;
   font-weight: 700;
   color: #2C3E50;
   margin: 0;
@@ -902,23 +902,21 @@
   }
 
   .onboarding-page .category-box {
-    min-height: 165px;
-    height: auto;
-    width: calc((100% - 1rem) / 2);
+    min-height: 110px;
   }
 
   .onboarding-page .category-icon {
-    padding: 1.125rem 0.75rem;
+    padding: 0.75rem 0.5rem;
   }
 
   .onboarding-page .category-icon svg {
-    width: 42px;
-    height: 42px;
+    width: 28px;
+    height: 28px;
   }
 
   .onboarding-page .category-title {
-    padding: 1.125rem 0.45rem;
-    font-size: 1.125rem;
+    padding: 0.75rem 0.3rem;
+    font-size: 0.75rem;
   }
 }
 
@@ -933,9 +931,8 @@
   }
 
   .onboarding-menu-grid {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: 0.4rem;
     padding: 0.5rem;
     margin: 1rem auto;
@@ -943,23 +940,21 @@
 
   .onboarding-page .category-box {
     min-height: 150px;
-    height: auto;
     min-width: 157px;
-    width: calc((100% - 0.8rem) / 2);
   }
 
   .onboarding-page .category-icon {
-    padding: 0.975rem 0.45rem;
+    padding: 0.65rem 0.3rem;
   }
 
   .onboarding-page .category-icon svg {
-    width: 36px;
-    height: 36px;
+    width: 24px;
+    height: 24px;
   }
 
   .onboarding-page .category-title {
-    padding: 0.975rem 0.3rem;
-    font-size: 1.05rem;
+    padding: 0.65rem 0.2rem;
+    font-size: 0.7rem;
   }
 
   .process-tabs {
@@ -1112,11 +1107,5 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-  }
-
-  /* Fix for menu alignment: 2 items should fill width on mobile */
-  .onboarding-page .category-box {
-    width: calc(50% - 0.5rem);
-    min-width: unset;
   }
 }
