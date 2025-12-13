@@ -64,13 +64,13 @@
 }
 
 .guidebook-content {
-  padding: 1rem;
+  padding: 0.3rem 1rem 1rem 1rem;
 }
 
 .category-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 0.75rem;
+  gap: 1.5rem;
   max-width: 700px;
   margin: 0 auto;
 }
@@ -251,7 +251,7 @@
 @media (max-width: 768px) {
   .category-grid {
     grid-template-columns: repeat(3, 1fr);
-    gap: 0.5rem;
+    gap: 1rem;
   }
 
   .category-box {
@@ -269,7 +269,7 @@
   }
 
   .guidebook-logo {
-    height: 30px;
+    height: 15px;
   }
 
   .guidebook-badge {
@@ -315,7 +315,7 @@
 @media (max-width: 640px) {
   .category-grid {
     grid-template-columns: repeat(3, 1fr);
-    gap: 0.4rem;
+    gap: 0.8rem;
   }
 
   .category-box {
@@ -329,7 +329,7 @@
   }
 
   .guidebook-logo {
-    height: 25px;
+    height: 12.5px;
   }
 
   .guidebook-badge {
@@ -390,7 +390,7 @@
 /* Extra small devices (400px and below) */
 @media (max-width: 400px) {
   .category-grid {
-    gap: 0.3rem;
+    gap: 0.6rem;
   }
 
   .category-box {

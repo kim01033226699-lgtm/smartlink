@@ -895,7 +895,7 @@
 
 @media (max-width: 768px) {
   .onboarding-logo {
-    height: 30px;
+    height: 15px;
   }
 
   .onboarding-badge {
@@ -924,7 +924,7 @@
 
 @media (max-width: 640px) {
   .onboarding-logo {
-    height: 25px;
+    height: 12.5px;
   }
 
   .onboarding-badge {
