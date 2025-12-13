@@ -35,6 +35,13 @@
   opacity: 0.6;
 }
 
+.onboarding-header .container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
 .onboarding-logo-wrapper {
   display: flex;
   justify-content: center;
@@ -1104,12 +1111,4 @@
     box-sizing: border-box;
   }
 
-  .onboarding-header .container {
-    width: 100%;
-    padding: 0 1rem;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
 }
