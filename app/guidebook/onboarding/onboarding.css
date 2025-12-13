@@ -10,7 +10,7 @@
   padding: 2rem 1rem;
   text-align: center;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  margin: 0 0 1.5rem 0;
+  margin: 0 0 0.5rem 0;
   position: relative;
 }
 
@@ -43,7 +43,7 @@
 }
 
 .onboarding-logo {
-  height: 40px;
+  height: 20px;
   width: auto;
   transition: transform 0.3s ease;
 }
@@ -59,7 +59,7 @@
   font-size: 1.5rem;
   font-weight: 700;
   padding: 0.5rem 2rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.3rem;
   text-shadow:
     1px 1px 0px rgba(255, 255, 255, 0.8),
     2px 2px 4px rgba(0, 0, 0, 0.15);
