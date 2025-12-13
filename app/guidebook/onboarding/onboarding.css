@@ -156,7 +156,9 @@
   gap: 0.75rem;
   max-width: 700px;
   margin: 0 auto;
-  padding: 1rem;
+  padding: 1rem 1rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .empty-spacer {
@@ -934,13 +936,15 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 0.4rem;
-    padding: 0.5rem;
+    padding: 0.5rem 1rem;
     margin: 1rem auto;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .onboarding-page .category-box {
     min-height: 150px;
-    min-width: 157px;
+    
   }
 
   .onboarding-page .category-icon {
