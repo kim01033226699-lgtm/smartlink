@@ -489,7 +489,7 @@ export default function OnboardingPage() {
                       >
                         <div className="step-content">
                           <p className="content-text">
-                            신분증 사본, 통장사본, 수료증, 등본(제출용)(br r 
+                            신분증 사본, 통장사본, 수료증, 등본(제출용) 
                             <span className="highlight-red">(본인 주민번호 공개, 그 외 비공개 필)</span><br />
                             합격증 (생명, 손해, 제3보험)
                           </p>
