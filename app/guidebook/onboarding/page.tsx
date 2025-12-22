@@ -254,12 +254,17 @@ export default function OnboardingPage() {
                         onToggle={() => toggleStep('exp-5')}
                       >
                         <div className="step-content">
-                          <p className="content-text font-bold text-lg mb-2">(1) 위촉서류</p>
+                          <p className="content-text font-bold text-lg mb-2">(1) 기본정보 전달</p>
+                          <p className="content-text mb-6">
+                            기본정보 : 성명, 주민번호, 자택주소, 휴대폰번호, 이메일 주소
+                          </p>
+
+                          <p className="content-text font-bold text-lg mb-2">(2) 위촉서류</p>
                           <p className="content-text mb-6">
                             신분증 사본, 통장사본, 수료증, 등본(제출용) <span className="highlight-red">(본인 주민번호 공개, 그 외 비공개 필)</span> 경력증명서(교보생명위촉용), 이클린조회
                           </p>
 
-                          <p className="content-text font-bold text-lg mb-2">(2) 전자서명</p>
+                          <p className="content-text font-bold text-lg mb-2">(3) 전자서명</p>
                           <h4 className="font-bold text-gray-800 mb-2">* 위촉서류 전자서명하기</h4>
                           <p className="content-text mb-2">
                             ① <span className="text-blue-600 font-bold">위촉계약서(필수)</span> 하단 <span className="text-blue-600 font-bold">[서류체크]</span> 버튼 클릭 → 팝업된 화면 우측 스크롤을 모두 내려서 내용 확인후 <span className="text-blue-600 font-bold">[서명]</span> 버튼 클릭 → <span className="text-blue-600 font-bold">마우스로 서명입력</span> → 저장 → <span className="text-blue-600 font-bold">[동의]</span> 버튼 클릭 → <span className="text-blue-600 font-bold">전자서명</span> 선택
@@ -271,7 +276,7 @@ export default function OnboardingPage() {
                             ⁙ 전자서명 본인인증 : 카카오톡인증 or 네이버인증
                           </p>
 
-                          <p className="content-text font-bold text-lg mb-2">(3) 서류업로드 & E-Clean정보 조회하기</p>
+                          <p className="content-text font-bold text-lg mb-2">(4) 서류업로드 & E-Clean정보 조회하기</p>
                           <div className="flex flex-col gap-2 mb-3">
                             <div className="bg-orange-500 text-white px-3 py-1.5 rounded-md inline-block text-sm font-bold shadow-sm">
                               [조회] 버튼 클릭 → 이클린 보험 서비스의 모바일 인증절차 진행
@@ -446,12 +451,17 @@ export default function OnboardingPage() {
                         onToggle={() => toggleStep('inexp-4')}
                       >
                         <div className="step-content">
-                          <p className="content-text font-bold text-lg mb-2">(1) 위촉서류</p>
+                          <p className="content-text font-bold text-lg mb-2">(1) 기본정보 전달</p>
+                          <p className="content-text mb-6">
+                            기본정보 : 성명, 주민번호, 자택주소, 휴대폰번호, 이메일 주소
+                          </p>
+
+                          <p className="content-text font-bold text-lg mb-2">(2) 위촉서류</p>
                           <p className="content-text mb-6">
                             신분증 사본, 통장사본, 수료증, 등본(제출용) <span className="highlight-red">(본인 주민번호 공개, 그 외 비공개 필)</span> 경력증명서(교보생명위촉용), 이클린조회
                           </p>
 
-                          <p className="content-text font-bold text-lg mb-2">(2) 전자서명</p>
+                          <p className="content-text font-bold text-lg mb-2">(3) 전자서명</p>
                           <h4 className="font-bold text-gray-800 mb-2">* 위촉서류 전자서명하기</h4>
                           <p className="content-text mb-2">
                             ① <span className="text-blue-600 font-bold">위촉계약서(필수)</span> 하단 <span className="text-blue-600 font-bold">[서류체크]</span> 버튼 클릭 → 팝업된 화면 우측 스크롤을 모두 내려서 내용 확인후 <span className="text-blue-600 font-bold">[서명]</span> 버튼 클릭 → <span className="text-blue-600 font-bold">마우스로 서명입력</span> → 저장 → <span className="text-blue-600 font-bold">[동의]</span> 버튼 클릭 → <span className="text-blue-600 font-bold">전자서명</span> 선택
@@ -463,7 +473,7 @@ export default function OnboardingPage() {
                             ⁙ 전자서명 본인인증 : 카카오톡인증 or 네이버인증
                           </p>
 
-                          <p className="content-text font-bold text-lg mb-2">(3) 서류업로드 & E-Clean정보 조회하기</p>
+                          <p className="content-text font-bold text-lg mb-2">(4) 서류업로드 & E-Clean정보 조회하기</p>
                           <div className="flex flex-col gap-2 mb-3">
                             <div className="bg-orange-500 text-white px-3 py-1.5 rounded-md inline-block text-sm font-bold shadow-sm">
                               [조회] 버튼 클릭 → 이클린 보험 서비스의 모바일 인증절차 진행
