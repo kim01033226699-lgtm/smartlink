@@ -3,18 +3,60 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { ArrowLeft, ChevronDown, ChevronUp, ExternalLink, UserCheck, UserPlus, X, Download } from 'lucide-react';
 import BottomNavigation from '@/app/components/BottomNavigation';
+import ApplicationPreview from "@/app/info-appoint/components/application-flow/application-preview";
 import QuestionFlow from '@/app/info-appoint/components/application-flow/question-flow';
+import PersonalInfoForm from "@/app/info-appoint/components/application-flow/personal-info-form";
+import { Button } from "@/app/components/ui/button";
 import './onboarding.css';
+
+interface PersonalInfo {
+  company: string;
+  companyAddress: string;
+  residentNumber: string;
+  name: string;
+  address: string;
+  phone: string;
+  submissionDate: string;
+  recipients: string[];
+}
 
 type ExpandedType = 'experienced' | 'inexperienced' | null;
 
 export default function OnboardingPage() {
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState<'onboarding' | 'termination'>('onboarding');
-  const [expandedProcess, setExpandedProcess] = useState<ExpandedType>(null);
   const [expandedSteps, setExpandedSteps] = useState<Set<string>>(new Set());
   const [expandedSubSteps, setExpandedSubSteps] = useState<Set<string>>(new Set());
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalView, setModalView] = useState<'question' | 'sample' | 'personal-info' | 'preview' | 'completed'>('question');
+  const [activeTab, setActiveTab] = useState<'onboarding' | 'termination'>('onboarding');
+  const [expandedProcess, setExpandedProcess] = useState<ExpandedType>(null);
+
+  // Flow State
+  const [selectedResults, setSelectedResults] = useState<string[]>([]);
+  const [personalInfo, setPersonalInfo] = useState<PersonalInfo | null>(null);
+
+  const openModal = (view: 'question' | 'sample') => {
+    setModalView(view);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setModalView('question'); // Reset view on close
+    // Reset flow state
+    setSelectedResults([]);
+    setPersonalInfo(null);
+  };
+
+  const handleQuestionsComplete = (results: string[]) => {
+    setSelectedResults(results);
+    setModalView('sample');
+  };
+
+  const handlePersonalInfoComplete = (info: PersonalInfo) => {
+    setPersonalInfo(info);
+    setModalView('preview');
+  };
 
   const toggleProcess = (process: ExpandedType) => {
     setExpandedProcess(expandedProcess === process ? null : process);
@@ -119,8 +161,8 @@ export default function OnboardingPage() {
                             내용증명 발송 후 발송일 포함 <strong className="highlight-red">11일째 되는 날</strong>부터 생, 손보 협회 인터넷 말소 가능
                           </p>
 
-                          <div className="highlight-box">
-                            <p className="highlight-red">해촉신청서 양식</p>
+                          <div className="highlight-box cursor-pointer hover:bg-red-50 transition-colors" onClick={() => openModal('sample')}>
+                            <span className="highlight-red font-bold border-b border-red-400">내용증명 샘플보기</span>
                           </div>
 
                           <p className="content-text mt-4 mb-3">
@@ -135,7 +177,7 @@ export default function OnboardingPage() {
 
                           <div className="step-button-box">
                             <button
-                              onClick={() => setIsModalOpen(true)}
+                              onClick={() => openModal('question')}
                               className="step-action-button"
                             >
                               협회 말소처리 안내
@@ -153,7 +195,7 @@ export default function OnboardingPage() {
                       >
                         <div className="step-content">
                           <p className="content-text">
-                            모바일 서울보증보험 앱 설치 → 개인정보동의 → 1번 [예약 체결·이행을 위한 동의]
+                            모바일 서울보증보험 앱 설치 → 개인정보동의 → 1번 [계약 체결·이행을 위한 동의]
                           </p>
                           <div className="app-download-container">
                             <a href="https://play.google.com/store/search?q=%EC%84%9C%EC%9A%B8%EB%B3%B4%EC%A6%9D%EB%B3%B4%ED%97%98&c=apps&hl=ko" target="_blank" rel="noopener noreferrer" className="app-store-button google">
@@ -372,7 +414,7 @@ export default function OnboardingPage() {
                       >
                         <div className="step-content">
                           <p className="content-text">
-                            모바일 서울보증보험 앱 설치 → 개인정보동의 → 1번 [예약 체결·이행을 위한 동의]
+                            모바일 서울보증보험 앱 설치 → 개인정보동의 → 1번 [계약 체결·이행을 위한 동의]
                           </p>
                           <div className="app-download-container">
                             <a href="https://play.google.com/store/search?q=%EC%84%9C%EC%9A%B8%EB%B3%B4%EC%A6%9D%EB%B3%B4%ED%97%98&c=apps&hl=ko" target="_blank" rel="noopener noreferrer" className="app-store-button google">
@@ -546,21 +588,93 @@ export default function OnboardingPage() {
       {/* Modal for Application Flow */}
       {
         isModalOpen && (
-          <div className="modal-overlay" onClick={() => setIsModalOpen(false)}>
+          <div className="modal-overlay" onClick={closeModal}>
             <div className="modal-content" onClick={(e) => e.stopPropagation()}>
               <div className="modal-header">
-                <h2 className="modal-title">협회 말소처리 안내</h2>
+                <h2 className="modal-title">
+                  {modalView === 'question' ? '협회 말소처리 안내' : '내용증명 샘플보기'}
+                </h2>
                 <button
                   className="modal-close-button"
-                  onClick={() => setIsModalOpen(false)}
+                  onClick={closeModal}
                   aria-label="닫기"
                 >
                   <X size={24} />
                 </button>
               </div>
               <div className="modal-body">
-                <div className="modal-subtitle">본인의 상황을 알려주세요</div>
-                <QuestionFlow onComplete={() => { }} />
+                {modalView === 'question' && (
+                  <>
+                    <div className="modal-subtitle">본인의 상황을 알려주세요</div>
+                    <QuestionFlow
+                      onComplete={handleQuestionsComplete}
+                    />
+                  </>
+                )}
+
+                {modalView === 'sample' && (
+                  <>
+                    <ApplicationPreview
+                      personalInfo={{
+                        company: "A금융서비스",
+                        companyAddress: "서울시 강남구 강남길 21",
+                        residentNumber: "800101-1234567",
+                        name: "홍길동",
+                        address: "서울시 강남구 강남길 12",
+                        phone: "010-1234-5678",
+                        submissionDate: "2025-01-01",
+                        recipients: [
+                          "생명보험협회 - 서울특별시 중구 퇴계로 173, 16층(충무로3가)",
+                          "손해보험협회 - 서울특별시 종로구 종로1길 50 15층 B동(케이트윈타워) 손해보험협회 자격관리팀",
+                          "A금융서비스 - 서울시 강남구 강남길 21",
+                        ],
+                      }}
+                      selectedResults={['생명보험협회', '손해보험협회', '현재 재직회사']}
+                      onPdfDownloaded={() => { }}
+                      onBack={() => setModalView('question')}
+                      isSample={true}
+                    />
+                    <div className="mt-4">
+                      <button
+                        className="w-full py-6 rounded-xl border-2 border-[#FFE082] bg-orange-50 text-gray-600 font-bold text-lg transition-all duration-150 hover:bg-orange-100 hover:shadow-lg active:scale-95"
+                        onClick={() => setModalView('personal-info')}
+                      >
+                        내용증명 작성을 도와드릴까요?
+                      </button>
+                    </div>
+                  </>
+                )}
+
+                {modalView === 'personal-info' && (
+                  <PersonalInfoForm
+                    onComplete={handlePersonalInfoComplete}
+                    onBack={() => setModalView('sample')}
+                    selectedResults={selectedResults}
+                  />
+                )}
+
+                {modalView === 'preview' && personalInfo && (
+                  <ApplicationPreview
+                    personalInfo={personalInfo}
+                    selectedResults={selectedResults}
+                    onPdfDownloaded={() => setModalView('completed')}
+                    onBack={() => setModalView('personal-info')}
+                  />
+                )}
+
+                {modalView === 'completed' && (
+                  <div className="py-12 text-center">
+                    <div className="mb-4 text-6xl">✅</div>
+                    <h2 className="mb-8 text-2xl font-bold text-gray-900">다운로드가 완료됐습니다.</h2>
+                    <Button
+                      onClick={closeModal}
+                      className="bg-goodrich-yellow-light transition-all duration-150 hover:opacity-90 active:scale-95"
+                      size="lg"
+                    >
+                      닫기
+                    </Button>
+                  </div>
+                )}
               </div>
             </div>
           </div>

@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 
 import NavigationHeader from "@/app/components/NavigationHeader";
 import BottomNavigation from "@/app/components/BottomNavigation";
@@ -23,10 +24,23 @@ interface PersonalInfo {
   recipients: string[];
 }
 
-export default function ApplicationFlowPage() {
-  const [currentStep, setCurrentStep] = useState<FlowStep>("questions");
+function ApplicationFlowContent() {
+  const searchParams = useSearchParams();
+  const initialStep = searchParams.get('mode') === 'writing' ? 'personal-info' : 'questions';
+
+  const [currentStep, setCurrentStep] = useState<FlowStep>(initialStep);
   const [selectedResults, setSelectedResults] = useState<string[]>([]);
   const [personalInfo, setPersonalInfo] = useState<PersonalInfo | null>(null);
+
+  // Effect to handle direct navigation when search param changes or on mount
+  useEffect(() => {
+    if (searchParams.get('mode') === 'writing') {
+      setCurrentStep('personal-info');
+      // If jumping straight to writing, we might want to default some selectedResults 
+      // or handle it in the form if they are needed.
+      // For now, assuming empty selectedResults is fine or form handles it.
+    }
+  }, [searchParams]);
 
   const handleQuestionsComplete = (results: string[]) => {
     setSelectedResults(results);
@@ -50,7 +64,13 @@ export default function ApplicationFlowPage() {
     if (currentStep === "sample-preview") {
       setCurrentStep("questions");
     } else if (currentStep === "personal-info") {
-      setCurrentStep("sample-preview");
+      // If we came directly to writing mode, going back should probably go to questions or home
+      // But standard flow is back to sample-preview
+      if (searchParams.get('mode') === 'writing') {
+        setCurrentStep("questions"); // Or maybe router.back()
+      } else {
+        setCurrentStep("sample-preview");
+      }
     } else if (currentStep === "preview") {
       setCurrentStep("personal-info");
     }
@@ -96,7 +116,7 @@ export default function ApplicationFlowPage() {
                   ],
                 }}
                 selectedResults={selectedResults}
-                onPdfDownloaded={() => {}}
+                onPdfDownloaded={() => { }}
                 onBack={handleGoBack}
                 isSample={true}
               />
@@ -164,6 +184,14 @@ export default function ApplicationFlowPage() {
 
       <BottomNavigation />
     </div>
+  );
+}
+
+export default function ApplicationFlowPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ApplicationFlowContent />
+    </Suspense>
   );
 }
 
