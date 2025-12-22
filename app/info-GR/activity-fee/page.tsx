@@ -186,6 +186,7 @@ export default function ActivityFeePage() {
                 <p className="notice-subtitle notice-subtitle-margin">환수</p>
                 <p>- 36개월 이내 해촉 시 지원금 전액 <span className="refund-highlight">환수</span></p>
                 <p>- 미유지 계약 발생 시 정산<span className="refund-highlight">환수</span>율에 따라 <span className="refund-highlight">환수</span> 적용</p>
+                <p>- {isType1 ? '활동수수료 I' : '활동수수료 II'} 신청 시 : {isType1 ? '활동수수료II' : '활동수수료I'},정착교육비,금융캠퍼스,고능률수수료,장기고능률수수료 미지급</p>
               </div>
             </div>
           </div>
