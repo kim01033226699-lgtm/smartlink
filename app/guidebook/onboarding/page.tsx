@@ -144,23 +144,9 @@ export default function OnboardingPage() {
                         </div>
                       </StepAccordion>
 
-                      {/* Step 2 - 기본정보 전달 (moved from 1) */}
+                      {/* Step 2 - 서울보증보험 동의 (moved from 3) */}
                       <StepAccordion
                         stepNumber="2"
-                        title="기본정보 전달"
-                        isOpen={expandedSteps.has('exp-2')}
-                        onToggle={() => toggleStep('exp-2')}
-                      >
-                        <div className="step-content">
-                          <p className="content-text">
-                            <strong>기본정보:</strong> 성명, 주민번호, 자택주소, 휴대폰 번호, 이메일 주소
-                          </p>
-                        </div>
-                      </StepAccordion>
-
-                      {/* Step 3 - 서울보증보험 동의 (moved from 2) */}
-                      <StepAccordion
-                        stepNumber="3"
                         title="서울보증보험 동의"
                         isOpen={expandedSteps.has('exp-3')}
                         onToggle={() => toggleStep('exp-3')}
@@ -182,9 +168,9 @@ export default function OnboardingPage() {
                         </div>
                       </StepAccordion>
 
-                      {/* Step 4 - 보험연수원 등록교육 수료 (moved from 3) */}
+                      {/* Step 3 - 보험연수원 등록교육 수료 (moved from 4) */}
                       <StepAccordion
-                        stepNumber="4"
+                        stepNumber="3"
                         title="보험연수원 등록교육 수료"
                         isOpen={expandedSteps.has('exp-4')}
                         onToggle={() => toggleStep('exp-4')}
@@ -260,35 +246,21 @@ export default function OnboardingPage() {
                         </div>
                       </StepAccordion>
 
-                      {/* Step 5 - 위촉서류 준비 */}
+                      {/* Step 4 - 굿리치 위촉방법 */}
                       <StepAccordion
-                        stepNumber="5"
-                        title="위촉서류 준비"
+                        stepNumber="4"
+                        title="굿리치 위촉방법"
                         isOpen={expandedSteps.has('exp-5')}
                         onToggle={() => toggleStep('exp-5')}
                       >
                         <div className="step-content">
-                          <p className="content-text mb-1">
-                            신분증 사본, 통장사본, 수료증, 등본(제출용)
+                          <p className="content-text font-bold text-lg mb-2">(1) 위촉서류</p>
+                          <p className="content-text mb-6">
+                            신분증 사본, 통장사본, 수료증, 등본(제출용) <span className="highlight-red">(본인 주민번호 공개, 그 외 비공개 필)</span> 경력증명서(교보생명위촉용), 이클린조회
                           </p>
-                          <p className="content-text mb-3">
-                            <span className="highlight-red">(본인 주민번호 공개, 그 외 비공개 필)</span>
-                          </p>
-                          <p className="content-text">
-                            경력증명서(교보생명위촉용), 이클린조회
-                          </p>
-                        </div>
-                      </StepAccordion>
 
-                      {/* Step 6 - 전자서명 및 서류 업로드 */}
-                      <StepAccordion
-                        stepNumber="6"
-                        title="전자서명 및 서류 업로드"
-                        isOpen={expandedSteps.has('exp-6')}
-                        onToggle={() => toggleStep('exp-6')}
-                      >
-                        <div className="step-content">
-                          <h4 className="font-bold text-lg text-gray-800 mb-2">(1) (Step2) 위촉서류 전자서명 하기</h4>
+                          <p className="content-text font-bold text-lg mb-2">(2) 전자서명</p>
+                          <h4 className="font-bold text-gray-800 mb-2">* 위촉서류 전자서명하기</h4>
                           <p className="content-text mb-2">
                             ① <span className="text-blue-600 font-bold">위촉계약서(필수)</span> 하단 <span className="text-blue-600 font-bold">[서류체크]</span> 버튼 클릭 → 팝업된 화면 우측 스크롤을 모두 내려서 내용 확인후 <span className="text-blue-600 font-bold">[서명]</span> 버튼 클릭 → <span className="text-blue-600 font-bold">마우스로 서명입력</span> → 저장 → <span className="text-blue-600 font-bold">[동의]</span> 버튼 클릭 → <span className="text-blue-600 font-bold">전자서명</span> 선택
                           </p>
@@ -299,42 +271,28 @@ export default function OnboardingPage() {
                             ⁙ 전자서명 본인인증 : 카카오톡인증 or 네이버인증
                           </p>
 
-                          <div className="mb-6 border-t pt-5">
-                            <div className="flex flex-col gap-2 mb-3">
-                              <h4 className="font-bold text-lg text-gray-800">(2) (Step3) E-Clean 정보 조회하기</h4>
-                              <div className="bg-orange-500 text-white px-3 py-1.5 rounded-md inline-block text-sm font-bold shadow-sm">
-                                [조회] 버튼 클릭 → 이클린 보험 서비스의 모바일 인증절차 진행
-                              </div>
-                            </div>
-
-                            <div className="border-2 border-blue-400 p-4 rounded-lg bg-white shadow-sm">
-                              <p className="text-blue-600 font-bold mb-2 text-sm md:text-base">
-                                ♥ 조회 버튼 클릭후 모래시계가 계속 돌고 있다면? 이클린 연결 오류상태!!
-                              </p>
-                              <p className="text-xs md:text-sm font-bold text-gray-700 leading-relaxed">
-                                → <a href="https://www.e-cleanins.or.kr" target="_blank" rel="noopener noreferrer" className="text-red-600">[E클린보험서비스]</a> 홈페이지에서 <span className="text-red-600">[모집종사자 본인정보조회]</span> 하여 다운로드 받은 PDF 파일을 지점장님께 회신!!!
-                              </p>
+                          <p className="content-text font-bold text-lg mb-2">(3) 서류업로드 & E-Clean정보 조회하기</p>
+                          <div className="flex flex-col gap-2 mb-3">
+                            <div className="bg-orange-500 text-white px-3 py-1.5 rounded-md inline-block text-sm font-bold shadow-sm">
+                              [조회] 버튼 클릭 → 이클린 보험 서비스의 모바일 인증절차 진행
                             </div>
                           </div>
 
-                          <div className="step-button-box mb-6">
-                            <a
-                              href="https://docusign.goodrich.kr/login"
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="step-action-link"
-                            >
-                              <span>위촉지원시스템</span>
-                              <ExternalLink size={16} />
-                            </a>
+                          <div className="border-2 border-blue-400 p-4 rounded-lg bg-white shadow-sm">
+                            <p className="text-blue-600 font-bold mb-2 text-sm md:text-base">
+                              ♥ 조회 버튼 클릭후 모래시계가 계속 돌고 있다면? 이클린 연결 오류상태!!
+                            </p>
+                            <p className="text-xs md:text-sm font-bold text-gray-700 leading-relaxed">
+                              → <span className="text-red-600">[E클린보험서비스]</span> 홈페이지에서 <span className="text-red-600">[모집종사자 본인정보조회]</span> 하여 다운로드 받은 PDF 파일을 지점장님께 회신!!!
+                            </p>
                           </div>
                         </div>
                       </StepAccordion>
 
-                      {/* Step 7 - 각 보험사 위촉신청 */}
+                      {/* Step 5 - 원수사 위촉안내 */}
                       <StepAccordion
-                        stepNumber="7"
-                        title="각 보험사 위촉신청"
+                        stepNumber="5"
+                        title="원수사 위촉안내"
                         isOpen={expandedSteps.has('exp-7')}
                         onToggle={() => toggleStep('exp-7')}
                       >
@@ -375,21 +333,21 @@ export default function OnboardingPage() {
 
                     {/* Detailed Steps */}
                     <div className="step-details">
-                      {/* Step 1 - 필요정보 */}
+                      {/* Step 1 - 모집인 시험 접수 */}
                       <StepAccordion
                         stepNumber="1"
-                        title="필요정보"
+                        title="모집인 시험 접수"
                         isOpen={expandedSteps.has('inexp-1')}
                         onToggle={() => toggleStep('inexp-1')}
                       >
                         <div className="step-content">
                           <p className="content-text mb-4 text-blue-600 font-bold">
-                            기본정보 : 성명, 주민번호, 자택주소, 휴대폰 번호, 이메일 주소, <span className="text-red-500">응시지역</span>
+                            기본정보 : 성명, 주민번호, 휴대폰번호(본인명의), 이메일주소, <span className="text-red-500">응시지역</span>
                           </p>
 
-                          <div className="bg-yellow-100 border border-yellow-300 rounded-lg p-3 mb-4 text-center cursor-pointer hover:bg-yellow-200 transition-colors">
-                            <span className="font-bold text-lg text-gray-800 flex items-center justify-center gap-2">
-                              <span className="text-red-500">≫</span> 응시지역 확인 <ExternalLink size={20} className="inline" />
+                          <div className="bg-yellow-100 border border-yellow-300 rounded-lg p-3 mb-4 text-left">
+                            <span className="font-bold text-lg text-gray-800 flex items-center justify-start gap-2">
+                              <span className="text-red-500">≫</span> 응시지역 확인
                             </span>
                           </div>
 
@@ -480,31 +438,21 @@ export default function OnboardingPage() {
                         </div>
                       </StepAccordion>
 
-                      {/* Step 4 */}
+                      {/* Step 4 - 굿리치 위촉방법 */}
                       <StepAccordion
                         stepNumber="4"
-                        title="위촉서류 준비"
+                        title="굿리치 위촉방법"
                         isOpen={expandedSteps.has('inexp-4')}
                         onToggle={() => toggleStep('inexp-4')}
                       >
                         <div className="step-content">
-                          <p className="content-text">
-                            신분증 사본, 통장사본, 수료증, 등본(제출용) 
-                            <span className="highlight-red">(본인 주민번호 공개, 그 외 비공개 필)</span><br />
-                            합격증 (생명, 손해, 제3보험)
+                          <p className="content-text font-bold text-lg mb-2">(1) 위촉서류</p>
+                          <p className="content-text mb-6">
+                            신분증 사본, 통장사본, 수료증, 등본(제출용) <span className="highlight-red">(본인 주민번호 공개, 그 외 비공개 필)</span> 경력증명서(교보생명위촉용), 이클린조회
                           </p>
-                        </div>
-                      </StepAccordion>
 
-                      {/* Step 5 - 전자서명 및 서류 업로드 */}
-                      <StepAccordion
-                        stepNumber="5"
-                        title="전자서명 및 서류 업로드"
-                        isOpen={expandedSteps.has('inexp-5')}
-                        onToggle={() => toggleStep('inexp-5')}
-                      >
-                        <div className="step-content">
-                          <h4 className="font-bold text-lg text-gray-800 mb-2">(1) (Step2) 위촉서류 전자서명 하기</h4>
+                          <p className="content-text font-bold text-lg mb-2">(2) 전자서명</p>
+                          <h4 className="font-bold text-gray-800 mb-2">* 위촉서류 전자서명하기</h4>
                           <p className="content-text mb-2">
                             ① <span className="text-blue-600 font-bold">위촉계약서(필수)</span> 하단 <span className="text-blue-600 font-bold">[서류체크]</span> 버튼 클릭 → 팝업된 화면 우측 스크롤을 모두 내려서 내용 확인후 <span className="text-blue-600 font-bold">[서명]</span> 버튼 클릭 → <span className="text-blue-600 font-bold">마우스로 서명입력</span> → 저장 → <span className="text-blue-600 font-bold">[동의]</span> 버튼 클릭 → <span className="text-blue-600 font-bold">전자서명</span> 선택
                           </p>
@@ -515,44 +463,30 @@ export default function OnboardingPage() {
                             ⁙ 전자서명 본인인증 : 카카오톡인증 or 네이버인증
                           </p>
 
-                          <div className="mb-6 border-t pt-5">
-                            <div className="flex flex-col gap-2 mb-3">
-                              <h4 className="font-bold text-lg text-gray-800">(2) (Step3) E-Clean 정보 조회하기</h4>
-                              <div className="bg-orange-500 text-white px-3 py-1.5 rounded-md inline-block text-sm font-bold shadow-sm">
-                                [조회] 버튼 클릭 → 이클린 보험 서비스의 모바일 인증절차 진행
-                              </div>
-                            </div>
-
-                            <div className="border-2 border-blue-400 p-4 rounded-lg bg-white shadow-sm">
-                              <p className="text-blue-600 font-bold mb-2 text-sm md:text-base">
-                                ♥ 조회 버튼 클릭후 모래시계가 계속 돌고 있다면? 이클린 연결 오류상태!!
-                              </p>
-                              <p className="text-xs md:text-sm font-bold text-gray-700 leading-relaxed">
-                                → <a href="https://www.e-cleanins.or.kr" target="_blank" rel="noopener noreferrer" className="text-red-600">[E클린보험서비스]</a> 홈페이지에서 <span className="text-red-600">[모집종사자 본인정보조회]</span> 하여 다운로드 받은 PDF 파일을 지점장님께 회신!!!
-                              </p>
+                          <p className="content-text font-bold text-lg mb-2">(3) 서류업로드 & E-Clean정보 조회하기</p>
+                          <div className="flex flex-col gap-2 mb-3">
+                            <div className="bg-orange-500 text-white px-3 py-1.5 rounded-md inline-block text-sm font-bold shadow-sm">
+                              [조회] 버튼 클릭 → 이클린 보험 서비스의 모바일 인증절차 진행
                             </div>
                           </div>
 
-                          <div className="step-button-box mb-6">
-                            <a
-                              href="https://docusign.goodrich.kr/login"
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="step-action-link"
-                            >
-                              <span>위촉지원시스템</span>
-                              <ExternalLink size={16} />
-                            </a>
+                          <div className="border-2 border-blue-400 p-4 rounded-lg bg-white shadow-sm">
+                            <p className="text-blue-600 font-bold mb-2 text-sm md:text-base">
+                              ♥ 조회 버튼 클릭후 모래시계가 계속 돌고 있다면? 이클린 연결 오류상태!!
+                            </p>
+                            <p className="text-xs md:text-sm font-bold text-gray-700 leading-relaxed">
+                              → <span className="text-red-600">[E클린보험서비스]</span> 홈페이지에서 <span className="text-red-600">[모집종사자 본인정보조회]</span> 하여 다운로드 받은 PDF 파일을 지점장님께 회신!!!
+                            </p>
                           </div>
                         </div>
                       </StepAccordion>
 
-                      {/* Step 6 - 각 보험사 위촉신청 */}
+                      {/* Step 5 - 원수사 위촉안내 */}
                       <StepAccordion
-                        stepNumber="6"
-                        title="각 보험사 위촉신청"
-                        isOpen={expandedSteps.has('inexp-6')}
-                        onToggle={() => toggleStep('inexp-6')}
+                        stepNumber="5"
+                        title="원수사 위촉안내"
+                        isOpen={expandedSteps.has('inexp-5')}
+                        onToggle={() => toggleStep('inexp-5')}
                       >
                         <div className="step-content">
                           <p className="content-text mb-3">
