@@ -152,8 +152,8 @@
 .content-section {
   max-width: 800px;
   margin: 0 auto;
-  padding-left: 15%;
-  padding-right: 15%;
+  padding-left: 9%;
+  padding-right: 9%;
 }
 
 /* Menu Grid for Selection */
@@ -166,6 +166,62 @@
   padding: 1rem 1rem;
   width: 100%;
   box-sizing: border-box;
+}
+
+/* Cancellation Tabs */
+.cancellation-tabs {
+  display: flex;
+  border-bottom: 2px solid #E8E8E8;
+  margin-bottom: 1.5rem;
+}
+
+.cancellation-tab {
+  flex: 1;
+  text-align: center;
+  padding: 1rem 0.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #888;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-bottom: -2px;
+  /* Pull bottom border down to overlap container border */
+}
+
+.cancellation-tab:hover {
+  color: #555;
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+.cancellation-tab.active {
+  color: #FF6B00;
+  border-bottom: 2px solid #FF6B00;
+}
+
+.section-title-bar {
+  display: flex;
+  align-items: center;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #333;
+  margin-bottom: 1rem;
+  position: relative;
+  padding-left: 12px;
+}
+
+.section-title-bar::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 16px;
+  background-color: #FF6B00;
+  border-radius: 2px;
 }
 
 .empty-spacer {
@@ -230,23 +286,7 @@
 }
 
 /* 무경력자 프로세스 - 파스텔 퍼플 색상 */
-.process-detail.inexperienced-process .step-accordion::before {
-  background: linear-gradient(180deg, #E1BEE7 0%, #E8E8E8 100%);
-}
 
-.process-detail.inexperienced-process .step-accordion:last-child::before {
-  background: linear-gradient(180deg, #E1BEE7 0%, #E8E8E8 50%);
-}
-
-.process-detail.inexperienced-process .step-accordion-number {
-  background: #E1BEE7;
-}
-
-.process-detail.inexperienced-process .step-accordion-header:hover .step-accordion-number,
-.process-detail.inexperienced-process .step-accordion.active .step-accordion-number {
-  background: linear-gradient(135deg, #E1BEE7, #CE93D8);
-  box-shadow: 0 4px 12px rgba(225, 190, 231, 0.4);
-}
 
 .process-detail.inexperienced-process .detail-header::after {
   background: #E1BEE7;
@@ -267,6 +307,53 @@
     transform: translateY(0);
   }
 }
+
+/* Inexperienced Process - Purple Theme Overrides - Toned Down */
+.process-detail.inexperienced-process .step-accordion::after {
+  background: linear-gradient(180deg, #E1BEE7 0%, #E0E0E0 100%);
+}
+
+.process-detail.inexperienced-process .step-accordion-header:hover .step-accordion-title-wrapper {
+  border-color: #CE93D8;
+  box-shadow: 0 4px 12px rgba(156, 39, 176, 0.1);
+}
+
+.process-detail.inexperienced-process .step-accordion.active .step-accordion-title-wrapper {
+  border-color: #CE93D8;
+  background: linear-gradient(135deg, #FAF5FB 0%, #FFFFFF 100%);
+  box-shadow: 0 4px 16px rgba(156, 39, 176, 0.15);
+}
+
+.process-detail.inexperienced-process .step-accordion-icon {
+  color: #9C27B0;
+}
+
+.process-detail.inexperienced-process .step-accordion-content {
+  border-color: #E1BEE7;
+  box-shadow: 0 4px 16px rgba(156, 39, 176, 0.05);
+}
+
+.process-detail.inexperienced-process .detail-title {
+  color: #9C27B0;
+}
+
+/* Override text colors inside inexperienced process if needed */
+.process-detail.inexperienced-process .text-blue-600 {
+  color: #9C27B0 !important;
+}
+
+.process-detail.inexperienced-process .border-blue-200 {
+  border-color: #E1BEE7 !important;
+}
+
+.process-detail.inexperienced-process .bg-blue-50 {
+  background-color: #F3E5F5 !important;
+}
+
+.process-detail.inexperienced-process .hover\:bg-blue-50:hover {
+  background-color: #F3E5F5 !important;
+}
+
 
 .detail-header {
   text-align: center;
@@ -297,31 +384,33 @@
 /* Vertical Step Styles */
 .step-accordion {
   position: relative;
-  padding-left: 45px;
+  padding-left: 0;
   margin-bottom: 2rem;
   transition: all 0.3s ease;
+}
+
+/* Centered Vertical Line Connector - Toned down */
+.step-accordion::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -2rem;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 2rem;
+  background: linear-gradient(180deg, #BBDEFB 0%, #E0E0E0 100%);
+  z-index: 0;
 }
 
 .step-accordion:last-child {
   margin-bottom: 0;
 }
 
-/* Vertical Line Connector - positioned to enter text box */
-.step-accordion::before {
-  content: '';
-  position: absolute;
-  left: 12.5px;
-  top: 29px;
-  width: 2px;
-  height: calc(100% + 2rem);
-  background: linear-gradient(180deg, #A8D5FF 0%, #E8E8E8 100%);
-  z-index: 0;
+.step-accordion:last-child::after {
+  display: none;
 }
 
-.step-accordion:last-child::before {
-  background: linear-gradient(180deg, #A8D5FF 0%, #E8E8E8 50%);
-  height: 29px;
-}
+/* Vertical Line Connector removed */
 
 .step-accordion-header {
   width: 100%;
@@ -338,42 +427,18 @@
 }
 
 .step-accordion-number {
-  background: #A8D5FF;
-  border: none;
-  color: #ffffff;
-  min-width: 29px;
-  height: 29px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  font-size: 0.85rem;
-  flex-shrink: 0;
-  position: absolute;
-  left: -45px;
-  top: 0;
-  box-shadow: none;
-  transition: all 0.3s ease;
-}
-
-/* Active/Open state */
-.step-accordion-header:hover .step-accordion-number,
-.step-accordion.active .step-accordion-number {
-  background: linear-gradient(135deg, #A8D5FF, #7BBFFF);
-  color: #ffffff;
-  transform: scale(1.1);
-  box-shadow: 0 4px 12px rgba(168, 213, 255, 0.4);
+  display: none;
 }
 
 .step-accordion-title-wrapper {
   flex: 1;
   background: white;
-  border: 2px solid #E8E8E8;
+  border: 1px solid #E3F2FD;
+  /* Toned down blue border */
   border-radius: 12px;
   padding: 1rem 1.25rem;
   transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
 }
 
 .step-accordion-header:hover .step-accordion-title-wrapper {
@@ -408,8 +473,9 @@
 
 .step-accordion-content {
   background: #FAFBFC;
-  border: 2px solid #0095FF;
-  border-top: 1px solid #E0E0E0;
+  border: 1px solid #BBDEFB;
+  /* Toned down blue border */
+  border-top: 1px solid #E3F2FD;
   border-radius: 0 0 12px 12px;
   padding: 1.5rem;
   margin-top: 0;
@@ -980,31 +1046,10 @@
   }
 
   .step-accordion {
-    padding-left: 38px;
+    padding-left: 0;
   }
 
-  .step-accordion::before {
-    left: 10.5px;
-    top: 24px;
-    width: 1.5px;
-  }
 
-  .step-accordion:last-child::before {
-    height: 24px;
-  }
-
-  .step-accordion-number {
-    min-width: 24px;
-    height: 24px;
-    font-size: 0.75rem;
-    left: -38px;
-    box-shadow: none;
-  }
-
-  .step-accordion-header:hover .step-accordion-number,
-  .step-accordion.active .step-accordion-number {
-    box-shadow: 0 4px 12px rgba(168, 213, 255, 0.4);
-  }
 
   .step-accordion-title-wrapper {
     padding: 0.875rem 1rem;

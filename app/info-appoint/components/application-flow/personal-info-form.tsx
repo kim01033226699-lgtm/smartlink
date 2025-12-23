@@ -89,8 +89,8 @@ export default function PersonalInfoForm({ onComplete, onBack, selectedResults }
 
     if (!formData.residentNumber.trim()) {
       newErrors.residentNumber = '주민번호를 입력해주세요.';
-    } else if (!/^\d{6}-\d{7}$/.test(formData.residentNumber)) {
-      newErrors.residentNumber = '올바른 주민번호 형식이 아닙니다. (예: 123456-1234567)';
+    } else if (!/^\d{6}-?\d{7}$/.test(formData.residentNumber)) {
+      newErrors.residentNumber = '올바른 주민번호 형식이 아닙니다. (예: 123456-1234567 또는 생략)';
     }
 
     if (!formData.name.trim()) {
@@ -103,7 +103,7 @@ export default function PersonalInfoForm({ onComplete, onBack, selectedResults }
 
     if (!formData.phone.trim()) {
       newErrors.phone = '전화번호를 입력해주세요.';
-    } else if (!/^[0-9-]+$/.test(formData.phone)) {
+    } else if (!/^[\d-]{10,14}$/.test(formData.phone)) {
       newErrors.phone = '올바른 전화번호 형식이 아닙니다.';
     }
 
@@ -293,25 +293,25 @@ export default function PersonalInfoForm({ onComplete, onBack, selectedResults }
           {/* 주민번호 */}
           <div>
             <label htmlFor="residentNumber" className="block text-sm font-medium text-gray-700 mb-1">
-              주민번호 <span className="text-red-500">*</span>
+              주민번호 (-생략) <span className="text-red-500">*</span>
             </label>
             <input
               id="residentNumber"
               type="text"
               value={formData.residentNumber}
               onChange={(e) => {
-                let value = e.target.value.replace(/[^0-9]/g, ''); // 숫자만 추출
-
-                // 자동으로 - 추가
-                if (value.length > 6) {
-                  value = value.slice(0, 6) + '-' + value.slice(6, 13);
-                }
-
+                const value = e.target.value.replace(/[^0-9-]/g, ''); // 숫자와 - 만 허용
                 handleChange('residentNumber', value);
+              }}
+              onBlur={(e) => {
+                const value = e.target.value.replace(/[^0-9]/g, '');
+                if (value.length === 13) {
+                  handleChange('residentNumber', value.replace(/(\d{6})(\d{7})/, '$1-$2'));
+                }
               }}
               className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${errors.residentNumber ? 'border-red-500' : 'border-gray-300'
                 }`}
-              placeholder="123456-1234567 (- 자동 입력)"
+              placeholder="1234561234567 (- 생략 가능)"
               maxLength={14}
             />
             {errors.residentNumber && (
@@ -341,16 +341,31 @@ export default function PersonalInfoForm({ onComplete, onBack, selectedResults }
           {/* 전화번호 */}
           <div>
             <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
-              전화번호 <span className="text-red-500">*</span>
+              전화번호 (-생략) <span className="text-red-500">*</span>
             </label>
             <input
               id="phone"
               type="tel"
               value={formData.phone}
-              onChange={(e) => handleChange('phone', e.target.value)}
+              onChange={(e) => {
+                const value = e.target.value.replace(/[^0-9-]/g, ''); // 숫자와 - 만 허용
+                handleChange('phone', value);
+              }}
+              onBlur={(e) => {
+                const value = e.target.value.replace(/[^0-9]/g, '');
+                if (value.length === 11) {
+                  handleChange('phone', value.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3'));
+                } else if (value.length === 10) {
+                  if (value.startsWith('02')) {
+                    handleChange('phone', value.replace(/(\d{2})(\d{4})(\d{4})/, '$1-$2-$3'));
+                  } else {
+                    handleChange('phone', value.replace(/(\d{3})(\d{3,4})(\d{4})/, '$1-$2-$3'));
+                  }
+                }
+              }}
               className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${errors.phone ? 'border-red-500' : 'border-gray-300'
                 }`}
-              placeholder="010-1234-5678"
+              placeholder="01012345678 (- 생략 가능)"
             />
             {errors.phone && (
               <p className="text-red-500 text-sm mt-1">{errors.phone}</p>

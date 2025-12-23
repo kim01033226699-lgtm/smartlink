@@ -43,6 +43,38 @@ export default function ApplicationPreview({
   const submissionDate = new Date(personalInfo.submissionDate);
   const tenDaysLater = addDays(submissionDate, 10);
 
+  // 전화번호 포맷팅 함수
+  const formatPhoneNumber = (phone: string) => {
+    // 이미 하이픈이 있는 경우 그대로 반환
+    if (phone.includes('-')) return phone;
+
+    // 숫자만 있는 경우 포맷팅
+    const cleaned = phone.replace(/[^0-9]/g, '');
+    if (cleaned.length === 11) {
+      return cleaned.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+    } else if (cleaned.length === 10) {
+      // 02-1234-5678 또는 010-123-4567 등
+      if (cleaned.startsWith('02')) {
+        return cleaned.replace(/(\d{2})(\d{4})(\d{4})/, '$1-$2-$3');
+      }
+      return cleaned.replace(/(\d{3})(\d{3,4})(\d{4})/, '$1-$2-$3');
+    }
+    return phone;
+  };
+
+  // 주민번호 포맷팅 함수
+  const formatResidentNumber = (rrn: string) => {
+    // 이미 하이픈이 있는 경우 그대로 반환
+    if (rrn.includes('-')) return rrn;
+
+    // 숫자만 있는 경우 포맷팅
+    const cleaned = rrn.replace(/[^0-9]/g, '');
+    if (cleaned.length === 13) {
+      return cleaned.replace(/(\d{6})(\d{7})/, '$1-$2');
+    }
+    return rrn;
+  };
+
   const handleDownloadPdfClick = () => {
     setShowConfirmModal(true);
   };
@@ -53,13 +85,35 @@ export default function ApplicationPreview({
 
     setIsGenerating(true);
 
+    // 현재 스타일 저장
+    const originalStyle = {
+      width: previewRef.current.style.width,
+      minWidth: previewRef.current.style.minWidth,
+      maxWidth: previewRef.current.style.maxWidth,
+    };
+
     try {
+      // PDF 생성을 위해 강제로 A4 크기로 고정
+      previewRef.current.style.width = '210mm';
+      previewRef.current.style.minWidth = '210mm';
+      previewRef.current.style.maxWidth = 'none';
+
+      // 스타일 변경이 적용되도록 잠시 대기
+      await new Promise(resolve => setTimeout(resolve, 200));
+
       // html2canvas를 사용하여 HTML을 캔버스로 변환
       const canvas = await html2canvas(previewRef.current, {
         scale: 2,
         useCORS: true,
         logging: false,
+        width: 794, // 210mm to px (96dpi 기준 약 794px)
+        windowWidth: 1080, // 모바일에서 PC 뷰포트로 인식하게 함
       });
+
+      // 스타일 복구
+      previewRef.current.style.width = originalStyle.width;
+      previewRef.current.style.minWidth = originalStyle.minWidth;
+      previewRef.current.style.maxWidth = originalStyle.maxWidth;
 
       // 캔버스를 이미지로 변환
       const imgData = canvas.toDataURL('image/png');
@@ -81,6 +135,14 @@ export default function ApplicationPreview({
       onPdfDownloaded();
     } catch (error) {
       console.error('PDF 생성 실패:', error);
+
+      // 에러 발생 시에도 스타일 복구 시도
+      if (previewRef.current) {
+        previewRef.current.style.width = originalStyle.width;
+        previewRef.current.style.minWidth = originalStyle.minWidth;
+        previewRef.current.style.maxWidth = originalStyle.maxWidth;
+      }
+
       alert('PDF 생성에 실패했습니다. 다시 시도해주세요.');
       setIsGenerating(false);
     }
@@ -170,14 +232,16 @@ export default function ApplicationPreview({
             {/* 신청서 표 */}
             <table className="w-full border-collapse mb-6">
               <tbody>
-                <tr>
-                  <td className="border border-gray-800 bg-gray-100 px-4 py-3 font-semibold w-1/4 text-center">
-                    소속회사
-                  </td>
-                  <td className="border border-gray-800 px-4 py-3 text-center">
-                    {personalInfo.company}
-                  </td>
-                </tr>
+                {personalInfo.company && (
+                  <tr>
+                    <td className="border border-gray-800 bg-gray-100 px-4 py-3 font-semibold w-1/4 text-center">
+                      소속회사
+                    </td>
+                    <td className="border border-gray-800 px-4 py-3 text-center">
+                      {personalInfo.company}
+                    </td>
+                  </tr>
+                )}
                 <tr>
                   <td className="border border-gray-800 bg-gray-100 px-4 py-3 font-semibold text-center">
                     성명
@@ -191,7 +255,7 @@ export default function ApplicationPreview({
                     주민번호
                   </td>
                   <td className="border border-gray-800 px-4 py-3 text-center">
-                    {personalInfo.residentNumber}
+                    {formatResidentNumber(personalInfo.residentNumber)}
                   </td>
                 </tr>
                 <tr>
@@ -207,7 +271,7 @@ export default function ApplicationPreview({
                     전화번호
                   </td>
                   <td className="border border-gray-800 px-4 py-3 text-center">
-                    {personalInfo.phone}
+                    {formatPhoneNumber(personalInfo.phone)}
                   </td>
                 </tr>
               </tbody>

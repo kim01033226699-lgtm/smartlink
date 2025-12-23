@@ -155,29 +155,23 @@ export default function OnboardingPage() {
                     <div className="step-details">
                       {/* Step 1 - 협회 말소하기 (moved from 4) */}
                       <StepAccordion
-                        stepNumber="1"
-                        title="협회 말소하기"
+                        title="① 협회 말소하기"
                         isOpen={expandedSteps.has('exp-1')}
                         onToggle={() => toggleStep('exp-1')}
                       >
                         <div className="step-content">
                           {/* Main Choice Buttons */}
-                          <div className="grid grid-cols-2 gap-3 mb-4">
+                          {/* Cancellation Mode Tabs */}
+                          <div className="cancellation-tabs">
                             <button
                               onClick={() => setCancellationMode('certified')}
-                              className={`p-4 rounded-xl border-2 transition-all ${cancellationMode === 'certified'
-                                ? 'border-orange-500 bg-orange-50 text-orange-700 font-bold'
-                                : 'border-gray-200 hover:border-orange-300 hover:bg-orange-50/50'
-                                }`}
+                              className={`cancellation-tab ${cancellationMode === 'certified' ? 'active' : ''}`}
                             >
                               내용증명으로<br />협회말소
                             </button>
                             <button
                               onClick={() => setCancellationMode('application')}
-                              className={`p-4 rounded-xl border-2 transition-all ${cancellationMode === 'application'
-                                ? 'border-blue-500 bg-blue-50 text-blue-700 font-bold'
-                                : 'border-gray-200 hover:border-blue-300 hover:bg-blue-50/50'
-                                }`}
+                              className={`cancellation-tab ${cancellationMode === 'application' ? 'active' : ''}`}
                             >
                               해촉신청서로<br />협회말소
                             </button>
@@ -185,63 +179,80 @@ export default function OnboardingPage() {
 
                           {/* Certified Mail Mode Content */}
                           {cancellationMode === 'certified' && (
-                            <div className="fade-in bg-white border border-gray-100 rounded-xl p-4 shadow-sm mb-4">
-                              <h4 className="font-bold text-gray-800 mb-3 flex items-center">
-                                <span className="w-1 h-4 bg-orange-500 rounded-full mr-2"></span>
-                                내용증명 보내기
-                              </h4>
+                            <div className="fade-in mt-4">
+                              <div className="space-y-0 relative mt-4">
+                                {/* Step 1 Button */}
+                                <div className="relative">
+                                  <button
+                                    onClick={() => openModal('personal-info')}
+                                    className="w-full text-left py-4 flex items-center justify-between border-b border-gray-100 hover:bg-gray-50 transition-colors"
+                                  >
+                                    <span className="font-bold text-gray-800 text-lg">1. 내용증명 작성하기</span>
+                                    <ChevronRight size={20} className="text-gray-400" />
+                                  </button>
+                                </div>
 
-                              <div className="space-y-3">
-                                <button
-                                  onClick={() => openModal('personal-info')}
-                                  className="w-full p-3 bg-white border border-gray-200 rounded-lg flex items-center justify-between hover:bg-gray-50 transition-colors group"
-                                >
-                                  <span className="font-medium text-gray-700">1. 내용증명 작성하기</span>
-                                  <ChevronRight size={16} className="text-gray-400 group-hover:text-orange-500 transition-colors" />
-                                </button>
-
-                                <div className="space-y-2">
+                                {/* Step 2 Button */}
+                                <div className="relative border-b border-gray-100">
                                   <button
                                     onClick={() => setIsSendExpanded(!isSendExpanded)}
-                                    className="w-full text-left p-3 bg-gray-50 border border-gray-100 rounded-lg flex items-center justify-between hover:bg-gray-100 transition-colors"
+                                    className="w-full text-left py-4 flex items-center justify-between hover:bg-gray-50 transition-colors"
                                   >
-                                    <span className="font-medium text-gray-700">2. 내용증명 발송하기</span>
-                                    {isSendExpanded ? <ChevronRight size={16} className="rotate-90 text-gray-500 transition-transform" /> : <ChevronRight size={16} className="text-gray-500 transition-transform" />}
+                                    <span className="font-bold text-gray-800 text-lg">2. 내용증명 발송하기</span>
+                                    <ChevronRight
+                                      size={20}
+                                      className={`text-gray-400 transition-transform ${isSendExpanded ? 'rotate-90' : ''}`}
+                                    />
                                   </button>
 
                                   {isSendExpanded && (
-                                    <div className="pl-2 pr-2 pb-2 animate-in slide-in-from-top-2 duration-200">
-                                      <div className="bg-white border-2 border-gray-200 rounded-lg p-3 mb-2 text-sm text-gray-700 shadow-sm">
-                                        <p><strong>발송처</strong> : 현재 재직회사, 생명보험협회, 손해보험협회,우체국,본인보관용으로 총 5부를 출력(생보 or 손보 코드가 하나만 있는 경우에는 해당협회에만 내용증명 제출(총 4부만 출력)</p>
-                                      </div>
-                                      <div className="bg-white border-2 border-gray-200 rounded-lg p-3 text-sm text-gray-700 shadow-sm">
-                                        <p><strong>발송방법</strong> : 출력한 내용증명에 자필서명 또는 날인 후 우체국에 내용증명으로 발송</p>
-                                      </div>
+                                    <div className="pl-2 pr-2 pb-6 pt-2 animate-in slide-in-from-top-2 duration-200">
+                                      <ul className="space-y-4 text-sm text-gray-700">
+                                        <li className="flex items-start">
+                                          <span className="mr-2 mt-1.5 w-1.5 h-1.5 bg-gray-400 rounded-full flex-shrink-0"></span>
+                                          <span className="leading-relaxed">
+                                            <strong>발송처</strong> : 현재 재직회사, 생명보험협회, 손해보험협회, 우체국, 본인보관용으로 총 5부를 출력
+                                            <span className="block text-xs text-gray-500 mt-1">
+                                              (생보 or 손보 코드가 하나만 있는 경우에는 해당협회에만 내용증명 제출 (총 4부만 출력))
+                                            </span>
+                                          </span>
+                                        </li>
+                                        <li className="flex items-start">
+                                          <span className="mr-2 mt-1.5 w-1.5 h-1.5 bg-gray-400 rounded-full flex-shrink-0"></span>
+                                          <span className="leading-relaxed">
+                                            <strong>발송방법</strong> : 출력한 내용증명에 자필서명 또는 날인 후 우체국에 내용증명으로 발송
+                                          </span>
+                                        </li>
+                                      </ul>
                                     </div>
                                   )}
                                 </div>
 
-                                <div className="space-y-2">
+                                {/* Step 3 Button */}
+                                <div className="relative border-b border-gray-100">
                                   <button
                                     onClick={() => setIsCancelExpanded(!isCancelExpanded)}
-                                    className="w-full text-left p-3 bg-gray-50 border border-gray-100 rounded-lg flex flex-col hover:bg-gray-100 transition-colors relative"
+                                    className="w-full text-left py-4 flex items-start justify-between hover:bg-gray-50 transition-colors"
                                   >
-                                    <div className="flex items-center justify-between w-full">
-                                      <span className="font-medium text-gray-700">3. 협회말소하기</span>
-                                      {isCancelExpanded ? <ChevronRight size={16} className="rotate-90 text-gray-500 transition-transform" /> : <ChevronRight size={16} className="text-gray-500 transition-transform" />}
+                                    <div className="flex flex-col gap-1">
+                                      <span className="font-bold text-gray-800 text-lg">3. 협회말소하기</span>
+                                      <span className="text-xs text-orange-600 font-medium">
+                                        내용증명 발송 후 발송일 포함 11일째 되는 날부터 말소 가능
+                                      </span>
                                     </div>
-                                    <p className="text-xs text-orange-600 mt-1">
-                                      내용증명 발송 후 발송일 포함 11일째 되는 날부터 말소 가능
-                                    </p>
+                                    <ChevronRight
+                                      size={20}
+                                      className={`text-gray-400 transition-transform mt-1 ${isCancelExpanded ? 'rotate-90' : ''}`}
+                                    />
                                   </button>
 
                                   {isCancelExpanded && (
-                                    <div className="grid grid-cols-2 gap-2 pl-2 pr-2 pb-2 animate-in slide-in-from-top-2 duration-200">
+                                    <div className="grid grid-cols-2 gap-3 pl-2 pr-2 pb-6 mt-2 animate-in slide-in-from-top-2 duration-200">
                                       <a
                                         href="https://isi.knia.or.kr/cancellation/cancelInfo.do"
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="p-3 bg-blue-50 border border-blue-200 rounded-lg text-sm text-blue-700 font-bold hover:bg-blue-100 text-center transition-colors"
+                                        className="p-3 bg-white border border-blue-200 rounded-lg text-sm text-blue-600 font-bold hover:bg-blue-50 text-center transition-colors shadow-sm"
                                       >
                                         손보협회<br />온라인 말소
                                       </a>
@@ -249,7 +260,7 @@ export default function OnboardingPage() {
                                         href="https://fp.insure.or.kr/process/process01"
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="p-3 bg-blue-50 border border-blue-200 rounded-lg text-sm text-blue-700 font-bold hover:bg-blue-100 text-center transition-colors"
+                                        className="p-3 bg-white border border-blue-200 rounded-lg text-sm text-blue-600 font-bold hover:bg-blue-50 text-center transition-colors shadow-sm"
                                       >
                                         생보협회<br />온라인 말소
                                       </a>
@@ -257,20 +268,12 @@ export default function OnboardingPage() {
                                   )}
                                 </div>
                               </div>
-
-                              <div className="mt-4 pt-4 border-t border-gray-100 hidden">
-                                {/* Moved to header */}
-                              </div>
                             </div>
                           )}
 
                           {/* Application Mode Content */}
                           {cancellationMode === 'application' && (
                             <div className="fade-in bg-white border border-gray-100 rounded-xl p-4 shadow-sm mb-4">
-                              <h4 className="font-bold text-gray-800 mb-3 flex items-center">
-                                <span className="w-1 h-4 bg-blue-500 rounded-full mr-2"></span>
-                                해촉신청서로 협회말소
-                              </h4>
                               <div className="grid grid-cols-2 gap-2">
                                 <a
                                   href="https://isi.knia.or.kr/cancellation/cancelInfo.do"
@@ -296,8 +299,7 @@ export default function OnboardingPage() {
 
                       {/* Step 2 - 서울보증보험 동의 (moved from 3) */}
                       <StepAccordion
-                        stepNumber="2"
-                        title="서울보증보험 동의"
+                        title="② 서울보증보험 동의"
                         isOpen={expandedSteps.has('exp-3')}
                         onToggle={() => toggleStep('exp-3')}
                       >
@@ -320,8 +322,7 @@ export default function OnboardingPage() {
 
                       {/* Step 3 - 보험연수원 등록교육 수료 (moved from 4) */}
                       <StepAccordion
-                        stepNumber="3"
-                        title="보험연수원 등록교육 수료"
+                        title="③ 보험연수원 등록교육 수료"
                         isOpen={expandedSteps.has('exp-4')}
                         onToggle={() => toggleStep('exp-4')}
                       >
@@ -398,8 +399,7 @@ export default function OnboardingPage() {
 
                       {/* Step 4 - 굿리치 위촉방법 */}
                       <StepAccordion
-                        stepNumber="4"
-                        title="굿리치 위촉방법"
+                        title="④ 굿리치 위촉방법"
                         isOpen={expandedSteps.has('exp-5')}
                         onToggle={() => toggleStep('exp-5')}
                       >
@@ -446,8 +446,7 @@ export default function OnboardingPage() {
 
                       {/* Step 5 - 원수사 위촉안내 */}
                       <StepAccordion
-                        stepNumber="5"
-                        title="원수사 위촉안내"
+                        title="⑤ 원수사 위촉안내"
                         isOpen={expandedSteps.has('exp-7')}
                         onToggle={() => toggleStep('exp-7')}
                       >
@@ -490,8 +489,7 @@ export default function OnboardingPage() {
                     <div className="step-details">
                       {/* Step 1 - 모집인 시험 접수 */}
                       <StepAccordion
-                        stepNumber="1"
-                        title="모집인 시험 접수"
+                        title="① 모집인 시험 접수"
                         isOpen={expandedSteps.has('inexp-1')}
                         onToggle={() => toggleStep('inexp-1')}
                       >
@@ -515,8 +513,7 @@ export default function OnboardingPage() {
 
                       {/* Step 2 */}
                       <StepAccordion
-                        stepNumber="2"
-                        title="서울보증보험 동의"
+                        title="② 서울보증보험 동의"
                         isOpen={expandedSteps.has('inexp-2')}
                         onToggle={() => toggleStep('inexp-2')}
                       >
@@ -539,8 +536,7 @@ export default function OnboardingPage() {
 
                       {/* Step 3 */}
                       <StepAccordion
-                        stepNumber="3"
-                        title="보험연수원 등록교육 수료"
+                        title="③ 보험연수원 등록교육 수료"
                         isOpen={expandedSteps.has('inexp-3')}
                         onToggle={() => toggleStep('inexp-3')}
                       >
@@ -595,8 +591,7 @@ export default function OnboardingPage() {
 
                       {/* Step 4 - 굿리치 위촉방법 */}
                       <StepAccordion
-                        stepNumber="4"
-                        title="굿리치 위촉방법"
+                        title="④ 굿리치 위촉방법"
                         isOpen={expandedSteps.has('inexp-4')}
                         onToggle={() => toggleStep('inexp-4')}
                       >
@@ -643,8 +638,7 @@ export default function OnboardingPage() {
 
                       {/* Step 5 - 원수사 위촉안내 */}
                       <StepAccordion
-                        stepNumber="5"
-                        title="원수사 위촉안내"
+                        title="⑤ 원수사 위촉안내"
                         isOpen={expandedSteps.has('inexp-5')}
                         onToggle={() => toggleStep('inexp-5')}
                       >
@@ -797,13 +791,11 @@ export default function OnboardingPage() {
 
 // Step Accordion Component
 function StepAccordion({
-  stepNumber,
   title,
   isOpen,
   onToggle,
   children
 }: {
-  stepNumber: string;
   title: string;
   isOpen: boolean;
   onToggle: () => void;
@@ -812,7 +804,6 @@ function StepAccordion({
   return (
     <div className={`step-accordion ${isOpen ? 'active' : ''}`}>
       <button className="step-accordion-header" onClick={onToggle}>
-        <div className="step-accordion-number">{stepNumber}</div>
         <div className="step-accordion-title-wrapper">
           <div className="step-accordion-title">
             {title}
