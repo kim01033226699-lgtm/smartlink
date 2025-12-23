@@ -13,6 +13,8 @@ import { cn } from "@/lib/utils";
 interface PersonalInfo {
   company: string;
   companyAddress: string;
+  lifeAssociationAddress: string;
+  generalAssociationAddress: string;
   residentNumber: string;
   name: string;
   address: string;
@@ -36,6 +38,8 @@ export default function PersonalInfoForm({ onComplete, onBack, selectedResults }
   const [formData, setFormData] = useState<PersonalInfo>({
     company: '',
     companyAddress: '',
+    lifeAssociationAddress: '',
+    generalAssociationAddress: '',
     residentNumber: '',
     name: '',
     address: '',
@@ -134,8 +138,33 @@ export default function PersonalInfoForm({ onComplete, onBack, selectedResults }
             }
             finalRecipients.push(recipientString);
           }
+        } else if (result.includes('생명보험협회')) {
+          // 생명보험협회 주소 입력값 사용
+          if (formData.lifeAssociationAddress) {
+            finalRecipients.push(`생명보험협회 - ${formData.lifeAssociationAddress}`);
+          } else {
+            // Fallback to existing logic or data.json if needed, or push just name
+            const matchedRecipient = recipients.find(r => r.company.includes('생명보험협회'));
+            if (matchedRecipient) {
+              finalRecipients.push(`${matchedRecipient.company} - ${matchedRecipient.address}`);
+            } else {
+              finalRecipients.push(result);
+            }
+          }
+        } else if (result.includes('손해보험협회')) {
+          // 손해보험협회 주소 입력값 사용
+          if (formData.generalAssociationAddress) {
+            finalRecipients.push(`손해보험협회 - ${formData.generalAssociationAddress}`);
+          } else {
+            const matchedRecipient = recipients.find(r => r.company.includes('손해보험협회'));
+            if (matchedRecipient) {
+              finalRecipients.push(`${matchedRecipient.company} - ${matchedRecipient.address}`);
+            } else {
+              finalRecipients.push(result);
+            }
+          }
         } else {
-          // 협회 등 다른 수신처
+          // 기타 수신처
           const matchedRecipient = recipients.find(r =>
             r.company.includes(result) || result.includes(r.company)
           );
@@ -154,98 +183,23 @@ export default function PersonalInfoForm({ onComplete, onBack, selectedResults }
 
   return (
     <Card>
-      <CardHeader>
-        <CardTitle>내용증명 작성하기</CardTitle>
-        <CardDescription>
-          아래 사항을 입력해 주세요
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
+      <CardContent className="pt-6">
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* 수신처 */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-3">
-              내용증명 발송할 기관/회사
-            </label>
-            {loading ? (
-              <div className="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-50 text-gray-500">
-                로딩 중...
-              </div>
-            ) : (
-              <div className="space-y-4">
-                {/* 질문 결과에 따른 수신처 표시 */}
-                <div className="bg-blue-50 border border-blue-200 rounded-md p-4">
-                  <p className="text-sm font-semibold text-gray-700 mb-3">제출 필요 기관:</p>
-                  <div className="space-y-2">
-                    {selectedResults.map((result, index) => {
-                      // "현재 재직회사"는 선택한 소속회사로 대체
-                      if (result === '현재 재직회사') {
-                        if (formData.company) {
-                          // 사용자가 직접 입력한 회사 주소가 있으면 사용, 없으면 구글시트 데이터 사용
-                          let recipientString = formData.company;
-                          if (formData.companyAddress) {
-                            recipientString = `${formData.company} - ${formData.companyAddress}`;
-                          } else {
-                            const matchedRecipient = recipients.find(r => r.company === formData.company);
-                            if (matchedRecipient) {
-                              recipientString = `${matchedRecipient.company} - ${matchedRecipient.address}`;
-                            }
-                          }
-                          return (
-                            <div key={index} className="flex items-center gap-2 text-sm">
-                              <span className="w-2 h-2 bg-blue-600 rounded-full"></span>
-                              <span className="text-gray-800">{recipientString}</span>
-                            </div>
-                          );
-                        }
-                        return (
-                          <div key={index} className="flex items-center gap-2 text-sm">
-                            <span className="w-2 h-2 bg-blue-600 rounded-full"></span>
-                            <span className="text-gray-800">전 소속회사 (아래에서 소속회사 정보를 입력하세요)</span>
-                          </div>
-                        );
-                      }
-
-                      // 협회는 구글시트 데이터와 매칭
-                      const matchedRecipient = recipients.find(r =>
-                        r.company.includes(result) || result.includes(r.company)
-                      );
-                      if (matchedRecipient) {
-                        const recipientString = `${matchedRecipient.company} - ${matchedRecipient.address}`;
-                        return (
-                          <div key={index} className="flex items-center gap-2 text-sm">
-                            <span className="w-2 h-2 bg-blue-600 rounded-full"></span>
-                            <span className="text-gray-800">{recipientString}</span>
-                          </div>
-                        );
-                      }
-                      return (
-                        <div key={index} className="flex items-center gap-2 text-sm">
-                          <span className="w-2 h-2 bg-blue-600 rounded-full"></span>
-                          <span className="text-gray-800">{result}</span>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
+          {/* 수신처 (삭제됨) */}
 
           {/* 소속회사 */}
           <div>
             <label htmlFor="company" className="block text-sm font-medium text-gray-700 mb-1">
-              전 소속회사 입력
+              현재 소속 회사명
             </label>
             <input
               id="company"
               type="text"
               value={formData.company}
               onChange={(e) => handleChange('company', e.target.value)}
-              className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                errors.company ? 'border-red-500' : 'border-gray-300'
-              }`}
-              placeholder="전 소속회사 입력(미입력시 공란으로 표기됩니다)"
+              className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${errors.company ? 'border-red-500' : 'border-gray-300'
+                }`}
+              placeholder="현재 소속 회사명 입력"
             />
             {errors.company && (
               <p className="text-red-500 text-sm mt-1">{errors.company}</p>
@@ -255,7 +209,7 @@ export default function PersonalInfoForm({ onComplete, onBack, selectedResults }
           {/* 회사 주소 */}
           <div>
             <label htmlFor="companyAddress" className="block text-sm font-medium text-gray-700 mb-1">
-              전 소속회사 주소 입력
+              현재 소속 회사 본사 주소(수신인:해촉담당자)
             </label>
             <input
               id="companyAddress"
@@ -263,7 +217,57 @@ export default function PersonalInfoForm({ onComplete, onBack, selectedResults }
               value={formData.companyAddress}
               onChange={(e) => handleChange('companyAddress', e.target.value)}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="전 소속회사 주소 입력(미입력시 공란으로 표기됩니다)"
+              placeholder="현재 소속 회사 본사 주소 입력"
+            />
+          </div>
+
+          {/* 생명보험협회 주소 */}
+          <div>
+            <div className="flex justify-between items-center mb-1">
+              <label htmlFor="lifeAssociationAddress" className="block text-sm font-medium text-gray-700">
+                생명보험협회 주소(본인 해당협회주소확인) <span className="text-xs text-gray-500">(수신인:말소담당자)</span>
+              </label>
+              <a
+                href="https://fp.insure.or.kr/process/process01"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs bg-gray-100 hover:bg-gray-200 text-blue-600 px-2 py-1 rounded border border-gray-200 transition-colors"
+              >
+                협회주소찾기
+              </a>
+            </div>
+            <input
+              id="lifeAssociationAddress"
+              type="text"
+              value={formData.lifeAssociationAddress}
+              onChange={(e) => handleChange('lifeAssociationAddress', e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="해당 지역 생명보험협회 주소 입력"
+            />
+          </div>
+
+          {/* 손해보험협회 주소 */}
+          <div>
+            <div className="flex justify-between items-center mb-1">
+              <label htmlFor="generalAssociationAddress" className="block text-sm font-medium text-gray-700">
+                손해보험협회 주소(본인 해당협회주소확인) <span className="text-xs text-gray-500">(수신인:말소담당자)</span>
+              </label>
+              <a
+                href="https://isi.knia.or.kr/cancellation/cancelInfo.do"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs bg-gray-100 hover:bg-gray-200 text-blue-600 px-2 py-1 rounded border border-gray-200 transition-colors"
+              >
+                협회주소찾기
+              </a>
+            </div>
+            <input
+              id="generalAssociationAddress"
+              type="text"
+              value={formData.generalAssociationAddress}
+              onChange={(e) => handleChange('generalAssociationAddress', e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="해당 지역 손해보험협회 주소 입력"
             />
           </div>
 
@@ -277,9 +281,8 @@ export default function PersonalInfoForm({ onComplete, onBack, selectedResults }
               type="text"
               value={formData.name}
               onChange={(e) => handleChange('name', e.target.value)}
-              className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                errors.name ? 'border-red-500' : 'border-gray-300'
-              }`}
+              className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${errors.name ? 'border-red-500' : 'border-gray-300'
+                }`}
               placeholder="홍길동"
             />
             {errors.name && (
@@ -306,9 +309,8 @@ export default function PersonalInfoForm({ onComplete, onBack, selectedResults }
 
                 handleChange('residentNumber', value);
               }}
-              className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                errors.residentNumber ? 'border-red-500' : 'border-gray-300'
-              }`}
+              className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${errors.residentNumber ? 'border-red-500' : 'border-gray-300'
+                }`}
               placeholder="123456-1234567 (- 자동 입력)"
               maxLength={14}
             />
@@ -327,9 +329,8 @@ export default function PersonalInfoForm({ onComplete, onBack, selectedResults }
               type="text"
               value={formData.address}
               onChange={(e) => handleChange('address', e.target.value)}
-              className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                errors.address ? 'border-red-500' : 'border-gray-300'
-              }`}
+              className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${errors.address ? 'border-red-500' : 'border-gray-300'
+                }`}
               placeholder="본인의 집 주소를 입력하세요"
             />
             {errors.address && (
@@ -347,9 +348,8 @@ export default function PersonalInfoForm({ onComplete, onBack, selectedResults }
               type="tel"
               value={formData.phone}
               onChange={(e) => handleChange('phone', e.target.value)}
-              className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-                errors.phone ? 'border-red-500' : 'border-gray-300'
-              }`}
+              className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${errors.phone ? 'border-red-500' : 'border-gray-300'
+                }`}
               placeholder="010-1234-5678"
             />
             {errors.phone && (
@@ -394,6 +394,17 @@ export default function PersonalInfoForm({ onComplete, onBack, selectedResults }
                   initialFocus
                   locale={ko}
                   weekStartsOn={0}
+                  modifiers={{
+                    today: new Date()
+                  }}
+                  modifiersStyles={{
+                    today: {
+                      backgroundColor: '#fffbeb', // yellow-50
+                      color: '#d97706', // amber-600
+                      fontWeight: 'bold',
+                      border: '2px solid #fbbf24' // amber-400
+                    }
+                  }}
                 />
               </PopoverContent>
             </Popover>

@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, ChevronDown, ChevronUp, ExternalLink, UserCheck, UserPlus, X, Download } from 'lucide-react';
+import { ArrowLeft, ChevronDown, ChevronUp, ExternalLink, UserCheck, UserPlus, X, Download, ChevronRight } from 'lucide-react';
 import BottomNavigation from '@/app/components/BottomNavigation';
 import ApplicationPreview from "@/app/info-appoint/components/application-flow/application-preview";
 import QuestionFlow from '@/app/info-appoint/components/application-flow/question-flow';
@@ -35,9 +35,19 @@ export default function OnboardingPage() {
   const [selectedResults, setSelectedResults] = useState<string[]>([]);
   const [personalInfo, setPersonalInfo] = useState<PersonalInfo | null>(null);
 
-  const openModal = (view: 'question' | 'sample') => {
+  /* State for Step 1 mode */
+  const [cancellationMode, setCancellationMode] = useState<'certified' | 'application' | null>(null);
+  const [isSendExpanded, setIsSendExpanded] = useState(false);
+  const [isCancelExpanded, setIsCancelExpanded] = useState(false);
+
+  const openModal = (view: 'question' | 'sample' | 'personal-info') => {
     setModalView(view);
     setIsModalOpen(true);
+
+    // If opening form directly, set default results required for form logic
+    if (view === 'personal-info') {
+      setSelectedResults(['생명보험협회', '손해보험협회', '현재 재직회사']);
+    }
   };
 
   const closeModal = () => {
@@ -151,32 +161,136 @@ export default function OnboardingPage() {
                         onToggle={() => toggleStep('exp-1')}
                       >
                         <div className="step-content">
-                          <p className="content-text mb-2">
-                            내용증명 발송 후 발송일 포함 <strong className="highlight-red">11일째 되는 날</strong>부터 생, 손보 협회 인터넷 말소 가능
-                          </p>
-
-                          <div className="highlight-box cursor-pointer hover:bg-red-50 transition-colors" onClick={() => openModal('sample')}>
-                            <span className="highlight-red font-bold border-b border-red-400">내용증명 샘플보기</span>
-                          </div>
-
-                          <p className="content-text mt-4 mb-3">
-                            생,손보 코드가 다 있는 경우<br />
-                            수신처: 현재 근무회사 본점, 생보협회<span className="highlight-red">(지역본부 必)</span>, 손보협회<span className="highlight-red">(총 5부 출력)</span>
-                          </p>
-
-                          <p className="content-text bg-blue-50 p-3 rounded-lg text-center font-bold text-blue-600">
-                            ※ 생손보협회 지역본부 및 보험사 본점 주소<br />
-                            각 홈페이지에서 확인 가능
-                          </p>
-
-                          <div className="step-button-box">
+                          {/* Main Choice Buttons */}
+                          <div className="grid grid-cols-2 gap-3 mb-4">
                             <button
-                              onClick={() => openModal('question')}
-                              className="step-action-button"
+                              onClick={() => setCancellationMode('certified')}
+                              className={`p-4 rounded-xl border-2 transition-all ${cancellationMode === 'certified'
+                                ? 'border-orange-500 bg-orange-50 text-orange-700 font-bold'
+                                : 'border-gray-200 hover:border-orange-300 hover:bg-orange-50/50'
+                                }`}
                             >
-                              협회 말소처리 안내
+                              내용증명으로<br />협회말소
+                            </button>
+                            <button
+                              onClick={() => setCancellationMode('application')}
+                              className={`p-4 rounded-xl border-2 transition-all ${cancellationMode === 'application'
+                                ? 'border-blue-500 bg-blue-50 text-blue-700 font-bold'
+                                : 'border-gray-200 hover:border-blue-300 hover:bg-blue-50/50'
+                                }`}
+                            >
+                              해촉신청서로<br />협회말소
                             </button>
                           </div>
+
+                          {/* Certified Mail Mode Content */}
+                          {cancellationMode === 'certified' && (
+                            <div className="fade-in bg-white border border-gray-100 rounded-xl p-4 shadow-sm mb-4">
+                              <h4 className="font-bold text-gray-800 mb-3 flex items-center">
+                                <span className="w-1 h-4 bg-orange-500 rounded-full mr-2"></span>
+                                내용증명 보내기
+                              </h4>
+
+                              <div className="space-y-3">
+                                <button
+                                  onClick={() => openModal('personal-info')}
+                                  className="w-full p-3 bg-white border border-gray-200 rounded-lg flex items-center justify-between hover:bg-gray-50 transition-colors group"
+                                >
+                                  <span className="font-medium text-gray-700">1. 내용증명 작성하기</span>
+                                  <ChevronRight size={16} className="text-gray-400 group-hover:text-orange-500 transition-colors" />
+                                </button>
+
+                                <div className="space-y-2">
+                                  <button
+                                    onClick={() => setIsSendExpanded(!isSendExpanded)}
+                                    className="w-full text-left p-3 bg-gray-50 border border-gray-100 rounded-lg flex items-center justify-between hover:bg-gray-100 transition-colors"
+                                  >
+                                    <span className="font-medium text-gray-700">2. 내용증명 발송하기</span>
+                                    {isSendExpanded ? <ChevronRight size={16} className="rotate-90 text-gray-500 transition-transform" /> : <ChevronRight size={16} className="text-gray-500 transition-transform" />}
+                                  </button>
+
+                                  {isSendExpanded && (
+                                    <div className="pl-2 pr-2 pb-2 animate-in slide-in-from-top-2 duration-200">
+                                      <div className="bg-white border-2 border-gray-200 rounded-lg p-3 mb-2 text-sm text-gray-700 shadow-sm">
+                                        <p><strong>발송처</strong> : 현재 재직회사, 생명보험협회, 손해보험협회,우체국,본인보관용으로 총 5부를 출력(생보 or 손보 코드가 하나만 있는 경우에는 해당협회에만 내용증명 제출(총 4부만 출력)</p>
+                                      </div>
+                                      <div className="bg-white border-2 border-gray-200 rounded-lg p-3 text-sm text-gray-700 shadow-sm">
+                                        <p><strong>발송방법</strong> : 출력한 내용증명에 자필서명 또는 날인 후 우체국에 내용증명으로 발송</p>
+                                      </div>
+                                    </div>
+                                  )}
+                                </div>
+
+                                <div className="space-y-2">
+                                  <button
+                                    onClick={() => setIsCancelExpanded(!isCancelExpanded)}
+                                    className="w-full text-left p-3 bg-gray-50 border border-gray-100 rounded-lg flex flex-col hover:bg-gray-100 transition-colors relative"
+                                  >
+                                    <div className="flex items-center justify-between w-full">
+                                      <span className="font-medium text-gray-700">3. 협회말소하기</span>
+                                      {isCancelExpanded ? <ChevronRight size={16} className="rotate-90 text-gray-500 transition-transform" /> : <ChevronRight size={16} className="text-gray-500 transition-transform" />}
+                                    </div>
+                                    <p className="text-xs text-orange-600 mt-1">
+                                      내용증명 발송 후 발송일 포함 11일째 되는 날부터 말소 가능
+                                    </p>
+                                  </button>
+
+                                  {isCancelExpanded && (
+                                    <div className="grid grid-cols-2 gap-2 pl-2 pr-2 pb-2 animate-in slide-in-from-top-2 duration-200">
+                                      <a
+                                        href="https://isi.knia.or.kr/cancellation/cancelInfo.do"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="p-3 bg-blue-50 border border-blue-200 rounded-lg text-sm text-blue-700 font-bold hover:bg-blue-100 text-center transition-colors"
+                                      >
+                                        손보협회<br />온라인 말소
+                                      </a>
+                                      <a
+                                        href="https://fp.insure.or.kr/process/process01"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="p-3 bg-blue-50 border border-blue-200 rounded-lg text-sm text-blue-700 font-bold hover:bg-blue-100 text-center transition-colors"
+                                      >
+                                        생보협회<br />온라인 말소
+                                      </a>
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+
+                              <div className="mt-4 pt-4 border-t border-gray-100 hidden">
+                                {/* Moved to header */}
+                              </div>
+                            </div>
+                          )}
+
+                          {/* Application Mode Content */}
+                          {cancellationMode === 'application' && (
+                            <div className="fade-in bg-white border border-gray-100 rounded-xl p-4 shadow-sm mb-4">
+                              <h4 className="font-bold text-gray-800 mb-3 flex items-center">
+                                <span className="w-1 h-4 bg-blue-500 rounded-full mr-2"></span>
+                                해촉신청서로 협회말소
+                              </h4>
+                              <div className="grid grid-cols-2 gap-2">
+                                <a
+                                  href="https://isi.knia.or.kr/cancellation/cancelInfo.do"
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="p-3 bg-blue-50 border border-blue-200 rounded-lg text-sm text-blue-700 font-bold hover:bg-blue-100 text-center transition-colors"
+                                >
+                                  손보협회<br />온라인 말소
+                                </a>
+                                <a
+                                  href="https://fp.insure.or.kr/process/process01"
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="p-3 bg-blue-50 border border-blue-200 rounded-lg text-sm text-blue-700 font-bold hover:bg-blue-100 text-center transition-colors"
+                                >
+                                  생보협회<br />온라인 말소
+                                </a>
+                              </div>
+                            </div>
+                          )}
                         </div>
                       </StepAccordion>
 
@@ -586,7 +700,8 @@ export default function OnboardingPage() {
             <div className="modal-content" onClick={(e) => e.stopPropagation()}>
               <div className="modal-header">
                 <h2 className="modal-title">
-                  {modalView === 'question' ? '협회 말소처리 안내' : '내용증명 샘플보기'}
+                  {modalView === 'question' ? '협회 말소처리 안내' :
+                    modalView === 'personal-info' ? '내용증명 작성하기' : '내용증명 샘플보기'}
                 </h2>
                 <button
                   className="modal-close-button"
