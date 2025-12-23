@@ -105,8 +105,8 @@
 /* Responsive */
 @media (max-width: 768px) {
   .menu-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.5rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem;
   }
 
   .menu-box {
@@ -117,7 +117,6 @@
   .menu-title {
     font-size: 1.25rem;
   }
-
 
   .menu-icon {
     padding: 0.75rem 0.5rem;
@@ -136,15 +135,15 @@
 
 @media (max-width: 640px) {
   .menu-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.4rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem;
   }
 
   .menu-box {
     min-height: auto;
-    aspect-ratio: 1.1 / 1;
+    aspect-ratio: 2.1 / 1;
     height: auto;
-    min-width: 105px;
+    min-width: 0;
   }
 
   .menu-title {

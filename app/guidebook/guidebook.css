@@ -271,8 +271,8 @@
 
 @media (max-width: 768px) {
   .category-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem;
   }
 
   .category-box {
@@ -286,7 +286,7 @@
   }
 
   .empty-spacer {
-    visibility: hidden;
+    display: none;
   }
 
   .guidebook-logo {
@@ -335,13 +335,13 @@
 
 @media (max-width: 640px) {
   .category-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 0.8rem;
   }
 
   .category-box {
     min-height: auto;
-    aspect-ratio: 1.1 / 1;
+    aspect-ratio: 2.1 / 1;
     /* Slightly wider than square to avoid tall rectangles */
     height: auto;
   }
@@ -371,8 +371,7 @@
 
   .category-title {
     padding: 0.65rem 0.2rem;
-    font-size: 1.1rem;
-    /* Increased size (approx 1.5x of previous 0.7rem) */
+    font-size: 11cqi;
   }
 
   .department-icon {
