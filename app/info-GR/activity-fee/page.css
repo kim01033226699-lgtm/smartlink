@@ -16,19 +16,19 @@
 .header {
   background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
   color: white;
-  padding: 2.5rem 0;
+  padding: 3.5rem 0;
   text-align: center;
   box-shadow: var(--shadow-md);
 }
 
 .title {
-  font-size: 2.5rem;
+  font-size: 1.25rem;
   font-weight: 800;
   margin-bottom: 1rem;
 }
 
 .subtitle {
-  font-size: 1.1rem;
+  font-size: 0.75rem;
   font-weight: 400;
   opacity: 0.95;
   margin-bottom: 1rem;
@@ -547,6 +547,7 @@
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -557,6 +558,7 @@
     transform: translateY(20px);
     opacity: 0;
   }
+
   to {
     transform: translateY(0);
     opacity: 1;
@@ -580,11 +582,11 @@
 /* Responsive */
 @media (max-width: 768px) {
   .title {
-    font-size: 2rem;
+    font-size: 1.25rem;
   }
 
   .subtitle {
-    font-size: 1rem;
+    font-size: 0.75rem;
   }
 
   .tab-menu {
