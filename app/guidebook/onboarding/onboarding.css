@@ -199,7 +199,7 @@
 .onboarding-page .category-title {
   background: white;
   padding: 1rem;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   /* Increased size */
   font-weight: 700;
   color: #111111;
@@ -911,7 +911,7 @@
 
   .onboarding-page .category-title {
     padding: 0.75rem 0.3rem;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
   }
 }
 
@@ -952,7 +952,7 @@
 
   .onboarding-page .category-title {
     padding: 0.65rem 0.2rem;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
   }
 
   .process-tabs {

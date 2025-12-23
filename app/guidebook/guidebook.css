@@ -72,7 +72,7 @@
 }
 
 .guidebook-content {
-  padding: 4rem 1rem 1rem 1rem;
+  padding: 3.2rem 1rem 1rem 1rem;
 }
 
 .category-grid {
@@ -193,8 +193,8 @@
   background: transparent;
   padding: 1rem;
   /* Balanced padding */
-  font-size: 1.2rem;
-  /* Increased by 120% from 1rem */
+  font-size: 1.1rem;
+  /* Reduced to 90% of 1.2rem */
   font-weight: 700;
   color: #111111;
   margin: 0;
@@ -307,7 +307,7 @@
 
   .category-title {
     padding: 0.75rem 0.3rem;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
   }
 
   .department-icon {
@@ -425,7 +425,7 @@
 
   .category-title {
     padding: 0.5rem 0.15rem;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
   }
 
   .department-icon {
