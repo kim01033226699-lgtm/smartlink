@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { ArrowLeft } from 'lucide-react';
 import BottomNavigation from '@/app/components/BottomNavigation';
 import { formatCurrency, formatNumber } from '@/app/utils/calculator';
 import './page.css';
@@ -229,12 +230,12 @@ export default function MProjectPage() {
       <div className="mproject-page">
         {/* Header */}
         <header className="header">
+          <button onClick={() => router.back()} className="back-button">
+            <ArrowLeft size={24} />
+          </button>
           <div className="container">
             <h1 className="title">{config?.pageMetadata?.mProject?.title || '영업관리자 지원금'}</h1>
             <p className="subtitle">{config?.pageMetadata?.mProject?.subtitle || '편의를 위한 참고용으로 정확한 내용은 규정을 준수합니다.'}</p>
-            <div className="header-links">
-              <button onClick={() => router.push('/info-GR/')} className="home-link">홈</button>
-            </div>
           </div>
         </header>
 
@@ -396,7 +397,7 @@ export default function MProjectPage() {
                 <div className="button-group">
                   <button onClick={handleReset} className="btn-secondary btn-icon" title="새로고침">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/>
+                      <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2" />
                     </svg>
                   </button>
                   <button onClick={checkQualification} className="btn-primary btn-large">지원금 확인</button>
@@ -461,7 +462,7 @@ export default function MProjectPage() {
                 <div className="result-button-container">
                   <button onClick={handleReset} className="btn-secondary btn-icon" title="새로고침">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/>
+                      <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2" />
                     </svg>
                   </button>
                 </div>

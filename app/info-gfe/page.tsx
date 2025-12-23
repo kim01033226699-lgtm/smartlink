@@ -1,9 +1,12 @@
 'use client';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { ArrowLeft, BookOpen, GraduationCap } from 'lucide-react';
 import BottomNavigation from '@/app/components/BottomNavigation';
 import './info-gfe.css';
 
 export default function InfoGfePage() {
+  const router = useRouter();
   const [mainTab, setMainTab] = useState('campus');
   const [dbOption, setDbOption] = useState('db-select');
 
@@ -11,6 +14,9 @@ export default function InfoGfePage() {
     <>
       <div className="page active" style={{ paddingBottom: '80px' }}>
         <header className="page-header">
+          <button onClick={() => router.back()} className="back-button">
+            <ArrowLeft size={24} />
+          </button>
           <div className="container">
             <h1 className="page-title">금융캠퍼스</h1>
             <p className="text-xs text-white/90 mt-2 break-keep">편의를 위한 참고용으로 정확한 내용은 규정을 준수합니다.</p>

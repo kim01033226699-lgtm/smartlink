@@ -1,7 +1,7 @@
 'use client';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
-import { FileText, Shield, DollarSign, GraduationCap, FileCheck, Laptop, CheckCircle, Users } from 'lucide-react';
+import { ArrowLeft, FileText, Shield, DollarSign, GraduationCap, FileCheck, Laptop, CheckCircle, Users } from 'lucide-react';
 import BottomNavigation from '@/app/components/BottomNavigation';
 import { SupportCard } from '@/app/components/SupportCard';
 import './guidebook.css';

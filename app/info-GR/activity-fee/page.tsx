@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { ArrowLeft } from 'lucide-react';
 import BottomNavigation from '@/app/components/BottomNavigation';
 import { calculateSupport, formatCurrency, formatNumber } from '@/app/utils/calculator';
 import './page.css';
@@ -101,14 +102,12 @@ export default function ActivityFeePage() {
       <div className="activity-fee-page">
         {/* Header */}
         <header className="header">
+          <button onClick={() => router.back()} className="back-button">
+            <ArrowLeft size={24} />
+          </button>
           <div className="container">
             <h1 className="title">활동수수료</h1>
             <p className="subtitle">편의를 위한 참고용으로 정확한 내용은 규정을 준수합니다.</p>
-            <div className="header-links">
-              <button onClick={() => router.push('/info-GR/')} className="home-link">
-                홈
-              </button>
-            </div>
           </div>
         </header>
 
