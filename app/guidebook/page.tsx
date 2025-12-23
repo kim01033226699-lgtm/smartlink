@@ -4,10 +4,13 @@ import { useEffect } from 'react';
 import { ArrowLeft, FileText, Shield, DollarSign, GraduationCap, FileCheck, Laptop, CheckCircle, Users } from 'lucide-react';
 import BottomNavigation from '@/app/components/BottomNavigation';
 import { SupportCard } from '@/app/components/SupportCard';
+import ManagerInfoModal from './components/ManagerInfoModal';
+import { useState } from 'react';
 import './guidebook.css';
 
 export default function GuidebookPage() {
   const router = useRouter();
+  const [isManagerModalOpen, setIsManagerModalOpen] = useState(false);
 
   // 스크롤 복원 비활성화 - 뒤로가기 시 레이아웃 깨짐 방지
   useEffect(() => {
@@ -138,8 +141,7 @@ export default function GuidebookPage() {
                       className="category-box bg-orange-500 border-none"
                       style={{ background: '#FF9800' }} // Explicit orange to override white default
                       onClick={() => {
-                        // Action for contact check
-                        console.log("Contact Check Clicked");
+                        setIsManagerModalOpen(true);
                       }}
                     >
                       <h3 className="category-title text-white font-bold" style={{ color: 'white' }}>담당자 확인 &gt;</h3>
@@ -176,6 +178,11 @@ export default function GuidebookPage() {
       </div>
 
       <BottomNavigation />
+
+      <ManagerInfoModal
+        isOpen={isManagerModalOpen}
+        onClose={() => setIsManagerModalOpen(false)}
+      />
     </>
   );
 }
