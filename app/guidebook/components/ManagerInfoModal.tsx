@@ -7,6 +7,7 @@ interface Contact {
     role: string;
     name: string;
     position?: string;
+    isVertical?: boolean; // Added for layout control
 }
 
 interface Team {
@@ -66,9 +67,11 @@ const managerData: Team[] = [
         title: '그 외 영업 지원',
         contacts: [
             { role: '영업지원팀', name: '김남현', position: '팀장' },
-            { role: '주임단 지원', name: '이서영', position: '차장 / 금융캠퍼스 평가: 고현진 과장' },
-            { role: '조직승강격, 315, MDRT, 자격유지평가등', name: '서미해', position: '대리' },
-            { role: '임차 및 인프라', name: '김현철', position: '과장 / 연도등 행사평가, 마케팅임원: 조준승 차장' },
+            { role: '주임단 지원', name: '이서영', position: '차장' },
+            { role: '금융캠퍼스 평가', name: '고현진', position: '과장' },
+            { role: '조직승강격, 315, MDRT, 자격유지평가등', name: '서미해', position: '대리', isVertical: true },
+            { role: '임차 및 인프라', name: '김현철', position: '과장' },
+            { role: '연도등 행사평가, 마케팅임원', name: '조준승', position: '차장' },
         ]
     },
 ];
@@ -108,9 +111,12 @@ export default function ManagerInfoModal({ isOpen, onClose }: ManagerInfoModalPr
                                 </h3>
                                 <div className="space-y-3 flex-1">
                                     {team.contacts.map((contact, cIdx) => (
-                                        <div key={cIdx} className="flex justify-center items-start gap-3 text-sm border-b border-dashed border-gray-100 pb-2 last:border-0 last:pb-0">
+                                        <div
+                                            key={cIdx}
+                                            className={`flex ${contact.isVertical ? 'flex-col text-center' : 'flex-row text-center'} justify-center items-center gap-2 text-sm border-b border-dashed border-gray-100 pb-2 last:border-0 last:pb-0`}
+                                        >
                                             <span className="text-gray-600 font-medium shrink-0 break-keep">{contact.role}</span>
-                                            <span className="text-gray-900 font-bold text-left break-keep">
+                                            <span className="text-gray-900 font-bold break-keep">
                                                 {contact.name} {contact.position}
                                             </span>
                                         </div>
