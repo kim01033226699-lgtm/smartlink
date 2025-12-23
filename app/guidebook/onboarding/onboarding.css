@@ -911,7 +911,7 @@
 
   .onboarding-page .category-title {
     padding: 0.75rem 0.3rem;
-    font-size: 0.75rem;
+    font-size: 1.2rem;
   }
 }
 
@@ -936,8 +936,9 @@
   }
 
   .onboarding-page .category-box {
-    min-height: 150px;
-
+    min-height: auto;
+    aspect-ratio: 1.1 / 1;
+    height: auto;
   }
 
   .onboarding-page .category-icon {
@@ -951,7 +952,7 @@
 
   .onboarding-page .category-title {
     padding: 0.65rem 0.2rem;
-    font-size: 0.7rem;
+    font-size: 1.2rem;
   }
 
   .process-tabs {

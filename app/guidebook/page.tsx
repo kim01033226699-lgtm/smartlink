@@ -86,6 +86,15 @@ export default function GuidebookPage() {
       icon: FileText,
       available: false,
       isEmpty: true
+    },
+    {
+      id: 9,
+      title: '담당자 확인',
+      description: '',
+      path: '',
+      icon: Users,
+      available: true,
+      isContactAction: true
     }
   ];
 
@@ -100,6 +109,10 @@ export default function GuidebookPage() {
             </div>
             <div className="text-center mt-2">
               <h1 className="text-xl font-bold text-gray-900">업무 가이드</h1>
+              <p className="text-xs text-gray-500 mt-2 break-keep">
+                굿리치 업무 가이드는 편의를 위해 정리된 자료입니다.<br />
+                자세한 기준과 절차를 확인 바랍니다.
+              </p>
             </div>
           </div>
         </header>
@@ -108,18 +121,30 @@ export default function GuidebookPage() {
         <main className="guidebook-content">
           <div className="w-full max-w-[700px] mx-auto px-4">
             {/* Notice Text Section - Left Aligned with top margin */}
-            <div className="mb-6 mt-[30px] text-left px-2">
-              <p className="text-sm text-gray-600 leading-relaxed">
-                굿리치 업무 가이드는 편의를 위해 제공된 자료이며,<br />
-                자세한 기준과 절차는 담당자에게 문의하여 주시기 바랍니다.
-              </p>
-            </div>
+            {/* Notice Text Removed from here */}
 
             <div className="category-grid">
               {categories.map(category => {
                 // Empty spacer
                 if (category.isEmpty) {
                   return <div key={category.id} className="empty-spacer"></div>;
+                }
+
+                // Contact Action Button - Designed like a Category Box (Tile)
+                if (category.isContactAction) {
+                  return (
+                    <div
+                      key={category.id}
+                      className="category-box bg-orange-500 border-none"
+                      style={{ background: '#FF9800' }} // Explicit orange to override white default
+                      onClick={() => {
+                        // Action for contact check
+                        console.log("Contact Check Clicked");
+                      }}
+                    >
+                      <h3 className="category-title text-white font-bold" style={{ color: 'white' }}>담당자 확인 &gt;</h3>
+                    </div>
+                  );
                 }
 
                 // Custom Styling Logic based on Title
@@ -145,24 +170,6 @@ export default function GuidebookPage() {
                   </div>
                 );
               })}
-
-              {/* Special Card - Department Contact - New Horizontal Design */}
-              <div className="col-span-3 mt-4"> {/* col-span-3 to take full width in grid */}
-                <div className="bg-[#FFF8E1] rounded-2xl p-4 flex items-center justify-between shadow-sm cursor-pointer hover:shadow-md transition-shadow">
-                  <div className="flex items-start gap-3">
-                    <div className="w-8 h-8 rounded-full bg-[#FFE082] flex items-center justify-center text-[#F57F17] font-bold text-lg flex-shrink-0">
-                      ?
-                    </div>
-                    <div className="flex flex-col">
-                      <h3 className="text-base font-bold text-gray-900 m-0 leading-tight">도움이 필요하신가요?</h3>
-                      <p className="text-xs text-gray-600 mt-1 m-0">담당자에게 바로 문의하세요</p>
-                    </div>
-                  </div>
-                  <button className="bg-orange-500 text-white text-sm font-bold py-2 px-4 rounded-full flex items-center gap-1 hover:bg-orange-600 transition-colors whitespace-nowrap">
-                    담당자 확인 &gt;
-                  </button>
-                </div>
-              </div>
             </div>
           </div>
         </main>
