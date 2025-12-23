@@ -24,19 +24,11 @@ export default function GuidebookPage() {
   const categories = [
     {
       id: 1,
-      title: '위촉',
+      title: '위촉 관리', // Updated Title
       description: '위촉 및 해촉 프로세스 안내',
       path: '/guidebook/onboarding',
       icon: FileText,
       available: true
-    },
-    {
-      id: 2,
-      title: '재정보증',
-      description: '보증 관련 업무 안내',
-      path: '/guidebook/guarantee',
-      icon: Shield,
-      available: false
     },
     {
       id: 3,
@@ -63,11 +55,11 @@ export default function GuidebookPage() {
       available: false
     },
     {
-      id: 6,
-      title: '굿리치플래너GP',
-      description: 'GP시스템 사용 가이드',
-      path: '/guidebook/gp',
-      icon: Laptop,
+      id: 2,
+      title: '재정보증',
+      description: '보증 관련 업무 안내',
+      path: '/guidebook/guarantee',
+      icon: Shield,
       available: false
     },
     {
@@ -76,6 +68,14 @@ export default function GuidebookPage() {
       description: '기타 업무 안내',
       path: '/guidebook/etc',
       icon: CheckCircle,
+      available: false
+    },
+    {
+      id: 6,
+      title: '굿리치플래너GP',
+      description: 'GP시스템 사용 가이드',
+      path: '/guidebook/gp',
+      icon: Laptop,
       available: false
     },
     {
@@ -94,61 +94,76 @@ export default function GuidebookPage() {
       <div className="guidebook-page">
         {/* Header */}
         <header className="guidebook-header">
-          <div className="container">
+          <div className="w-full max-w-[700px] mx-auto flex flex-col items-center">
             <div className="guidebook-logo-wrapper">
               <img src="/smartlink/images/GR-img.png" alt="GoodRich" className="guidebook-logo" />
             </div>
-            <div className="guidebook-badge">업무 가이드</div>
+            <div className="text-center mt-2">
+              <h1 className="text-xl font-bold text-gray-900">업무 가이드</h1>
+            </div>
           </div>
         </header>
 
         {/* Main Content */}
         <main className="guidebook-content">
-          <div className="container">
+          <div className="w-full max-w-[700px] mx-auto px-4">
+            {/* Notice Text Section - Left Aligned with top margin */}
+            <div className="mb-6 mt-[30px] text-left px-2">
+              <p className="text-sm text-gray-600 leading-relaxed">
+                굿리치 업무 가이드는 편의를 위해 제공된 자료이며,<br />
+                자세한 기준과 절차는 담당자에게 문의하여 주시기 바랍니다.
+              </p>
+            </div>
+
             <div className="category-grid">
               {categories.map(category => {
-                const IconComponent = category.icon;
-
                 // Empty spacer
                 if (category.isEmpty) {
                   return <div key={category.id} className="empty-spacer"></div>;
                 }
 
-                return category.available ? (
-                  <SupportCard
-                    key={category.id}
-                    title={category.title}
-                    description={category.description}
-                    icon={IconComponent}
-                    onClick={() => router.push(category.path)}
-                  />
-                ) : (
+                // Custom Styling Logic based on Title
+                const isCommission = category.title === '위촉 관리';
+                const isInactive = ['보험계약', '재정보증', '기타', '굿리치플래너GP'].includes(category.title);
+
+                let cardClass = "category-box";
+                if (isCommission) cardClass += " active-commission"; // Orange style
+                if (isInactive) cardClass += " disabled-blur"; // Blur style
+
+                return (
                   <div
                     key={category.id}
-                    className="category-box disabled"
+                    className={cardClass}
+                    onClick={() => {
+                      if (category.available && !isInactive) {
+                        router.push(category.path);
+                      }
+                    }}
                   >
-                    <div className="category-icon">
-                      <IconComponent size={32} />
-                    </div>
+                    {/* Icon Removed - Title Only */}
                     <h3 className="category-title">{category.title}</h3>
                   </div>
                 );
               })}
 
-              {/* Special Card - Department Contact */}
-              <div className="department-card">
-                <div className="department-icon">
-                  <Users size={32} />
+              {/* Special Card - Department Contact - New Horizontal Design */}
+              <div className="col-span-3 mt-4"> {/* col-span-3 to take full width in grid */}
+                <div className="bg-[#FFF8E1] rounded-2xl p-4 flex items-center justify-between shadow-sm cursor-pointer hover:shadow-md transition-shadow">
+                  <div className="flex items-start gap-3">
+                    <div className="w-8 h-8 rounded-full bg-[#FFE082] flex items-center justify-center text-[#F57F17] font-bold text-lg flex-shrink-0">
+                      ?
+                    </div>
+                    <div className="flex flex-col">
+                      <h3 className="text-base font-bold text-gray-900 m-0 leading-tight">도움이 필요하신가요?</h3>
+                      <p className="text-xs text-gray-600 mt-1 m-0">담당자에게 바로 문의하세요</p>
+                    </div>
+                  </div>
+                  <button className="bg-orange-500 text-white text-sm font-bold py-2 px-4 rounded-full flex items-center gap-1 hover:bg-orange-600 transition-colors whitespace-nowrap">
+                    담당자 확인 &gt;
+                  </button>
                 </div>
-                <h3 className="department-title">담당자 연락처</h3>
               </div>
             </div>
-
-            {/* Footer Notice */}
-            <p className="guidebook-footer-notice">
-              굿리치 업무 가이드는 편의를 위해 제공된 자료이며,<br />
-              자세한 기준과 절차는 담당자에게 문의하여 주시기 바랍니다.
-            </p>
           </div>
         </main>
       </div>

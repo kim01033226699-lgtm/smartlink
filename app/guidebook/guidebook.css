@@ -94,6 +94,11 @@
   flex-direction: column;
   min-height: 120px;
   height: auto;
+  justify-content: center;
+  /* Center content vertically */
+  align-items: center;
+  /* Center content horizontally */
+  text-align: center;
 }
 
 /* Focus/Active 상태 제거 - 뒤로가기 시 레이아웃 깨짐 방지 */
@@ -130,6 +135,12 @@
   align-items: center;
   color: white;
   flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* Center icon vertically */
+  padding-top: 1.5rem;
+  /* Add some top padding */
 }
 
 .category-icon svg {
@@ -142,56 +153,56 @@
   opacity: 0.6;
 }
 
-/* Unified dark navy background for all categories */
-.category-box:nth-child(1) .category-icon,
-.category-box:nth-child(2) .category-icon,
-.category-box:nth-child(3) .category-icon,
-.category-box:nth-child(4) .category-icon,
-.category-box:nth-child(5) .category-icon,
-.category-box:nth-child(6) .category-icon,
-.category-box:nth-child(7) .category-icon {
-  background: #2C3E50;
+/* Default Icon Style for all categories - Simplified */
+.category-box .category-icon {
+  background: transparent;
+  color: #333;
 }
 
-/* Different icon colors for each category */
-.category-box:nth-child(1) .category-icon {
-  color: #82B1FF;
+/* Active Commission Card Style */
+.category-box.active-commission {
+  background: linear-gradient(135deg, #FFD54F 0%, #FFCA28 100%);
+  /* GoodRich Yellow/Orange approximation */
+  border: 1px solid #FFC107;
 }
 
-.category-box:nth-child(2) .category-icon {
-  color: #FF80AB;
+.category-box.active-commission .category-title {
+  background: transparent;
+  color: #111;
 }
 
-.category-box:nth-child(3) .category-icon {
-  color: #80DEEA;
+.category-box.active-commission .category-icon {
+  color: #111;
 }
 
-.category-box:nth-child(4) .category-icon {
-  color: #B9F6CA;
+/* Disabled Blur Style */
+.category-box.disabled-blur {
+  opacity: 0.6;
+  filter: blur(0.5px);
+  pointer-events: none;
+  /* Make it unclickable */
+  background: #EEE;
+  /* Grayish background for inactive feel */
 }
 
-.category-box:nth-child(5) .category-icon {
-  color: #FFE57F;
-}
-
-.category-box:nth-child(6) .category-icon {
-  color: #EA80FC;
-}
-
-.category-box:nth-child(7) .category-icon {
-  color: #A7FFEB;
+.category-box.disabled-blur .category-title {
+  color: #999;
 }
 
 .category-title {
-  background: white;
-  padding: 1rem 0.5rem;
-  font-size: 0.9rem;
+  background: transparent;
+  padding: 1rem;
+  /* Balanced padding */
+  font-size: 1.2rem;
+  /* Increased by 120% from 1rem */
   font-weight: 700;
-  color: #2C3E50;
+  color: #111111;
   margin: 0;
+  width: 100%;
+  /* Ensure text takes width to center properly if needed */
   text-align: center;
-  flex-shrink: 0;
-  white-space: nowrap;
+  word-break: keep-all;
+  /* Prevent awkward breaks in Korean */
 }
 
 .category-box.disabled .category-title {
@@ -385,6 +396,7 @@
     box-sizing: border-box;
   }
 }
+
 /* Extra small devices (400px and below) */
 @media (max-width: 400px) {
   .category-grid {

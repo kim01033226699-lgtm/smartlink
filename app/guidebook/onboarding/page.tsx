@@ -106,7 +106,7 @@ export default function OnboardingPage() {
           <button onClick={handleBackButton} className="back-button">
             <ArrowLeft size={24} />
           </button>
-          <div className="container">
+          <div className="w-full max-w-[700px] mx-auto flex flex-col items-center relative">
             <div className="onboarding-logo-wrapper">
               <img
                 src="/smartlink/images/GR-img.png"
@@ -119,22 +119,16 @@ export default function OnboardingPage() {
 
         {/* Content */}
         <main className="onboarding-content">
-          <div className="container">
+          <div className="w-full max-w-[700px] mx-auto min-h-screen">
             {activeTab === 'onboarding' && (
               <div className="content-section">
                 {/* Menu Selection - Only show when no process is selected */}
                 {expandedProcess === null && (
                   <div className="onboarding-menu-grid">
                     <div className="category-box" onClick={() => toggleProcess('experienced')}>
-                      <div className="category-icon">
-                        <UserCheck size={32} />
-                      </div>
                       <h3 className="category-title">경력자 위촉</h3>
                     </div>
                     <div className="category-box" onClick={() => toggleProcess('inexperienced')}>
-                      <div className="category-icon">
-                        <UserPlus size={32} />
-                      </div>
                       <h3 className="category-title">무경력자 위촉</h3>
                     </div>
                   </div>
