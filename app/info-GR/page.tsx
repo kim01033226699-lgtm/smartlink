@@ -36,9 +36,9 @@ export default function InfoGRPage() {
         {/* Header */}
         {/* Header */}
         <header className="menu-header">
-          <div className="w-full max-w-[700px] mx-auto flex flex-col items-center">
+          <div className="w-full max-w-[700px] mx-auto flex flex-col items-center px-4">
             <h1 className="menu-title">굿리치 지원금</h1>
-            <p className="menu-subtitle">편의를 위한 참고용으로 정확한 내용은 규정을 준수합니다.</p>
+            <p className="text-xs text-white/90 mt-2 break-keep">편의를 위한 참고용으로 정확한 내용은 규정을 준수합니다.</p>
           </div>
         </header>
 

@@ -33,7 +33,7 @@
 
 /* Main Content */
 .menu-content {
-  padding: 1rem;
+  padding: 1rem 0;
 }
 
 .menu-grid {
@@ -59,6 +59,7 @@
   justify-content: center;
   align-items: center;
   text-align: center;
+  container-type: inline-size;
 }
 
 .menu-box:hover {
@@ -81,7 +82,7 @@
 .menu-box-title {
   background: white;
   padding: 1rem;
-  font-size: 1.1rem;
+  font-size: 11cqi;
   font-weight: 700;
   color: #111111;
   margin: 0;
@@ -129,7 +130,7 @@
 
   .menu-box-title {
     padding: 0.75rem 0.3rem;
-    font-size: 1.1rem;
+    font-size: 11cqi;
   }
 }
 
@@ -161,6 +162,6 @@
 
   .menu-box-title {
     padding: 0.65rem 0.2rem;
-    font-size: 1.1rem;
+    font-size: 11cqi;
   }
 }
