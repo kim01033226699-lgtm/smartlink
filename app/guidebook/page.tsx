@@ -50,19 +50,19 @@ export default function GuidebookPage() {
       available: true
     },
     {
-      id: 5,
-      title: '보험계약',
-      description: '보험계약 관련 업무 안내',
-      path: '/guidebook/insurance',
-      icon: FileCheck,
-      available: false
-    },
-    {
       id: 2,
       title: '재정보증',
       description: '보증 관련 업무 안내',
       path: '/guidebook/guarantee',
       icon: Shield,
+      available: true
+    },
+    {
+      id: 5,
+      title: '보험계약',
+      description: '보험계약 관련 업무 안내',
+      path: '/guidebook/insurance',
+      icon: FileCheck,
       available: false
     },
     {
@@ -151,7 +151,7 @@ export default function GuidebookPage() {
 
                 // Custom Styling Logic based on Title
                 const isCommission = category.title === '위촉 관리';
-                const isInactive = ['보험계약', '재정보증', '기타', '굿리치플래너GP'].includes(category.title);
+                const isInactive = ['보험계약', '기타', '굿리치플래너GP'].includes(category.title);
 
                 let cardClass = "category-box";
                 if (isCommission) cardClass += " active-commission"; // Orange style
