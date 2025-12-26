@@ -7,7 +7,9 @@ interface Contact {
     role: string;
     name: string;
     position?: string;
-    isVertical?: boolean; // Added for layout control
+    isVertical?: boolean;
+    roleClass?: string;
+    nameClass?: string;
 }
 
 interface Team {
@@ -22,20 +24,21 @@ interface ManagerInfoModalProps {
 
 const managerData: Team[] = [
     {
-        title: '위촉지원실',
+        title: '부문 지원',
         contacts: [
-            { role: '위촉심사', name: '김지열', position: '과장' },
-            { role: '해촉담당', name: '이성연', position: '사원' },
-            { role: '생보협회', name: '김보미', position: '사원' },
-            { role: '손보협회', name: '허지원', position: '사원' },
+            { role: '중부', name: '윤정희', position: '차장' },
+            { role: '동부', name: '김소은', position: '과장' },
+            { role: '서부', name: '공기택', position: '대리' },
+            { role: '그 외 부문', name: '안다솜', position: '과장' },
         ]
     },
     {
-        title: '영업지원금관리팀',
+        title: '위촉지원실',
         contacts: [
-            { role: '정착지원금', name: '박세현', position: '차장' },
-            { role: '영업관리자 지원금', name: '성현', position: '대리' },
-            { role: '기타', name: '이천영', position: '팀장' },
+            { role: '위촉심사', name: '김지열', position: '과장' },
+            { role: '시험응시', name: '방수현', position: '대리' },
+            { role: '협회소속이동', name: '윤서하', position: '사원' },
+            { role: '해촉담당', name: '이성연', position: '사원' },
         ]
     },
     {
@@ -46,32 +49,47 @@ const managerData: Team[] = [
         ]
     },
     {
+        title: '영업지원금관리팀',
+        contacts: [
+            { role: '정착지원금', name: '박세현', position: '차장' },
+            { role: '영업관리자 지원금', name: '성현', position: '대리' },
+            { role: '기타', name: '이천영', position: '팀장', roleClass: 'text-blue-600', nameClass: 'text-blue-600' },
+        ]
+    },
+    {
         title: '채널교육팀',
         contacts: [
             { role: '금융캠퍼스', name: '신지수', position: '과장' },
             { role: '입문과정', name: '김석현', position: '대리' },
             { role: '법인교육', name: '최인석', position: '과장' },
-            { role: '기타', name: '이철', position: '팀장' },
+            { role: '기타', name: '이철', position: '팀장', roleClass: 'text-blue-600', nameClass: 'text-blue-600' },
         ]
     },
     {
-        title: '부문 지원',
+        title: '수수료',
         contacts: [
-            { role: '중부', name: '윤정희', position: '차장' },
-            { role: '동부', name: '김소은', position: '과장' },
-            { role: '서부', name: '공기택', position: '대리' },
-            { role: '그 외 부문', name: '안다솜', position: '과장' },
+            { role: '중부, 직할', name: '한나라', position: '과장' },
+            { role: '동부, 법인, 총괄', name: '박소희', position: '대리' },
+            { role: '서부,영업마케팅', name: '김진경', position: '과장' },
+            { role: '기타', name: '고나연', position: '팀장', roleClass: 'text-blue-600', nameClass: 'text-blue-600' },
+        ]
+    },
+    {
+        title: '시책 & 운영비',
+        contacts: [
+            { role: '운영비', name: '김정우', position: '대리' },
+            { role: '생보시책', name: '홍희지', position: '대리' },
+            { role: '손보시책', name: '최성락', position: '차장' },
+            { role: '본사 규정 & 기타', name: '장흥석', position: '팀장', roleClass: 'text-blue-600', nameClass: 'text-blue-600' },
         ]
     },
     {
         title: '그 외 영업 지원',
         contacts: [
-            { role: '영업지원팀', name: '김남현', position: '팀장' },
-            { role: '주임단 지원', name: '이서영', position: '차장' },
-            { role: '금융캠퍼스 평가', name: '고현진', position: '과장' },
+            { role: '주임단 지원: 이서영 차장 / 금융캠퍼스 평가: 고현진 과장', name: '', position: '', isVertical: true },
             { role: '조직승강격, 315, MDRT, 자격유지평가등', name: '서미해', position: '대리', isVertical: true },
-            { role: '임차 및 인프라', name: '김현철', position: '과장' },
             { role: '연도등 행사평가, 마케팅임원', name: '조준승', position: '차장' },
+            { role: '임차 및 인프라: 김현철 과장 / ', name: '기타: 김남현 팀장', position: '', isVertical: true, nameClass: 'text-blue-600' },
         ]
     },
 ];
@@ -115,8 +133,8 @@ export default function ManagerInfoModal({ isOpen, onClose }: ManagerInfoModalPr
                                             key={cIdx}
                                             className={`flex ${contact.isVertical ? 'flex-col text-center' : 'flex-row text-center'} justify-center items-center gap-2 text-sm border-b border-dashed border-gray-100 pb-2 last:border-0 last:pb-0`}
                                         >
-                                            <span className="text-gray-600 font-medium shrink-0 break-keep">{contact.role}</span>
-                                            <span className="text-gray-900 font-bold break-keep">
+                                            <span className={`${contact.roleClass || 'text-gray-600'} font-medium shrink-0 break-keep`}>{contact.role}</span>
+                                            <span className={`${contact.nameClass || 'text-gray-900'} font-bold break-keep`}>
                                                 {contact.name} {contact.position}
                                             </span>
                                         </div>
