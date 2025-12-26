@@ -22,6 +22,15 @@ export default function GuaranteePage() {
   /* State for mortgage setup document type */
   const [setupDocType, setSetupDocType] = useState<'owner' | 'debtor' | null>(null);
 
+  /* State for promissory note tabs */
+  const [promissoryTab, setPromissoryTab] = useState<'eligibility' | 'process' | null>(null);
+
+  /* State for eligibility type (재산세/근로소득자) */
+  const [eligibilityType, setEligibilityType] = useState<'property-tax' | 'employee' | null>(null);
+
+  /* State for promissory visit type (동행/단독) */
+  const [visitType, setVisitType] = useState<'together' | 'alone' | null>(null);
+
   const toggleStep = (stepId: string) => {
     if (expandedSteps.has(stepId)) {
       setExpandedSteps(new Set());
@@ -163,183 +172,256 @@ export default function GuaranteePage() {
                       onToggle={() => toggleStep('col-1')}
                     >
                       <div className="step-content">
-                        {/* Sub-tabs for 근저당 */}
-                        <div className="sub-tabs-container">
-                          <div className="sub-tabs">
-                            <button
-                              onClick={() => setMortgageSubTab('inquiry')}
-                              className={`sub-tab ${mortgageSubTab === 'inquiry' ? 'active' : ''}`}
-                            >
-                              근저당 한도 조회
-                            </button>
-                            <button
-                              onClick={() => setMortgageSubTab('setup')}
-                              className={`sub-tab ${mortgageSubTab === 'setup' ? 'active' : ''}`}
-                            >
-                              근저당 설정
-                            </button>
+                        {/* 1. 근저당 한도 조회 */}
+                        <SubStepAccordion
+                          subStepId="mortgage-inquiry"
+                          title="1. 근저당 한도 조회"
+                          isOpen={expandedSubSteps.has('mortgage-inquiry')}
+                          onToggle={() => toggleSubStep('mortgage-inquiry')}
+                        >
+                          <div className="step-content">
+                            {/* 한도조회필요정보 */}
+                            <div className="mb-4">
+                              <button
+                                className="w-full text-left font-bold text-sm mb-2 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors flex justify-between items-center"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  const newSet = new Set(expandedSubSteps);
+                                  if (newSet.has('mortgage-inquiry-info')) {
+                                    newSet.delete('mortgage-inquiry-info');
+                                  } else {
+                                    newSet.add('mortgage-inquiry-info');
+                                  }
+                                  setExpandedSubSteps(newSet);
+                                }}
+                              >
+                                <span>한도조회필요정보</span>
+                                {expandedSubSteps.has('mortgage-inquiry-info') ?
+                                  <ChevronUp size={18} /> : <ChevronDown size={18} />
+                                }
+                              </button>
+                              {expandedSubSteps.has('mortgage-inquiry-info') && (
+                                <div className="content-text pl-3">
+                                  <ul className="circle-bullet-list">
+                                    <li>RP 성명 :</li>
+                                    <li>사용인번호 :</li>
+                                    <li>위촉(예정)일 :</li>
+                                    <li>담보제공자 성명, 주민번호 :</li>
+                                    <li>RP 와 담보제공자의 관계 :</li>
+                                    <li>담보대상 : (영업수수료 or 지원금 종류등)</li>
+                                    <li>보증 종류: 근저당 (소유자거주 or 전월세계약(보증금 기재 필수)</li>
+                                    <li>필요금액 :</li>
+                                  </ul>
+                                </div>
+                              )}
+                            </div>
+
+                            {/* 필요서류 */}
+                            <div className="mb-4">
+                              <button
+                                className="w-full text-left font-bold text-sm mb-2 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors flex justify-between items-center"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  const newSet = new Set(expandedSubSteps);
+                                  if (newSet.has('mortgage-inquiry-docs')) {
+                                    newSet.delete('mortgage-inquiry-docs');
+                                  } else {
+                                    newSet.add('mortgage-inquiry-docs');
+                                  }
+                                  setExpandedSubSteps(newSet);
+                                }}
+                              >
+                                <span>필요서류</span>
+                                {expandedSubSteps.has('mortgage-inquiry-docs') ?
+                                  <ChevronUp size={18} /> : <ChevronDown size={18} />
+                                }
+                              </button>
+                              {expandedSubSteps.has('mortgage-inquiry-docs') && (
+                                <div className="pl-3">
+                                  <div className="nested-tabs-container">
+                                    <div className="nested-tabs">
+                                      <button
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          setDocInquiryType('simple');
+                                        }}
+                                        className={`nested-tab ${docInquiryType === 'simple' ? 'active' : ''}`}
+                                      >
+                                        간편조회
+                                      </button>
+                                      <button
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          setDocInquiryType('detailed');
+                                        }}
+                                        className={`nested-tab ${docInquiryType === 'detailed' ? 'active' : ''}`}
+                                      >
+                                        세부조회
+                                      </button>
+                                    </div>
+                                  </div>
+
+                                  {docInquiryType === 'simple' && (
+                                    <div className="nested-tab-content">
+                                      <p className="content-text mb-2">
+                                        <strong>용도:</strong> 대략적인 담보 가능 범위 확인
+                                      </p>
+                                      <ul className="circle-bullet-list">
+                                        <li>등기부 등본</li>
+                                      </ul>
+                                    </div>
+                                  )}
+
+                                  {docInquiryType === 'detailed' && (
+                                    <div className="nested-tab-content">
+                                      <p className="content-text mb-2">
+                                        <strong>용도:</strong> 실제 설정 가능 한도 산정
+                                      </p>
+                                      <ul className="circle-bullet-list">
+                                        <li>등기부등본</li>
+                                        <li>세목별과세증명</li>
+                                        <li>담보제공자 초본</li>
+                                        <li>부채증명원(부채가 있는 경우)</li>
+                                      </ul>
+                                    </div>
+                                  )}
+                                </div>
+                              )}
+                            </div>
                           </div>
-                        </div>
+                        </SubStepAccordion>
 
-                        {/* Content based on sub-tab selection */}
-                        {mortgageSubTab === 'inquiry' && (
-                          <div className="sub-tab-content">
-                            <SubStepAccordion
-                              subStepId="mortgage-inquiry-info"
-                              title="한도조회필요정보"
-                              isOpen={expandedSubSteps.has('mortgage-inquiry-info')}
-                              onToggle={() => toggleSubStep('mortgage-inquiry-info')}
-                            >
-                              <div className="content-text">
-                                <ul className="circle-bullet-list">
-                                  <li>RP 성명 :</li>
-                                  <li>사용인번호 :</li>
-                                  <li>위촉(예정)일 :</li>
-                                  <li>담보제공자 성명, 주민번호 :</li>
-                                  <li>RP 와 담보제공자의 관계 :</li>
-                                  <li>담보대상 : (영업수수료 or 지원금 종류등)</li>
-                                  <li>보증 종류: 근저당 (소유자거주 or 전월세계약(보증금 기재 필수)</li>
-                                  <li>필요금액 :</li>
-                                </ul>
-                              </div>
-                            </SubStepAccordion>
+                        {/* 2. 근저당 설정 방법 */}
+                        <SubStepAccordion
+                          subStepId="mortgage-setup"
+                          title="2. 근저당 설정 방법"
+                          isOpen={expandedSubSteps.has('mortgage-setup')}
+                          onToggle={() => toggleSubStep('mortgage-setup')}
+                        >
+                          <div className="step-content">
+                            {/* 필요서류 */}
+                            <div className="mb-4">
+                              <button
+                                className="w-full text-left font-bold text-sm mb-2 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors flex justify-between items-center"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  const newSet = new Set(expandedSubSteps);
+                                  if (newSet.has('mortgage-setup-docs')) {
+                                    newSet.delete('mortgage-setup-docs');
+                                  } else {
+                                    newSet.add('mortgage-setup-docs');
+                                  }
+                                  setExpandedSubSteps(newSet);
+                                }}
+                              >
+                                <span>필요서류</span>
+                                {expandedSubSteps.has('mortgage-setup-docs') ?
+                                  <ChevronUp size={18} /> : <ChevronDown size={18} />
+                                }
+                              </button>
+                              {expandedSubSteps.has('mortgage-setup-docs') && (
+                                <div className="pl-3">
+                                  <div className="nested-tabs-container">
+                                    <div className="nested-tabs">
+                                      <button
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          setSetupDocType('owner');
+                                        }}
+                                        className={`nested-tab ${setupDocType === 'owner' ? 'active' : ''}`}
+                                      >
+                                        근저당설정자<br />(부동산소유자)
+                                      </button>
+                                      <button
+                                        onClick={(e) => {
+                                          e.stopPropagation();
+                                          setSetupDocType('debtor');
+                                        }}
+                                        className={`nested-tab ${setupDocType === 'debtor' ? 'active' : ''}`}
+                                      >
+                                        채무자<br />(RP본인)
+                                      </button>
+                                    </div>
+                                  </div>
 
-                            <SubStepAccordion
-                              subStepId="mortgage-inquiry-docs"
-                              title="필요서류"
-                              isOpen={expandedSubSteps.has('mortgage-inquiry-docs')}
-                              onToggle={() => toggleSubStep('mortgage-inquiry-docs')}
-                            >
-                              <div className="nested-tabs-container">
-                                <div className="nested-tabs">
-                                  <button
-                                    onClick={() => setDocInquiryType('simple')}
-                                    className={`nested-tab ${docInquiryType === 'simple' ? 'active' : ''}`}
-                                  >
-                                    간편조회
-                                  </button>
-                                  <button
-                                    onClick={() => setDocInquiryType('detailed')}
-                                    className={`nested-tab ${docInquiryType === 'detailed' ? 'active' : ''}`}
-                                  >
-                                    세부조회
-                                  </button>
-                                </div>
-                              </div>
+                                  {setupDocType === 'owner' && (
+                                    <div className="nested-tab-content">
+                                      <ul className="circle-bullet-list">
+                                        <li>등기권리증</li>
+                                        <li>소유자 인감증명서 (3개월이내, 본인발급용) 1통<br />소유자가 제 3자인 경우 2통</li>
+                                        <li>소유자 인감도장</li>
+                                        <li>초본(3개월이내, 과거변동내역 포함)</li>
+                                        <li>등기사항전부증명서</li>
+                                        <li>당사 제공 서류 일체</li>
+                                      </ul>
+                                    </div>
+                                  )}
 
-                              {docInquiryType === 'simple' && (
-                                <div className="nested-tab-content">
-                                  <p className="content-text mb-2">
-                                    <strong>용도:</strong> 대략적인 담보 가능 범위 확인
-                                  </p>
-                                  <ul className="circle-bullet-list">
-                                    <li>등기부 등본</li>
-                                  </ul>
+                                  {setupDocType === 'debtor' && (
+                                    <div className="nested-tab-content">
+                                      <ul className="circle-bullet-list">
+                                        <li>등본(3개월 이내)</li>
+                                        <li>막도장</li>
+                                      </ul>
+                                    </div>
+                                  )}
                                 </div>
                               )}
+                            </div>
 
-                              {docInquiryType === 'detailed' && (
-                                <div className="nested-tab-content">
-                                  <p className="content-text mb-2">
-                                    <strong>용도:</strong> 실제 설정 가능 한도 산정
+                            {/* 근저당설정방법 */}
+                            <div className="mb-4">
+                              <button
+                                className="w-full text-left font-bold text-sm mb-2 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors flex justify-between items-center"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  const newSet = new Set(expandedSubSteps);
+                                  if (newSet.has('mortgage-setup-method')) {
+                                    newSet.delete('mortgage-setup-method');
+                                  } else {
+                                    newSet.add('mortgage-setup-method');
+                                  }
+                                  setExpandedSubSteps(newSet);
+                                }}
+                              >
+                                <span>근저당설정방법</span>
+                                {expandedSubSteps.has('mortgage-setup-method') ?
+                                  <ChevronUp size={18} /> : <ChevronDown size={18} />
+                                }
+                              </button>
+                              {expandedSubSteps.has('mortgage-setup-method') && (
+                                <div className="content-text pl-3">
+                                  <p className="mb-4">
+                                    <strong>1. 서류 준비 후 (설정/변경/말소) 자격을 갖추고 물건지와 가까운 법무사 사무실에서 진행(타 지역의 경우 별도 출장비 발생 가능)</strong>
                                   </p>
-                                  <ul className="circle-bullet-list">
-                                    <li>등기부등본</li>
-                                    <li>세목별과세증명</li>
-                                    <li>담보제공자 초본</li>
-                                    <li>부채증명원(부채가 있는 경우)</li>
-                                  </ul>
+
+                                  <div className="bg-blue-50 p-4 rounded-lg mb-4">
+                                    <p className="font-bold mb-2">채권자 겸 근저당권리자 = 등기권리자</p>
+                                    <p className="text-sm">굿리치 주식회사(GoodRich Co., Ltd.) (110111-3403451)</p>
+                                    <p className="text-sm">주소: 서울특별시 중구 세종대로 9길 41,(서소문동)</p>
+                                    <p className="text-sm">대표이사 : 한승표</p>
+                                  </div>
+
+                                  <div className="bg-orange-50 p-4 rounded-lg mb-4">
+                                    <p className="font-bold mb-2">채권최고액: 금 ___________ 원</p>
+                                    <p className="text-sm text-gray-700 mt-2">
+                                      접수 완료 시 등기접수증 수령 후 RP 성명 및 채권최고액을 기재하여<br />
+                                      등기 발송 전 <span className="text-red-600 font-bold">팩스(0303-3441-9000)</span>로 먼저 보내 주세요.
+                                    </p>
+                                  </div>
+
+                                  <div className="bg-gray-50 p-4 rounded-lg">
+                                    <p className="font-bold mb-2">⇒ 모든 서류 원본 등기 발송</p>
+                                    <p className="text-sm">
+                                      ★ 등기 발송 주소: 서울 중구 세종대로 9길 41, 7층(파시픽타워)<br />
+                                      <span className="ml-6">굿리치 법무지원팀 채권실</span>
+                                    </p>
+                                  </div>
                                 </div>
                               )}
-                            </SubStepAccordion>
+                            </div>
                           </div>
-                        )}
-
-                        {mortgageSubTab === 'setup' && (
-                          <div className="sub-tab-content">
-                            <SubStepAccordion
-                              subStepId="mortgage-setup-docs"
-                              title="필요서류"
-                              isOpen={expandedSubSteps.has('mortgage-setup-docs')}
-                              onToggle={() => toggleSubStep('mortgage-setup-docs')}
-                            >
-                              <div className="nested-tabs-container">
-                                <div className="nested-tabs">
-                                  <button
-                                    onClick={() => setSetupDocType('owner')}
-                                    className={`nested-tab ${setupDocType === 'owner' ? 'active' : ''}`}
-                                  >
-                                    근저당설정자<br />(부동산소유자)
-                                  </button>
-                                  <button
-                                    onClick={() => setSetupDocType('debtor')}
-                                    className={`nested-tab ${setupDocType === 'debtor' ? 'active' : ''}`}
-                                  >
-                                    채무자<br />(RP본인)
-                                  </button>
-                                </div>
-                              </div>
-
-                              {setupDocType === 'owner' && (
-                                <div className="nested-tab-content">
-                                  <ul className="circle-bullet-list">
-                                    <li>등기권리증</li>
-                                    <li>소유자 인감증명서 (3개월이내, 본인발급용) 1통<br />소유자가 제 3자인 경우 2통</li>
-                                    <li>소유자 인감도장</li>
-                                    <li>초본(3개월이내, 과거변동내역 포함)</li>
-                                    <li>등기사항전부증명서</li>
-                                    <li>당사 제공 서류 일체</li>
-                                  </ul>
-                                </div>
-                              )}
-
-                              {setupDocType === 'debtor' && (
-                                <div className="nested-tab-content">
-                                  <ul className="circle-bullet-list">
-                                    <li>등본(3개월 이내)</li>
-                                    <li>막도장</li>
-                                  </ul>
-                                </div>
-                              )}
-                            </SubStepAccordion>
-
-                            <SubStepAccordion
-                              subStepId="mortgage-setup-method"
-                              title="근저당설정방법"
-                              isOpen={expandedSubSteps.has('mortgage-setup-method')}
-                              onToggle={() => toggleSubStep('mortgage-setup-method')}
-                            >
-                              <div className="content-text">
-                                <p className="mb-4">
-                                  <strong>1. 서류 준비 후 (설정/변경/말소) 자격을 갖추고 물건지와 가까운 법무사 사무실에서 진행</strong>
-                                </p>
-
-                                <div className="bg-blue-50 p-4 rounded-lg mb-4">
-                                  <p className="font-bold mb-2">채권자 겸 근저당권리자 = 등기권리자</p>
-                                  <p className="text-sm">굿리치 주식회사(GoodRich Co., Ltd.) (110111-3403451)</p>
-                                  <p className="text-sm">주소: 서울특별시 중구 세종대로 9길 41,(서소문동)</p>
-                                  <p className="text-sm">대표이사 : 한승표</p>
-                                </div>
-
-                                <div className="bg-orange-50 p-4 rounded-lg mb-4">
-                                  <p className="font-bold mb-2">채권최고액: 금 ___________ 원</p>
-                                  <p className="text-sm text-gray-700 mt-2">
-                                    접수 완료 시 등기접수증 수령 후 RP 성명 및 채권최고액을 기재하여<br />
-                                    등기 발송 전 <span className="text-red-600 font-bold">팩스(0303-3441-9000)</span>로 먼저 보내 주세요.
-                                  </p>
-                                </div>
-
-                                <div className="bg-gray-50 p-4 rounded-lg">
-                                  <p className="font-bold mb-2">⇒ 모든 서류 원본 등기 발송</p>
-                                  <p className="text-sm">
-                                    ★ 등기 발송 주소: 서울 중구 세종대로 9길 41, 7층(파시픽타워)<br />
-                                    <span className="ml-6">굿리치 법무지원팀 채권실</span>
-                                  </p>
-                                </div>
-                              </div>
-                            </SubStepAccordion>
-                          </div>
-                        )}
+                        </SubStepAccordion>
                       </div>
                     </StepAccordion>
 
@@ -429,13 +511,153 @@ export default function GuaranteePage() {
                       </div>
                     </StepAccordion>
 
-                    {/* Step 3 - 공동약속어음/승인제한 */}
+                    {/* Step 3 - 공동발행 약속어음 */}
                     <StepAccordion
-                      title="③ 공동약속어음/승인제한"
+                      title="③ 공동발행 약속어음"
                       isOpen={expandedSteps.has('col-3')}
                       onToggle={() => toggleStep('col-3')}
                     >
                       <div className="step-content">
+                        <div className="bg-red-50 p-3 rounded-lg mb-4 border border-red-200">
+                          <p className="text-red-600 font-bold text-sm text-center">
+                            ※공동약속어음은 승인 거절 될 수 있으니 유의해 주세요.
+                          </p>
+                        </div>
+
+                        {/* 1. 공동발행인 자격 */}
+                        <SubStepAccordion
+                          subStepId="promissory-eligibility"
+                          title="1. 공동발행인 자격"
+                          isOpen={expandedSubSteps.has('promissory-eligibility')}
+                          onToggle={() => toggleSubStep('promissory-eligibility')}
+                        >
+                          <div className="step-content">
+                            <div className="nested-tabs-container">
+                              <div className="nested-tabs">
+                                <button
+                                  onClick={() => setEligibilityType('property-tax')}
+                                  className={`nested-tab ${eligibilityType === 'property-tax' ? 'active' : ''}`}
+                                >
+                                  재산세 5만원 이상 납부자
+                                </button>
+                                <button
+                                  onClick={() => setEligibilityType('employee')}
+                                  className={`nested-tab ${eligibilityType === 'employee' ? 'active' : ''}`}
+                                >
+                                  근로소득자
+                                </button>
+                              </div>
+                            </div>
+
+                            {eligibilityType === 'property-tax' && (
+                              <div className="nested-tab-content">
+                                <p className="font-bold text-sm mb-2">★ 필요서류</p>
+                                <ul className="circle-bullet-list mb-4">
+                                  <li>① 세목별 과세증명서</li>
+                                  <li>② 등기사항 전부증명서(말소사항포함, 최신날짜)</li>
+                                  <li>③ 초본(소유자 = 거주자 확인)_재산세 납부자가 실시보는 물건에 거주하지 않고, 전세 계약 등이 설정되어 있는 경우 전세계약서, 임대차계약서 추가 제출</li>
+                                  <li>④ 부채증명원(등기부상 선순위 금액과 실제 피담보 채무액의 차이가 큰 경우)</li>
+                                  <li>⑤ 토지 또는 토지+건물 심사시 (거래기액 확인 불가능한 경우)<br />
+                                      행정사 or 중개사 or 감정평가사의 시세확인서 + 사업자등록증 + 명함 첨부</li>
+                                </ul>
+
+                                <div className="bg-yellow-50 p-3 rounded-lg border border-yellow-300">
+                                  <p className="text-sm font-bold text-gray-800 mb-1">- 압류, 가압류 등 문제물건지 / 신탁재산은 진행 불가</p>
+                                  <p className="text-sm font-bold text-gray-800 mb-1">- 전입세대열람내역서, 무상일대차거주확인서, 공실확인서 등 서류보완요청 있을 수 있음</p>
+                                  <p className="text-sm font-bold text-gray-800">- 선순위 근저당 채권최고액 등이 과다하다고 판단될 경우 압부 불가</p>
+                                </div>
+                              </div>
+                            )}
+
+                            {eligibilityType === 'employee' && (
+                              <div className="nested-tab-content">
+                                <p className="font-bold text-sm mb-2">★ 필요서류</p>
+                                <ul className="circle-bullet-list mb-4">
+                                  <li>① 재직증명서</li>
+                                  <li>② 원천징수영수증</li>
+                                </ul>
+
+                                <div className="bg-blue-50 p-3 rounded-lg border border-blue-300 mb-3">
+                                  <p className="text-sm font-bold text-gray-800 mb-1">- 순수 급여항목의 70% 한도 인정</p>
+                                  <p className="text-sm font-bold text-gray-800 mb-1">- 모든 서류 개인정보사항, 상호, 대표이사, 보증인 성명 등 <span className="text-red-600">전체공개</span>로 발급</p>
+                                  <p className="text-sm font-bold text-gray-800">- 정착교육비 1명, 영업관리자 지원금 선지급의 경우 지급금액의 <span className="text-red-600">120%</span> 발행</p>
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        </SubStepAccordion>
+
+                        {/* 2. 공동발행 약속어음 진행 방법 */}
+                        <SubStepAccordion
+                          subStepId="promissory-process"
+                          title="2. 공동발행 약속어음 진행 방법"
+                          isOpen={expandedSubSteps.has('promissory-process')}
+                          onToggle={() => toggleSubStep('promissory-process')}
+                        >
+                          <div className="step-content">
+                            <div className="bg-orange-50 p-4 rounded-lg mb-4 border border-orange-200">
+                              <p className="font-bold text-orange-800 mb-2">채권실 서류 요청</p>
+                              <p className="text-sm">공동발행 약속어음 품의 승인 후 채권실에 서류 요청(부문 담당자 통해 진행)</p>
+                            </div>
+
+                            <p className="font-bold mb-3">약속어음 필요서류</p>
+
+                            <div className="nested-tabs-container">
+                              <div className="nested-tabs">
+                                <button
+                                  onClick={() => setVisitType('together')}
+                                  className={`nested-tab ${visitType === 'together' ? 'active' : ''}`}
+                                >
+                                  공동발행인 동행 시
+                                </button>
+                                <button
+                                  onClick={() => setVisitType('alone')}
+                                  className={`nested-tab ${visitType === 'alone' ? 'active' : ''}`}
+                                >
+                                  RP 단독 방문 시
+                                </button>
+                              </div>
+                            </div>
+
+                            {visitType === 'together' && (
+                              <div className="nested-tab-content">
+                                <ul className="circle-bullet-list">
+                                  <li>① 본사 제공 서류 일체</li>
+                                  <li>② 공동발행인 신분증, 인감도장</li>
+                                  <li>③ RP 본인 신분증, 막도장</li>
+                                  <li className="text-red-600 font-bold">※ 신분증에 도로명 미기재 시 등본 1통 (3개월이내 발급)</li>
+                                </ul>
+                              </div>
+                            )}
+
+                            {visitType === 'alone' && (
+                              <div className="nested-tab-content">
+                                <ul className="circle-bullet-list">
+                                  <li>① 본사 제공 서류 일체</li>
+                                  <li>② 공동발행인 인감도장, 인감증명서 1통 (3개월 이내, 본인 발급용)</li>
+                                  <li>③ RP 본인 신분증, 막도장</li>
+                                  <li className="text-red-600 font-bold">※ 신분증에 도로명 미기재 시 등본 1통 (3개월이내 발급)</li>
+                                </ul>
+                              </div>
+                            )}
+
+                            <div className="border-t-2 border-gray-300 my-6"></div>
+
+                            <div className="mt-6">
+                              <p className="font-bold mb-3">굿리치 제출 서류</p>
+                              <ul className="circle-bullet-list">
+                                <li>① 약속어음 공정증서 정본</li>
+                                <li>② 약속어음공동발행 승락서<br />(공동발행인 직접 작성 후 인감도장 날인) 인감증명 1통(본인발급용)</li>
+                              </ul>
+                            </div>
+
+                            <div className="bg-orange-100 p-4 rounded-lg mt-6 border-2 border-orange-400">
+                              <p className="font-bold text-orange-800 text-center">
+                                공증사무실 방문하여 어음 공증 진행
+                              </p>
+                            </div>
+                          </div>
+                        </SubStepAccordion>
                       </div>
                     </StepAccordion>
                   </div>
