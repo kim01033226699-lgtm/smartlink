@@ -1,0 +1,466 @@
+.guidebook-page {
+  min-height: 100vh;
+  background: #F5F5F5;
+  padding-bottom: 80px;
+  margin: 0;
+  padding-top: 0;
+}
+
+.guidebook-header {
+  background: white;
+  padding: 2rem 1rem;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  margin: 0 0 0.5rem 0;
+  position: relative;
+}
+
+.back-button {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: #111;
+  padding: 0.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s;
+  z-index: 10;
+}
+
+.back-button:hover {
+  opacity: 0.8;
+}
+
+.guidebook-header .container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.guidebook-logo-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.guidebook-logo {
+  height: 20px;
+  width: auto;
+  transition: transform 0.3s ease;
+}
+
+.guidebook-logo:hover {
+  transform: scale(1.05);
+}
+
+.guidebook-badge {
+  display: inline-block;
+  background: transparent;
+  color: #888;
+  font-size: 1.5rem;
+  font-weight: 700;
+  padding: 0.5rem 2rem;
+  margin-bottom: 0.3rem;
+  text-shadow:
+    1px 1px 0px rgba(255, 255, 255, 0.8),
+    2px 2px 4px rgba(0, 0, 0, 0.15);
+  letter-spacing: 0.05em;
+}
+
+.guidebook-subtitle {
+  color: #666;
+  font-size: 1.35rem;
+  line-height: 1.6;
+  margin-top: 1rem;
+  font-weight: 500;
+}
+
+.guidebook-footer-notice {
+  color: #666;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-top: 2rem;
+  font-weight: 500;
+  text-align: center;
+  padding: 1rem;
+}
+
+.guidebook-content {
+  padding: 3.2rem 1rem 1rem 1rem;
+}
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.category-box {
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  min-height: 120px;
+  height: auto;
+  justify-content: center;
+  /* Center content vertically */
+  align-items: center;
+  /* Center content horizontally */
+  text-align: center;
+  container-type: inline-size;
+  /* Enable Container Queries */
+}
+
+/* Focus/Active 상태 제거 - 뒤로가기 시 레이아웃 깨짐 방지 */
+.category-box:focus,
+.category-box:active {
+  outline: none !important;
+}
+
+.category-box *:focus,
+.category-box *:active {
+  outline: none !important;
+}
+
+.category-box:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.category-box.disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.category-box.disabled:hover {
+  transform: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.category-icon {
+  background: #2C3E50;
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* Center icon vertically */
+  padding-top: 1.5rem;
+  /* Add some top padding */
+}
+
+.category-icon svg {
+  width: 32px;
+  height: 32px;
+}
+
+.category-box.disabled .category-icon {
+  background: #95A5A6;
+  opacity: 0.6;
+}
+
+/* Default Icon Style for all categories - Simplified */
+.category-box .category-icon {
+  background: transparent;
+  color: #333;
+}
+
+/* Active Commission Card Style */
+.category-box.active-commission {
+  background: linear-gradient(135deg, #FFD54F 0%, #FFCA28 100%);
+  /* GoodRich Yellow/Orange approximation */
+  border: 1px solid #FFC107;
+}
+
+.category-box.active-commission .category-title {
+  background: transparent;
+  color: #111;
+}
+
+.category-box.active-commission .category-icon {
+  color: #111;
+}
+
+/* Disabled Blur Style */
+.category-box.disabled-blur {
+  opacity: 0.6;
+  filter: blur(0.5px);
+  pointer-events: none;
+  /* Make it unclickable */
+  background: #F9F9F9;
+  /* Grayish background for inactive feel */
+}
+
+.category-box.disabled-blur .category-title {
+  color: #999;
+}
+
+.category-title {
+  background: transparent;
+  padding: 1rem;
+  /* Balanced padding */
+  font-size: 11cqi;
+  /* Fluid font size (approx 11% of box width) */
+  font-weight: 700;
+  color: #111111;
+  margin: 0;
+  width: 100%;
+  /* Ensure text takes width to center properly if needed */
+  text-align: center;
+  word-break: keep-all;
+  /* Prevent awkward breaks in Korean */
+}
+
+.category-box.disabled .category-title {
+  color: #95A5A6;
+}
+
+.category-desc {
+  display: none;
+}
+
+.empty-spacer {
+  visibility: hidden;
+}
+
+.department-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-height: 120px;
+  height: auto;
+}
+
+.department-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.department-card:focus,
+.department-card:active {
+  outline: none !important;
+}
+
+.department-icon {
+  background: linear-gradient(135deg, #FF9900 0%, #FF6B00 100%);
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  flex: 1;
+}
+
+.department-icon svg {
+  width: 32px;
+  height: 32px;
+}
+
+.department-title {
+  background: white;
+  padding: 1rem 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #2C3E50;
+  margin: 0;
+  text-align: center;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .category-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem;
+  }
+
+  .category-box {
+    min-height: 110px;
+    height: auto;
+  }
+
+  .department-card {
+    min-height: 110px;
+    height: auto;
+  }
+
+  .empty-spacer {
+    display: none;
+  }
+
+  .guidebook-logo {
+    height: 15px;
+  }
+
+  .guidebook-badge {
+    font-size: 1.2rem;
+    padding: 0.4rem 1.5rem;
+  }
+
+  .category-icon {
+    padding: 0.75rem 0.5rem;
+  }
+
+  .category-icon svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .category-title {
+    padding: 0.75rem 0.3rem;
+    font-size: 11cqi;
+  }
+
+  .department-icon {
+    padding: 0.75rem 0.5rem;
+  }
+
+  .department-icon svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .department-title {
+    padding: 0.75rem 0.3rem;
+    font-size: 0.75rem;
+  }
+
+  .guidebook-footer-notice {
+    font-size: 0.8rem;
+    margin-top: 1.5rem;
+    padding: 0.75rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .category-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem;
+  }
+
+  .category-box {
+    min-height: auto;
+    aspect-ratio: 2.1 / 1;
+    /* Slightly wider than square to avoid tall rectangles */
+    height: auto;
+  }
+
+  .department-card {
+    min-height: 100px;
+    height: auto;
+  }
+
+  .guidebook-logo {
+    height: 12.5px;
+  }
+
+  .guidebook-badge {
+    font-size: 1rem;
+    padding: 0.3rem 1.2rem;
+  }
+
+  .category-icon {
+    padding: 0.65rem 0.3rem;
+  }
+
+  .category-icon svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .category-title {
+    padding: 0.65rem 0.2rem;
+    font-size: 11cqi;
+  }
+
+  .department-icon {
+    padding: 0.65rem 0.3rem;
+  }
+
+  .department-icon svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .department-title {
+    padding: 0.65rem 0.2rem;
+    font-size: 0.7rem;
+  }
+
+  .guidebook-footer-notice {
+    font-size: 0.75rem;
+    margin-top: 1rem;
+    padding: 0.5rem;
+  }
+
+  /* Ensure grid doesn't overflow */
+  .category-grid {
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
+
+/* Extra small devices (400px and below) */
+@media (max-width: 400px) {
+  .category-grid {
+    gap: 0.6rem;
+  }
+
+  .category-box {
+    /* Inherit aspect ratio from 640px rule */
+  }
+
+  .department-card {
+    min-height: 90px;
+  }
+
+  .category-icon {
+    padding: 0.5rem 0.2rem;
+  }
+
+  .category-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .category-title {
+    padding: 0.5rem 0.15rem;
+    font-size: 11cqi;
+  }
+
+  .department-icon {
+    padding: 0.5rem 0.2rem;
+  }
+
+  .department-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .department-title {
+    padding: 0.5rem 0.15rem;
+    font-size: 0.65rem;
+  }
+}

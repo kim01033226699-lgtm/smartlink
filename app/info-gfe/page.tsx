@@ -83,35 +83,23 @@ export default function InfoGfePage() {
 
                 {/* DB선택형 상세 */}
                 <div className={`detail-card ${dbOption === 'db-select' ? 'active' : ''}`}>
-                  <div className="detail-box">
-                    <div className="detail-item">
-                      <strong>지원금</strong>
-                      <ul className="info-list">
-                        <li>1-6차월 : 120만원 (각월 정산평가업적 30만 원 이상 시)</li>
-                        <li>7-12차월 : 100만원 (6개 월 통산 정산평가업적 600만 원 초과 달성자 신청 가능, 단 각월 정산평가업적 50만원 이상 시 지급하며 13차월에 업적 미달시 환수)</li>
-                      </ul>
-                    </div>
-                    <div className="detail-item">
-                      <strong>DB</strong>
-                      <ul className="info-list">
-                        <li>매월 10건 x 12개 월</li>
-                        <li>단, 초기 3개월 지급 ( 1차평가(4차월):30만 이상 시 ,2차평가(7차월):50만원 이상 시 계속 지급(직전 3개월 평균 정산평가업적 기준) .</li>
-                      </ul>
-                    </div>
-                  </div>
+                  <ul className="info-list">
+                    <li><strong>지원금</strong></li>
+                    <li>1-6차월 : 120만원 (각월 정산평가업적 30만 원 이상 시)</li>
+                    <li>7-12차월 : 100만원 (6개 월 통산 정산평가업적 600만 원 초과 달성자 신청 가능, 단 각월 정산평가업적 50만원 이상 시 지급하며 13차월에 업적 미달시 환수)</li>
+                    <li><strong>DB</strong></li>
+                    <li>매월 10건 x 12개 월</li>
+                    <li>단, 초기 3개월 지급 ( 1차평가(4차월):30만 이상 시 ,2차평가(7차월):50만원 이상 시 계속 지급(직전 3개월 평균 정산평가업적 기준) .</li>
+                  </ul>
                 </div>
 
                 {/* DB미선택형 상세 */}
                 <div className={`detail-card ${dbOption === 'db-no-select' ? 'active' : ''}`}>
-                  <div className="detail-box">
-                    <div className="detail-item">
-                      <strong>지원금</strong>
-                      <ul className="info-list">
-                        <li>1차 지원금(1-6차월) : 월 170만 원(지원금 120만 원 + 시장개발비 50만 원, 각월 정산평가업적 50만 원 이상 시 지급) 단, 6개월 통산 정산평가업적 기준 미달시 50% 환수</li>
-                        <li>2차 지원금(7-12차월) : 월 120만 원, 초기 6개월 통산 정산평가업적 720만 원 초과 달성자에 한해 신청 가능, 단, 7-12차월 통산 정산평가업적 기준 미달시 환수</li>
-                      </ul>
-                    </div>
-                  </div>
+                  <ul className="info-list">
+                    <li><strong>지원금</strong></li>
+                    <li>1차 지원금(1-6차월) : 월 170만 원(지원금 120만 원 + 시장개발비 50만 원, 각월 정산평가업적 50만 원 이상 시 지급) 단, 6개월 통산 정산평가업적 기준 미달시 50% 환수</li>
+                    <li>2차 지원금(7-12차월) : 월 120만 원, 초기 6개월 통산 정산평가업적 720만 원 초과 달성자에 한해 신청 가능, 단, 7-12차월 통산 정산평가업적 기준 미달시 환수</li>
+                  </ul>
                 </div>
               </div>
 
@@ -148,22 +136,14 @@ export default function InfoGfePage() {
               {/* 혜택 섹션 */}
               <div className="info-section">
                 <h3>혜택</h3>
-                <div className="detail-box">
-                  <div className="detail-item">
-                    <strong>지원금</strong>
-                    <ul className="info-list">
-                      <li>6개월간 정산평가업적의 100% 지급</li>
-                      <li>단, 월 최저 정산평가업적 30만원 이상시 지급, 최대한도 100만원</li>
-                    </ul>
-                  </div>
-                  <div className="detail-item">
-                    <strong>DB</strong>
-                    <ul className="info-list">
-                      <li>매월 7건 x 6개월</li>
-                      <li>단, 초기 3개월 지급 후 직전 3개월 평균 정산평가업적 30만원 이상자에 한하여 추가 3개월간 매월 지원</li>
-                    </ul>
-                  </div>
-                </div>
+                <ul className="info-list">
+                  <li><strong>지원금</strong></li>
+                  <li>6개월간 정산평가업적의 100% 지급</li>
+                  <li>단, 월 최저 정산평가업적 30만원 이상시 지급, 최대한도 100만원</li>
+                  <li><strong>DB</strong></li>
+                  <li>매월 7건 x 6개월</li>
+                  <li>단, 초기 3개월 지급 후 직전 3개월 평균 정산평가업적 30만원 이상자에 한하여 추가 3개월간 매월 지원</li>
+                </ul>
               </div>
 
               {/* 안내사항 섹션 */}

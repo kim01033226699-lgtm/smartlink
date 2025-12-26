@@ -94,11 +94,9 @@
 
 /* Guarantee Tabs Container */
 .guarantee-tabs-container {
-  background: white;
-  padding: 1.5rem 1rem;
+  background: transparent;
+  padding: 0;
   margin-bottom: 1rem;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .guarantee-tabs {
@@ -110,7 +108,7 @@
 }
 
 .guarantee-tab {
-  background: #f5f5f5;
+  background: white;
   border: 2px solid #E0E0E0;
   padding: 1.25rem 1rem;
   font-size: 1rem;
@@ -121,6 +119,7 @@
   border-radius: 12px;
   text-align: center;
   line-height: 1.4;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .guarantee-tab:hover {
