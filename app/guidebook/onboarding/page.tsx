@@ -96,24 +96,13 @@ export default function OnboardingPage() {
     }
   };
 
-  const handleBackButton = () => {
-    if (expandedProcess !== null) {
-      // If viewing process details, go back to menu selection
-      setExpandedProcess(null);
-      setExpandedSteps(new Set());
-      setExpandedSubSteps(new Set());
-    } else {
-      // If on menu selection, go back to previous page
-      router.back();
-    }
-  };
 
   return (
     <>
       <div className="onboarding-page">
         {/* Header */}
         <header className="onboarding-header">
-          <button onClick={handleBackButton} className="back-button">
+          <button onClick={() => router.back()} className="back-button">
             <ArrowLeft size={24} />
           </button>
           <div className="w-full max-w-[700px] mx-auto flex flex-col items-center relative">
