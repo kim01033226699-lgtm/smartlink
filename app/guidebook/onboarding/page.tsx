@@ -438,7 +438,7 @@ export default function OnboardingPage() {
                               ♥ 조회 버튼 클릭후 모래시계가 계속 돌고 있다면? 이클린 연결 오류상태!!
                             </p>
                             <p className="text-xs md:text-sm font-bold text-gray-700 leading-relaxed">
-                              → <span className="text-red-600">[E클린보험서비스]</span> 홈페이지에서 <span className="text-red-600">[모집종사자 본인정보조회]</span> 하여 다운로드 받은 PDF 파일을 지점장님께 회신!!!
+                              👉 <a href="https://eclean.knia.or.kr/eclean/recr020m" target="_blank" rel="noopener noreferrer" className="text-red-600 underline hover:text-red-700">E클린보험서비스</a> 홈페이지에서 <span className="text-red-600">[모집종사자 본인정보조회]</span> 하여 다운로드 받은 PDF 파일을 지점장님께 회신!!!
                             </p>
                           </div>
                         </div>
@@ -630,7 +630,7 @@ export default function OnboardingPage() {
                               ♥ 조회 버튼 클릭후 모래시계가 계속 돌고 있다면? 이클린 연결 오류상태!!
                             </p>
                             <p className="text-xs md:text-sm font-bold text-gray-700 leading-relaxed">
-                              → <span className="text-red-600">[E클린보험서비스]</span> 홈페이지에서 <span className="text-red-600">[모집종사자 본인정보조회]</span> 하여 다운로드 받은 PDF 파일을 지점장님께 회신!!!
+                              👉 <a href="https://eclean.knia.or.kr/eclean/recr020m" target="_blank" rel="noopener noreferrer" className="text-red-600 underline hover:text-red-700">E클린보험서비스</a> 홈페이지에서 <span className="text-red-600">[모집종사자 본인정보조회]</span> 하여 다운로드 받은 PDF 파일을 지점장님께 회신!!!
                             </p>
                           </div>
                         </div>

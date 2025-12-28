@@ -216,6 +216,9 @@ export default function GuaranteePage() {
                               )}
                             </div>
 
+                            {/* Divider */}
+                            <div className="border-t border-gray-200 my-4"></div>
+
                             {/* 필요서류 */}
                             <div className="mb-4">
                               <button
@@ -368,6 +371,9 @@ export default function GuaranteePage() {
                                 </div>
                               )}
                             </div>
+
+                            {/* Divider */}
+                            <div className="border-t border-gray-200 my-4"></div>
 
                             {/* 근저당설정방법 */}
                             <div className="mb-4">
@@ -558,7 +564,7 @@ export default function GuaranteePage() {
                                   <li>③ 초본(소유자 = 거주자 확인)_재산세 납부자가 실시보는 물건에 거주하지 않고, 전세 계약 등이 설정되어 있는 경우 전세계약서, 임대차계약서 추가 제출</li>
                                   <li>④ 부채증명원(등기부상 선순위 금액과 실제 피담보 채무액의 차이가 큰 경우)</li>
                                   <li>⑤ 토지 또는 토지+건물 심사시 (거래기액 확인 불가능한 경우)<br />
-                                      행정사 or 중개사 or 감정평가사의 시세확인서 + 사업자등록증 + 명함 첨부</li>
+                                    행정사 or 중개사 or 감정평가사의 시세확인서 + 사업자등록증 + 명함 첨부</li>
                                 </ul>
 
                                 <div className="bg-yellow-50 p-3 rounded-lg border border-yellow-300">

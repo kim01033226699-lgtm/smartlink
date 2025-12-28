@@ -36,6 +36,13 @@
   opacity: 0.6;
 }
 
+/* Align back button with centered content container on larger screens */
+@media (min-width: 769px) {
+  .back-button {
+    left: calc((100% - 700px) / 2 + 1rem);
+  }
+}
+
 .guarantee-logo-wrapper {
   display: flex;
   justify-content: center;
@@ -314,6 +321,7 @@
     opacity: 0;
     transform: translateY(10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -493,6 +501,7 @@
     opacity: 0;
     transform: translateY(-10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -592,6 +601,7 @@
     padding-top: 0;
     padding-bottom: 0;
   }
+
   to {
     opacity: 1;
     max-height: 500px;
@@ -808,6 +818,7 @@
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
