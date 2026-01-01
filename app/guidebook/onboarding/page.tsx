@@ -102,7 +102,16 @@ export default function OnboardingPage() {
       <div className="onboarding-page">
         {/* Header */}
         <header className="onboarding-header">
-          <button onClick={() => router.back()} className="back-button">
+          <button
+            onClick={() => {
+              if (expandedProcess) {
+                setExpandedProcess(null);
+              } else {
+                router.back();
+              }
+            }}
+            className="back-button"
+          >
             <ArrowLeft size={24} />
           </button>
           <div className="w-full max-w-[700px] mx-auto flex flex-col items-center relative">
@@ -150,17 +159,16 @@ export default function OnboardingPage() {
                       >
                         <div className="step-content">
                           {/* Main Choice Buttons */}
-                          {/* Cancellation Mode Tabs */}
-                          <div className="cancellation-tabs">
+                          <div className="grid grid-cols-2 gap-3 mb-4">
                             <button
                               onClick={() => setCancellationMode('certified')}
-                              className={`cancellation-tab ${cancellationMode === 'certified' ? 'active' : ''}`}
+                              className={`p-4 rounded-lg border-2 font-bold text-center transition-all duration-150 active:scale-95 ${cancellationMode === 'certified' ? 'border-blue-500 bg-blue-50 text-blue-700' : 'border-gray-300 bg-white text-gray-700 hover:border-gray-400'}`}
                             >
                               내용증명으로<br />협회말소
                             </button>
                             <button
                               onClick={() => setCancellationMode('application')}
-                              className={`cancellation-tab ${cancellationMode === 'application' ? 'active' : ''}`}
+                              className={`p-4 rounded-lg border-2 font-bold text-center transition-all duration-150 active:scale-95 ${cancellationMode === 'application' ? 'border-blue-500 bg-blue-50 text-blue-700' : 'border-gray-300 bg-white text-gray-700 hover:border-gray-400'}`}
                             >
                               해촉신청서로<br />협회말소
                             </button>
@@ -260,26 +268,33 @@ export default function OnboardingPage() {
                             </div>
                           )}
 
-                          {/* Application Mode Content */}
+                          {/* Application Mode Content - Tab Style */}
                           {cancellationMode === 'application' && (
-                            <div className="fade-in bg-white border border-gray-100 rounded-xl p-4 shadow-sm mb-4">
-                              <div className="grid grid-cols-2 gap-2">
-                                <a
-                                  href="https://isi.knia.or.kr/cancellation/cancelInfo.do"
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="p-3 bg-blue-50 border border-blue-200 rounded-lg text-sm text-blue-700 font-bold hover:bg-blue-100 text-center transition-colors"
-                                >
-                                  손보협회<br />온라인 말소
-                                </a>
-                                <a
-                                  href="https://fp.insure.or.kr/process/process01"
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="p-3 bg-blue-50 border border-blue-200 rounded-lg text-sm text-blue-700 font-bold hover:bg-blue-100 text-center transition-colors"
-                                >
-                                  생보협회<br />온라인 말소
-                                </a>
+                            <div className="fade-in mt-4">
+                              <div className="bg-white border border-gray-100 rounded-xl p-4 shadow-sm">
+                                <p className="text-sm text-gray-600 mb-3">
+                                  해촉신청서를 통해 온라인으로 협회 말소를 진행할 수 있습니다.
+                                </p>
+
+                                {/* Tab Navigation for Associations */}
+                                <div className="cancellation-tabs">
+                                  <a
+                                    href="https://isi.knia.or.kr/cancellation/cancelInfo.do"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="cancellation-tab"
+                                  >
+                                    손보협회 온라인 말소
+                                  </a>
+                                  <a
+                                    href="https://fp.insure.or.kr/process/process01"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="cancellation-tab"
+                                  >
+                                    생보협회 온라인 말소
+                                  </a>
+                                </div>
                               </div>
                             </div>
                           )}
@@ -317,22 +332,21 @@ export default function OnboardingPage() {
                       >
                         <div className="step-content">
                           <SubStepAccordion
-                            subStepId="exp-4-1"
-                            title="4-1. 경력 확인"
-                            isOpen={expandedSubSteps.has('exp-4-1')}
-                            onToggle={() => toggleSubStep('exp-4-1')}
+                            subStepId="exp-3-1"
+                            title="3-1. 경력 확인"
+                            isOpen={expandedSubSteps.has('exp-3-1')}
+                            onToggle={() => toggleSubStep('exp-3-1')}
                           >
                             <p className="content-text">
-                              협회등록일 기준 직전 <strong className="highlight-red">3년</strong> 이내<br />
-                              <strong className="highlight-red">1년</strong> 이상 경력 인정
+                              협회등록일 기준 직전 <strong className="highlight-red">3년</strong> 이내 <strong className="highlight-red">1년</strong> 이상 경력 인정
                             </p>
                           </SubStepAccordion>
 
                           <SubStepAccordion
-                            subStepId="exp-4-2"
-                            title="4-2 수강신청하기"
-                            isOpen={expandedSubSteps.has('exp-4-2')}
-                            onToggle={() => toggleSubStep('exp-4-2')}
+                            subStepId="exp-3-2"
+                            title="3-2. 수강신청하기"
+                            isOpen={expandedSubSteps.has('exp-3-2')}
+                            onToggle={() => toggleSubStep('exp-3-2')}
                           >
                             <p className="content-text">
                               ▶ 보험연수원 로그인 → 모집종사자 교육 → 보험설계사 → 경력자등록교육 → 수강신청
@@ -340,10 +354,10 @@ export default function OnboardingPage() {
                           </SubStepAccordion>
 
                           <SubStepAccordion
-                            subStepId="exp-4-3"
-                            title="4-3. 수강과목 선택 방법"
-                            isOpen={expandedSubSteps.has('exp-4-3')}
-                            onToggle={() => toggleSubStep('exp-4-3')}
+                            subStepId="exp-3-3"
+                            title="3-3. 수강과목 선택 방법"
+                            isOpen={expandedSubSteps.has('exp-3-3')}
+                            onToggle={() => toggleSubStep('exp-3-3')}
                           >
                             <div className="course-option">
                               <p className="course-title text-blue-600">▶ 생보, 손보 : 둘다 경력 (총 30H)</p>
@@ -374,10 +388,10 @@ export default function OnboardingPage() {
                           </SubStepAccordion>
 
                           <SubStepAccordion
-                            subStepId="exp-4-4"
-                            title="4-4 수료증 출력"
-                            isOpen={expandedSubSteps.has('exp-4-4')}
-                            onToggle={() => toggleSubStep('exp-4-4')}
+                            subStepId="exp-3-4"
+                            title="3-4. 수료증 출력"
+                            isOpen={expandedSubSteps.has('exp-3-4')}
+                            onToggle={() => toggleSubStep('exp-3-4')}
                           >
                             <p className="content-text">
                               ▶ 나의강의실 → 수료증 출력하기 → 발급사유[협회제출용] 기재 → PDF 저장
@@ -393,42 +407,54 @@ export default function OnboardingPage() {
                         onToggle={() => toggleStep('exp-5')}
                       >
                         <div className="step-content">
-                          <p className="content-text font-bold text-lg mb-2">(1) 기본정보 전달</p>
-                          <p className="content-text mb-6">
-                            기본정보 : 성명, 주민번호, 자택주소, 휴대폰번호, 이메일 주소
-                          </p>
-
-                          <p className="content-text font-bold text-lg mb-2">(2) 위촉서류</p>
-                          <p className="content-text mb-6">
-                            신분증 사본, 통장사본, 수료증, 등본(제출용) <span className="highlight-red">(본인 주민번호 공개, 그 외 비공개 필)</span> 경력증명서(교보생명위촉용), 이클린조회
-                          </p>
-
-                          <p className="content-text font-bold text-lg mb-2">(3) 전자서명</p>
-                          <h4 className="font-bold text-gray-800 mb-2">* 위촉서류 전자서명하기</h4>
-                          <p className="content-text mb-2">
-                            ① <span className="text-blue-600 font-bold">위촉계약서(필수)</span> 하단 <span className="text-blue-600 font-bold">[서류체크]</span> 버튼 클릭 → 팝업된 화면 우측 스크롤을 모두 내려서 내용 확인후 <span className="text-blue-600 font-bold">[서명]</span> 버튼 클릭 → <span className="text-blue-600 font-bold">마우스로 서명입력</span> → 저장 → <span className="text-blue-600 font-bold">[동의]</span> 버튼 클릭 → <span className="text-blue-600 font-bold">전자서명</span> 선택
-                          </p>
-                          <p className="content-text mb-3">
-                            ② <span className="text-blue-600 font-bold">기타필수동의서</span> 하단 <span className="text-blue-600 font-bold">[서류체크]</span> 버튼 클릭 → 팝업된 화면 우측 스크롤을 모두 내려서 내용 확인후 <span className="text-blue-600 font-bold">[서명]</span> 버튼 클릭 → <span className="text-blue-600 font-bold">마우스로 서명입력</span> → 저장 → <span className="text-blue-600 font-bold">[동의]</span> 버튼 클릭 → <span className="text-blue-600 font-bold">전자서명</span> 선택
-                          </p>
-                          <p className="content-text highlight-red font-bold mb-6">
-                            ⁙ 전자서명 본인인증 : 카카오톡인증 or 네이버인증
-                          </p>
-
-                          <p className="content-text font-bold text-lg mb-2">(4) 서류업로드 & E-Clean정보 조회하기</p>
-                          <div className="flex flex-col gap-2 mb-3">
-                            <div className="bg-orange-500 text-white px-3 py-1.5 rounded-md inline-block text-sm font-bold shadow-sm">
-                              [조회] 버튼 클릭 → 이클린 보험 서비스의 모바일 인증절차 진행
-                            </div>
+                          {/* (1) 기본정보 담당 주임단에 전달 */}
+                          <div className="pb-4 mb-4 border-b border-gray-200">
+                            <p className="content-text font-bold text-lg mb-2 text-gray-900">(1) 기본정보 담당 주임단에 전달</p>
+                            <p className="content-text">
+                              기본정보 : 성명, 주민번호, 자택주소, 휴대폰번호, 이메일 주소
+                            </p>
                           </div>
 
-                          <div className="border-2 border-blue-400 p-4 rounded-lg bg-white shadow-sm">
-                            <p className="text-blue-600 font-bold mb-2 text-sm md:text-base">
-                              ♥ 조회 버튼 클릭후 모래시계가 계속 돌고 있다면? 이클린 연결 오류상태!!
+                          {/* (2) 위촉서류 */}
+                          <div className="pb-4 mb-4 border-b border-gray-200">
+                            <p className="content-text font-bold text-lg mb-2 text-gray-900">(2) 위촉서류</p>
+                            <p className="content-text">
+                              신분증 사본, 통장사본, 수료증, 등본(제출용) <span className="highlight-red">(본인 주민번호 공개, 그 외 비공개 필)</span> 경력증명서(교보생명위촉용), 이클린조회
                             </p>
-                            <p className="text-xs md:text-sm font-bold text-gray-700 leading-relaxed">
-                              👉 <a href="https://eclean.knia.or.kr/eclean/recr020m" target="_blank" rel="noopener noreferrer" className="text-red-600 underline hover:text-red-700">E클린보험서비스</a> 홈페이지에서 <span className="text-red-600">[모집종사자 본인정보조회]</span> 하여 다운로드 받은 PDF 파일을 지점장님께 회신!!!
+                          </div>
+
+                          {/* (3) 전자서명 */}
+                          <div className="pb-4 mb-4 border-b border-gray-200">
+                            <p className="content-text font-bold text-lg mb-2 text-gray-900">(3) 전자서명</p>
+                            <h4 className="font-bold text-gray-800 mb-2">* 위촉서류 전자서명하기</h4>
+                            <p className="content-text mb-2">
+                              ① <span className="text-blue-600 font-bold">위촉계약서(필수)</span> 하단 <span className="text-blue-600 font-bold">[서류체크]</span> 버튼 클릭 → 팝업된 화면 우측 스크롤을 모두 내려서 내용 확인후 <span className="text-blue-600 font-bold">[서명]</span> 버튼 클릭 → <span className="text-blue-600 font-bold">마우스로 서명입력</span> → 저장 → <span className="text-blue-600 font-bold">[동의]</span> 버튼 클릭 → <span className="text-blue-600 font-bold">전자서명</span> 선택
                             </p>
+                            <p className="content-text mb-3">
+                              ② <span className="text-blue-600 font-bold">기타필수동의서</span> 하단 <span className="text-blue-600 font-bold">[서류체크]</span> 버튼 클릭 → 팝업된 화면 우측 스크롤을 모두 내려서 내용 확인후 <span className="text-blue-600 font-bold">[서명]</span> 버튼 클릭 → <span className="text-blue-600 font-bold">마우스로 서명입력</span> → 저장 → <span className="text-blue-600 font-bold">[동의]</span> 버튼 클릭 → <span className="text-blue-600 font-bold">전자서명</span> 선택
+                            </p>
+                            <p className="content-text highlight-red font-bold">
+                              ⁙ 전자서명 본인인증 : 카카오톡인증 or 네이버인증
+                            </p>
+                          </div>
+
+                          {/* (4) 서류업로드 & E-Clean정보 조회하기 */}
+                          <div className="pb-4">
+                            <p className="content-text font-bold text-lg mb-2 text-gray-900">(4) 서류업로드 & E-Clean정보 조회하기</p>
+                            <div className="flex flex-col gap-2 mb-3">
+                              <div className="bg-orange-500 text-white px-3 py-1.5 rounded-md inline-block text-sm font-bold shadow-sm">
+                                [조회] 버튼 클릭 → 이클린 보험 서비스의 모바일 인증절차 진행
+                              </div>
+                            </div>
+
+                            <div className="border-2 border-blue-400 p-4 rounded-lg bg-white shadow-sm">
+                              <p className="text-blue-600 font-bold mb-2 text-sm md:text-base">
+                                ♥ 조회 버튼 클릭후 모래시계가 계속 돌고 있다면? 이클린 연결 오류상태!!
+                              </p>
+                              <p className="text-xs md:text-sm font-bold text-gray-700 leading-relaxed">
+                                👉 <a href="https://eclean.knia.or.kr/eclean/recr020m" target="_blank" rel="noopener noreferrer" className="text-red-600 underline hover:text-red-700">E클린보험서비스</a> 홈페이지에서 <span className="text-red-600">[모집종사자 본인정보조회]</span> 하여 다운로드 받은 PDF 파일을 지점장에게 회신
+                              </p>
+                            </div>
                           </div>
                         </div>
                       </StepAccordion>
@@ -442,11 +468,11 @@ export default function OnboardingPage() {
                         <div className="step-content">
                           <p className="content-text mb-3">
                             <strong>모바일 보험사 위촉신청</strong><br />
-                            : 2주에 걸쳐 각 생명보험사별 위촉동의 url 발송됩니다. 각 보험사 링크들어가서 동의 완료해주세요.
+                            2주에 걸쳐 각 생명보험사별 위촉동의 url 발송됩니다. 각 보험사 링크를 클릭하여 동의 완료를 합니다.
                           </p>
                           <p className="content-text">
-                            <strong>서면 보험사 위촉신청서 서명</strong><br />
-                            : <span className="highlight-red">위촉서류 원본 발송시 함께 보내주세요.</span>
+                            <strong>서면 보험사 위촉신청서 작성 및 서명</strong><br />
+                            <span className="highlight-red">작성된 서류는 위촉서류 원본 발송 시 함께 본사 담당자에게 보내 주셔야 합니다.(주임단에게 제출)</span>
                           </p>
                         </div>
                       </StepAccordion>
@@ -483,19 +509,31 @@ export default function OnboardingPage() {
                         onToggle={() => toggleStep('inexp-1')}
                       >
                         <div className="step-content">
-                          <p className="content-text mb-4 text-blue-600 font-bold">
-                            기본정보 : 성명, 주민번호, 휴대폰번호(본인명의), 이메일주소, <span className="text-red-500">응시지역</span>
-                          </p>
-
-                          <div className="bg-yellow-100 border border-yellow-300 rounded-lg p-3 mb-4 text-left">
-                            <span className="font-bold text-lg text-gray-800 flex items-center justify-start gap-2">
-                              <span className="text-red-500">≫</span> 응시지역 확인
-                            </span>
+                          {/* 기본정보 제출 */}
+                          <div className="pb-4 mb-4 border-b border-gray-200">
+                            <p className="font-bold text-lg text-gray-900 mb-2">기본정보를 소속 주임단에 제출</p>
+                            <p className="content-text">
+                              성명, 주민번호, 휴대폰번호(본인명의), 이메일주소, <span className="text-red-600 font-bold">응시지역</span>
+                            </p>
                           </div>
 
-                          <div className="text-red-500 font-bold">
-                            <p className="mb-1 text-lg">생명보험 시험응시 경우</p>
-                            <p className="pl-4">{"->"} 메트라이프생명 url 접속 응시 필수</p>
+                          {/* 응시 가능 지역 */}
+                          <div className="pb-4 mb-4 border-b border-gray-200">
+                            <p className="font-bold text-lg text-gray-800 mb-2">응시 가능 지역</p>
+                            <p className="content-text mb-3">
+                              서울, 인천, 부산, 대구, 광주, 대전, 원주, 울산, 전주, 서산, 강릉, 제주, 춘천
+                            </p>
+                            <p className="text-sm text-gray-700 leading-relaxed pt-2 border-t border-gray-200">
+                              <span className="text-orange-600 font-bold">→</span> 응시지역 및 시험 일정은 매월 <span className="font-bold text-blue-600">GP공지사항 - 자격시험 응시 일정 공지</span>를 통해 확인해야 합니다.
+                            </p>
+                          </div>
+
+                          {/* 생명보험 시험응시 */}
+                          <div className="pb-4">
+                            <p className="font-bold text-lg text-gray-900 mb-2">생명보험 시험응시 경우</p>
+                            <p className="content-text">
+                              <span className="text-red-600 font-bold">→</span> 문자로 수신한 <span className="font-bold text-red-600">메트라이프생명 url</span> 접속하여 관련 서류 업로드하여 응시해야 합니다.
+                            </p>
                           </div>
                         </div>
                       </StepAccordion>
@@ -585,42 +623,54 @@ export default function OnboardingPage() {
                         onToggle={() => toggleStep('inexp-4')}
                       >
                         <div className="step-content">
-                          <p className="content-text font-bold text-lg mb-2">(1) 기본정보 전달</p>
-                          <p className="content-text mb-6">
-                            기본정보 : 성명, 주민번호, 자택주소, 휴대폰번호, 이메일 주소
-                          </p>
-
-                          <p className="content-text font-bold text-lg mb-2">(2) 위촉서류</p>
-                          <p className="content-text mb-6">
-                            신분증 사본, 통장사본, 수료증, 등본(제출용) <span className="highlight-red">(본인 주민번호 공개, 그 외 비공개 필)</span> 경력증명서(교보생명위촉용), 이클린조회
-                          </p>
-
-                          <p className="content-text font-bold text-lg mb-2">(3) 전자서명</p>
-                          <h4 className="font-bold text-gray-800 mb-2">* 위촉서류 전자서명하기</h4>
-                          <p className="content-text mb-2">
-                            ① <span className="text-blue-600 font-bold">위촉계약서(필수)</span> 하단 <span className="text-blue-600 font-bold">[서류체크]</span> 버튼 클릭 → 팝업된 화면 우측 스크롤을 모두 내려서 내용 확인후 <span className="text-blue-600 font-bold">[서명]</span> 버튼 클릭 → <span className="text-blue-600 font-bold">마우스로 서명입력</span> → 저장 → <span className="text-blue-600 font-bold">[동의]</span> 버튼 클릭 → <span className="text-blue-600 font-bold">전자서명</span> 선택
-                          </p>
-                          <p className="content-text mb-3">
-                            ② <span className="text-blue-600 font-bold">기타필수동의서</span> 하단 <span className="text-blue-600 font-bold">[서류체크]</span> 버튼 클릭 → 팝업된 화면 우측 스크롤을 모두 내려서 내용 확인후 <span className="text-blue-600 font-bold">[서명]</span> 버튼 클릭 → <span className="text-blue-600 font-bold">마우스로 서명입력</span> → 저장 → <span className="text-blue-600 font-bold">[동의]</span> 버튼 클릭 → <span className="text-blue-600 font-bold">전자서명</span> 선택
-                          </p>
-                          <p className="content-text highlight-red font-bold mb-6">
-                            ⁙ 전자서명 본인인증 : 카카오톡인증 or 네이버인증
-                          </p>
-
-                          <p className="content-text font-bold text-lg mb-2">(4) 서류업로드 & E-Clean정보 조회하기</p>
-                          <div className="flex flex-col gap-2 mb-3">
-                            <div className="bg-orange-500 text-white px-3 py-1.5 rounded-md inline-block text-sm font-bold shadow-sm">
-                              [조회] 버튼 클릭 → 이클린 보험 서비스의 모바일 인증절차 진행
-                            </div>
+                          {/* (1) 기본정보 담당 주임단에 전달 */}
+                          <div className="pb-4 mb-4 border-b border-gray-200">
+                            <p className="content-text font-bold text-lg mb-2 text-gray-900">(1) 기본정보 담당 주임단에 전달</p>
+                            <p className="content-text">
+                              기본정보 : 성명, 주민번호, 자택주소, 휴대폰번호, 이메일 주소
+                            </p>
                           </div>
 
-                          <div className="border-2 border-blue-400 p-4 rounded-lg bg-white shadow-sm">
-                            <p className="text-blue-600 font-bold mb-2 text-sm md:text-base">
-                              ♥ 조회 버튼 클릭후 모래시계가 계속 돌고 있다면? 이클린 연결 오류상태!!
+                          {/* (2) 위촉서류 */}
+                          <div className="pb-4 mb-4 border-b border-gray-200">
+                            <p className="content-text font-bold text-lg mb-2 text-gray-900">(2) 위촉서류</p>
+                            <p className="content-text">
+                              신분증 사본, 통장사본, 수료증, 등본(제출용) <span className="highlight-red">(본인 주민번호 공개, 그 외 비공개 필)</span> 경력증명서(교보생명위촉용), 이클린조회
                             </p>
-                            <p className="text-xs md:text-sm font-bold text-gray-700 leading-relaxed">
-                              👉 <a href="https://eclean.knia.or.kr/eclean/recr020m" target="_blank" rel="noopener noreferrer" className="text-red-600 underline hover:text-red-700">E클린보험서비스</a> 홈페이지에서 <span className="text-red-600">[모집종사자 본인정보조회]</span> 하여 다운로드 받은 PDF 파일을 지점장님께 회신!!!
+                          </div>
+
+                          {/* (3) 전자서명 */}
+                          <div className="pb-4 mb-4 border-b border-gray-200">
+                            <p className="content-text font-bold text-lg mb-2 text-gray-900">(3) 전자서명</p>
+                            <h4 className="font-bold text-gray-800 mb-2">* 위촉서류 전자서명하기</h4>
+                            <p className="content-text mb-2">
+                              ① <span className="text-blue-600 font-bold">위촉계약서(필수)</span> 하단 <span className="text-blue-600 font-bold">[서류체크]</span> 버튼 클릭 → 팝업된 화면 우측 스크롤을 모두 내려서 내용 확인후 <span className="text-blue-600 font-bold">[서명]</span> 버튼 클릭 → <span className="text-blue-600 font-bold">마우스로 서명입력</span> → 저장 → <span className="text-blue-600 font-bold">[동의]</span> 버튼 클릭 → <span className="text-blue-600 font-bold">전자서명</span> 선택
                             </p>
+                            <p className="content-text mb-3">
+                              ② <span className="text-blue-600 font-bold">기타필수동의서</span> 하단 <span className="text-blue-600 font-bold">[서류체크]</span> 버튼 클릭 → 팝업된 화면 우측 스크롤을 모두 내려서 내용 확인후 <span className="text-blue-600 font-bold">[서명]</span> 버튼 클릭 → <span className="text-blue-600 font-bold">마우스로 서명입력</span> → 저장 → <span className="text-blue-600 font-bold">[동의]</span> 버튼 클릭 → <span className="text-blue-600 font-bold">전자서명</span> 선택
+                            </p>
+                            <p className="content-text highlight-red font-bold">
+                              ⁙ 전자서명 본인인증 : 카카오톡인증 or 네이버인증
+                            </p>
+                          </div>
+
+                          {/* (4) 서류업로드 & E-Clean정보 조회하기 */}
+                          <div className="pb-4">
+                            <p className="content-text font-bold text-lg mb-2 text-gray-900">(4) 서류업로드 & E-Clean정보 조회하기</p>
+                            <div className="flex flex-col gap-2 mb-3">
+                              <div className="bg-orange-500 text-white px-3 py-1.5 rounded-md inline-block text-sm font-bold shadow-sm">
+                                [조회] 버튼 클릭 → 이클린 보험 서비스의 모바일 인증절차 진행
+                              </div>
+                            </div>
+
+                            <div className="border-2 border-blue-400 p-4 rounded-lg bg-white shadow-sm">
+                              <p className="text-blue-600 font-bold mb-2 text-sm md:text-base">
+                                ♥ 조회 버튼 클릭후 모래시계가 계속 돌고 있다면? 이클린 연결 오류상태!!
+                              </p>
+                              <p className="text-xs md:text-sm font-bold text-gray-700 leading-relaxed">
+                                👉 <a href="https://eclean.knia.or.kr/eclean/recr020m" target="_blank" rel="noopener noreferrer" className="text-red-600 underline hover:text-red-700">E클린보험서비스</a> 홈페이지에서 <span className="text-red-600">[모집종사자 본인정보조회]</span> 하여 다운로드 받은 PDF 파일을 지점장에게 회신
+                              </p>
+                            </div>
                           </div>
                         </div>
                       </StepAccordion>
@@ -634,11 +684,11 @@ export default function OnboardingPage() {
                         <div className="step-content">
                           <p className="content-text mb-3">
                             <strong>모바일 보험사 위촉신청</strong><br />
-                            : 2주에 걸쳐 각 생명보험사별 위촉동의 url 발송됩니다. 각 보험사 링크들어가서 동의 완료해주세요.
+                            2주에 걸쳐 각 생명보험사별 위촉동의 url 발송됩니다. 각 보험사 링크를 클릭하여 동의 완료를 합니다.
                           </p>
                           <p className="content-text">
-                            <strong>서면 보험사 위촉신청서 서명</strong><br />
-                            : <span className="highlight-red">위촉서류 원본 발송시 함께 보내주세요.</span>
+                            <strong>서면 보험사 위촉신청서 작성 및 서명</strong><br />
+                            <span className="highlight-red">작성된 서류는 위촉서류 원본 발송 시 함께 본사 담당자에게 보내 주셔야 합니다.(주임단에게 제출)</span>
                           </p>
                         </div>
                       </StepAccordion>

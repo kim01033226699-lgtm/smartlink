@@ -181,9 +181,9 @@ export default function GuaranteePage() {
                         >
                           <div className="step-content">
                             {/* 한도조회필요정보 */}
-                            <div className="mb-4">
+                            <div className="mb-2">
                               <button
-                                className="w-full text-left font-bold text-sm mb-2 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors flex justify-between items-center"
+                                className="w-full text-left font-bold text-sm mb-2 p-2 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors flex justify-between items-center"
                                 onClick={(e) => {
                                   e.stopPropagation();
                                   const newSet = new Set(expandedSubSteps);
@@ -217,12 +217,12 @@ export default function GuaranteePage() {
                             </div>
 
                             {/* Divider */}
-                            <div className="border-t border-gray-200 my-4"></div>
+                            <div className="border-t border-gray-200 my-2"></div>
 
                             {/* 필요서류 */}
-                            <div className="mb-4">
+                            <div className="mb-2">
                               <button
-                                className="w-full text-left font-bold text-sm mb-2 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors flex justify-between items-center"
+                                className="w-full text-left font-bold text-sm mb-2 p-2 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors flex justify-between items-center"
                                 onClick={(e) => {
                                   e.stopPropagation();
                                   const newSet = new Set(expandedSubSteps);
@@ -303,9 +303,9 @@ export default function GuaranteePage() {
                         >
                           <div className="step-content">
                             {/* 필요서류 */}
-                            <div className="mb-4">
+                            <div className="mb-2">
                               <button
-                                className="w-full text-left font-bold text-sm mb-2 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors flex justify-between items-center"
+                                className="w-full text-left font-bold text-sm mb-2 p-2 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors flex justify-between items-center"
                                 onClick={(e) => {
                                   e.stopPropagation();
                                   const newSet = new Set(expandedSubSteps);
@@ -373,12 +373,12 @@ export default function GuaranteePage() {
                             </div>
 
                             {/* Divider */}
-                            <div className="border-t border-gray-200 my-4"></div>
+                            <div className="border-t border-gray-200 my-2"></div>
 
                             {/* 근저당설정방법 */}
-                            <div className="mb-4">
+                            <div className="mb-2">
                               <button
-                                className="w-full text-left font-bold text-sm mb-2 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors flex justify-between items-center"
+                                className="w-full text-left font-bold text-sm mb-2 p-2 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors flex justify-between items-center"
                                 onClick={(e) => {
                                   e.stopPropagation();
                                   const newSet = new Set(expandedSubSteps);

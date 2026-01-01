@@ -11,6 +11,7 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1.0,
   minimumScale: 1.0,
+  viewportFit: "cover", // Safe Area 대응
 };
 
 export default function RootLayout({

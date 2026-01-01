@@ -119,52 +119,42 @@ export default function PersonalInfoForm({ onComplete, onBack, selectedResults }
     e.preventDefault();
 
     if (validateForm()) {
-      // 질문 결과에서 수신처 생성
+      // 질문 결과에서 수신처 생성 - 폼 입력 순서대로 정렬
       const finalRecipients: string[] = [];
 
-      selectedResults.forEach(result => {
-        if (result === '현재 재직회사') {
-          // 선택한 소속회사 정보 사용
-          if (formData.company) {
-            // 사용자가 직접 입력한 회사 주소가 있으면 사용, 없으면 구글시트 데이터 사용
-            let recipientString = formData.company;
-            if (formData.companyAddress) {
-              recipientString = `${formData.company} - ${formData.companyAddress}`;
-            } else {
-              const matchedRecipient = recipients.find(r => r.company === formData.company);
-              if (matchedRecipient) {
-                recipientString = `${matchedRecipient.company} - ${matchedRecipient.address}`;
-              }
-            }
-            finalRecipients.push(recipientString);
-          }
-        } else if (result.includes('생명보험협회')) {
-          // 생명보험협회 주소 입력값 사용
-          if (formData.lifeAssociationAddress) {
-            finalRecipients.push(`생명보험협회 - ${formData.lifeAssociationAddress}`);
-          } else {
-            // Fallback to existing logic or data.json if needed, or push just name
-            const matchedRecipient = recipients.find(r => r.company.includes('생명보험협회'));
-            if (matchedRecipient) {
-              finalRecipients.push(`${matchedRecipient.company} - ${matchedRecipient.address}`);
-            } else {
-              finalRecipients.push(result);
-            }
-          }
-        } else if (result.includes('손해보험협회')) {
-          // 손해보험협회 주소 입력값 사용
-          if (formData.generalAssociationAddress) {
-            finalRecipients.push(`손해보험협회 - ${formData.generalAssociationAddress}`);
-          } else {
-            const matchedRecipient = recipients.find(r => r.company.includes('손해보험협회'));
-            if (matchedRecipient) {
-              finalRecipients.push(`${matchedRecipient.company} - ${matchedRecipient.address}`);
-            } else {
-              finalRecipients.push(result);
-            }
-          }
+      // 1. 현재 소속 회사 (폼의 첫 번째 입력) - 회사명이 입력된 경우만
+      if (selectedResults.includes('현재 재직회사') && formData.company && formData.company.trim()) {
+        let recipientString = formData.company;
+        if (formData.companyAddress && formData.companyAddress.trim()) {
+          recipientString = `${formData.company} - ${formData.companyAddress}`;
         } else {
-          // 기타 수신처
+          const matchedRecipient = recipients.find(r => r.company === formData.company);
+          if (matchedRecipient) {
+            recipientString = `${matchedRecipient.company} - ${matchedRecipient.address}`;
+          }
+        }
+        finalRecipients.push(recipientString);
+      }
+
+      // 2. 생명보험협회 (폼의 두 번째 입력) - 주소가 입력된 경우만
+      if (selectedResults.some(r => r.includes('생명보험협회')) &&
+        formData.lifeAssociationAddress &&
+        formData.lifeAssociationAddress.trim()) {
+        finalRecipients.push(`생명보험협회 - ${formData.lifeAssociationAddress}`);
+      }
+
+      // 3. 손해보험협회 (폼의 세 번째 입력) - 주소가 입력된 경우만
+      if (selectedResults.some(r => r.includes('손해보험협회')) &&
+        formData.generalAssociationAddress &&
+        formData.generalAssociationAddress.trim()) {
+        finalRecipients.push(`손해보험협회 - ${formData.generalAssociationAddress}`);
+      }
+
+      // 4. 기타 수신처 (위 3개가 아닌 경우)
+      selectedResults.forEach(result => {
+        if (result !== '현재 재직회사' &&
+          !result.includes('생명보험협회') &&
+          !result.includes('손해보험협회')) {
           const matchedRecipient = recipients.find(r =>
             r.company.includes(result) || result.includes(r.company)
           );
@@ -225,7 +215,7 @@ export default function PersonalInfoForm({ onComplete, onBack, selectedResults }
           <div>
             <div className="flex justify-between items-center mb-1">
               <label htmlFor="lifeAssociationAddress" className="block text-sm font-medium text-gray-700">
-                생명보험협회 주소(본인 해당협회주소확인) <span className="text-xs text-gray-500">(수신인:말소담당자)</span>
+                생명보험협회 주소 <span className="text-xs text-gray-500">(수신인:말소담당자)</span>
               </label>
               <a
                 href="https://fp.insure.or.kr/process/process01"
@@ -250,7 +240,7 @@ export default function PersonalInfoForm({ onComplete, onBack, selectedResults }
           <div>
             <div className="flex justify-between items-center mb-1">
               <label htmlFor="generalAssociationAddress" className="block text-sm font-medium text-gray-700">
-                손해보험협회 주소(본인 해당협회주소확인) <span className="text-xs text-gray-500">(수신인:말소담당자)</span>
+                손해보험협회 주소 <span className="text-xs text-gray-500">(수신인:말소담당자)</span>
               </label>
               <a
                 href="https://isi.knia.or.kr/cancellation/cancelInfo.do"
@@ -293,7 +283,7 @@ export default function PersonalInfoForm({ onComplete, onBack, selectedResults }
           {/* 주민번호 */}
           <div>
             <label htmlFor="residentNumber" className="block text-sm font-medium text-gray-700 mb-1">
-              주민번호 (-생략) <span className="text-red-500">*</span>
+              주민번호 <span className="text-red-500">*</span>
             </label>
             <input
               id="residentNumber"
@@ -311,7 +301,7 @@ export default function PersonalInfoForm({ onComplete, onBack, selectedResults }
               }}
               className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${errors.residentNumber ? 'border-red-500' : 'border-gray-300'
                 }`}
-              placeholder="1234561234567 (- 생략 가능)"
+              placeholder="900101-1234567"
               maxLength={14}
             />
             {errors.residentNumber && (
@@ -341,7 +331,7 @@ export default function PersonalInfoForm({ onComplete, onBack, selectedResults }
           {/* 전화번호 */}
           <div>
             <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
-              전화번호 (-생략) <span className="text-red-500">*</span>
+              전화번호 <span className="text-red-500">*</span>
             </label>
             <input
               id="phone"
@@ -365,7 +355,7 @@ export default function PersonalInfoForm({ onComplete, onBack, selectedResults }
               }}
               className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${errors.phone ? 'border-red-500' : 'border-gray-300'
                 }`}
-              placeholder="01012345678 (- 생략 가능)"
+              placeholder="010-1234-5678"
             />
             {errors.phone && (
               <p className="text-red-500 text-sm mt-1">{errors.phone}</p>

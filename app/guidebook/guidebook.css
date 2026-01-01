@@ -464,3 +464,29 @@
     font-size: 0.65rem;
   }
 }
+
+/* ========================================
+   모바일 여백 및 간격 개선
+   ======================================== */
+@media (max-width: 768px) {
+  .guidebook-content {
+    padding: 2rem 1rem;
+    /* 상하 여백 증가 */
+  }
+
+  .step-accordion {
+    margin-bottom: 1rem;
+    /* 아코디언 간격 */
+  }
+
+  .step-content {
+    padding: 1rem;
+    /* 내부 여백 */
+  }
+
+  /* 리스트 아이템 간격 */
+  .circle-bullet-list li {
+    margin-bottom: 0.75rem;
+    line-height: 1.6;
+  }
+}
