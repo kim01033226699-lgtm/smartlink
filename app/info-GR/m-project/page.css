@@ -325,28 +325,28 @@
 }
 
 .arrow-btn {
-  width: 18px;
-  height: 18px;
-  border: 1px solid #d1d5db;
+  width: 16px;
+  height: 16px;
+  border: none;
   background: transparent;
-  color: #6b7280;
-  font-size: 0.65rem;
+  color: #9ca3af;
+  font-size: 0.7rem;
   cursor: pointer;
-  border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.2s ease;
+  padding: 0;
+  line-height: 1;
 }
 
 .arrow-btn:hover {
-  background: var(--primary-color);
-  color: white;
-  border-color: var(--primary-color);
+  color: var(--primary-color);
+  transform: scale(1.2);
 }
 
 .arrow-btn:active {
-  transform: scale(0.95);
+  transform: scale(1);
 }
 
 /* Result Summary */
