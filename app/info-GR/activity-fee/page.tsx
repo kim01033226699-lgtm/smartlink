@@ -124,7 +124,7 @@ export default function ActivityFeePage() {
                 <span className="tab-subtitle">소득무관</span>
               </button>
               <button
-                className={`tab-button ${!isType1 ? 'active' : ''}`}
+                className={`tab-button ${!isType1 ? 'active active-green' : ''}`}
                 onClick={() => setActiveTab('type2')}
               >
                 <span className="tab-title">활동수수료 II</span>

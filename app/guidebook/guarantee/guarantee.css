@@ -250,6 +250,20 @@
   box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
 }
 
+.nested-tab.active-orange {
+  background: linear-gradient(135deg, #FF9800 0%, #F57C00 100%);
+  color: white;
+  border-color: #FF9800;
+  box-shadow: 0 2px 8px rgba(255, 152, 0, 0.3);
+}
+
+.nested-tab.active-green {
+  background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+  color: white;
+  border-color: #4CAF50;
+  box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
+}
+
 .nested-tab-content {
   margin-top: 0.75rem;
   padding-top: 0.75rem;
@@ -608,6 +622,10 @@
     padding-top: 1rem;
     padding-bottom: 1.5rem;
   }
+}
+
+.indent-text {
+  padding-left: 1.5rem;
 }
 
 .content-text {

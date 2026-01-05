@@ -204,6 +204,14 @@
   color: var(--primary-color);
 }
 
+.result-payout-info {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #4b5563;
+  margin-top: 0.5rem;
+  display: block;
+}
+
 /* Option Selection */
 .option-selection-section {
   margin-bottom: 1.5rem;

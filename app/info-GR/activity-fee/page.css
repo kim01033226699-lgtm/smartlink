@@ -142,6 +142,10 @@
   opacity: 1;
 }
 
+.tab-button.active.active-green {
+  background: #00a874;
+}
+
 .tab-title {
   font-size: 1.275rem;
   font-weight: 700;

@@ -126,22 +126,17 @@ export default function SettlementEducationPage() {
   };
 
   const calculateIntermediateGoals = (finalGoal: number, period: number) => {
-    const monthlyAverage = Math.floor(finalGoal / period);
-
     if (period === 12) {
       return [
-        { month: 3, amount: Math.floor(finalGoal * 0.25) },
-        { month: 6, amount: Math.floor(finalGoal * 0.35) }
+        { month: 3, amount: Math.floor(finalGoal * 0.25), evaluation: '영업7차월' }
       ];
     } else if (period === 18) {
       return [
-        { month: 6, amount: Math.floor(finalGoal * 0.20) },
-        { month: 12, amount: Math.floor(finalGoal * 0.25) }
+        { month: 6, amount: Math.floor(finalGoal * 0.20), evaluation: '영업10차월' }
       ];
     } else if (period === 24) {
       return [
-        { month: 6, amount: Math.floor(finalGoal * 0.15) },
-        { month: 12, amount: Math.floor(finalGoal * 0.20) }
+        { month: 6, amount: Math.floor(finalGoal * 0.15), evaluation: '영업10차월' }
       ];
     }
     return [];
@@ -224,6 +219,7 @@ export default function SettlementEducationPage() {
                   <div className="result-header">
                     <p className="result-title">정착교육비 지원금</p>
                     <p className="result-amount">{formatNumber(Math.floor(result.amount / 10000))}만원</p>
+                    <p className="result-payout-info">(1차 50%, 2차 50% 분할 지급)</p>
                   </div>
 
                   {/* Option Selection */}
@@ -268,26 +264,26 @@ export default function SettlementEducationPage() {
                           <span className="goal-monthly-calc">
                             {formatNumber(Math.floor(result.finalGoal / result.selectedOption.period / 10000))}만원 x {result.selectedOption.period}개월
                           </span>
+                          <span className="goal-evaluation" style={{ display: 'block', marginTop: '0.25rem' }}>
+                            (평가시기: 영업{result.selectedOption.period + 1}차월)
+                          </span>
                         </div>
                       </div>
 
                       {/* Intermediate Goals */}
                       {result.intermediateGoals && result.intermediateGoals.length > 0 && (
                         <div className="intermediate-goals">
-                          {result.intermediateGoals.map((goal: any, index: number) => {
-                            const evaluationPeriods = ['영업7차월', '영업10차월', '영업13차월'];
-                            return (
-                              <div key={index} className="goal-block intermediate-goal">
-                                <h4 className="goal-block-title">{index + 1}차 중간목표</h4>
-                                <div className="goal-block-content">
-                                  {formatNumber(Math.floor(goal.amount / 10000))}만원
-                                  <span className="goal-evaluation">
-                                    (평가시기: {evaluationPeriods[index]})
-                                  </span>
-                                </div>
+                          {result.intermediateGoals.map((goal: any, index: number) => (
+                            <div key={index} className="goal-block intermediate-goal">
+                              <h4 className="goal-block-title">{index + 1}차 중간목표</h4>
+                              <div className="goal-block-content">
+                                {formatNumber(Math.floor(goal.amount / 10000))}만원
+                                <span className="goal-evaluation">
+                                  (평가시기: {goal.evaluation})
+                                </span>
                               </div>
-                            );
-                          })}
+                            </div>
+                          ))}
                         </div>
                       )}
 

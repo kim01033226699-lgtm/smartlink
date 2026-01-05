@@ -31,6 +31,9 @@ export default function GuaranteePage() {
   /* State for promissory visit type (동행/단독) */
   const [visitType, setVisitType] = useState<'together' | 'alone' | null>(null);
 
+  /* State for app download modal */
+  const [isAppDownloadModalOpen, setIsAppDownloadModalOpen] = useState(false);
+
   const toggleStep = (stepId: string) => {
     if (expandedSteps.has(stepId)) {
       setExpandedSteps(new Set());
@@ -93,7 +96,7 @@ export default function GuaranteePage() {
                     onClick={() => setGuaranteeType('collateral')}
                     className={`guarantee-tab ${guaranteeType === 'collateral' ? 'active active-orange' : ''}`}
                   >
-                    근저당<br />예금질권<br />공동약속어음
+                    그외보증
                   </button>
                 </div>
               </div>
@@ -109,18 +112,27 @@ export default function GuaranteePage() {
                       onToggle={() => toggleStep('ins-1')}
                     >
                       <div className="step-content">
-                        <p className="content-text">
-                          모바일 서울보증보험 앱 설치 → 개인정보동의 → 1번 [계약 체결·이행을 위한 동의]
-                        </p>
-                        <div className="app-download-container">
-                          <a href="https://play.google.com/store/search?q=%EC%84%9C%EC%9A%B8%EB%B3%B4%EC%A6%9D%EB%B3%B4%ED%97%98&c=apps&hl=ko" target="_blank" rel="noopener noreferrer" className="app-store-button google">
+                        <div className="ml-2">
+                          <p className="content-text mb-3">
+                            • 서울보증보험 앱 설치
+                          </p>
+                          <p className="content-text mb-3 ml-4">↓</p>
+                          <p className="content-text mb-3">
+                            • 개인 정보 동의
+                          </p>
+                          <p className="content-text mb-3 ml-4">↓</p>
+                          <p className="content-text mb-3">
+                            • 1번[계약체결 이행을 위한 동의]
+                          </p>
+                        </div>
+                        <div className="flex justify-start mt-4">
+                          <button
+                            onClick={() => setIsAppDownloadModalOpen(true)}
+                            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors flex items-center gap-2"
+                          >
                             <Download size={20} />
-                            <span>Google Play</span>
-                          </a>
-                          <a href="https://apps.apple.com/kr/app/sgi-m-sgi서울보증/id6443694425" target="_blank" rel="noopener noreferrer" className="app-store-button apple">
-                            <Download size={20} />
-                            <span>App Store</span>
-                          </a>
+                            <span>앱 설치하기</span>
+                          </button>
                         </div>
                       </div>
                     </StepAccordion>
@@ -133,19 +145,35 @@ export default function GuaranteePage() {
                     >
                       <div className="step-content">
                         <p className="content-text">
-                          서울보증보험 → 01.보험계약체결용 필수 동의 후 한도조회 요청
+                          • 주임단에 요청
+                        </p>
+                        <p className="content-text mt-2">
+                          • 필요정보: 이름, 주민번호
                         </p>
                       </div>
                     </StepAccordion>
 
-                    {/* Step 3 - 링크 수신 후 전자서명 */}
+                    {/* Step 3 - 보증보험 청약요청 */}
                     <StepAccordion
-                      title="③ 링크 수신 후 전자서명"
+                      title="③ 보증보험 청약요청"
                       isOpen={expandedSteps.has('ins-3')}
                       onToggle={() => toggleStep('ins-3')}
                     >
                       <div className="step-content">
-                        <div className="bg-orange-50 p-4 rounded-lg border-2 border-orange-300">
+                        <p className="content-text">
+                          • 주임단에 요청
+                        </p>
+                      </div>
+                    </StepAccordion>
+
+                    {/* Step 4 - 서울보증보험 전자서명 */}
+                    <StepAccordion
+                      title="④ 서울보증보험 전자서명"
+                      isOpen={expandedSteps.has('ins-4')}
+                      onToggle={() => toggleStep('ins-4')}
+                    >
+                      <div className="step-content">
+                        <div className="p-1">
                           <p className="content-text font-bold text-orange-800 mb-2">
                             ⚠️ 중요 안내
                           </p>
@@ -172,15 +200,19 @@ export default function GuaranteePage() {
                       onToggle={() => toggleStep('col-1')}
                     >
                       <div className="step-content">
-                        {/* 1. 근저당 한도 조회 */}
+                        <p className="content-text mb-4 indent-text">
+                          주임단을 통해 진행합니다.
+                        </p>
+
+                        {/* 1. 한도조회 */}
                         <SubStepAccordion
                           subStepId="mortgage-inquiry"
-                          title="1. 근저당 한도 조회"
+                          title="1. 한도조회"
                           isOpen={expandedSubSteps.has('mortgage-inquiry')}
                           onToggle={() => toggleSubStep('mortgage-inquiry')}
                         >
                           <div className="step-content">
-                            {/* 한도조회필요정보 */}
+                            {/* 필요정보 */}
                             <div className="mb-2">
                               <button
                                 className="w-full text-left font-bold text-sm mb-2 p-2 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors flex justify-between items-center"
@@ -195,7 +227,7 @@ export default function GuaranteePage() {
                                   setExpandedSubSteps(newSet);
                                 }}
                               >
-                                <span>한도조회필요정보</span>
+                                <span>필요정보</span>
                                 {expandedSubSteps.has('mortgage-inquiry-info') ?
                                   <ChevronUp size={18} /> : <ChevronDown size={18} />
                                 }
@@ -291,13 +323,34 @@ export default function GuaranteePage() {
                                 </div>
                               )}
                             </div>
+
+                            {/* 설명 추가 */}
+                            <div className="bg-blue-50 p-3 rounded-lg mt-3 border border-blue-200">
+                              <p className="content-text text-sm text-gray-700">
+                                필요정보와 필요서류를 주임단 or 부문담당자에게 전달하여 채권실로 요청합니다.
+                              </p>
+                            </div>
                           </div>
                         </SubStepAccordion>
 
-                        {/* 2. 근저당 설정 방법 */}
+                        {/* 2. 근저당 요청 */}
+                        <SubStepAccordion
+                          subStepId="mortgage-request"
+                          title="2. 근저당 요청"
+                          isOpen={expandedSubSteps.has('mortgage-request')}
+                          onToggle={() => toggleSubStep('mortgage-request')}
+                        >
+                          <div className="step-content">
+                            <p className="content-text">
+                              세부 조회용 서류 심사 한도내에서 부문 담당자를 통하여 진행
+                            </p>
+                          </div>
+                        </SubStepAccordion>
+
+                        {/* 3. 근저당 설정 */}
                         <SubStepAccordion
                           subStepId="mortgage-setup"
-                          title="2. 근저당 설정 방법"
+                          title="3. 근저당 설정"
                           isOpen={expandedSubSteps.has('mortgage-setup')}
                           onToggle={() => toggleSubStep('mortgage-setup')}
                         >
@@ -331,7 +384,7 @@ export default function GuaranteePage() {
                                           e.stopPropagation();
                                           setSetupDocType('owner');
                                         }}
-                                        className={`nested-tab ${setupDocType === 'owner' ? 'active' : ''}`}
+                                        className={`nested-tab ${setupDocType === 'owner' ? 'active-orange' : ''}`}
                                       >
                                         근저당설정자<br />(부동산소유자)
                                       </button>
@@ -340,7 +393,7 @@ export default function GuaranteePage() {
                                           e.stopPropagation();
                                           setSetupDocType('debtor');
                                         }}
-                                        className={`nested-tab ${setupDocType === 'debtor' ? 'active' : ''}`}
+                                        className={`nested-tab ${setupDocType === 'debtor' ? 'active-green' : ''}`}
                                       >
                                         채무자<br />(RP본인)
                                       </button>
@@ -419,7 +472,7 @@ export default function GuaranteePage() {
                                   <div className="bg-gray-50 p-4 rounded-lg">
                                     <p className="font-bold mb-2">⇒ 모든 서류 원본 등기 발송</p>
                                     <p className="text-sm">
-                                      ★ 등기 발송 주소: 서울 중구 세종대로 9길 41, 7층(파시픽타워)<br />
+                                      ★ 등기 발송 주소: 서울 중구 세종대로 9길 41, 7층(퍼시픽타워)<br />
                                       <span className="ml-6">굿리치 법무지원팀 채권실</span>
                                     </p>
                                   </div>
@@ -488,7 +541,7 @@ export default function GuaranteePage() {
                         >
                           <div className="content-text">
                             <p className="mb-2">
-                              질권설정 당일 가까운 공증사무실 또는 등기국 방문하여 확정일자 필수
+                              • 질권설정 당일 가까운 공증사무실 또는 등기국 방문하여 확정일자 필수
                             </p>
                           </div>
                         </SubStepAccordion>
@@ -508,7 +561,7 @@ export default function GuaranteePage() {
                               </p>
                               <p className="font-bold mt-4 mb-2">등기 발송 주소:</p>
                               <p className="text-sm">
-                                서울 중구 세종대로 9길 41, 7층(파시픽타워)<br />
+                                서울 중구 세종대로 9길 41, 7층(퍼시픽타워)<br />
                                 굿리치 법무지원팀 채권실
                               </p>
                             </div>
@@ -530,25 +583,40 @@ export default function GuaranteePage() {
                           </p>
                         </div>
 
-                        {/* 1. 공동발행인 자격 */}
+                        {/* 1. 보증인 유형 */}
                         <SubStepAccordion
                           subStepId="promissory-eligibility"
-                          title="1. 공동발행인 자격"
+                          title="1. 보증인 유형"
                           isOpen={expandedSubSteps.has('promissory-eligibility')}
                           onToggle={() => toggleSubStep('promissory-eligibility')}
+                        >
+                          <div className="step-content">
+                            <ul className="circle-bullet-list mt-2 ml-4">
+                              <li className="font-semibold text-gray-700">재산세 5만원 이상 납세자</li>
+                              <li className="font-semibold text-gray-700">근로소득자</li>
+                            </ul>
+                          </div>
+                        </SubStepAccordion>
+
+                        {/* 2. 보증인 심사 */}
+                        <SubStepAccordion
+                          subStepId="promissory-screening"
+                          title="2. 보증인 심사"
+                          isOpen={expandedSubSteps.has('promissory-screening')}
+                          onToggle={() => toggleSubStep('promissory-screening')}
                         >
                           <div className="step-content">
                             <div className="nested-tabs-container">
                               <div className="nested-tabs">
                                 <button
                                   onClick={() => setEligibilityType('property-tax')}
-                                  className={`nested-tab ${eligibilityType === 'property-tax' ? 'active' : ''}`}
+                                  className={`nested-tab ${eligibilityType === 'property-tax' ? 'active-orange' : ''}`}
                                 >
                                   재산세 5만원 이상 납부자
                                 </button>
                                 <button
                                   onClick={() => setEligibilityType('employee')}
-                                  className={`nested-tab ${eligibilityType === 'employee' ? 'active' : ''}`}
+                                  className={`nested-tab ${eligibilityType === 'employee' ? 'active-green' : ''}`}
                                 >
                                   근로소득자
                                 </button>
@@ -557,6 +625,9 @@ export default function GuaranteePage() {
 
                             {eligibilityType === 'property-tax' && (
                               <div className="nested-tab-content">
+                                <p className="font-bold text-sm mb-2">자격요건</p>
+                                <p className="content-text mb-4">재산세 5만원 이상 납부자</p>
+
                                 <p className="font-bold text-sm mb-2">★ 필요서류</p>
                                 <ul className="circle-bullet-list mb-4">
                                   <li>① 세목별 과세증명서</li>
@@ -577,6 +648,11 @@ export default function GuaranteePage() {
 
                             {eligibilityType === 'employee' && (
                               <div className="nested-tab-content">
+                                <p className="font-bold text-sm mb-2">자격요건</p>
+                                <p className="content-text mb-4">
+                                  국내 상장사 또는 공기업 3년 이상 재직자(연봉3천만원 이상) / 8급 이상 공무원
+                                </p>
+
                                 <p className="font-bold text-sm mb-2">★ 필요서류</p>
                                 <ul className="circle-bullet-list mb-4">
                                   <li>① 재직증명서</li>
@@ -593,74 +669,84 @@ export default function GuaranteePage() {
                           </div>
                         </SubStepAccordion>
 
-                        {/* 2. 공동발행 약속어음 진행 방법 */}
+                        {/* 3. 공동발행 약속어음 요청 */}
                         <SubStepAccordion
                           subStepId="promissory-process"
-                          title="2. 공동발행 약속어음 진행 방법"
+                          title="3. 공동발행 약속어음 요청"
                           isOpen={expandedSubSteps.has('promissory-process')}
                           onToggle={() => toggleSubStep('promissory-process')}
                         >
                           <div className="step-content">
-                            <div className="bg-orange-50 p-4 rounded-lg mb-4 border border-orange-200">
-                              <p className="font-bold text-orange-800 mb-2">채권실 서류 요청</p>
-                              <p className="text-sm">공동발행 약속어음 품의 승인 후 채권실에 서류 요청(부문 담당자 통해 진행)</p>
+                            {/* ① 심사 서류 전달 */}
+                            <div className="mb-4">
+                              <p className="font-bold text-sm mb-2">① 심사에 필요한 서류를 부문 담당자에게 전달하여 요청</p>
                             </div>
 
-                            <p className="font-bold mb-3">약속어음 필요서류</p>
+                            {/* ② 필수 준비사항 */}
+                            <div className="mb-4">
+                              <p className="font-bold text-sm mb-3">② 필수 준비사항</p>
 
-                            <div className="nested-tabs-container">
-                              <div className="nested-tabs">
-                                <button
-                                  onClick={() => setVisitType('together')}
-                                  className={`nested-tab ${visitType === 'together' ? 'active' : ''}`}
-                                >
-                                  공동발행인 동행 시
-                                </button>
-                                <button
-                                  onClick={() => setVisitType('alone')}
-                                  className={`nested-tab ${visitType === 'alone' ? 'active' : ''}`}
-                                >
-                                  RP 단독 방문 시
-                                </button>
+                              <div className="nested-tabs-container">
+                                <div className="nested-tabs">
+                                  <button
+                                    onClick={() => setVisitType('together')}
+                                    className={`nested-tab ${visitType === 'together' ? 'active-orange' : ''}`}
+                                  >
+                                    공동발행인 동행 시
+                                  </button>
+                                  <button
+                                    onClick={() => setVisitType('alone')}
+                                    className={`nested-tab ${visitType === 'alone' ? 'active-green' : ''}`}
+                                  >
+                                    RP 단독 방문 시
+                                  </button>
+                                </div>
                               </div>
+
+                              {visitType === 'together' && (
+                                <div className="nested-tab-content">
+                                  <ul className="circle-bullet-list">
+                                    <li>① 본사 제공 서류 일체</li>
+                                    <li>② 공동발행인 신분증, 인감도장</li>
+                                    <li>③ RP 본인 신분증, 막도장</li>
+                                    <li className="text-red-600 font-bold">※ 신분증에 도로명 미기재 시 등본 1통 (3개월이내 발급)</li>
+                                  </ul>
+                                </div>
+                              )}
+
+                              {visitType === 'alone' && (
+                                <div className="nested-tab-content">
+                                  <ul className="circle-bullet-list">
+                                    <li>① 본사 제공 서류 일체</li>
+                                    <li>② 공동발행인 인감도장, 인감증명서 1통 (3개월 이내, 본인 발급용)</li>
+                                    <li>③ RP 본인 신분증, 막도장</li>
+                                    <li className="text-red-600 font-bold">※ 신분증에 도로명 미기재 시 등본 1통 (3개월이내 발급)</li>
+                                  </ul>
+                                </div>
+                              )}
                             </div>
 
-                            {visitType === 'together' && (
-                              <div className="nested-tab-content">
-                                <ul className="circle-bullet-list">
-                                  <li>① 본사 제공 서류 일체</li>
-                                  <li>② 공동발행인 신분증, 인감도장</li>
-                                  <li>③ RP 본인 신분증, 막도장</li>
-                                  <li className="text-red-600 font-bold">※ 신분증에 도로명 미기재 시 등본 1통 (3개월이내 발급)</li>
+                            {/* ③ 약속어음 발행방법 */}
+                            <div className="mb-4">
+                              <p className="font-bold text-sm mb-3">③ 약속어음 발행방법</p>
+
+                              <p className="content-text mb-2">• 필수 준비사항을 지참하여 공증사무실에서 어음 공증 진행</p>
+
+                              <p className="content-text mb-3">• 본사로 서류 발송</p>
+
+                              <div className="bg-gray-50 p-4 rounded-lg ml-4">
+                                <p className="font-bold mb-2">발송서류:</p>
+                                <ul className="circle-bullet-list mb-4">
+                                  <li>① 약속어음 공정증서 정본</li>
+                                  <li>② 약속어음공동발행 승락서<br />(공동발행인 직접 작성 후 인감도장 날인) 인감증명 1통(본인발급용)</li>
                                 </ul>
+
+                                <p className="font-bold mb-2">본사 주소:</p>
+                                <p className="text-sm">
+                                  서울 중구 세종대로 9길 41, 7층(퍼시픽타워)<br />
+                                  굿리치 법무지원팀 채권실
+                                </p>
                               </div>
-                            )}
-
-                            {visitType === 'alone' && (
-                              <div className="nested-tab-content">
-                                <ul className="circle-bullet-list">
-                                  <li>① 본사 제공 서류 일체</li>
-                                  <li>② 공동발행인 인감도장, 인감증명서 1통 (3개월 이내, 본인 발급용)</li>
-                                  <li>③ RP 본인 신분증, 막도장</li>
-                                  <li className="text-red-600 font-bold">※ 신분증에 도로명 미기재 시 등본 1통 (3개월이내 발급)</li>
-                                </ul>
-                              </div>
-                            )}
-
-                            <div className="border-t-2 border-gray-300 my-6"></div>
-
-                            <div className="mt-6">
-                              <p className="font-bold mb-3">굿리치 제출 서류</p>
-                              <ul className="circle-bullet-list">
-                                <li>① 약속어음 공정증서 정본</li>
-                                <li>② 약속어음공동발행 승락서<br />(공동발행인 직접 작성 후 인감도장 날인) 인감증명 1통(본인발급용)</li>
-                              </ul>
-                            </div>
-
-                            <div className="bg-orange-100 p-4 rounded-lg mt-6 border-2 border-orange-400">
-                              <p className="font-bold text-orange-800 text-center">
-                                공증사무실 방문하여 어음 공증 진행
-                              </p>
                             </div>
                           </div>
                         </SubStepAccordion>
@@ -675,6 +761,57 @@ export default function GuaranteePage() {
       </div>
 
       <BottomNavigation />
+
+      {/* App Download Modal */}
+      {isAppDownloadModalOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+          onClick={() => setIsAppDownloadModalOpen(false)}
+        >
+          <div
+            className="bg-white rounded-lg p-6 max-w-sm w-full"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-lg font-bold text-gray-900">앱 설치</h3>
+              <button
+                onClick={() => setIsAppDownloadModalOpen(false)}
+                className="text-gray-400 hover:text-gray-600 text-2xl leading-none"
+              >
+                ×
+              </button>
+            </div>
+
+            <p className="text-sm text-gray-600 mb-6">
+              사용하시는 기기에 맞는 스토어를 선택해주세요.
+            </p>
+
+            <div className="space-y-3">
+              <a
+                href="https://play.google.com/store/search?q=%EC%84%9C%EC%9A%B8%EB%B3%B4%EC%A6%9D%EB%B3%B4%ED%97%98&c=apps&hl=ko"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-3 w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors"
+                onClick={() => setIsAppDownloadModalOpen(false)}
+              >
+                <Download size={20} />
+                <span>Google Play</span>
+              </a>
+
+              <a
+                href="https://apps.apple.com/kr/app/sgi-m-sgi서울보증/id6443694425"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-3 w-full bg-gray-800 hover:bg-gray-900 text-white font-semibold py-3 px-4 rounded-lg transition-colors"
+                onClick={() => setIsAppDownloadModalOpen(false)}
+              >
+                <Download size={20} />
+                <span>App Store</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }

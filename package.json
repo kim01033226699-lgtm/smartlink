@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:github": "cross-env DEPLOY_TARGET=github next build",
+    "build:vercel": "next build",
     "start": "next start",
     "lint": "next lint",
     "sync": "node sync-to-appoint.js",
@@ -41,6 +43,7 @@
   "devDependencies": {
     "autoprefixer": "^10.4.22",
     "chokidar": "^5.0.0",
+    "cross-env": "^10.1.0",
     "postcss": "^8.5.6",
     "tailwindcss": "^3.4.14",
     "tailwindcss-animate": "^1.0.7"
