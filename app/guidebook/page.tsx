@@ -6,6 +6,7 @@ import BottomNavigation from '@/app/components/BottomNavigation';
 import { SupportCard } from '@/app/components/SupportCard';
 import ManagerInfoModal from './components/ManagerInfoModal';
 import { useState } from 'react';
+import { BASE_PATH } from '@/lib/utils';
 import './guidebook.css';
 
 export default function GuidebookPage() {
@@ -108,7 +109,7 @@ export default function GuidebookPage() {
         <header className="guidebook-header">
           <div className="w-full max-w-[700px] mx-auto flex flex-col items-center">
             <div className="guidebook-logo-wrapper">
-              <img src="/smartlink/images/GR-img.png" alt="GoodRich" className="guidebook-logo" />
+              <img src={`${BASE_PATH}/images/GR-img.png`} alt="GoodRich" className="guidebook-logo" />
             </div>
             <div className="text-center mt-2">
               <h1 className="text-xl font-bold text-gray-900">업무 가이드</h1>

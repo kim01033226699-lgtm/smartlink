@@ -5,6 +5,7 @@ import { Button } from "@/app/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/components/ui/card";
 import { CheckCircle2, ExternalLink, X } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/app/components/ui/dialog";
+import { BASE_PATH } from "@/lib/utils";
 
 interface Question {
   id: string;
@@ -233,7 +234,7 @@ export default function EducationQuestionFlow() {
                     </div>
                     <div className="relative w-full bg-gray-100 rounded-lg overflow-hidden border-2 border-gray-300">
                       <img
-                        src="/info-appoint/IMG/0-신규.경력등록교육.png"
+                        src={`${BASE_PATH}/info-appoint/IMG/0-신규.경력등록교육.png`}
                         alt="등록교육 선택"
                         className="w-full h-auto object-contain"
                       />
@@ -250,7 +251,7 @@ export default function EducationQuestionFlow() {
                     </div>
                     <div className="relative w-full bg-gray-100 rounded-lg overflow-hidden border-2 border-gray-300">
                       <img
-                        src="/info-appoint/IMG/1-1신규등록교육.png"
+                        src={`${BASE_PATH}/info-appoint/IMG/1-1신규등록교육.png`}
                         alt="신규등록교육 대상자 확인"
                         className="w-full h-auto object-contain"
                       />
@@ -267,7 +268,7 @@ export default function EducationQuestionFlow() {
                     </div>
                     <div className="relative w-full bg-gray-100 rounded-lg overflow-hidden border-2 border-gray-300">
                       <img
-                        src="/info-appoint/IMG/1-2신규등록교육-3.png"
+                        src={`${BASE_PATH}/info-appoint/IMG/1-2신규등록교육-3.png`}
                         alt="신규등록교육 과정 선택"
                         className="w-full h-auto object-contain"
                       />
@@ -543,220 +544,220 @@ export default function EducationQuestionFlow() {
               </CardHeader>
               <CardContent className="pt-6">
                 <div className="space-y-6">
-                {/* 경력조회 안내 */}
-                <div className="bg-purple-50 border border-purple-200 rounded-lg p-4">
-                  <h3 className="font-semibold text-purple-900 mb-3">📋 경력조회 안내</h3>
-                  <ul className="space-y-2 text-sm text-purple-900">
-                    <li className="flex gap-2">
-                      <span>•</span>
-                      <span>타사 경력자로 위촉 시에는 경력에 맞는 등록교육을 이수하셔야 합니다.</span>
-                    </li>
-                    <li className="flex gap-2">
-                      <span>•</span>
-                      <span>경력은 최근 3년 내 1년 이상(365일)으로 이하의 경력 일수이면 신규등록교육을 수료하셔야 합니다.</span>
-                    </li>
-                    <li className="flex gap-2">
-                      <span>•</span>
-                      <span>경력일수가 364일이어도 불인정하며 직전 1년의 기준은 협회등록 날짜를 기준으로 합니다.</span>
-                    </li>
-                    <li className="flex gap-2">
-                      <span>•</span>
-                      <span>경력일수는 협회에서 조회하실 수 있습니다.</span>
-                    </li>
-                  </ul>
-                </div>
+                  {/* 경력조회 안내 */}
+                  <div className="bg-purple-50 border border-purple-200 rounded-lg p-4">
+                    <h3 className="font-semibold text-purple-900 mb-3">📋 경력조회 안내</h3>
+                    <ul className="space-y-2 text-sm text-purple-900">
+                      <li className="flex gap-2">
+                        <span>•</span>
+                        <span>타사 경력자로 위촉 시에는 경력에 맞는 등록교육을 이수하셔야 합니다.</span>
+                      </li>
+                      <li className="flex gap-2">
+                        <span>•</span>
+                        <span>경력은 최근 3년 내 1년 이상(365일)으로 이하의 경력 일수이면 신규등록교육을 수료하셔야 합니다.</span>
+                      </li>
+                      <li className="flex gap-2">
+                        <span>•</span>
+                        <span>경력일수가 364일이어도 불인정하며 직전 1년의 기준은 협회등록 날짜를 기준으로 합니다.</span>
+                      </li>
+                      <li className="flex gap-2">
+                        <span>•</span>
+                        <span>경력일수는 협회에서 조회하실 수 있습니다.</span>
+                      </li>
+                    </ul>
+                  </div>
 
-                {/* 교육 구분 */}
-                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                  <h3 className="font-semibold text-blue-900 mb-3">📚 교육 구분</h3>
-                  <ul className="space-y-2 text-sm text-blue-900">
-                    <li className="flex gap-2">
-                      <span>•</span>
-                      <span><strong>3년내 1년이상</strong> → 경력등록교육</span>
-                    </li>
-                    <li className="flex gap-2">
-                      <span>•</span>
-                      <span><strong>3년내 1년미만</strong> → 신규등록교육</span>
-                    </li>
-                  </ul>
-                </div>
+                  {/* 교육 구분 */}
+                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                    <h3 className="font-semibold text-blue-900 mb-3">📚 교육 구분</h3>
+                    <ul className="space-y-2 text-sm text-blue-900">
+                      <li className="flex gap-2">
+                        <span>•</span>
+                        <span><strong>3년내 1년이상</strong> → 경력등록교육</span>
+                      </li>
+                      <li className="flex gap-2">
+                        <span>•</span>
+                        <span><strong>3년내 1년미만</strong> → 신규등록교육</span>
+                      </li>
+                    </ul>
+                  </div>
 
-                {/* 중요 안내 */}
-                <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
-                  <h3 className="font-semibold text-amber-900 mb-3">⚠️ 중요</h3>
-                  <p className="text-sm text-amber-900">본인경력과 다른 등록교육 이수시 다시 교육을 이수하셔야 합니다. 꼭 미리 확인해서 등록교육 신청바랍니다.</p>
-                </div>
+                  {/* 중요 안내 */}
+                  <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
+                    <h3 className="font-semibold text-amber-900 mb-3">⚠️ 중요</h3>
+                    <p className="text-sm text-amber-900">본인경력과 다른 등록교육 이수시 다시 교육을 이수하셔야 합니다. 꼭 미리 확인해서 등록교육 신청바랍니다.</p>
+                  </div>
 
-                {/* 경력조회 링크 */}
-                <div className="space-y-4">
-                  <div className="border-t pt-4">
-                    <h3 className="font-semibold text-gray-900 mb-3">
-                      경력 확인 바로 가기
-                    </h3>
-                    <p className="text-sm text-gray-600 mb-3">클릭 시 각 협회로 이동합니다</p>
-                    <div className="space-y-2">
-                      <a
-                        href="http://www.klia.or.kr/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="block px-4 py-3 bg-green-50 hover:bg-green-100 border border-green-200 rounded-lg text-green-900 font-medium transition-all duration-150 active:scale-95"
-                      >
-                        <div className="flex items-center justify-between">
-                          <span>🔗 생명보험협회</span>
-                          <ExternalLink className="h-4 w-4" />
-                        </div>
-                      </a>
-                      <a
-                        href="http://www.knia.or.kr/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="block px-4 py-3 bg-green-50 hover:bg-green-100 border border-green-200 rounded-lg text-green-900 font-medium transition-all duration-150 active:scale-95"
-                      >
-                        <div className="flex items-center justify-between">
-                          <span>🔗 손해보험협회</span>
-                          <ExternalLink className="h-4 w-4" />
-                        </div>
-                      </a>
+                  {/* 경력조회 링크 */}
+                  <div className="space-y-4">
+                    <div className="border-t pt-4">
+                      <h3 className="font-semibold text-gray-900 mb-3">
+                        경력 확인 바로 가기
+                      </h3>
+                      <p className="text-sm text-gray-600 mb-3">클릭 시 각 협회로 이동합니다</p>
+                      <div className="space-y-2">
+                        <a
+                          href="http://www.klia.or.kr/"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="block px-4 py-3 bg-green-50 hover:bg-green-100 border border-green-200 rounded-lg text-green-900 font-medium transition-all duration-150 active:scale-95"
+                        >
+                          <div className="flex items-center justify-between">
+                            <span>🔗 생명보험협회</span>
+                            <ExternalLink className="h-4 w-4" />
+                          </div>
+                        </a>
+                        <a
+                          href="http://www.knia.or.kr/"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="block px-4 py-3 bg-green-50 hover:bg-green-100 border border-green-200 rounded-lg text-green-900 font-medium transition-all duration-150 active:scale-95"
+                        >
+                          <div className="flex items-center justify-between">
+                            <span>🔗 손해보험협회</span>
+                            <ExternalLink className="h-4 w-4" />
+                          </div>
+                        </a>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                {/* 교육신청 링크 */}
-                <div className="space-y-4">
-                  <div className="border-t pt-4">
-                    <h3 className="font-semibold text-gray-900 mb-3">
-                      교육신청 바로가기
-                    </h3>
-                    <div className="space-y-2">
-                      <a
-                        href="https://is.in.or.kr/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="block px-4 py-3 bg-green-50 hover:bg-green-100 border border-green-200 rounded-lg text-green-900 font-medium transition-all duration-150 active:scale-95"
-                      >
-                        <div className="flex items-center justify-between">
-                          <span>🔗 교육신청 바로가기</span>
-                          <ExternalLink className="h-4 w-4" />
-                        </div>
-                      </a>
+                  {/* 교육신청 링크 */}
+                  <div className="space-y-4">
+                    <div className="border-t pt-4">
+                      <h3 className="font-semibold text-gray-900 mb-3">
+                        교육신청 바로가기
+                      </h3>
+                      <div className="space-y-2">
+                        <a
+                          href="https://is.in.or.kr/"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="block px-4 py-3 bg-green-50 hover:bg-green-100 border border-green-200 rounded-lg text-green-900 font-medium transition-all duration-150 active:scale-95"
+                        >
+                          <div className="flex items-center justify-between">
+                            <span>🔗 교육신청 바로가기</span>
+                            <ExternalLink className="h-4 w-4" />
+                          </div>
+                        </a>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                {/* 교육신청과목 확인하기 버튼 */}
-                <div className="space-y-4">
-                  <div className="border-t pt-4 flex justify-start">
+                  {/* 교육신청과목 확인하기 버튼 */}
+                  <div className="space-y-4">
+                    <div className="border-t pt-4 flex justify-start">
+                      <Button
+                        onClick={() => {
+                          setEducationType('career');
+                          setIsEducationModalOpen(true);
+                        }}
+                        className="w-1/2 bg-purple-600 hover:bg-purple-700 text-white py-4 text-base font-semibold text-left justify-start px-6"
+                      >
+                        교육신청과목 확인하기
+                      </Button>
+                    </div>
+                  </div>
+
+                  <div className="flex gap-3 pt-4">
                     <Button
-                      onClick={() => {
-                        setEducationType('career');
-                        setIsEducationModalOpen(true);
-                      }}
-                      className="w-1/2 bg-purple-600 hover:bg-purple-700 text-white py-4 text-base font-semibold text-left justify-start px-6"
+                      variant="outline"
+                      onClick={handleGoBack}
+                      className="flex-1 transition-all duration-150 active:scale-95"
                     >
-                      교육신청과목 확인하기
+                      이전으로
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={handleReset}
+                      className="flex-1 transition-all duration-150 active:scale-95"
+                    >
+                      처음으로
                     </Button>
                   </div>
                 </div>
+              </CardContent>
+            </Card>
+          </div>
 
-                <div className="flex gap-3 pt-4">
-                  <Button
-                    variant="outline"
-                    onClick={handleGoBack}
-                    className="flex-1 transition-all duration-150 active:scale-95"
-                  >
-                    이전으로
-                  </Button>
-                  <Button
-                    variant="outline"
-                    onClick={handleReset}
-                    className="flex-1 transition-all duration-150 active:scale-95"
-                  >
-                    처음으로
-                  </Button>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+          {/* 교육신청과목 확인 모달 */}
+          <Dialog open={isEducationModalOpen} onOpenChange={setIsEducationModalOpen}>
+            <DialogContent className="max-w-5xl max-h-[95vh] overflow-hidden flex flex-col">
+              <DialogHeader>
+                <DialogTitle className="text-2xl font-bold">
+                  경력 등록교육 신청과목 확인
+                </DialogTitle>
+                <DialogDescription className="sr-only">
+                  교육 신청 과목을 확인하는 화면입니다.
+                </DialogDescription>
+              </DialogHeader>
 
-        {/* 교육신청과목 확인 모달 */}
-        <Dialog open={isEducationModalOpen} onOpenChange={setIsEducationModalOpen}>
-          <DialogContent className="max-w-5xl max-h-[95vh] overflow-hidden flex flex-col">
-            <DialogHeader>
-              <DialogTitle className="text-2xl font-bold">
-                경력 등록교육 신청과목 확인
-              </DialogTitle>
-              <DialogDescription className="sr-only">
-                교육 신청 과목을 확인하는 화면입니다.
-              </DialogDescription>
-            </DialogHeader>
-
-            <div className="flex-1 overflow-y-auto px-2">
-              <div className="space-y-8 py-4">
-                {/* Step 1 */}
-                <div className="space-y-3">
-                  <div className="flex items-center gap-2">
-                    <div className="bg-purple-600 text-white px-4 py-2 rounded-lg font-bold">
-                      Step 1
+              <div className="flex-1 overflow-y-auto px-2">
+                <div className="space-y-8 py-4">
+                  {/* Step 1 */}
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2">
+                      <div className="bg-purple-600 text-white px-4 py-2 rounded-lg font-bold">
+                        Step 1
+                      </div>
+                      <h3 className="text-lg font-semibold text-gray-900">등록교육 선택</h3>
                     </div>
-                    <h3 className="text-lg font-semibold text-gray-900">등록교육 선택</h3>
-                  </div>
-                  <div className="relative w-full bg-gray-100 rounded-lg overflow-hidden border-2 border-gray-300">
-                    <img
-                      src="/info-appoint/IMG/0-신규.경력등록교육.png"
-                      alt="등록교육 선택"
-                      className="w-full h-auto object-contain"
-                    />
-                  </div>
-                </div>
-
-                {/* Step 2 */}
-                <div className="space-y-3">
-                  <div className="flex items-center gap-2">
-                    <div className="bg-purple-600 text-white px-4 py-2 rounded-lg font-bold">
-                      Step 2
+                    <div className="relative w-full bg-gray-100 rounded-lg overflow-hidden border-2 border-gray-300">
+                      <img
+                        src={`${BASE_PATH}/info-appoint/IMG/0-신규.경력등록교육.png`}
+                        alt="등록교육 선택"
+                        className="w-full h-auto object-contain"
+                      />
                     </div>
-                    <h3 className="text-lg font-semibold text-gray-900">경력등록교육 대상자 확인</h3>
                   </div>
-                  <div className="relative w-full bg-gray-100 rounded-lg overflow-hidden border-2 border-gray-300">
-                    <img
-                      src="/info-appoint/IMG/2-1경력등록교육.png"
-                      alt="경력등록교육 대상자 확인"
-                      className="w-full h-auto object-contain"
-                    />
-                  </div>
-                </div>
 
-                {/* Step 3 */}
-                <div className="space-y-3">
-                  <div className="flex items-center gap-2">
-                    <div className="bg-purple-600 text-white px-4 py-2 rounded-lg font-bold">
-                      Step 3
+                  {/* Step 2 */}
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2">
+                      <div className="bg-purple-600 text-white px-4 py-2 rounded-lg font-bold">
+                        Step 2
+                      </div>
+                      <h3 className="text-lg font-semibold text-gray-900">경력등록교육 대상자 확인</h3>
                     </div>
-                    <h3 className="text-lg font-semibold text-gray-900">경력등록교육 과정 선택</h3>
+                    <div className="relative w-full bg-gray-100 rounded-lg overflow-hidden border-2 border-gray-300">
+                      <img
+                        src={`${BASE_PATH}/info-appoint/IMG/2-1경력등록교육.png`}
+                        alt="경력등록교육 대상자 확인"
+                        className="w-full h-auto object-contain"
+                      />
+                    </div>
                   </div>
-                  <div className="relative w-full bg-gray-100 rounded-lg overflow-hidden border-2 border-gray-300">
-                    <img
-                      src="/info-appoint/IMG/2-2경력등록교육.png"
-                      alt="경력등록교육 과정 선택"
-                      className="w-full h-auto object-contain"
-                    />
+
+                  {/* Step 3 */}
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2">
+                      <div className="bg-purple-600 text-white px-4 py-2 rounded-lg font-bold">
+                        Step 3
+                      </div>
+                      <h3 className="text-lg font-semibold text-gray-900">경력등록교육 과정 선택</h3>
+                    </div>
+                    <div className="relative w-full bg-gray-100 rounded-lg overflow-hidden border-2 border-gray-300">
+                      <img
+                        src={`${BASE_PATH}/info-appoint/IMG/2-2경력등록교육.png`}
+                        alt="경력등록교육 과정 선택"
+                        className="w-full h-auto object-contain"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            <div className="flex justify-end pt-4 border-t">
-              <Button
-                onClick={() => setIsEducationModalOpen(false)}
-                className="bg-gray-600 hover:bg-gray-700 px-8"
-              >
-                닫기
-              </Button>
-            </div>
-          </DialogContent>
-        </Dialog>
-      </>
+              <div className="flex justify-end pt-4 border-t">
+                <Button
+                  onClick={() => setIsEducationModalOpen(false)}
+                  className="bg-gray-600 hover:bg-gray-700 px-8"
+                >
+                  닫기
+                </Button>
+              </div>
+            </DialogContent>
+          </Dialog>
+        </>
       );
     }
 
@@ -777,221 +778,221 @@ export default function EducationQuestionFlow() {
               </CardHeader>
               <CardContent className="pt-6">
                 <div className="space-y-6">
-                {/* 경력 안내 */}
-                <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-                  <h3 className="font-semibold text-green-900 mb-3">📚 경력등록교육 안내</h3>
-                  <ul className="space-y-2 text-sm text-green-900">
-                    <li className="flex gap-2">
-                      <span>•</span>
-                      <span>최근 3년 이내 경력 일수가 1년(365일) 이상인 경우에는 경력자로 등록교육을 이수하셔야 합니다.</span>
-                    </li>
-                    <li className="flex gap-2">
-                      <span>•</span>
-                      <span>경력일수는 365일이 넘어야 합니다.</span>
-                    </li>
-                    <li className="flex gap-2">
-                      <span>•</span>
-                      <span>정확한 경력일수는 협회에서 확인하실 수 있습니다.</span>
-                    </li>
-                  </ul>
-                </div>
-
-                {/* 경력등록교육 vs 신입등록교육 기준 안내 */}
-                <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
-                  <h3 className="font-semibold text-amber-900 mb-3">⚠️ 경력등록교육 vs 신입등록교육 기준 안내</h3>
-                  <div className="space-y-3 text-sm text-amber-900">
-                    <p>
-                      경력등록교육 대상자는{' '}
-                      <strong className="text-amber-950">"등록일을 기준으로 직전 3년 이내에 경력일수가 1년(365일) 이상인 사람"</strong>입니다.
-                    </p>
-                    <p>
-                      즉, 오늘 기준이 아니라 실제 협회에 등록하는 날짜가 기준이에요.
-                    </p>
-                    <div className="bg-white/50 rounded p-3 mt-2">
-                      <p className="font-medium mb-2">예를 들어,</p>
-                      <ul className="space-y-1.5 pl-2">
-                        <li>• 오늘(11월 8일) 기준으로는 직전 3년 이내 경력이 365일이지만,</li>
-                        <li>• 등록이 다음 주(11월 15일)에 이루어지면,</li>
-                        <li>• 그 사이 일주일이 지나면서 일부 경력 기간이 3년 범위를 벗어나</li>
-                        <li>• 직전 3년 내 경력이 365일 미만이 될 수 있습니다.</li>
-                      </ul>
-                    </div>
-                    <p className="font-medium">
-                      따라서 등록일 기준으로 다시 계산했을 때 365일 이상인지 반드시 확인해야 경력등록교육 대상이 되는지 정확히 판단할 수 있습니다.
-                    </p>
+                  {/* 경력 안내 */}
+                  <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                    <h3 className="font-semibold text-green-900 mb-3">📚 경력등록교육 안내</h3>
+                    <ul className="space-y-2 text-sm text-green-900">
+                      <li className="flex gap-2">
+                        <span>•</span>
+                        <span>최근 3년 이내 경력 일수가 1년(365일) 이상인 경우에는 경력자로 등록교육을 이수하셔야 합니다.</span>
+                      </li>
+                      <li className="flex gap-2">
+                        <span>•</span>
+                        <span>경력일수는 365일이 넘어야 합니다.</span>
+                      </li>
+                      <li className="flex gap-2">
+                        <span>•</span>
+                        <span>정확한 경력일수는 협회에서 확인하실 수 있습니다.</span>
+                      </li>
+                    </ul>
                   </div>
-                </div>
 
-                {/* 경력 확인 링크 */}
-                <div className="space-y-4">
-                  <div className="border-t pt-4">
-                    <h3 className="font-semibold text-gray-900 mb-3">
-                      경력 확인 바로 가기
-                    </h3>
-                    <p className="text-sm text-gray-600 mb-3">클릭 시 각 협회로 이동합니다</p>
-                    <div className="space-y-2">
-                      <a
-                        href="http://www.klia.or.kr/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="block px-4 py-3 bg-green-50 hover:bg-green-100 border border-green-200 rounded-lg text-green-900 font-medium transition-all duration-150 active:scale-95"
-                      >
-                        <div className="flex items-center justify-between">
-                          <span>🔗 생명보험협회</span>
-                          <ExternalLink className="h-4 w-4" />
-                        </div>
-                      </a>
-                      <a
-                        href="http://www.knia.or.kr/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="block px-4 py-3 bg-green-50 hover:bg-green-100 border border-green-200 rounded-lg text-green-900 font-medium transition-all duration-150 active:scale-95"
-                      >
-                        <div className="flex items-center justify-between">
-                          <span>🔗 손해보험협회</span>
-                          <ExternalLink className="h-4 w-4" />
-                        </div>
-                      </a>
+                  {/* 경력등록교육 vs 신입등록교육 기준 안내 */}
+                  <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
+                    <h3 className="font-semibold text-amber-900 mb-3">⚠️ 경력등록교육 vs 신입등록교육 기준 안내</h3>
+                    <div className="space-y-3 text-sm text-amber-900">
+                      <p>
+                        경력등록교육 대상자는{' '}
+                        <strong className="text-amber-950">"등록일을 기준으로 직전 3년 이내에 경력일수가 1년(365일) 이상인 사람"</strong>입니다.
+                      </p>
+                      <p>
+                        즉, 오늘 기준이 아니라 실제 협회에 등록하는 날짜가 기준이에요.
+                      </p>
+                      <div className="bg-white/50 rounded p-3 mt-2">
+                        <p className="font-medium mb-2">예를 들어,</p>
+                        <ul className="space-y-1.5 pl-2">
+                          <li>• 오늘(11월 8일) 기준으로는 직전 3년 이내 경력이 365일이지만,</li>
+                          <li>• 등록이 다음 주(11월 15일)에 이루어지면,</li>
+                          <li>• 그 사이 일주일이 지나면서 일부 경력 기간이 3년 범위를 벗어나</li>
+                          <li>• 직전 3년 내 경력이 365일 미만이 될 수 있습니다.</li>
+                        </ul>
+                      </div>
+                      <p className="font-medium">
+                        따라서 등록일 기준으로 다시 계산했을 때 365일 이상인지 반드시 확인해야 경력등록교육 대상이 되는지 정확히 판단할 수 있습니다.
+                      </p>
                     </div>
                   </div>
-                </div>
 
-                {/* 교육신청 링크 */}
-                <div className="space-y-4">
-                  <div className="border-t pt-4">
-                    <h3 className="font-semibold text-gray-900 mb-3">
-                      교육신청 바로가기
-                    </h3>
-                    <div className="space-y-2">
-                      <a
-                        href="https://is.in.or.kr/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="block px-4 py-3 bg-green-50 hover:bg-green-100 border border-green-200 rounded-lg text-green-900 font-medium transition-all duration-150 active:scale-95"
-                      >
-                        <div className="flex items-center justify-between">
-                          <span>🔗 교육신청 바로가기</span>
-                          <ExternalLink className="h-4 w-4" />
-                        </div>
-                      </a>
+                  {/* 경력 확인 링크 */}
+                  <div className="space-y-4">
+                    <div className="border-t pt-4">
+                      <h3 className="font-semibold text-gray-900 mb-3">
+                        경력 확인 바로 가기
+                      </h3>
+                      <p className="text-sm text-gray-600 mb-3">클릭 시 각 협회로 이동합니다</p>
+                      <div className="space-y-2">
+                        <a
+                          href="http://www.klia.or.kr/"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="block px-4 py-3 bg-green-50 hover:bg-green-100 border border-green-200 rounded-lg text-green-900 font-medium transition-all duration-150 active:scale-95"
+                        >
+                          <div className="flex items-center justify-between">
+                            <span>🔗 생명보험협회</span>
+                            <ExternalLink className="h-4 w-4" />
+                          </div>
+                        </a>
+                        <a
+                          href="http://www.knia.or.kr/"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="block px-4 py-3 bg-green-50 hover:bg-green-100 border border-green-200 rounded-lg text-green-900 font-medium transition-all duration-150 active:scale-95"
+                        >
+                          <div className="flex items-center justify-between">
+                            <span>🔗 손해보험협회</span>
+                            <ExternalLink className="h-4 w-4" />
+                          </div>
+                        </a>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                {/* 교육신청과목 확인하기 버튼 */}
-                <div className="space-y-4">
-                  <div className="border-t pt-4">
+                  {/* 교육신청 링크 */}
+                  <div className="space-y-4">
+                    <div className="border-t pt-4">
+                      <h3 className="font-semibold text-gray-900 mb-3">
+                        교육신청 바로가기
+                      </h3>
+                      <div className="space-y-2">
+                        <a
+                          href="https://is.in.or.kr/"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="block px-4 py-3 bg-green-50 hover:bg-green-100 border border-green-200 rounded-lg text-green-900 font-medium transition-all duration-150 active:scale-95"
+                        >
+                          <div className="flex items-center justify-between">
+                            <span>🔗 교육신청 바로가기</span>
+                            <ExternalLink className="h-4 w-4" />
+                          </div>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* 교육신청과목 확인하기 버튼 */}
+                  <div className="space-y-4">
+                    <div className="border-t pt-4">
+                      <Button
+                        onClick={() => {
+                          setEducationType('career');
+                          setIsEducationModalOpen(true);
+                        }}
+                        className="w-full bg-green-600 hover:bg-green-700 text-white py-6 text-lg font-semibold"
+                      >
+                        교육신청과목 확인하기
+                      </Button>
+                    </div>
+                  </div>
+
+                  <div className="flex gap-3 pt-4">
                     <Button
-                      onClick={() => {
-                        setEducationType('career');
-                        setIsEducationModalOpen(true);
-                      }}
-                      className="w-full bg-green-600 hover:bg-green-700 text-white py-6 text-lg font-semibold"
+                      variant="outline"
+                      onClick={handleGoBack}
+                      className="flex-1 transition-all duration-150 active:scale-95"
                     >
-                      교육신청과목 확인하기
+                      이전으로
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={handleReset}
+                      className="flex-1 transition-all duration-150 active:scale-95"
+                    >
+                      처음으로
                     </Button>
                   </div>
                 </div>
+              </CardContent>
+            </Card>
+          </div>
 
-                <div className="flex gap-3 pt-4">
-                  <Button
-                    variant="outline"
-                    onClick={handleGoBack}
-                    className="flex-1 transition-all duration-150 active:scale-95"
-                  >
-                    이전으로
-                  </Button>
-                  <Button
-                    variant="outline"
-                    onClick={handleReset}
-                    className="flex-1 transition-all duration-150 active:scale-95"
-                  >
-                    처음으로
-                  </Button>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+          {/* 교육신청과목 확인 모달 */}
+          <Dialog open={isEducationModalOpen} onOpenChange={setIsEducationModalOpen}>
+            <DialogContent className="max-w-5xl max-h-[95vh] overflow-hidden flex flex-col">
+              <DialogHeader>
+                <DialogTitle className="text-2xl font-bold">
+                  경력 등록교육 신청과목 확인
+                </DialogTitle>
+                <DialogDescription className="sr-only">
+                  교육 신청 과목을 확인하는 화면입니다.
+                </DialogDescription>
+              </DialogHeader>
 
-        {/* 교육신청과목 확인 모달 */}
-        <Dialog open={isEducationModalOpen} onOpenChange={setIsEducationModalOpen}>
-          <DialogContent className="max-w-5xl max-h-[95vh] overflow-hidden flex flex-col">
-            <DialogHeader>
-              <DialogTitle className="text-2xl font-bold">
-                경력 등록교육 신청과목 확인
-              </DialogTitle>
-              <DialogDescription className="sr-only">
-                교육 신청 과목을 확인하는 화면입니다.
-              </DialogDescription>
-            </DialogHeader>
-
-            <div className="flex-1 overflow-y-auto px-2">
-              <div className="space-y-8 py-4">
-                {/* Step 1 */}
-                <div className="space-y-3">
-                  <div className="flex items-center gap-2">
-                    <div className="bg-green-600 text-white px-4 py-2 rounded-lg font-bold">
-                      Step 1
+              <div className="flex-1 overflow-y-auto px-2">
+                <div className="space-y-8 py-4">
+                  {/* Step 1 */}
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2">
+                      <div className="bg-green-600 text-white px-4 py-2 rounded-lg font-bold">
+                        Step 1
+                      </div>
+                      <h3 className="text-lg font-semibold text-gray-900">등록교육 선택</h3>
                     </div>
-                    <h3 className="text-lg font-semibold text-gray-900">등록교육 선택</h3>
-                  </div>
-                  <div className="relative w-full bg-gray-100 rounded-lg overflow-hidden border-2 border-gray-300">
-                    <img
-                      src="/info-appoint/IMG/0-신규.경력등록교육.png"
-                      alt="등록교육 선택"
-                      className="w-full h-auto object-contain"
-                    />
-                  </div>
-                </div>
-
-                {/* Step 2 */}
-                <div className="space-y-3">
-                  <div className="flex items-center gap-2">
-                    <div className="bg-green-600 text-white px-4 py-2 rounded-lg font-bold">
-                      Step 2
+                    <div className="relative w-full bg-gray-100 rounded-lg overflow-hidden border-2 border-gray-300">
+                      <img
+                        src={`${BASE_PATH}/info-appoint/IMG/0-신규.경력등록교육.png`}
+                        alt="등록교육 선택"
+                        className="w-full h-auto object-contain"
+                      />
                     </div>
-                    <h3 className="text-lg font-semibold text-gray-900">경력등록교육 대상자 확인</h3>
                   </div>
-                  <div className="relative w-full bg-gray-100 rounded-lg overflow-hidden border-2 border-gray-300">
-                    <img
-                      src="/info-appoint/IMG/2-1경력등록교육.png"
-                      alt="경력등록교육 대상자 확인"
-                      className="w-full h-auto object-contain"
-                    />
-                  </div>
-                </div>
 
-                {/* Step 3 */}
-                <div className="space-y-3">
-                  <div className="flex items-center gap-2">
-                    <div className="bg-green-600 text-white px-4 py-2 rounded-lg font-bold">
-                      Step 3
+                  {/* Step 2 */}
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2">
+                      <div className="bg-green-600 text-white px-4 py-2 rounded-lg font-bold">
+                        Step 2
+                      </div>
+                      <h3 className="text-lg font-semibold text-gray-900">경력등록교육 대상자 확인</h3>
                     </div>
-                    <h3 className="text-lg font-semibold text-gray-900">경력등록교육 과정 선택</h3>
+                    <div className="relative w-full bg-gray-100 rounded-lg overflow-hidden border-2 border-gray-300">
+                      <img
+                        src={`${BASE_PATH}/info-appoint/IMG/2-1경력등록교육.png`}
+                        alt="경력등록교육 대상자 확인"
+                        className="w-full h-auto object-contain"
+                      />
+                    </div>
                   </div>
-                  <div className="relative w-full bg-gray-100 rounded-lg overflow-hidden border-2 border-gray-300">
-                    <img
-                      src="/info-appoint/IMG/2-2경력등록교육.png"
-                      alt="경력등록교육 과정 선택"
-                      className="w-full h-auto object-contain"
-                    />
+
+                  {/* Step 3 */}
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2">
+                      <div className="bg-green-600 text-white px-4 py-2 rounded-lg font-bold">
+                        Step 3
+                      </div>
+                      <h3 className="text-lg font-semibold text-gray-900">경력등록교육 과정 선택</h3>
+                    </div>
+                    <div className="relative w-full bg-gray-100 rounded-lg overflow-hidden border-2 border-gray-300">
+                      <img
+                        src={`${BASE_PATH}/info-appoint/IMG/2-2경력등록교육.png`}
+                        alt="경력등록교육 과정 선택"
+                        className="w-full h-auto object-contain"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
 
-            <div className="flex justify-end pt-4 border-t">
-              <Button
-                onClick={() => setIsEducationModalOpen(false)}
-                className="bg-gray-600 hover:bg-gray-700 px-8"
-              >
-                닫기
-              </Button>
-            </div>
-          </DialogContent>
-        </Dialog>
-      </>
+              <div className="flex justify-end pt-4 border-t">
+                <Button
+                  onClick={() => setIsEducationModalOpen(false)}
+                  className="bg-gray-600 hover:bg-gray-700 px-8"
+                >
+                  닫기
+                </Button>
+              </div>
+            </DialogContent>
+          </Dialog>
+        </>
       );
     }
   }
@@ -1021,11 +1022,10 @@ export default function EducationQuestionFlow() {
                       <p className="text-gray-700 font-medium whitespace-pre-line">{questions[h.questionId].text}</p>
                     </div>
                     <div className="ml-4">
-                      <span className={`px-4 py-2 rounded-full text-sm font-semibold ${
-                        h.answer === 'yes'
-                          ? 'bg-blue-100 text-blue-700'
-                          : 'bg-gray-200 text-gray-700'
-                      }`}>
+                      <span className={`px-4 py-2 rounded-full text-sm font-semibold ${h.answer === 'yes'
+                        ? 'bg-blue-100 text-blue-700'
+                        : 'bg-gray-200 text-gray-700'
+                        }`}>
                         {h.answer === 'yes' ? '네' : '아니오'}
                       </span>
                     </div>
@@ -1088,7 +1088,7 @@ export default function EducationQuestionFlow() {
           </CardContent>
         </Card>
       </div>
-    </div>
+    </div >
   );
 }
 

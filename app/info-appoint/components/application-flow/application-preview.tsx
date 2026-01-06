@@ -91,8 +91,13 @@ export default function ApplicationPreview({
   };
 
   const handleConfirmDownload = async () => {
-    setShowConfirmModal(false);
-    if (!previewRef.current) return;
+    if (isGenerating) return;
+
+    if (!previewRef.current) {
+      alert('미리보기 영역을 찾을 수 없습니다.');
+      setShowConfirmModal(false);
+      return;
+    }
 
     setIsGenerating(true);
 
@@ -101,35 +106,57 @@ export default function ApplicationPreview({
       width: previewRef.current.style.width,
       minWidth: previewRef.current.style.minWidth,
       maxWidth: previewRef.current.style.maxWidth,
+      position: previewRef.current.style.position,
+      left: previewRef.current.style.left,
+      opacity: previewRef.current.style.opacity,
     };
 
     try {
-      // PDF 생성을 위해 강제로 A4 크기로 고정
+      // 1. PDF 생성을 위해 강제로 A4 크기로 고정 및 렌더링 최적화
+      // 모바일 캡처 안정성을 위해 absolute 위치 조정 및 가시성 확보 (잠시만)
+      if (autoDownload) {
+        previewRef.current.style.position = 'fixed';
+        previewRef.current.style.left = '0';
+        previewRef.current.style.top = '0';
+        previewRef.current.style.opacity = '1';
+        previewRef.current.style.zIndex = '-100';
+      }
+
       previewRef.current.style.width = '210mm';
       previewRef.current.style.minWidth = '210mm';
       previewRef.current.style.maxWidth = 'none';
 
-      // 스타일 변경이 적용되도록 잠시 대기
-      await new Promise(resolve => setTimeout(resolve, 200));
+      // 스타일 변경이 브라우저에 리페인트 될 시간을 충분히 줌 (모바일 대응)
+      await new Promise(resolve => setTimeout(resolve, 500));
 
-      // html2canvas를 사용하여 HTML을 캔버스로 변환
+      // 2. 모바일 기기에 따라 자동 스케일 조정 (메모리 부족 방지)
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      const captureScale = isMobile ? 1.5 : 2;
+
+      // 3. html2canvas를 사용하여 HTML을 캔버스로 변환
       const canvas = await html2canvas(previewRef.current, {
-        scale: 2,
+        scale: captureScale,
         useCORS: true,
         logging: false,
         width: 794, // 210mm to px (96dpi 기준 약 794px)
-        windowWidth: 1080, // 모바일에서 PC 뷰포트로 인식하게 함
+        windowWidth: isMobile ? 1080 : undefined,
       });
 
-      // 스타일 복구
+      // 스타일 즉시 복구
       previewRef.current.style.width = originalStyle.width;
       previewRef.current.style.minWidth = originalStyle.minWidth;
       previewRef.current.style.maxWidth = originalStyle.maxWidth;
+      if (autoDownload) {
+        previewRef.current.style.position = originalStyle.position;
+        previewRef.current.style.left = originalStyle.left;
+        previewRef.current.style.opacity = originalStyle.opacity;
+        previewRef.current.style.zIndex = '-50';
+      }
 
-      // 캔버스를 이미지로 변환
+      // 4. 캔버스를 이미지로 변환
       const imgData = canvas.toDataURL('image/png');
 
-      // PDF 생성
+      // 5. PDF 생성
       const pdf = new jsPDF({
         orientation: 'portrait',
         unit: 'mm',
@@ -143,8 +170,9 @@ export default function ApplicationPreview({
 
       const fileName = `내용증명_${personalInfo.name.trim() || '빈양식'}_${new Date().toISOString().split('T')[0]}.pdf`;
 
-      // 브라우저가 File System Access API를 지원하는지 확인 (직접 폴더/이름 지정 창)
-      if (typeof window !== 'undefined' && 'showSaveFilePicker' in window) {
+      // 6. 다운로드 처리 (PC/모바일 분기)
+      if (typeof window !== 'undefined' && 'showSaveFilePicker' in window && !isMobile) {
+        // PC (지원 브라우저): 직접 폴더/이름 지정 창
         try {
           const handle = await (window as any).showSaveFilePicker({
             suggestedName: fileName,
@@ -158,35 +186,49 @@ export default function ApplicationPreview({
           const pdfBlob = pdf.output('blob');
           await writable.write(pdfBlob);
           await writable.close();
+          onPdfDownloaded();
         } catch (err: any) {
-          // 사용자가 취소한 경우 또는 에러 발생 시 기존 방식으로 폴백 (단, 취소 에러면 아무것도 안함)
           if (err.name !== 'AbortError') {
             pdf.save(fileName);
+            onPdfDownloaded();
           }
         }
       } else {
-        // 지원하지 않는 브라우저(Safari, Firefox 등)는 기존 방식 사용
-        pdf.save(fileName);
+        // 모바일 또는 일반 브라우저: 자동 다운로드
+        // blob을 직접 생성하여 다운로드하는 방식이 모바일에서 더 안정적일 수 있음
+        const pdfBlob = pdf.output('blob');
+        const url = URL.createObjectURL(pdfBlob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = fileName;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+
+        onPdfDownloaded();
       }
 
       setIsGenerating(false);
-      onPdfDownloaded();
+      setShowConfirmModal(false);
     } catch (error) {
       console.error('PDF 생성 실패:', error);
 
-      // 에러 발생 시에도 스타일 복구 시도
+      // 에러 발생 시에도 스타일 복구
       if (previewRef.current) {
         previewRef.current.style.width = originalStyle.width;
         previewRef.current.style.minWidth = originalStyle.minWidth;
         previewRef.current.style.maxWidth = originalStyle.maxWidth;
       }
 
-      alert('PDF 생성에 실패했습니다. 다시 시도해주세요.');
+      alert('PDF 생성 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.');
       setIsGenerating(false);
+      setShowConfirmModal(false);
     }
   };
 
   const handleCancelDownload = () => {
+    if (isGenerating) return;
     setShowConfirmModal(false);
   };
 
@@ -199,13 +241,13 @@ export default function ApplicationPreview({
             <div className="space-y-3 mb-6">
               {autoDownload ? (
                 <>
-                  <p className="text-gray-700 leading-relaxed text-center py-4">
+                  <p className="text-gray-700 leading-relaxed text-center py-4 text-lg">
                     <strong>내용증명(빈양식)</strong>을 다운로드합니다.
                   </p>
                   <p className="text-blue-600 font-semibold mt-4 text-center">
-                    {typeof window !== 'undefined' && 'showSaveFilePicker' in window
+                    {typeof window !== 'undefined' && 'showSaveFilePicker' in window && !/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
                       ? "확인 버튼을 누른 후, 원하시는 저장 폴더를 선택해주세요."
-                      : "확인을 누르시면 다운로드 폴더(또는 파일 앱)에 저장됩니다."}
+                      : "확인을 누르시면 다운로드 폴더(파일 앱)에 저장됩니다."}
                   </p>
                 </>
               ) : (
@@ -228,14 +270,24 @@ export default function ApplicationPreview({
                 variant="outline"
                 onClick={handleCancelDownload}
                 className="flex-1 transition-all duration-150 active:scale-95"
+                disabled={isGenerating}
               >
                 취소
               </Button>
               <Button
                 onClick={handleConfirmDownload}
-                className="flex-1 bg-blue-600 hover:bg-blue-700 transition-all duration-150 active:scale-95"
+                disabled={isGenerating}
+                className="flex-1 bg-blue-600 hover:bg-blue-700 transition-all duration-150 active:scale-95 relative"
               >
-                {autoDownload ? '확인' : '다운로드'}
+                {isGenerating ? (
+                  <span className="flex items-center justify-center">
+                    <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    생성 중...
+                  </span>
+                ) : (autoDownload ? '확인' : '다운로드')}
               </Button>
             </div>
           </div>
@@ -409,7 +461,7 @@ export default function ApplicationPreview({
             </div>
             <div className="mb-8 text-right">
               <p className="text-lg mb-2">내용증명 발송일자</p>
-              <p className="text-lg mb-4 font-semibold">{format(new Date(), 'yyyy년 MM월 dd일', { locale: ko })}</p>
+              <p className="text-lg mb-4 font-semibold mr-10">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;년 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;월 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;일</p>
               <p className="text-lg mb-8">신청인: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (날인 또는 서명)</p>
             </div>
           </div>

@@ -10,6 +10,7 @@ import { Card, CardContent } from "@/app/components/ui/card";
 import ApplicationPreview from "@/app/info-appoint/components/application-flow/application-preview";
 import PersonalInfoForm from "@/app/info-appoint/components/application-flow/personal-info-form";
 import QuestionFlow from "@/app/info-appoint/components/application-flow/question-flow";
+import { BASE_PATH } from "@/lib/utils";
 
 type FlowStep = "questions" | "sample-preview" | "personal-info" | "preview" | "completed";
 
@@ -123,7 +124,7 @@ function ApplicationFlowContent() {
             <div className="space-y-4">
               <div className="w-full border border-gray-200 rounded-lg overflow-hidden shadow-md bg-white">
                 <img
-                  src="/images/sample-preview.png"
+                  src={`${BASE_PATH}/images/sample-preview.png`}
                   alt="내용증명 샘플"
                   className="w-full h-auto"
                 />

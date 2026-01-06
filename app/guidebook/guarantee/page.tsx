@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { ArrowLeft, ChevronDown, ChevronUp, ExternalLink, Download } from 'lucide-react';
 import BottomNavigation from '@/app/components/BottomNavigation';
+import { BASE_PATH } from '@/lib/utils';
 import './guarantee.css';
 
 export default function GuaranteePage() {
@@ -68,7 +69,7 @@ export default function GuaranteePage() {
           <div className="w-full max-w-[700px] mx-auto flex flex-col items-center relative">
             <div className="guarantee-logo-wrapper">
               <img
-                src="/smartlink/images/GR-img.png"
+                src={`${BASE_PATH}/images/GR-img.png`}
                 alt="GoodRich Logo"
                 className="guarantee-logo"
               />

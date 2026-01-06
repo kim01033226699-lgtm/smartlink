@@ -7,6 +7,7 @@ import ApplicationPreview from "@/app/info-appoint/components/application-flow/a
 import QuestionFlow from '@/app/info-appoint/components/application-flow/question-flow';
 import PersonalInfoForm from "@/app/info-appoint/components/application-flow/personal-info-form";
 import { Button } from "@/app/components/ui/button";
+import { BASE_PATH } from '@/lib/utils';
 import './onboarding.css';
 
 interface PersonalInfo {
@@ -122,7 +123,7 @@ export default function OnboardingPage() {
           <div className="w-full max-w-[700px] mx-auto flex flex-col items-center relative">
             <div className="onboarding-logo-wrapper">
               <img
-                src="/smartlink/images/GR-img.png"
+                src={`${BASE_PATH}/images/GR-img.png`}
                 alt="GoodRich Logo"
                 className="onboarding-logo"
               /></div>
@@ -792,7 +793,7 @@ export default function OnboardingPage() {
                   <div className="flex flex-col items-center">
                     <div className="w-full border border-gray-200 rounded-lg overflow-hidden shadow-md bg-white">
                       <img
-                        src="/images/sample-preview.png"
+                        src={`${BASE_PATH}/images/sample-preview.png`}
                         alt="내용증명 샘플"
                         className="w-full h-auto"
                       />
