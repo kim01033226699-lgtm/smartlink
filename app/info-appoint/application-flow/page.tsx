@@ -121,26 +121,13 @@ function ApplicationFlowContent() {
 
           {currentStep === "sample-preview" && (
             <div className="space-y-4">
-              <ApplicationPreview
-                personalInfo={{
-                  company: "A금융서비스",
-                  companyAddress: "서울시 강남구 강남길 21",
-                  residentNumber: "800101-1234567",
-                  name: "홍길동",
-                  address: "서울시 강남구 강남길 12",
-                  phone: "010-1234-5678",
-                  submissionDate: "2025-01-01",
-                  recipients: [
-                    "생명보험협회 - 서울특별시 중구 퇴계로 173, 16층(충무로3가)",
-                    "손해보험협회 - 서울특별시 종로구 종로1길 50 15층 B동(케이트윈타워) 손해보험협회 자격관리팀",
-                    "A금융서비스 - 서울시 강남구 강남길 21",
-                  ],
-                }}
-                selectedResults={selectedResults}
-                onPdfDownloaded={() => { }}
-                onBack={handleGoBack}
-                isSample={true}
-              />
+              <div className="w-full border border-gray-200 rounded-lg overflow-hidden shadow-md bg-white">
+                <img
+                  src="/images/sample-preview.png"
+                  alt="내용증명 샘플"
+                  className="w-full h-auto"
+                />
+              </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <Card

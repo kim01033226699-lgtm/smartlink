@@ -200,7 +200,7 @@ export default function ApplicationPreview({
               {autoDownload ? (
                 <>
                   <p className="text-gray-700 leading-relaxed text-center py-4">
-                    <strong>내용증명</strong>을 다운로드합니다.
+                    <strong>내용증명(빈양식)</strong>을 다운로드합니다.
                   </p>
                   <p className="text-blue-600 font-semibold mt-4 text-center">
                     {typeof window !== 'undefined' && 'showSaveFilePicker' in window
