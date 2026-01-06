@@ -34,11 +34,30 @@ function ApplicationFlowContent() {
 
   // Effect to handle direct navigation when search param changes or on mount
   useEffect(() => {
-    if (searchParams.get('mode') === 'writing') {
+    const mode = searchParams.get('mode');
+    if (mode === 'writing') {
       setCurrentStep('personal-info');
-      // If jumping straight to writing, we might want to default some selectedResults 
-      // or handle it in the form if they are needed.
-      // For now, assuming empty selectedResults is fine or form handles it.
+    } else if (mode === 'blank-download') {
+      const blankInfo: PersonalInfo = {
+        company: " ",
+        companyAddress: " ",
+        residentNumber: " ",
+        name: " ",
+        address: " ",
+        phone: " ",
+        submissionDate: new Date().toISOString().split('T')[0],
+        recipients: []
+      };
+      setPersonalInfo(blankInfo);
+      setSelectedResults([]);
+      setCurrentStep("preview");
+    } else if (mode === 'sample') {
+      setSelectedResults([
+        "생명보험협회 - 서울특별시 중구 퇴계로 173, 16층(충무로3가)",
+        "손해보험협회 - 서울특별시 종로구 종로1길 50 15층 B동(케이트윈타워) 손해보험협회 자격관리팀",
+        "A금융서비스 - 서울시 강남구 강남길 21",
+      ]);
+      setCurrentStep("sample-preview");
     }
   }, [searchParams]);
 
@@ -88,7 +107,9 @@ function ApplicationFlowContent() {
 
       <div className="px-4 py-8">
         <div className="mx-auto max-w-3xl">
-          <h1 className="mb-6 text-3xl font-bold text-gray-900 md:text-4xl">협회 말소처리 안내</h1>
+          {searchParams.get('mode') !== 'blank-download' && (
+            <h1 className="mb-6 text-3xl font-bold text-gray-900 md:text-4xl">협회 말소처리 안내</h1>
+          )}
 
           {currentStep === "questions" && (
             <div className="mb-8 text-center">
@@ -163,6 +184,7 @@ function ApplicationFlowContent() {
               selectedResults={selectedResults}
               onPdfDownloaded={handlePdfDownloaded}
               onBack={handleGoBack}
+              autoDownload={searchParams.get('mode') === 'blank-download'}
             />
           )}
 

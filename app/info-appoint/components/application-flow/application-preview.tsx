@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Button } from "@/app/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/components/ui/card";
 import { ArrowLeft, Download, AlertCircle } from "lucide-react";
@@ -26,6 +26,8 @@ interface ApplicationPreviewProps {
   onPdfDownloaded: () => void;
   onBack: () => void;
   isSample?: boolean;
+  autoDownload?: boolean;
+  blankTitle?: string;
 }
 
 export default function ApplicationPreview({
@@ -33,14 +35,23 @@ export default function ApplicationPreview({
   selectedResults,
   onPdfDownloaded,
   onBack,
-  isSample = false
+  isSample = false,
+  autoDownload = false,
+  blankTitle = ""
 }: ApplicationPreviewProps) {
   const [isGenerating, setIsGenerating] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const previewRef = useRef<HTMLDivElement>(null);
 
+  // 자동 다운로드 효과
+  useEffect(() => {
+    if (autoDownload && previewRef.current && !isGenerating) {
+      setShowConfirmModal(true);
+    }
+  }, [autoDownload, previewRef.current]);
+
   // 등기발송일 기준 10일 경과일 계산
-  const submissionDate = new Date(personalInfo.submissionDate);
+  const submissionDate = personalInfo.submissionDate ? new Date(personalInfo.submissionDate) : new Date();
   const tenDaysLater = addDays(submissionDate, 10);
 
   // 전화번호 포맷팅 함수
@@ -129,7 +140,34 @@ export default function ApplicationPreview({
       const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
       pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
-      pdf.save(`해촉신청서_${personalInfo.name}_${new Date().toISOString().split('T')[0]}.pdf`);
+
+      const fileName = `내용증명_${personalInfo.name.trim() || '빈양식'}_${new Date().toISOString().split('T')[0]}.pdf`;
+
+      // 브라우저가 File System Access API를 지원하는지 확인 (직접 폴더/이름 지정 창)
+      if (typeof window !== 'undefined' && 'showSaveFilePicker' in window) {
+        try {
+          const handle = await (window as any).showSaveFilePicker({
+            suggestedName: fileName,
+            types: [{
+              description: 'PDF Document',
+              accept: { 'application/pdf': ['.pdf'] },
+            }],
+          });
+
+          const writable = await handle.createWritable();
+          const pdfBlob = pdf.output('blob');
+          await writable.write(pdfBlob);
+          await writable.close();
+        } catch (err: any) {
+          // 사용자가 취소한 경우 또는 에러 발생 시 기존 방식으로 폴백 (단, 취소 에러면 아무것도 안함)
+          if (err.name !== 'AbortError') {
+            pdf.save(fileName);
+          }
+        }
+      } else {
+        // 지원하지 않는 브라우저(Safari, Firefox 등)는 기존 방식 사용
+        pdf.save(fileName);
+      }
 
       setIsGenerating(false);
       onPdfDownloaded();
@@ -158,17 +196,32 @@ export default function ApplicationPreview({
       {showConfirmModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg shadow-xl max-w-md w-full mx-4 p-6">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">⚠️ 잠깐!</h2>
             <div className="space-y-3 mb-6">
-              <p className="text-gray-700 leading-relaxed">
-                본 문서는 <strong>참고용으로 제공되는 자료</strong>이며, 실제 발송 시에는 내용을 꼭 확인하신 후 이용해 주세요.
-              </p>
-              <p className="text-gray-700 leading-relaxed">
-                내용상의 오류나 누락에 대한 <strong className="text-red-600">책임은 사용자 본인에게 있습니다.</strong>
-              </p>
-              <p className="text-gray-900 font-semibold mt-4">
-                PDF를 다운로드 할까요?
-              </p>
+              {autoDownload ? (
+                <>
+                  <p className="text-gray-700 leading-relaxed text-center py-4">
+                    <strong>내용증명</strong>을 다운로드합니다.
+                  </p>
+                  <p className="text-blue-600 font-semibold mt-4 text-center">
+                    {typeof window !== 'undefined' && 'showSaveFilePicker' in window
+                      ? "확인 버튼을 누른 후, 원하시는 저장 폴더를 선택해주세요."
+                      : "확인을 누르시면 다운로드 폴더(또는 파일 앱)에 저장됩니다."}
+                  </p>
+                </>
+              ) : (
+                <>
+                  <h2 className="text-2xl font-bold text-gray-900 mb-4 text-center">⚠️ 잠깐!</h2>
+                  <p className="text-gray-700 leading-relaxed">
+                    본 문서는 <strong>참고용으로 제공되는 자료</strong>이며, 실제 발송 시에는 내용을 꼭 확인하신 후 이용해 주세요.
+                  </p>
+                  <p className="text-gray-700 leading-relaxed">
+                    내용상의 오류나 누락에 대한 <strong className="text-red-600">책임은 사용자 본인에게 있습니다.</strong>
+                  </p>
+                  <p className="text-gray-900 font-semibold mt-4">
+                    PDF를 다운로드 할까요?
+                  </p>
+                </>
+              )}
             </div>
             <div className="flex gap-3">
               <Button
@@ -182,14 +235,14 @@ export default function ApplicationPreview({
                 onClick={handleConfirmDownload}
                 className="flex-1 bg-blue-600 hover:bg-blue-700 transition-all duration-150 active:scale-95"
               >
-                다운로드
+                {autoDownload ? '확인' : '다운로드'}
               </Button>
             </div>
           </div>
         </div>
       )}
 
-      <Card>
+      <Card className={autoDownload ? "hidden" : ""}>
         {!isSample && (
           <CardHeader>
             <CardDescription>
@@ -198,8 +251,8 @@ export default function ApplicationPreview({
           </CardHeader>
         )}
         <CardContent className={isSample ? "pt-6" : ""}>
-          {/* 일정 안내 - 샘플 모드에서는 숨김 */}
-          {!isSample && (
+          {/* 일정 안내 - 샘플 모드 또는 자동 다운로드 모드에서는 숨김 */}
+          {!isSample && !autoDownload && (
             <div className="mb-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
               <div className="flex items-start gap-3">
                 <AlertCircle className="h-5 w-5 text-blue-600 flex-shrink-0 mt-0.5" />
@@ -218,15 +271,15 @@ export default function ApplicationPreview({
             </div>
           )}
 
-          {/* 신청서 미리보기 영역 */}
+          {/* 신청서 미리보기 영역 - 자동 다운로드 모드가 아닐 때만 ref 사용 */}
           <div
-            ref={previewRef}
+            ref={autoDownload ? null : previewRef}
             className="bg-white p-8 border border-gray-300 rounded-lg"
             style={{ minHeight: '297mm' }}
           >
             {/* 제목 */}
             <div className="text-center mb-8">
-              <h1 className="text-3xl font-bold mb-2">[설계사]해촉 신청서</h1>
+              <h1 className="text-3xl font-bold mb-2">내용증명</h1>
             </div>
 
             {/* 신청서 표 */}
@@ -289,7 +342,7 @@ export default function ApplicationPreview({
             <div className="mb-8 text-right">
               <p className="text-lg mb-2">내용증명 발송일자</p>
               <p className="text-lg mb-4 font-semibold">
-                {personalInfo.submissionDate.replace(/-/g, '년 ').replace(/(\d{4})년 (\d{2}) (\d{2})/, '$1년 $2월 $3일')}
+                {personalInfo.submissionDate ? personalInfo.submissionDate.replace(/-/g, '년 ').replace(/(\d{4})년 (\d{2}) (\d{2})/, '$1년 $2월 $3일') : ''}
               </p>
               <p className="text-lg mb-8">
                 신청인: {personalInfo.name} (날인 또는 서명)
@@ -309,8 +362,8 @@ export default function ApplicationPreview({
             )}
           </div>
 
-          {/* 버튼 영역 - 샘플 모드에서는 숨김 */}
-          {!isSample && (
+          {/* 버튼 영역 - 샘플 모드 또는 자동 다운로드 모드에서는 숨김 */}
+          {!isSample && !autoDownload && (
             <div className="flex gap-3 mt-6">
               <Button
                 variant="outline"
@@ -333,6 +386,35 @@ export default function ApplicationPreview({
           )}
         </CardContent>
       </Card>
+
+      {/* 자동 다운로드 모드에서의 숨겨진 정적 요소 (html2canvas용) */}
+      {autoDownload && (
+        <div className="fixed opacity-0 pointer-events-none -z-50" style={{ left: '-9999px' }}>
+          {/* html2canvas는 이 영역을 캡처할 것입니다 */}
+          <div ref={previewRef} className="bg-white p-8 border border-gray-300 rounded-lg" style={{ width: '210mm', minHeight: '297mm' }}>
+            <div className="text-center mb-8">
+              <h1 className="text-3xl font-bold mb-2">내용증명</h1>
+            </div>
+            <table className="w-full border-collapse mb-6">
+              <tbody>
+                <tr><td className="border border-gray-800 bg-gray-100 px-4 py-3 font-semibold w-1/4 text-center">소속회사</td><td className="border border-gray-800 px-4 py-3 text-center">&nbsp;</td></tr>
+                <tr><td className="border border-gray-800 bg-gray-100 px-4 py-3 font-semibold text-center">성명</td><td className="border border-gray-800 px-4 py-3 text-center">&nbsp;</td></tr>
+                <tr><td className="border border-gray-800 bg-gray-100 px-4 py-3 font-semibold text-center">주민번호</td><td className="border border-gray-800 px-4 py-3 text-center">&nbsp;</td></tr>
+                <tr><td className="border border-gray-800 bg-gray-100 px-4 py-3 font-semibold text-center">주소</td><td className="border border-gray-800 px-4 py-3 text-center">&nbsp;</td></tr>
+                <tr><td className="border border-gray-800 bg-gray-100 px-4 py-3 font-semibold text-center">전화번호</td><td className="border border-gray-800 px-4 py-3 text-center">&nbsp;</td></tr>
+              </tbody>
+            </table>
+            <div className="mb-8 text-center py-8">
+              <p className="text-lg leading-relaxed">본인의 사정으로 귀사에 해촉처리를 요청하오니<br />처리하여 주시기 바랍니다.</p>
+            </div>
+            <div className="mb-8 text-right">
+              <p className="text-lg mb-2">내용증명 발송일자</p>
+              <p className="text-lg mb-4 font-semibold">{format(new Date(), 'yyyy년 MM월 dd일', { locale: ko })}</p>
+              <p className="text-lg mb-8">신청인: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (날인 또는 서명)</p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

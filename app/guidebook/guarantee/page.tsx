@@ -112,7 +112,7 @@ export default function GuaranteePage() {
                   <div className="step-details">
                     {/* Step 1 - 서울보증보험 동의 */}
                     <StepAccordion
-                      title="① 서울보증보험 동의"
+                      title="1. 서울보증보험 동의"
                       isOpen={expandedSteps.has('ins-1')}
                       onToggle={() => toggleStep('ins-1')}
                     >
@@ -144,7 +144,7 @@ export default function GuaranteePage() {
 
                     {/* Step 2 - 한도조회 */}
                     <StepAccordion
-                      title="② 한도조회"
+                      title="2. 한도조회"
                       isOpen={expandedSteps.has('ins-2')}
                       onToggle={() => toggleStep('ins-2')}
                     >
@@ -160,7 +160,7 @@ export default function GuaranteePage() {
 
                     {/* Step 3 - 보증보험 청약요청 */}
                     <StepAccordion
-                      title="③ 보증보험 청약요청"
+                      title="3. 보증보험 청약요청"
                       isOpen={expandedSteps.has('ins-3')}
                       onToggle={() => toggleStep('ins-3')}
                     >
@@ -173,7 +173,7 @@ export default function GuaranteePage() {
 
                     {/* Step 4 - 서울보증보험 전자서명 */}
                     <StepAccordion
-                      title="④ 서울보증보험 전자서명"
+                      title="4. 서울보증보험 전자서명"
                       isOpen={expandedSteps.has('ins-4')}
                       onToggle={() => toggleStep('ins-4')}
                     >
@@ -200,7 +200,7 @@ export default function GuaranteePage() {
                   <div className="step-details">
                     {/* Step 1 - 근저당 */}
                     <StepAccordion
-                      title="① 근저당"
+                      title="1. 근저당"
                       isOpen={expandedSteps.has('col-1')}
                       onToggle={() => toggleStep('col-1')}
                     >
@@ -211,7 +211,7 @@ export default function GuaranteePage() {
 
                         <SubStepAccordion
                           subStepId="mortgage-inquiry"
-                          title="1. 한도조회"
+                          title="1) 한도조회"
                           isOpen={expandedSubSteps.has('mortgage-inquiry')}
                           onToggle={() => toggleSubStep('mortgage-inquiry')}
                         >
@@ -340,7 +340,7 @@ export default function GuaranteePage() {
                         {/* 2. 근저당 요청 */}
                         <SubStepAccordion
                           subStepId="mortgage-request"
-                          title="2. 근저당 요청"
+                          title="2) 근저당 요청"
                           isOpen={expandedSubSteps.has('mortgage-request')}
                           onToggle={() => toggleSubStep('mortgage-request')}
                         >
@@ -354,7 +354,7 @@ export default function GuaranteePage() {
                         {/* 3. 근저당 설정 */}
                         <SubStepAccordion
                           subStepId="mortgage-setup"
-                          title="3. 근저당 설정"
+                          title="3) 근저당 설정"
                           isOpen={expandedSubSteps.has('mortgage-setup')}
                           onToggle={() => toggleSubStep('mortgage-setup')}
                         >
@@ -455,7 +455,7 @@ export default function GuaranteePage() {
                               {expandedSubSteps.has('mortgage-setup-method') && (
                                 <div className="content-text pl-3">
                                   <p className="mb-4">
-                                    <strong>1. 서류 준비 후 (설정/변경/말소) 자격을 갖추고 물건지와 가까운 법무사 사무실에서 진행(타 지역의 경우 별도 출장비 발생 가능)</strong>
+                                    <strong>(1) 서류 준비 후 (설정/변경/말소) 자격을 갖추고 물건지와 가까운 법무사 사무실에서 진행(타 지역의 경우 별도 출장비 발생 가능)</strong>
                                   </p>
 
                                   <div className="bg-blue-50 p-4 rounded-lg mb-4">
@@ -474,7 +474,7 @@ export default function GuaranteePage() {
                                   </div>
 
                                   <div className="bg-gray-50 p-4 rounded-lg">
-                                    <p className="font-bold mb-2">⇒ 모든 서류 원본 등기 발송</p>
+                                    <p className="font-bold mb-2">(2) 모든 서류 원본 등기 발송</p>
                                     <p className="text-sm">
                                       ★ 등기 발송 주소: 서울 중구 세종대로 9길 41, 7층(퍼시픽타워)<br />
                                       <span className="ml-6">굿리치 법무지원팀 채권실</span>
@@ -490,14 +490,14 @@ export default function GuaranteePage() {
 
                     {/* Step 2 - 예금질권 */}
                     <StepAccordion
-                      title="② 예금질권"
+                      title="2. 예금질권"
                       isOpen={expandedSteps.has('col-2')}
                       onToggle={() => toggleStep('col-2')}
                     >
                       <div className="step-content">
                         <SubStepAccordion
                           subStepId="deposit-step1"
-                          title="1. 은행 방문"
+                          title="1) 은행 방문"
                           isOpen={expandedSubSteps.has('deposit-step1')}
                           onToggle={() => toggleSubStep('deposit-step1')}
                         >
@@ -511,7 +511,7 @@ export default function GuaranteePage() {
 
                         <SubStepAccordion
                           subStepId="deposit-step2"
-                          title="2. 준비물"
+                          title="2) 준비물"
                           isOpen={expandedSubSteps.has('deposit-step2')}
                           onToggle={() => toggleSubStep('deposit-step2')}
                         >
@@ -525,7 +525,7 @@ export default function GuaranteePage() {
 
                         <SubStepAccordion
                           subStepId="deposit-step3"
-                          title="3. 은행 절차"
+                          title="3) 은행 절차"
                           isOpen={expandedSubSteps.has('deposit-step3')}
                           onToggle={() => toggleSubStep('deposit-step3')}
                         >
@@ -539,7 +539,7 @@ export default function GuaranteePage() {
 
                         <SubStepAccordion
                           subStepId="deposit-step4"
-                          title="4. 확정일자 부여"
+                          title="4) 확정일자 부여"
                           isOpen={expandedSubSteps.has('deposit-step4')}
                           onToggle={() => toggleSubStep('deposit-step4')}
                         >
@@ -552,7 +552,7 @@ export default function GuaranteePage() {
 
                         <SubStepAccordion
                           subStepId="deposit-step5"
-                          title="5. 서류 발송"
+                          title="5) 서류 발송"
                           isOpen={expandedSubSteps.has('deposit-step5')}
                           onToggle={() => toggleSubStep('deposit-step5')}
                         >
@@ -576,7 +576,7 @@ export default function GuaranteePage() {
 
                     {/* Step 3 - 공동발행 약속어음 */}
                     <StepAccordion
-                      title="③ 공동발행 약속어음"
+                      title="3. 공동발행 약속어음"
                       isOpen={expandedSteps.has('col-3')}
                       onToggle={() => toggleStep('col-3')}
                     >
@@ -590,7 +590,7 @@ export default function GuaranteePage() {
                         {/* 1. 보증인 유형 */}
                         <SubStepAccordion
                           subStepId="promissory-eligibility"
-                          title="1. 보증인 유형"
+                          title="1) 보증인 유형"
                           isOpen={expandedSubSteps.has('promissory-eligibility')}
                           onToggle={() => toggleSubStep('promissory-eligibility')}
                         >
@@ -607,7 +607,7 @@ export default function GuaranteePage() {
                         {/* 2. 보증인 심사 */}
                         <SubStepAccordion
                           subStepId="promissory-screening"
-                          title="2. 보증인 심사"
+                          title="2) 보증인 심사"
                           isOpen={expandedSubSteps.has('promissory-screening')}
                           onToggle={() => toggleSubStep('promissory-screening')}
                         >
@@ -636,11 +636,11 @@ export default function GuaranteePage() {
 
                                 <p className="font-bold text-sm mb-2">★ 필요서류</p>
                                 <ul className="circle-bullet-list mb-4">
-                                  <li>① 세목별 과세증명서</li>
-                                  <li>② 등기사항 전부증명서(말소사항포함, 최신날짜)</li>
-                                  <li>③ 초본(소유자 = 거주자 확인)_재산세 납부자가 실시보는 물건에 거주하지 않고, 전세 계약 등이 설정되어 있는 경우 전세계약서, 임대차계약서 추가 제출</li>
-                                  <li>④ 부채증명원(등기부상 선순위 금액과 실제 피담보 채무액의 차이가 큰 경우)</li>
-                                  <li>⑤ 토지 또는 토지+건물 심사시 (거래기액 확인 불가능한 경우)<br />
+                                  <li>(1) 세목별 과세증명서</li>
+                                  <li>(2) 등기사항 전부증명서(말소사항포함, 최신날짜)</li>
+                                  <li>(3) 초본(소유자 = 거주자 확인)_재산세 납부자가 실시보는 물건에 거주하지 않고, 전세 계약 등이 설정되어 있는 경우 전세계약서, 임대차계약서 추가 제출</li>
+                                  <li>(4) 부채증명원(등기부상 선순위 금액과 실제 피담보 채무액의 차이가 큰 경우)</li>
+                                  <li>(5) 토지 또는 토지+건물 심사시 (거래기액 확인 불가능한 경우)<br />
                                     행정사 or 중개사 or 감정평가사의 시세확인서 + 사업자등록증 + 명함 첨부</li>
                                 </ul>
 
@@ -661,8 +661,8 @@ export default function GuaranteePage() {
 
                                 <p className="font-bold text-sm mb-2">★ 필요서류</p>
                                 <ul className="circle-bullet-list mb-4">
-                                  <li>① 재직증명서</li>
-                                  <li>② 원천징수영수증</li>
+                                  <li>(1) 재직증명서</li>
+                                  <li>(2) 원천징수영수증</li>
                                 </ul>
 
                                 <div className="bg-blue-50 p-3 rounded-lg border border-blue-300 mb-3">
@@ -680,21 +680,21 @@ export default function GuaranteePage() {
                         {/* 3. 공동발행 약속어음 요청 */}
                         <SubStepAccordion
                           subStepId="promissory-process"
-                          title="3. 공동발행 약속어음 요청"
+                          title="3) 공동발행 약속어음 요청"
                           isOpen={expandedSubSteps.has('promissory-process')}
                           onToggle={() => toggleSubStep('promissory-process')}
                         >
                           <div className="step-content">
-                            {/* ① 심사 서류 전달 */}
+                            {/* (1) 심사 서류 전달 */}
                             <div className="mb-4">
-                              <p className="font-bold text-sm mb-2">① 심사에 필요한 서류를 부문 담당자에게 전달하여 요청</p>
+                              <p className="font-bold text-sm mb-2">(1) 심사에 필요한 서류를 부문 담당자에게 전달하여 요청</p>
                             </div>
 
                             <div className="border-t border-gray-100 my-4"></div>
 
-                            {/* ② 필수 준비사항 */}
+                            {/* (2) 필수 준비사항 */}
                             <div className="mb-4">
-                              <p className="font-bold text-sm mb-3">② 필수 준비사항</p>
+                              <p className="font-bold text-sm mb-3">(2) 필수 준비사항</p>
 
                               <div className="space-y-2">
                                 {/* 공동발행인 동행 시 */}
@@ -743,9 +743,9 @@ export default function GuaranteePage() {
 
                             <div className="border-t border-gray-100 my-4"></div>
 
-                            {/* ③ 약속어음 발행방법 */}
+                            {/* (3) 약속어음 발행방법 */}
                             <div className="mb-4">
-                              <p className="font-bold text-sm mb-3">③ 약속어음 발행방법</p>
+                              <p className="font-bold text-sm mb-3">(3) 약속어음 발행방법</p>
 
                               <p className="content-text mb-2">• 필수 준비사항을 지참하여 공증사무실에서 어음 공증 진행</p>
 

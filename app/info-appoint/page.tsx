@@ -175,15 +175,16 @@ export default function InfoAppointPage() {
             </CardHeader>
             <CardContent className="space-y-4">
               {data.checklist.map((item) => (
-                <div key={item.id} className="flex items-center space-x-3">
+                <div key={item.id} className="flex items-start space-x-3">
                   <Checkbox
                     id={item.id}
+                    className="mt-1"
                     checked={checkedItems.has(item.id)}
                     onCheckedChange={(checked) => handleCheckChange(item.id, Boolean(checked))}
                   />
                   <label
                     htmlFor={item.id}
-                    className="cursor-pointer text-base leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                    className="cursor-pointer text-base py-1 peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                   >
                     {item.text}
                   </label>

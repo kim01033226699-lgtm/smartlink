@@ -27,7 +27,7 @@ export default function OnboardingPage() {
   const [expandedSteps, setExpandedSteps] = useState<Set<string>>(new Set());
   const [expandedSubSteps, setExpandedSubSteps] = useState<Set<string>>(new Set());
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalView, setModalView] = useState<'question' | 'sample' | 'personal-info' | 'preview' | 'completed'>('question');
+  const [modalView, setModalView] = useState<'question' | 'sample' | 'personal-info' | 'preview' | 'completed' | 'blank-download'>('question');
   const [activeTab, setActiveTab] = useState<'onboarding' | 'termination'>('onboarding');
   const [expandedProcess, setExpandedProcess] = useState<ExpandedType>(null);
 
@@ -36,12 +36,11 @@ export default function OnboardingPage() {
   const [personalInfo, setPersonalInfo] = useState<PersonalInfo | null>(null);
 
   /* State for Step 1 mode */
-  const [cancellationMode, setCancellationMode] = useState<'certified' | 'application' | null>(null);
   const [isSendExpanded, setIsSendExpanded] = useState(false);
   const [isCancelExpanded, setIsCancelExpanded] = useState(false);
   const [isAppDownloadModalOpen, setIsAppDownloadModalOpen] = useState(false);
 
-  const openModal = (view: 'question' | 'sample' | 'personal-info') => {
+  const openModal = (view: 'question' | 'sample' | 'personal-info' | 'blank-download') => {
     setModalView(view);
     setIsModalOpen(true);
 
@@ -94,6 +93,11 @@ export default function OnboardingPage() {
     } else {
       // 다른 서브스텝은 모두 닫고 현재 서브스텝만 열기
       setExpandedSubSteps(new Set([subStepId]));
+      // Reset Step 1 internal states when opening its sub-steps
+      if (subStepId === 'exp-1-certified' || subStepId === 'exp-1-application') {
+        setIsSendExpanded(false);
+        setIsCancelExpanded(false);
+      }
     }
   };
 
@@ -154,38 +158,45 @@ export default function OnboardingPage() {
                     <div className="step-details">
                       {/* Step 1 - 협회 말소하기 (moved from 4) */}
                       <StepAccordion
-                        title="① 협회 말소하기"
+                        title="1. 협회 말소하기"
                         isOpen={expandedSteps.has('exp-1')}
                         onToggle={() => toggleStep('exp-1')}
                       >
                         <div className="step-content">
-                          {/* Main Choice Buttons */}
-                          <div className="grid grid-cols-2 gap-3 mb-4">
-                            <button
-                              onClick={() => setCancellationMode('certified')}
-                              className={`p-4 rounded-lg border-2 font-bold text-center transition-all duration-150 active:scale-95 ${cancellationMode === 'certified' ? 'border-blue-500 bg-blue-50 text-blue-700' : 'border-gray-300 bg-white text-gray-700 hover:border-gray-400'}`}
-                            >
-                              내용증명으로<br />협회말소
-                            </button>
-                            <button
-                              onClick={() => setCancellationMode('application')}
-                              className={`p-4 rounded-lg border-2 font-bold text-center transition-all duration-150 active:scale-95 ${cancellationMode === 'application' ? 'border-blue-500 bg-blue-50 text-blue-700' : 'border-gray-300 bg-white text-gray-700 hover:border-gray-400'}`}
-                            >
-                              해촉신청서로<br />협회말소
-                            </button>
-                          </div>
+                          {/* 내용증명 토글 */}
+                          <SubStepAccordion
+                            subStepId="exp-1-certified"
+                            title="1) 내용증명으로 말소"
+                            isOpen={expandedSubSteps.has('exp-1-certified')}
+                            onToggle={() => toggleSubStep('exp-1-certified')}
+                          >
+                            <div className="fade-in">
+                              <div className="space-y-0 relative mt-2">
+                                {/* 내용증명 샘플 및 빈양식 다운로드 버튼 */}
+                                <div className="grid grid-cols-2 gap-3 mb-6 px-1">
+                                  <button
+                                    onClick={() => openModal('sample')}
+                                    className="flex items-center justify-center gap-2 p-3 bg-white border border-blue-200 rounded-lg text-sm text-blue-600 font-bold hover:bg-blue-50 text-center transition-colors shadow-sm"
+                                  >
+                                    <ExternalLink size={16} />
+                                    내용증명 샘플
+                                  </button>
+                                  <button
+                                    onClick={() => openModal('blank-download')}
+                                    className="flex items-center justify-center gap-2 p-3 bg-white border-orange-200 border rounded-lg text-sm text-orange-600 font-bold hover:bg-orange-50 text-center transition-colors shadow-sm"
+                                  >
+                                    <Download size={16} />
+                                    파일(빈양식) 다운
+                                  </button>
+                                </div>
 
-                          {/* Certified Mail Mode Content */}
-                          {cancellationMode === 'certified' && (
-                            <div className="fade-in mt-4">
-                              <div className="space-y-0 relative mt-4">
                                 {/* Step 1 Button */}
                                 <div className="relative">
                                   <button
                                     onClick={() => openModal('personal-info')}
                                     className="w-full text-left py-4 flex items-center justify-between border-b border-gray-100 hover:bg-gray-50 transition-colors"
                                   >
-                                    <span className="font-bold text-gray-800 text-lg">1. 내용증명 작성하기</span>
+                                    <span className="font-bold text-gray-800 text-[0.95rem]">(1) 내용증명 작성하기</span>
                                     <ChevronRight size={20} className="text-gray-400" />
                                   </button>
                                 </div>
@@ -196,7 +207,7 @@ export default function OnboardingPage() {
                                     onClick={() => setIsSendExpanded(!isSendExpanded)}
                                     className="w-full text-left py-4 flex items-center justify-between hover:bg-gray-50 transition-colors"
                                   >
-                                    <span className="font-bold text-gray-800 text-lg">2. 내용증명 발송하기</span>
+                                    <span className="font-bold text-gray-800 text-[0.95rem]">(2) 내용증명 발송하기</span>
                                     <ChevronRight
                                       size={20}
                                       className={`text-gray-400 transition-transform ${isSendExpanded ? 'rotate-90' : ''}`}
@@ -233,7 +244,7 @@ export default function OnboardingPage() {
                                     className="w-full text-left py-4 flex items-start justify-between hover:bg-gray-50 transition-colors"
                                   >
                                     <div className="flex flex-col gap-1">
-                                      <span className="font-bold text-gray-800 text-lg">3. 협회말소하기</span>
+                                      <span className="font-bold text-gray-800 text-[0.95rem]">(3) 협회말소하기</span>
                                       <span className="text-xs text-orange-600 font-medium">
                                         내용증명 발송 후 발송일 포함 11일째 되는 날부터 말소 가능
                                       </span>
@@ -267,11 +278,16 @@ export default function OnboardingPage() {
                                 </div>
                               </div>
                             </div>
-                          )}
+                          </SubStepAccordion>
 
-                          {/* Application Mode Content - Tab Style */}
-                          {cancellationMode === 'application' && (
-                            <div className="fade-in mt-4">
+                          {/* 해촉신청서 토글 */}
+                          <SubStepAccordion
+                            subStepId="exp-1-application"
+                            title="2) 해촉신청서로 말소"
+                            isOpen={expandedSubSteps.has('exp-1-application')}
+                            onToggle={() => toggleSubStep('exp-1-application')}
+                          >
+                            <div className="fade-in">
                               <div className="bg-white border border-gray-100 rounded-xl p-4 shadow-sm">
                                 <p className="text-sm text-gray-600 mb-3">
                                   해촉신청서를 통해 온라인으로 협회 말소를 진행할 수 있습니다.
@@ -298,12 +314,12 @@ export default function OnboardingPage() {
                                 </div>
                               </div>
                             </div>
-                          )}
+                          </SubStepAccordion>
                         </div>
                       </StepAccordion>
 
                       <StepAccordion
-                        title="② 서울보증보험 동의"
+                        title="2. 서울보증보험 동의"
                         isOpen={expandedSteps.has('exp-3')}
                         onToggle={() => toggleStep('exp-3')}
                       >
@@ -335,14 +351,14 @@ export default function OnboardingPage() {
 
                       {/* Step 3 - 보험연수원 등록교육 수료 (moved from 4) */}
                       <StepAccordion
-                        title="③ 보험연수원 등록교육 수료"
+                        title="3. 보험연수원 등록교육 수료"
                         isOpen={expandedSteps.has('exp-4')}
                         onToggle={() => toggleStep('exp-4')}
                       >
                         <div className="step-content">
                           <SubStepAccordion
                             subStepId="exp-3-1"
-                            title="3-1. 경력 확인"
+                            title="1) 경력 확인"
                             isOpen={expandedSubSteps.has('exp-3-1')}
                             onToggle={() => toggleSubStep('exp-3-1')}
                           >
@@ -353,7 +369,7 @@ export default function OnboardingPage() {
 
                           <SubStepAccordion
                             subStepId="exp-3-2"
-                            title="3-2. 수강신청하기"
+                            title="2) 수강신청하기"
                             isOpen={expandedSubSteps.has('exp-3-2')}
                             onToggle={() => toggleSubStep('exp-3-2')}
                           >
@@ -364,7 +380,7 @@ export default function OnboardingPage() {
 
                           <SubStepAccordion
                             subStepId="exp-3-3"
-                            title="3-3. 수강과목 선택 방법"
+                            title="3) 수강과목 선택 방법"
                             isOpen={expandedSubSteps.has('exp-3-3')}
                             onToggle={() => toggleSubStep('exp-3-3')}
                           >
@@ -398,7 +414,7 @@ export default function OnboardingPage() {
 
                           <SubStepAccordion
                             subStepId="exp-3-4"
-                            title="3-4. 수료증 출력"
+                            title="4) 수료증 출력"
                             isOpen={expandedSubSteps.has('exp-3-4')}
                             onToggle={() => toggleSubStep('exp-3-4')}
                           >
@@ -411,14 +427,14 @@ export default function OnboardingPage() {
 
                       {/* Step 4 - 굿리치 위촉방법 */}
                       <StepAccordion
-                        title="④ 굿리치 위촉방법"
+                        title="4. 굿리치 위촉방법"
                         isOpen={expandedSteps.has('exp-5')}
                         onToggle={() => toggleStep('exp-5')}
                       >
                         <div className="step-content">
                           {/* (1) 기본정보 담당 주임단에 전달 */}
                           <div className="pb-4 mb-4 border-b border-gray-200">
-                            <p className="content-text font-bold text-lg mb-2 text-gray-900">(1) 기본정보 담당 주임단에 전달</p>
+                            <p className="content-text font-bold text-[0.95rem] mb-2 text-gray-900">1) 기본정보 담당 주임단에 전달</p>
                             <p className="content-text">
                               기본정보 : 성명, 주민번호, 자택주소, 휴대폰번호, 이메일 주소
                             </p>
@@ -426,7 +442,7 @@ export default function OnboardingPage() {
 
                           {/* (2) 위촉서류 */}
                           <div className="pb-4 mb-4 border-b border-gray-200">
-                            <p className="content-text font-bold text-lg mb-2 text-gray-900">(2) 위촉서류</p>
+                            <p className="content-text font-bold text-[0.95rem] mb-2 text-gray-900">2) 위촉서류</p>
                             <p className="content-text">
                               신분증 사본, 통장사본, 수료증, 등본(제출용) <span className="highlight-red">(본인 주민번호 공개, 그 외 비공개 필)</span> 경력증명서(교보생명위촉용), 이클린조회
                             </p>
@@ -434,13 +450,13 @@ export default function OnboardingPage() {
 
                           {/* (3) 전자서명 */}
                           <div className="pb-4 mb-4 border-b border-gray-200">
-                            <p className="content-text font-bold text-lg mb-2 text-gray-900">(3) 전자서명</p>
+                            <p className="content-text font-bold text-[0.95rem] mb-2 text-gray-900">3) 전자서명</p>
                             <h4 className="font-bold text-gray-800 mb-2">* 위촉서류 전자서명하기</h4>
                             <p className="content-text mb-2">
-                              ① <span className="text-blue-600 font-bold">위촉계약서(필수)</span> 하단 <span className="text-blue-600 font-bold">[서류체크]</span> 버튼 클릭 → 팝업된 화면 우측 스크롤을 모두 내려서 내용 확인후 <span className="text-blue-600 font-bold">[서명]</span> 버튼 클릭 → <span className="text-blue-600 font-bold">마우스로 서명입력</span> → 저장 → <span className="text-blue-600 font-bold">[동의]</span> 버튼 클릭 → <span className="text-blue-600 font-bold">전자서명</span> 선택
+                              (1) <span className="text-blue-600 font-bold">위촉계약서(필수)</span> 하단 <span className="text-blue-600 font-bold">[서류체크]</span> 버튼 클릭 → 팝업된 화면 우측 스크롤을 모두 내려서 내용 확인후 <span className="text-blue-600 font-bold">[서명]</span> 버튼 클릭 → <span className="text-blue-600 font-bold">마우스로 서명입력</span> → 저장 → <span className="text-blue-600 font-bold">[동의]</span> 버튼 클릭 → <span className="text-blue-600 font-bold">전자서명</span> 선택
                             </p>
                             <p className="content-text mb-3">
-                              ② <span className="text-blue-600 font-bold">기타필수동의서</span> 하단 <span className="text-blue-600 font-bold">[서류체크]</span> 버튼 클릭 → 팝업된 화면 우측 스크롤을 모두 내려서 내용 확인후 <span className="text-blue-600 font-bold">[서명]</span> 버튼 클릭 → <span className="text-blue-600 font-bold">마우스로 서명입력</span> → 저장 → <span className="text-blue-600 font-bold">[동의]</span> 버튼 클릭 → <span className="text-blue-600 font-bold">전자서명</span> 선택
+                              (2) <span className="text-blue-600 font-bold">기타필수동의서</span> 하단 <span className="text-blue-600 font-bold">[서류체크]</span> 버튼 클릭 → 팝업된 화면 우측 스크롤을 모두 내려서 내용 확인후 <span className="text-blue-600 font-bold">[서명]</span> 버튼 클릭 → <span className="text-blue-600 font-bold">마우스로 서명입력</span> → 저장 → <span className="text-blue-600 font-bold">[동의]</span> 버튼 클릭 → <span className="text-blue-600 font-bold">전자서명</span> 선택
                             </p>
                             <p className="content-text highlight-red font-bold">
                               ⁙ 전자서명 본인인증 : 카카오톡인증 or 네이버인증
@@ -449,7 +465,7 @@ export default function OnboardingPage() {
 
                           {/* (4) 서류업로드 & E-Clean정보 조회하기 */}
                           <div className="pb-4">
-                            <p className="content-text font-bold text-lg mb-2 text-gray-900">(4) 서류업로드 & E-Clean정보 조회하기</p>
+                            <p className="content-text font-bold text-[0.95rem] mb-2 text-gray-900">4) 서류업로드 & E-Clean정보 조회하기</p>
                             <div className="flex flex-col gap-2 mb-3">
                               <div className="bg-orange-500 text-white px-3 py-1.5 rounded-md inline-block text-sm font-bold shadow-sm">
                                 [조회] 버튼 클릭 → 이클린 보험 서비스의 모바일 인증절차 진행
@@ -470,7 +486,7 @@ export default function OnboardingPage() {
 
                       {/* Step 5 - 원수사 위촉안내 */}
                       <StepAccordion
-                        title="⑤ 원수사 위촉안내"
+                        title="5. 원수사 위촉안내"
                         isOpen={expandedSteps.has('exp-7')}
                         onToggle={() => toggleStep('exp-7')}
                       >
@@ -513,7 +529,7 @@ export default function OnboardingPage() {
                     <div className="step-details">
                       {/* Step 1 - 모집인 시험 접수 */}
                       <StepAccordion
-                        title="① 모집인 시험 접수"
+                        title="1. 모집인 시험 접수"
                         isOpen={expandedSteps.has('inexp-1')}
                         onToggle={() => toggleStep('inexp-1')}
                       >
@@ -548,7 +564,7 @@ export default function OnboardingPage() {
                       </StepAccordion>
 
                       <StepAccordion
-                        title="② 서울보증보험 동의"
+                        title="2. 서울보증보험 동의"
                         isOpen={expandedSteps.has('inexp-2')}
                         onToggle={() => toggleStep('inexp-2')}
                       >
@@ -580,14 +596,14 @@ export default function OnboardingPage() {
 
                       {/* Step 3 */}
                       <StepAccordion
-                        title="③ 보험연수원 등록교육 수료"
+                        title="3. 보험연수원 등록교육 수료"
                         isOpen={expandedSteps.has('inexp-3')}
                         onToggle={() => toggleStep('inexp-3')}
                       >
                         <div className="step-content">
                           <SubStepAccordion
                             subStepId="inexp-3-1"
-                            title="3-1. 수강신청하기"
+                            title="1) 수강신청하기"
                             isOpen={expandedSubSteps.has('inexp-3-1')}
                             onToggle={() => toggleSubStep('inexp-3-1')}
                           >
@@ -599,7 +615,7 @@ export default function OnboardingPage() {
 
                           <SubStepAccordion
                             subStepId="inexp-3-2"
-                            title="3-2. 수강과목 선택"
+                            title="2) 수강과목 선택"
                             isOpen={expandedSubSteps.has('inexp-3-2')}
                             onToggle={() => toggleSubStep('inexp-3-2')}
                           >
@@ -622,7 +638,7 @@ export default function OnboardingPage() {
 
                           <SubStepAccordion
                             subStepId="inexp-3-3"
-                            title="3-3. 수료증 발급방법"
+                            title="3) 수료증 발급방법"
                             isOpen={expandedSubSteps.has('inexp-3-3')}
                             onToggle={() => toggleSubStep('inexp-3-3')}
                           >
@@ -635,14 +651,14 @@ export default function OnboardingPage() {
 
                       {/* Step 4 - 굿리치 위촉방법 */}
                       <StepAccordion
-                        title="④ 굿리치 위촉방법"
+                        title="4. 굿리치 위촉방법"
                         isOpen={expandedSteps.has('inexp-4')}
                         onToggle={() => toggleStep('inexp-4')}
                       >
                         <div className="step-content">
                           {/* (1) 기본정보 담당 주임단에 전달 */}
                           <div className="pb-4 mb-4 border-b border-gray-200">
-                            <p className="content-text font-bold text-lg mb-2 text-gray-900">(1) 기본정보 담당 주임단에 전달</p>
+                            <p className="content-text font-bold text-[0.95rem] mb-2 text-gray-900">1) 기본정보 담당 주임단에 전달</p>
                             <p className="content-text">
                               기본정보 : 성명, 주민번호, 자택주소, 휴대폰번호, 이메일 주소
                             </p>
@@ -650,7 +666,7 @@ export default function OnboardingPage() {
 
                           {/* (2) 위촉서류 */}
                           <div className="pb-4 mb-4 border-b border-gray-200">
-                            <p className="content-text font-bold text-lg mb-2 text-gray-900">(2) 위촉서류</p>
+                            <p className="content-text font-bold text-[0.95rem] mb-2 text-gray-900">2) 위촉서류</p>
                             <p className="content-text">
                               신분증 사본, 통장사본, 수료증, 등본(제출용) <span className="highlight-red">(본인 주민번호 공개, 그 외 비공개 필)</span> 경력증명서(교보생명위촉용), 이클린조회
                             </p>
@@ -658,13 +674,13 @@ export default function OnboardingPage() {
 
                           {/* (3) 전자서명 */}
                           <div className="pb-4 mb-4 border-b border-gray-200">
-                            <p className="content-text font-bold text-lg mb-2 text-gray-900">(3) 전자서명</p>
+                            <p className="content-text font-bold text-[0.95rem] mb-2 text-gray-900">3) 전자서명</p>
                             <h4 className="font-bold text-gray-800 mb-2">* 위촉서류 전자서명하기</h4>
                             <p className="content-text mb-2">
-                              ① <span className="text-blue-600 font-bold">위촉계약서(필수)</span> 하단 <span className="text-blue-600 font-bold">[서류체크]</span> 버튼 클릭 → 팝업된 화면 우측 스크롤을 모두 내려서 내용 확인후 <span className="text-blue-600 font-bold">[서명]</span> 버튼 클릭 → <span className="text-blue-600 font-bold">마우스로 서명입력</span> → 저장 → <span className="text-blue-600 font-bold">[동의]</span> 버튼 클릭 → <span className="text-blue-600 font-bold">전자서명</span> 선택
+                              (1) <span className="text-blue-600 font-bold">위촉계약서(필수)</span> 하단 <span className="text-blue-600 font-bold">[서류체크]</span> 버튼 클릭 → 팝업된 화면 우측 스크롤을 모두 내려서 내용 확인후 <span className="text-blue-600 font-bold">[서명]</span> 버튼 클릭 → <span className="text-blue-600 font-bold">마우스로 서명입력</span> → 저장 → <span className="text-blue-600 font-bold">[동의]</span> 버튼 클릭 → <span className="text-blue-600 font-bold">전자서명</span> 선택
                             </p>
                             <p className="content-text mb-3">
-                              ② <span className="text-blue-600 font-bold">기타필수동의서</span> 하단 <span className="text-blue-600 font-bold">[서류체크]</span> 버튼 클릭 → 팝업된 화면 우측 스크롤을 모두 내려서 내용 확인후 <span className="text-blue-600 font-bold">[서명]</span> 버튼 클릭 → <span className="text-blue-600 font-bold">마우스로 서명입력</span> → 저장 → <span className="text-blue-600 font-bold">[동의]</span> 버튼 클릭 → <span className="text-blue-600 font-bold">전자서명</span> 선택
+                              (2) <span className="text-blue-600 font-bold">기타필수동의서</span> 하단 <span className="text-blue-600 font-bold">[서류체크]</span> 버튼 클릭 → 팝업된 화면 우측 스크롤을 모두 내려서 내용 확인후 <span className="text-blue-600 font-bold">[서명]</span> 버튼 클릭 → <span className="text-blue-600 font-bold">마우스로 서명입력</span> → 저장 → <span className="text-blue-600 font-bold">[동의]</span> 버튼 클릭 → <span className="text-blue-600 font-bold">전자서명</span> 선택
                             </p>
                             <p className="content-text highlight-red font-bold">
                               ⁙ 전자서명 본인인증 : 카카오톡인증 or 네이버인증
@@ -673,7 +689,7 @@ export default function OnboardingPage() {
 
                           {/* (4) 서류업로드 & E-Clean정보 조회하기 */}
                           <div className="pb-4">
-                            <p className="content-text font-bold text-lg mb-2 text-gray-900">(4) 서류업로드 & E-Clean정보 조회하기</p>
+                            <p className="content-text font-bold text-[0.95rem] mb-2 text-gray-900">4) 서류업로드 & E-Clean정보 조회하기</p>
                             <div className="flex flex-col gap-2 mb-3">
                               <div className="bg-orange-500 text-white px-3 py-1.5 rounded-md inline-block text-sm font-bold shadow-sm">
                                 [조회] 버튼 클릭 → 이클린 보험 서비스의 모바일 인증절차 진행
@@ -694,7 +710,7 @@ export default function OnboardingPage() {
 
                       {/* Step 5 - 원수사 위촉안내 */}
                       <StepAccordion
-                        title="⑤ 원수사 위촉안내"
+                        title="5. 원수사 위촉안내"
                         isOpen={expandedSteps.has('inexp-5')}
                         onToggle={() => toggleStep('inexp-5')}
                       >
@@ -747,11 +763,12 @@ export default function OnboardingPage() {
       {
         isModalOpen && (
           <div className="modal-overlay" onClick={closeModal}>
-            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-              <div className="modal-header">
+            <div className={modalView === 'blank-download' ? "" : "modal-content"} onClick={(e) => e.stopPropagation()}>
+              <div className={modalView === 'blank-download' ? "hidden" : "modal-header"}>
                 <h2 className="modal-title">
                   {modalView === 'question' ? '협회 말소처리 안내' :
-                    modalView === 'personal-info' ? '내용증명 작성하기' : '내용증명 샘플보기'}
+                    modalView === 'personal-info' ? '내용증명 작성하기' :
+                      modalView === 'sample' ? '' : '내용증명 샘플보기'}
                 </h2>
                 <button
                   className="modal-close-button"
@@ -793,15 +810,26 @@ export default function OnboardingPage() {
                       onBack={() => setModalView('question')}
                       isSample={true}
                     />
-                    <div className="mt-4">
-                      <button
-                        className="w-full py-6 rounded-xl border-2 border-[#FFE082] bg-orange-50 text-gray-600 font-bold text-lg transition-all duration-150 hover:bg-orange-100 hover:shadow-lg active:scale-95"
-                        onClick={() => setModalView('personal-info')}
-                      >
-                        내용증명 작성을 도와드릴까요?
-                      </button>
-                    </div>
                   </>
+                )}
+
+                {modalView === 'blank-download' && (
+                  <ApplicationPreview
+                    personalInfo={{
+                      company: " ",
+                      companyAddress: " ",
+                      residentNumber: " ",
+                      name: " ",
+                      address: " ",
+                      phone: " ",
+                      submissionDate: new Date().toISOString().split('T')[0],
+                      recipients: []
+                    }}
+                    selectedResults={[]}
+                    onPdfDownloaded={closeModal}
+                    onBack={closeModal}
+                    autoDownload={true}
+                  />
                 )}
 
                 {modalView === 'personal-info' && (
