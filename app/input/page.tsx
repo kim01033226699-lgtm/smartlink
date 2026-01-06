@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import NavigationHeader from "@/app/components/NavigationHeader";
 import BottomNavigation from "@/app/components/BottomNavigation";
 import { Button } from "@/app/components/ui/button";
-import { Printer } from "lucide-react";
+import { Printer, Download } from "lucide-react";
 
 interface UserInput {
     name: string;
@@ -35,6 +35,7 @@ export default function PersonalizedGuidePage() {
         subsidies: [],
         region: "",
     });
+    const [isAppDownloadModalOpen, setIsAppDownloadModalOpen] = useState(false);
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -87,12 +88,63 @@ export default function PersonalizedGuidePage() {
                             userInput={userInput}
                             onPrint={handlePrint}
                             onReset={handleReset}
+                            onDownloadApp={() => setIsAppDownloadModalOpen(true)}
                         />
                     )}
                 </div>
             </div>
 
             <BottomNavigation />
+
+            {/* App Download Modal */}
+            {isAppDownloadModalOpen && (
+                <div
+                    className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[100] p-4"
+                    onClick={() => setIsAppDownloadModalOpen(false)}
+                >
+                    <div
+                        className="bg-white rounded-lg p-6 max-w-sm w-full"
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <div className="flex justify-between items-center mb-4">
+                            <h3 className="text-lg font-bold text-gray-900">앱 설치</h3>
+                            <button
+                                onClick={() => setIsAppDownloadModalOpen(false)}
+                                className="text-gray-400 hover:text-gray-600 text-2xl leading-none"
+                            >
+                                ×
+                            </button>
+                        </div>
+
+                        <p className="text-sm text-gray-600 mb-6">
+                            사용하시는 기기에 맞는 스토어를 선택해주세요.
+                        </p>
+
+                        <div className="space-y-3">
+                            <a
+                                href="https://play.google.com/store/search?q=%EC%84%9C%EC%9A%B8%EB%B3%B4%EC%A6%9D%EB%B3%B4%ED%97%98&c=apps&hl=ko"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center justify-center gap-3 w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors no-underline"
+                                onClick={() => setIsAppDownloadModalOpen(false)}
+                            >
+                                <Download size={20} />
+                                <span>Google Play</span>
+                            </a>
+                            <a
+                                href="https://apps.apple.com/kr/app/sgi-m-sgi서울보증/id6443694425"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center justify-center gap-3 w-full bg-black hover:bg-gray-800 text-white font-semibold py-3 px-4 rounded-lg transition-colors no-underline"
+                                onClick={() => setIsAppDownloadModalOpen(false)}
+                            >
+                                <Download size={20} />
+                                <span>App Store</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
@@ -399,10 +451,12 @@ function ResultSection({
     userInput,
     onPrint,
     onReset,
+    onDownloadApp,
 }: {
     userInput: UserInput;
     onPrint: () => void;
     onReset: () => void;
+    onDownloadApp: () => void;
 }) {
     const isExperienced = userInput.experience === "experienced";
 
@@ -444,16 +498,16 @@ function ResultSection({
 
             <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-8">
                 {isExperienced ? (
-                    <ExperiencedGuide userInput={userInput} />
+                    <ExperiencedGuide userInput={userInput} onDownloadApp={onDownloadApp} />
                 ) : (
-                    <InexperiencedGuide userInput={userInput} />
+                    <InexperiencedGuide userInput={userInput} onDownloadApp={onDownloadApp} />
                 )}
             </div>
         </div>
     );
 }
 
-function ExperiencedGuide({ userInput }: { userInput: UserInput }) {
+function ExperiencedGuide({ userInput, onDownloadApp }: { userInput: UserInput; onDownloadApp: () => void }) {
     return (
         <div className="space-y-6">
             <h3 className="text-2xl font-bold text-gray-900 mb-6">경력자 위촉 프로세스</h3>
@@ -482,9 +536,22 @@ function ExperiencedGuide({ userInput }: { userInput: UserInput }) {
                     { role: "보증보험", name: "이인교", position: "과장" }
                 ]}
             >
-                <p className="text-sm text-gray-700">
-                    모바일 서울보증보험 앱 설치 → 개인정보동의 → 1번 [계약 체결·이행을 위한 동의]
-                </p>
+                <div className="text-sm text-gray-700 space-y-1">
+                    <p>• 서울보증보험 앱 설치</p>
+                    <p className="ml-4">↓</p>
+                    <p>• 개인 정보 동의</p>
+                    <p className="ml-4">↓</p>
+                    <p>• 1번 [계약 체결·이행을 위한 동의]</p>
+                </div>
+                <div className="flex justify-start mt-4">
+                    <button
+                        onClick={onDownloadApp}
+                        className="bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold py-2 px-4 rounded transition-colors flex items-center gap-2"
+                    >
+                        <Download size={14} />
+                        <span>앱 설치하기</span>
+                    </button>
+                </div>
             </StepCard>
 
             <StepCard
@@ -543,7 +610,7 @@ function ExperiencedGuide({ userInput }: { userInput: UserInput }) {
     );
 }
 
-function InexperiencedGuide({ userInput }: { userInput: UserInput }) {
+function InexperiencedGuide({ userInput, onDownloadApp }: { userInput: UserInput; onDownloadApp: () => void }) {
     return (
         <div className="space-y-6">
             <h3 className="text-2xl font-bold text-gray-900 mb-6">무경력자 위촉 프로세스</h3>
@@ -586,9 +653,22 @@ function InexperiencedGuide({ userInput }: { userInput: UserInput }) {
                     { role: "보증보험", name: "이인교", position: "과장" }
                 ]}
             >
-                <p className="text-sm text-gray-700">
-                    모바일 서울보증보험 앱 설치 → 개인정보동의 → 1번 [계약 체결·이행을 위한 동의]
-                </p>
+                <div className="text-sm text-gray-700 space-y-1">
+                    <p>• 서울보증보험 앱 설치</p>
+                    <p className="ml-4">↓</p>
+                    <p>• 개인 정보 동의</p>
+                    <p className="ml-4">↓</p>
+                    <p>• 1번 [계약 체결·이행을 위한 동의]</p>
+                </div>
+                <div className="flex justify-start mt-4">
+                    <button
+                        onClick={onDownloadApp}
+                        className="bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold py-2 px-4 rounded transition-colors flex items-center gap-2"
+                    >
+                        <Download size={14} />
+                        <span>앱 설치하기</span>
+                    </button>
+                </div>
             </StepCard>
 
             <StepCard

@@ -455,7 +455,7 @@
   border: 1px solid #BBDEFB;
   border-top: 1px solid #E3F2FD;
   border-radius: 0 0 12px 12px;
-  padding: 1.5rem;
+  padding: 1.5rem 1rem;
   margin-top: 0;
   margin-left: 0;
   animation: slideDown 0.3s ease-out;
@@ -603,7 +603,7 @@
 
 .sub-step-content {
   background: #FAFBFC;
-  padding: 1rem 1.5rem 1.5rem 1.5rem;
+  padding: 1rem 0.75rem 1.5rem 0.75rem;
   border-top: 1px solid #E0E0E0;
   animation: expandDown 0.2s ease-out;
 }

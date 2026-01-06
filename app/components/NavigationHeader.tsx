@@ -15,10 +15,15 @@ export default function NavigationHeader() {
     { name: "위촉차수조회", path: "/info-appoint" },
     { name: "등록교육", path: "/info-appoint/education-flow" },
     { name: "협회말소", path: "/info-appoint/application-flow" },
+    { name: "시험교재", path: "https://drive.google.com/drive/folders/YOUR_GOOGLE_DRIVE_FOLDER_ID", isExternal: true },
   ];
 
-  const handleNavigate = (path: string) => {
-    router.push(path);
+  const handleNavigate = (item: typeof navigationItems[0]) => {
+    if (item.isExternal) {
+      window.open(item.path, '_blank');
+    } else {
+      router.push(item.path);
+    }
     setIsMenuOpen(false);
   };
 
@@ -36,7 +41,10 @@ export default function NavigationHeader() {
           <div className="flex flex-row items-center justify-center gap-6 md:gap-12 lg:gap-16">
             <h1
               className="text-lg sm:text-xl md:text-2xl font-bold whitespace-nowrap cursor-pointer hover:opacity-80 transition-opacity"
-              onClick={() => handleNavigate("/info-appoint")}
+              onClick={() => {
+                router.push("/info-appoint");
+                setIsMenuOpen(false);
+              }}
             >
               <span className="text-gray-900">Start </span>
               <span className="text-goodrich-yellow">Good</span>
@@ -49,13 +57,12 @@ export default function NavigationHeader() {
               {navigationItems.map((item) => (
                 <Button
                   key={item.path}
-                  onClick={() => handleNavigate(item.path)}
+                  onClick={() => handleNavigate(item)}
                   variant={isActive(item.path) ? "default" : "outline"}
-                  className={`transition-all duration-150 active:scale-95 whitespace-nowrap ${
-                    isActive(item.path)
-                      ? "bg-goodrich-yellow hover:opacity-90 text-white"
-                      : "hover:bg-gray-100"
-                  }`}
+                  className={`transition-all duration-150 active:scale-95 whitespace-nowrap ${isActive(item.path)
+                    ? "bg-goodrich-yellow hover:opacity-90 text-white"
+                    : "hover:bg-gray-100"
+                    }`}
                 >
                   {item.name}
                 </Button>
@@ -87,14 +94,13 @@ export default function NavigationHeader() {
             {navigationItems.map((item) => (
               <Button
                 key={item.path}
-                onClick={() => handleNavigate(item.path)}
+                onClick={() => handleNavigate(item)}
                 variant={isActive(item.path) ? "default" : "outline"}
                 size="lg"
-                className={`w-full justify-center text-lg transition-all duration-150 active:scale-95 ${
-                  isActive(item.path)
-                    ? "bg-goodrich-yellow-light hover:opacity-90 text-white"
-                    : "bg-white hover:bg-gray-100 text-gray-900"
-                }`}
+                className={`w-full justify-center text-lg transition-all duration-150 active:scale-95 ${isActive(item.path)
+                  ? "bg-goodrich-yellow-light hover:opacity-90 text-white"
+                  : "bg-white hover:bg-gray-100 text-gray-900"
+                  }`}
               >
                 {item.name}
               </Button>

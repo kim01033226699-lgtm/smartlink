@@ -39,6 +39,7 @@ export default function OnboardingPage() {
   const [cancellationMode, setCancellationMode] = useState<'certified' | 'application' | null>(null);
   const [isSendExpanded, setIsSendExpanded] = useState(false);
   const [isCancelExpanded, setIsCancelExpanded] = useState(false);
+  const [isAppDownloadModalOpen, setIsAppDownloadModalOpen] = useState(false);
 
   const openModal = (view: 'question' | 'sample' | 'personal-info') => {
     setModalView(view);
@@ -301,25 +302,33 @@ export default function OnboardingPage() {
                         </div>
                       </StepAccordion>
 
-                      {/* Step 2 - 서울보증보험 동의 (moved from 3) */}
                       <StepAccordion
                         title="② 서울보증보험 동의"
                         isOpen={expandedSteps.has('exp-3')}
                         onToggle={() => toggleStep('exp-3')}
                       >
                         <div className="step-content">
-                          <p className="content-text">
-                            모바일 서울보증보험 앱 설치 → 개인정보동의 → 1번 [계약 체결·이행을 위한 동의]
-                          </p>
-                          <div className="app-download-container">
-                            <a href="https://play.google.com/store/search?q=%EC%84%9C%EC%9A%B8%EB%B3%B4%EC%A6%9D%EB%B3%B4%ED%97%98&c=apps&hl=ko" target="_blank" rel="noopener noreferrer" className="app-store-button google">
+                          <div className="ml-2">
+                            <p className="content-text mb-3">
+                              • 서울보증보험 앱 설치
+                            </p>
+                            <p className="content-text mb-3 ml-4">↓</p>
+                            <p className="content-text mb-3">
+                              • 개인 정보 동의
+                            </p>
+                            <p className="content-text mb-3 ml-4">↓</p>
+                            <p className="content-text mb-3">
+                              • 1번 [계약 체결·이행을 위한 동의]
+                            </p>
+                          </div>
+                          <div className="flex justify-start mt-4">
+                            <button
+                              onClick={() => setIsAppDownloadModalOpen(true)}
+                              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors flex items-center gap-2"
+                            >
                               <Download size={20} />
-                              <span>Google Play</span>
-                            </a>
-                            <a href="https://apps.apple.com/kr/app/sgi-m-sgi서울보증/id6443694425" target="_blank" rel="noopener noreferrer" className="app-store-button apple">
-                              <Download size={20} />
-                              <span>App Store</span>
-                            </a>
+                              <span>앱 설치하기</span>
+                            </button>
                           </div>
                         </div>
                       </StepAccordion>
@@ -538,25 +547,33 @@ export default function OnboardingPage() {
                         </div>
                       </StepAccordion>
 
-                      {/* Step 2 */}
                       <StepAccordion
                         title="② 서울보증보험 동의"
                         isOpen={expandedSteps.has('inexp-2')}
                         onToggle={() => toggleStep('inexp-2')}
                       >
                         <div className="step-content">
-                          <p className="content-text">
-                            모바일 서울보증보험 앱 설치 → 개인정보동의 → 1번 [계약 체결·이행을 위한 동의]
-                          </p>
-                          <div className="app-download-container">
-                            <a href="https://play.google.com/store/search?q=%EC%84%9C%EC%9A%B8%EB%B3%B4%EC%A6%9D%EB%B3%B4%ED%97%98&c=apps&hl=ko" target="_blank" rel="noopener noreferrer" className="app-store-button google">
+                          <div className="ml-2">
+                            <p className="content-text mb-3">
+                              • 서울보증보험 앱 설치
+                            </p>
+                            <p className="content-text mb-3 ml-4">↓</p>
+                            <p className="content-text mb-3">
+                              • 개인 정보 동의
+                            </p>
+                            <p className="content-text mb-3 ml-4">↓</p>
+                            <p className="content-text mb-3">
+                              • 1번 [계약 체결·이행을 위한 동의]
+                            </p>
+                          </div>
+                          <div className="flex justify-start mt-4">
+                            <button
+                              onClick={() => setIsAppDownloadModalOpen(true)}
+                              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors flex items-center gap-2"
+                            >
                               <Download size={20} />
-                              <span>Google Play</span>
-                            </a>
-                            <a href="https://apps.apple.com/kr/app/sgi-m-sgi서울보증/id6443694425" target="_blank" rel="noopener noreferrer" className="app-store-button apple">
-                              <Download size={20} />
-                              <span>App Store</span>
-                            </a>
+                              <span>앱 설치하기</span>
+                            </button>
                           </div>
                         </div>
                       </StepAccordion>
@@ -805,15 +822,18 @@ export default function OnboardingPage() {
                 )}
 
                 {modalView === 'completed' && (
-                  <div className="py-12 text-center">
-                    <div className="mb-4 text-6xl">✅</div>
-                    <h2 className="mb-8 text-2xl font-bold text-gray-900">다운로드가 완료됐습니다.</h2>
+                  <div className="text-center py-12">
+                    <div className="text-6xl mb-4">🎉</div>
+                    <h3 className="text-2xl font-bold text-gray-900 mb-2">내용증명 생성 완료!</h3>
+                    <p className="text-gray-600 mb-8">
+                      다운로드된 PDF 파일을 확인해주세요.<br />
+                      해당 파일을 출력하여 협회 말소 절차를 진행하시면 됩니다.
+                    </p>
                     <Button
                       onClick={closeModal}
-                      className="bg-goodrich-yellow-light transition-all duration-150 hover:opacity-90 active:scale-95"
-                      size="lg"
+                      className="w-full py-6 bg-gray-800 hover:bg-gray-900 text-white rounded-xl font-bold"
                     >
-                      닫기
+                      확인
                     </Button>
                   </div>
                 )}
@@ -823,6 +843,55 @@ export default function OnboardingPage() {
         )
       }
 
+      {/* App Download Modal */}
+      {isAppDownloadModalOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+          onClick={() => setIsAppDownloadModalOpen(false)}
+        >
+          <div
+            className="bg-white rounded-lg p-6 max-w-sm w-full"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-lg font-bold text-gray-900">앱 설치</h3>
+              <button
+                onClick={() => setIsAppDownloadModalOpen(false)}
+                className="text-gray-400 hover:text-gray-600 text-2xl leading-none"
+              >
+                ×
+              </button>
+            </div>
+
+            <p className="text-sm text-gray-600 mb-6">
+              사용하시는 기기에 맞는 스토어를 선택해주세요.
+            </p>
+
+            <div className="space-y-3">
+              <a
+                href="https://play.google.com/store/search?q=%EC%84%9C%EC%9A%B8%EB%B3%B4%EC%A6%9D%EB%B3%B4%ED%97%98&c=apps&hl=ko"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-3 w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors"
+                onClick={() => setIsAppDownloadModalOpen(false)}
+              >
+                <Download size={20} />
+                <span>Google Play</span>
+              </a>
+              <a
+                href="https://apps.apple.com/kr/app/sgi-m-sgi서울보증/id6443694425"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-3 w-full bg-black hover:bg-gray-800 text-white font-semibold py-3 px-4 rounded-lg transition-colors"
+                onClick={() => setIsAppDownloadModalOpen(false)}
+              >
+                <Download size={20} />
+                <span>App Store</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
       <BottomNavigation />
     </>
   );

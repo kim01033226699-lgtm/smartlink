@@ -148,6 +148,17 @@ body {
   background: #d1d5db;
 }
 
+/* DB 선택형 전용 색상 (클래스 기반 또는 순서 기반) */
+.tab-nav button:nth-child(1).active {
+  background: var(--primary-color) !important;
+  /* 주황 */
+}
+
+.tab-nav button:nth-child(2).active {
+  background: var(--secondary-color) !important;
+  /* 녹색 */
+}
+
 /* ==================== Tab Content ==================== */
 .tab-content {
   display: none;
@@ -246,6 +257,20 @@ body {
   text-align: left;
   color: var(--text-color);
   line-height: 1.8;
+}
+
+.sub-title {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--text-color);
+  margin-top: 1.2rem;
+  margin-bottom: 0.5rem;
+  position: relative;
+  display: block;
+}
+
+.sub-title::before {
+  display: none !important;
 }
 
 .detail-item .info-list {

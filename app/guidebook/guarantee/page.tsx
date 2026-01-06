@@ -49,6 +49,11 @@ export default function GuaranteePage() {
       setExpandedSubSteps(new Set());
     } else {
       setExpandedSubSteps(new Set([subStepId]));
+      // Reset nested selection states when opening a sub-step
+      if (subStepId === 'mortgage-inquiry') setDocInquiryType(null);
+      if (subStepId === 'mortgage-setup') setSetupDocType(null);
+      if (subStepId === 'promissory-screening') setEligibilityType(null);
+      if (subStepId === 'promissory-process') setVisitType(null);
     }
   };
 
@@ -200,11 +205,10 @@ export default function GuaranteePage() {
                       onToggle={() => toggleStep('col-1')}
                     >
                       <div className="step-content">
-                        <p className="content-text mb-4 indent-text">
+                        <p className="content-text mb-4 indent-text" style={{ marginTop: '20px' }}>
                           주임단을 통해 진행합니다.
                         </p>
 
-                        {/* 1. 한도조회 */}
                         <SubStepAccordion
                           subStepId="mortgage-inquiry"
                           title="1. 한도조회"
@@ -212,6 +216,13 @@ export default function GuaranteePage() {
                           onToggle={() => toggleSubStep('mortgage-inquiry')}
                         >
                           <div className="step-content">
+                            {/* 설명 추가 (제일 위로 이동) */}
+                            <div className="bg-blue-50 p-3 rounded-lg mb-3 border border-blue-200">
+                              <p className="content-text text-sm text-gray-700">
+                                필요정보와 필요서류를 주임단 or 부문담당자에게 전달하여 채권실로 요청합니다.
+                              </p>
+                            </div>
+
                             {/* 필요정보 */}
                             <div className="mb-2">
                               <button
@@ -233,7 +244,7 @@ export default function GuaranteePage() {
                                 }
                               </button>
                               {expandedSubSteps.has('mortgage-inquiry-info') && (
-                                <div className="content-text pl-3">
+                                <div className="content-text pl-2">
                                   <ul className="circle-bullet-list">
                                     <li>RP 성명 :</li>
                                     <li>사용인번호 :</li>
@@ -272,7 +283,7 @@ export default function GuaranteePage() {
                                 }
                               </button>
                               {expandedSubSteps.has('mortgage-inquiry-docs') && (
-                                <div className="pl-3">
+                                <div className="pl-2">
                                   <div className="nested-tabs-container">
                                     <div className="nested-tabs">
                                       <button
@@ -322,13 +333,6 @@ export default function GuaranteePage() {
                                   )}
                                 </div>
                               )}
-                            </div>
-
-                            {/* 설명 추가 */}
-                            <div className="bg-blue-50 p-3 rounded-lg mt-3 border border-blue-200">
-                              <p className="content-text text-sm text-gray-700">
-                                필요정보와 필요서류를 주임단 or 부문담당자에게 전달하여 채권실로 요청합니다.
-                              </p>
                             </div>
                           </div>
                         </SubStepAccordion>
@@ -598,6 +602,8 @@ export default function GuaranteePage() {
                           </div>
                         </SubStepAccordion>
 
+                        <div className="border-t border-gray-200 my-2"></div>
+
                         {/* 2. 보증인 심사 */}
                         <SubStepAccordion
                           subStepId="promissory-screening"
@@ -669,6 +675,8 @@ export default function GuaranteePage() {
                           </div>
                         </SubStepAccordion>
 
+                        <div className="border-t border-gray-200 my-2"></div>
+
                         {/* 3. 공동발행 약속어음 요청 */}
                         <SubStepAccordion
                           subStepId="promissory-process"
@@ -682,49 +690,58 @@ export default function GuaranteePage() {
                               <p className="font-bold text-sm mb-2">① 심사에 필요한 서류를 부문 담당자에게 전달하여 요청</p>
                             </div>
 
+                            <div className="border-t border-gray-100 my-4"></div>
+
                             {/* ② 필수 준비사항 */}
                             <div className="mb-4">
                               <p className="font-bold text-sm mb-3">② 필수 준비사항</p>
 
-                              <div className="nested-tabs-container">
-                                <div className="nested-tabs">
+                              <div className="space-y-2">
+                                {/* 공동발행인 동행 시 */}
+                                <div className="border border-gray-100 rounded-lg overflow-hidden">
                                   <button
-                                    onClick={() => setVisitType('together')}
-                                    className={`nested-tab ${visitType === 'together' ? 'active-orange' : ''}`}
+                                    onClick={() => setVisitType(visitType === 'together' ? null : 'together')}
+                                    className={`w-full flex items-center gap-2 p-3 text-sm font-bold transition-colors ${visitType === 'together' ? 'bg-orange-50 text-orange-600' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}
                                   >
-                                    공동발행인 동행 시
+                                    <span>공동발행인 동행 시</span>
+                                    {visitType === 'together' ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
                                   </button>
+                                  {visitType === 'together' && (
+                                    <div className="p-4 bg-white border-t border-gray-100">
+                                      <ul className="circle-bullet-list">
+                                        <li>① 본사 제공 서류 일체</li>
+                                        <li>② 공동발행인 신분증, 인감도장</li>
+                                        <li>③ RP 본인 신분증, 막도장</li>
+                                        <li className="text-red-600 font-bold">※ 신분증에 도로명 미기재 시 등본 1통 (3개월이내 발급)</li>
+                                      </ul>
+                                    </div>
+                                  )}
+                                </div>
+
+                                {/* RP 단독 방문 시 */}
+                                <div className="border border-gray-100 rounded-lg overflow-hidden">
                                   <button
-                                    onClick={() => setVisitType('alone')}
-                                    className={`nested-tab ${visitType === 'alone' ? 'active-green' : ''}`}
+                                    onClick={() => setVisitType(visitType === 'alone' ? null : 'alone')}
+                                    className={`w-full flex items-center gap-2 p-3 text-sm font-bold transition-colors ${visitType === 'alone' ? 'bg-green-50 text-green-600' : 'bg-gray-300 text-gray-700 hover:bg-gray-400'}`}
                                   >
-                                    RP 단독 방문 시
+                                    <span>RP 단독 방문 시</span>
+                                    {visitType === 'alone' ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
                                   </button>
+                                  {visitType === 'alone' && (
+                                    <div className="p-4 bg-white border-t border-gray-100">
+                                      <ul className="circle-bullet-list">
+                                        <li>① 본사 제공 서류 일체</li>
+                                        <li>② 공동발행인 인감도장, 인감증명서 1통 (3개월 이내, 본인 발급용)</li>
+                                        <li>③ RP 본인 신분증, 막도장</li>
+                                        <li className="text-red-600 font-bold">※ 신분증에 도로명 미기재 시 등본 1통 (3개월이내 발급)</li>
+                                      </ul>
+                                    </div>
+                                  )}
                                 </div>
                               </div>
-
-                              {visitType === 'together' && (
-                                <div className="nested-tab-content">
-                                  <ul className="circle-bullet-list">
-                                    <li>① 본사 제공 서류 일체</li>
-                                    <li>② 공동발행인 신분증, 인감도장</li>
-                                    <li>③ RP 본인 신분증, 막도장</li>
-                                    <li className="text-red-600 font-bold">※ 신분증에 도로명 미기재 시 등본 1통 (3개월이내 발급)</li>
-                                  </ul>
-                                </div>
-                              )}
-
-                              {visitType === 'alone' && (
-                                <div className="nested-tab-content">
-                                  <ul className="circle-bullet-list">
-                                    <li>① 본사 제공 서류 일체</li>
-                                    <li>② 공동발행인 인감도장, 인감증명서 1통 (3개월 이내, 본인 발급용)</li>
-                                    <li>③ RP 본인 신분증, 막도장</li>
-                                    <li className="text-red-600 font-bold">※ 신분증에 도로명 미기재 시 등본 1통 (3개월이내 발급)</li>
-                                  </ul>
-                                </div>
-                              )}
                             </div>
+
+                            <div className="border-t border-gray-100 my-4"></div>
 
                             {/* ③ 약속어음 발행방법 */}
                             <div className="mb-4">
