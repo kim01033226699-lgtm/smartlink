@@ -60,7 +60,7 @@ export default function GuidebookPage() {
     },
     {
       id: 7,
-      title: '문서파일',
+      title: '문서양식',
       description: '각종 업무 서식 및 문서 자료',
       path: 'https://drive.google.com/drive/folders/1RwthlbiB-KXizdVB-RMtwM80cAUPO0aq?usp=sharing',
       icon: CheckCircle,

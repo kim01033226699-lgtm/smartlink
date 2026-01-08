@@ -68,7 +68,7 @@ const managerData: Team[] = [
         contacts: [
             { role: '금융캠퍼스', name: '정진래', position: '차장', phone: '02-6410-7440' },
             { role: 'BASIC과정', name: '신지수', position: '과장', phone: '02-6410-7064' },
-            { role: '법인교육', name: '최인석', position: '과장', phone: '02-6410-7427' },
+            { role: '법인교육', name: '신지수', position: '과장', phone: '02-6410-7064' },
             { role: '테마교육', name: '김현정', position: '과장', phone: '02-6410-7313' },
             { role: '입문과정', name: '김석현', position: '대리', phone: '02-6410-7429' },
             { role: '기타', name: '이철', position: '팀장', phone: '02-6410-7421', roleClass: 'text-blue-600', nameClass: 'text-blue-600' },
@@ -78,7 +78,7 @@ const managerData: Team[] = [
         title: '금융캠퍼스',
         contacts: [
             { role: '금융캠퍼스 교육 문의', name: '정진래', position: '차장', phone: '02-6410-7440' },
-            { role: '베이직과정 교육 문의', name: '최인석', position: '과장', phone: '02-6410-7427' },
+            { role: '베이직과정 교육 문의', name: '신지수', position: '과장', phone: '02-6410-7064' },
             { role: '지원금 지급 및 평가', name: '이천영', position: '팀장', phone: '02-6410-7264', roleClass: 'text-blue-600', nameClass: 'text-blue-600' },
             { role: '지원안 제출', name: '박세현', position: '차장', phone: '02-6410-7028' },
             { role: 'DB배정', name: '제영록', position: '과장', phone: '02-6410-7431' },
@@ -108,7 +108,7 @@ const managerData: Team[] = [
         title: '시책 및 운영비',
         contacts: [
             { role: '생보시책', name: '홍희지', position: '대리', phone: '02-6410-7293' },
-            { role: '손보시책', name: '방훈', position: '사원', phone: '02-6410-7199' },
+            { role: '손보시책', name: '최성락', position: '차장', phone: '02-6410-7822' },
             { role: '운영비', name: '김정우', position: '대리', phone: '02-6410-7267' },
             { role: '규정 및 기타', name: '장흥석', position: '팀장', phone: '02-6288-5315', roleClass: 'text-blue-600', nameClass: 'text-blue-600' },
         ]
@@ -345,8 +345,8 @@ export default function ManagerInfoModal({ isOpen, onClose }: ManagerInfoModalPr
                                 <button
                                     onClick={() => handleCopy(activePopup.teamIdx, activePopup.contactIdx)}
                                     className={`flex items-center justify-center gap-2 px-4 py-3.5 rounded-xl font-bold text-sm transition-all border ${isCopied
-                                            ? 'bg-green-50 border-green-200 text-green-600'
-                                            : 'bg-white border-gray-200 text-gray-700 hover:bg-gray-50'
+                                        ? 'bg-green-50 border-green-200 text-green-600'
+                                        : 'bg-white border-gray-200 text-gray-700 hover:bg-gray-50'
                                         }`}
                                 >
                                     {isCopied ? <Check size={18} /> : <Copy size={18} />}
