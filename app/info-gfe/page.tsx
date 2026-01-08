@@ -57,7 +57,7 @@ export default function InfoGfePage() {
               <div className="info-section">
                 <h3>지원나이</h3>
                 <ul className="info-list">
-                  <li>만 20세~45세 (2025년 기준 1980년 출생까지)</li>
+                  <li>만 20세~45세 (2025년 기준 1981년 출생까지)</li>
                 </ul>
               </div>
 
@@ -85,20 +85,20 @@ export default function InfoGfePage() {
                 <div className={`detail-card ${dbOption === 'db-select' ? 'active' : ''}`}>
                   <div className="sub-title">지원금</div>
                   <ul className="info-list">
-                    <li>1차 지원금(1-6차월) : 120만원 (각월 정산평가업적 30만 원 이상 시)</li>
-                    <li>2차 지원금(7-12차월) : 100만원 (6개 월 통산 정산평가업적 600만 원 초과 달성자 신청 가능, 단 각월 정산평가업적 50만원 이상 시 지급)</li>
+                    <li>1차 지원금(1~6차월) : 월 120만원 (각월 정산평가업적 30만원 이상 시) / 최대 지원금액 720만원</li>
+                    <li>2차 지원금(7~12차월) : 월 100만원 (각월 정산평가업적 50만원 이상 시) / 최대 지원금액 600만원</li>
                   </ul>
 
                   <div className="sub-title">DB</div>
                   <ul className="info-list">
-                    <li>매월 10건 x 12개 월</li>
-                    <li>단, 초기 3개월 지급 ( 1차평가(4차월):30만 이상 시 ,2차평가(7차월):50만원 이상 시 계속 지급(직전 3개월 평균 정산평가업적 기준) .</li>
-                  </ul>
-
-                  <div className="sub-title">환수</div>
-                  <ul className="info-list">
-                    <li>1차 지원금 환수: 초기 6개월 통산 정산평가업적 420만원 미만 시, 기지원금(지원금+DB비용)의 50%에 해당하는 금액을 위촉 7차월부터 6개월간 분할하여 환수</li>
-                    <li>2차 지원금 환수: 13차월에 평가하여 7~12차월 통산 정산평가업적 600만원 미달 시, 기지원금(지원금+DB비용) 대비 미달률만큼 13차월부터 6개월간 분할하여 환수</li>
+                    <li>1차 DB(1~6차월) : 월 10건 (3개월 최저보장 후 분기평가 시행) / 최대 지원DB 60건</li>
+                    <li>2차 DB(7~12차월) : 월 10건 (업적 달성자에 한하여 3개월 지급 후 분기평가 시행) / 최대 지원DB 60건</li>
+                    <li className="font-semibold">분기평가 기준</li>
+                    <div style={{ marginLeft: '1.5rem', marginTop: '0.5rem' }} className="space-y-1">
+                      <div className="text-sm text-gray-600">- 1차평가(4차월) 직전 3개월 평균 정산평가업적 30만원 이상</div>
+                      <div className="text-sm text-gray-600">- 2차평가(7차월) 직전 3개월 평균 정산평가업적 50만원 이상</div>
+                      <div className="text-sm text-gray-600">- 3차평가(10차월) 직전 3개월 평균 정산평가업적 50만원 이상</div>
+                    </div>
                   </ul>
                 </div>
 
@@ -106,14 +106,15 @@ export default function InfoGfePage() {
                 <div className={`detail-card ${dbOption === 'db-no-select' ? 'active' : ''}`}>
                   <div className="sub-title">지원금</div>
                   <ul className="info-list">
-                    <li>1차 지원금(1-6차월) : 월 170만 원(지원금 120만 원 + 시장개발비 50만 원, 각월 정산평가업적 50만 원 이상 시 지급)</li>
-                    <li>2차 지원금(7-12차월) : 월 120만 원, 초기 6개월 통산 정산평가업적 720만 원 초과 달성자에 한해 신청 가능</li>
+                    <li>1차 지원금(1~6차월) : 월 170만원 (각월 정산평가업적 50만원 이상 시) / 최대 지원금액 1,020만원</li>
+                    <li>2차 지원금(7~12차월) : 월 120만원 (각월 정산평가업적 70만원 이상 시) / 최대 지원금액 720만원</li>
                   </ul>
 
                   <div className="sub-title">환수</div>
                   <ul className="info-list">
-                    <li>1차 지원금 환수 : 초기 6개월 통산 정산평가업적 600만원 미만 시, 기지원금 50%에 해당하는 금액을 위촉 7차월부터 6개월간 분할하여 환수</li>
-                    <li>2차 지원금 환수 : 13차월에 평가하여 7~12차월 통산 정산평가업적 720만원 미달 시, 미달률만큼 13차월부터 6개월간 분할하여 환수함</li>
+                    <li>1차 지원금 환수 : 목표업적(정산평가업적 600만원) 미달 시, 기지원금 대비 미달률만큼 6개월간 분할 환수</li>
+                    <li>2차 지원금 환수 : 목표업적(정산평가업적 720만원) 미달 시, 기지원금 대비 미달률만큼 6개월간 분할 환수</li>
+                    <li>해촉 환수 : 위촉의무기간(24개월) 이내 해촉 시, 지원금액 전액 환수 (해촉사유 불문) ※ 기지원금, 지원금액 : DB비용 제외한 지원금</li>
                   </ul>
                 </div>
               </div>
@@ -123,6 +124,7 @@ export default function InfoGfePage() {
                 <h3>안내사항</h3>
                 <ul className="info-list">
                   <li>지원금에 대한 재정보증이 필요하며 보증보험 가입불가자는 지원이 불가합니다.</li>
+                  <li>금융캠퍼스 신청 시 정착교육비, 활동수수료 등의 지원금 중복 신청은 불가합니다.</li>
                   <li>지원 기간 종료 후 전체 계약에 대한 유지율 평가를 진행하여 환수합니다.</li>
                 </ul>
               </div>
@@ -144,7 +146,7 @@ export default function InfoGfePage() {
               <div className="info-section">
                 <h3>지원나이</h3>
                 <ul className="info-list">
-                  <li>만 20세~만 50세 (2025년 기준 1975년 출생까지)</li>
+                  <li>만 20세~만 50세 (2025년 기준 1976년 출생까지)</li>
                 </ul>
               </div>
 
@@ -153,19 +155,22 @@ export default function InfoGfePage() {
                 <h3>혜택</h3>
                 <div className="sub-title">지원금</div>
                 <ul className="info-list">
-                  <li>6개월간 정산평가업적의 100% 지급</li>
-                  <li>단, 월 최저 정산평가업적 30만원 이상시 지급, 최대한도 100만원</li>
+                  <li>6개월간 [정산평가업적의 100%] 지급 / 최대 지원금액 600만원</li>
+                  <li>단, 각월 정산평가업적 30만원 이상 시 지급하며 월 최대 지급한도는 100만원</li>
                 </ul>
 
                 <div className="sub-title">DB</div>
                 <ul className="info-list">
-                  <li>매월 7건 x 6개월</li>
-                  <li>단, 초기 3개월 지급 후 직전 3개월 평균 정산평가업적 30만원 이상자에 한하여 추가 3개월간 매월 지원</li>
+                  <li>월 7건 (3개월 최저보장 후 분기평가 시행) / 최대 지원DB 42건</li>
+                  <li className="font-semibold">분기평가(4차월)</li>
+                  <div style={{ marginLeft: '1.5rem', marginTop: '0.5rem' }} className="space-y-1">
+                    <div className="text-sm text-gray-600">- 직전 3개월 평균 정산평가업적 30만원 이상자에 4~6차월 DB 지급</div>
+                  </div>
                 </ul>
 
                 <div className="sub-title">환수</div>
                 <ul className="info-list">
-                  <li>해촉 환수 : 2년(24개월)이내 해촉 시 지원금액(지원금+DB비용) 100% 전액 환수(해촉사유 불문)</li>
+                  <li>위촉의무기간(24개월) 이내 해촉 시, 지원금액 전액 환수 (해촉사유 불문) ※ 지원금액 : DB비용 제외한 지원금</li>
                 </ul>
               </div>
 
@@ -174,6 +179,7 @@ export default function InfoGfePage() {
                 <h3>안내사항</h3>
                 <ul className="info-list">
                   <li>지원 기간 종료 후 전체 계약에 대한 유지율 평가를 진행하여 환수합니다.</li>
+                  <li>금융캠퍼스 베이직 신청 시 정착교육비, 활동수수료 등의 지원금 중복 신청은 불가합니다.</li>
                 </ul>
               </div>
             </div>

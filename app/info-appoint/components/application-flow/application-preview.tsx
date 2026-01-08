@@ -41,12 +41,33 @@ export default function ApplicationPreview({
 }: ApplicationPreviewProps) {
   const [isGenerating, setIsGenerating] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [scale, setScale] = useState(1);
   const previewRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // 브라우저 크기에 따른 미리보기 스케일 조정 로직
+  useEffect(() => {
+    const handleResize = () => {
+      if (containerRef.current) {
+        const containerWidth = containerRef.current.offsetWidth - 32; // padding 고려
+        const docWidth = 210 * 3.78; // 210mm to px (approx)
+        if (containerWidth < docWidth) {
+          setScale(containerWidth / docWidth);
+        } else {
+          setScale(1);
+        }
+      }
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // 자동 다운로드 효과
   useEffect(() => {
-    if (autoDownload && previewRef.current && !isGenerating) {
-      setShowConfirmModal(true);
+    if (autoDownload && previewRef.current && !isGenerating && !showConfirmModal) {
+      handleConfirmDownload();
     }
   }, [autoDownload, previewRef.current]);
 
@@ -233,7 +254,7 @@ export default function ApplicationPreview({
   };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6 max-h-[80vh] overflow-y-auto px-1">
       {/* 확인 모달 */}
       {showConfirmModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -305,134 +326,140 @@ export default function ApplicationPreview({
         <CardContent className={isSample ? "pt-6" : ""}>
           {/* 일정 안내 - 샘플 모드 또는 자동 다운로드 모드에서는 숨김 */}
           {!isSample && !autoDownload && (
-            <div className="mb-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
+            <div className="mb-6 bg-blue-50 border border-blue-200 rounded-lg p-4 shadow-sm">
               <div className="flex items-start gap-3">
                 <AlertCircle className="h-5 w-5 text-blue-600 flex-shrink-0 mt-0.5" />
                 <div>
                   <p className="text-sm font-semibold text-blue-900 mb-1">
-                    직접말소 일정 안내
+                    신청 전 확인사항
                   </p>
-                  <p className="text-sm text-blue-800">
-                    등기발송일 11월 19일 이후 10일 경과일은{' '}
-                    <span className="font-semibold">2025년 11월 29일</span>입니다.{' '}
-                    이후 협회 방문 또는 인터넷으로 말소신청 웹페이지에서 신청하셔야 합니다.{' '}
-                    공휴일에는 인터넷 접수는 가능하지만 이후 영업일에 처리됩니다.
+                  <p className="text-sm text-blue-800 leading-relaxed">
+                    본 문서는 <span className="font-bold underline">A4 규격</span>으로 생성됩니다. 아래 미리보기를 확인하신 후 하단의 <b>다운로드</b> 버튼을 눌러주세요.
                   </p>
                 </div>
               </div>
             </div>
           )}
 
-          {/* 신청서 미리보기 영역 - 자동 다운로드 모드가 아닐 때만 ref 사용 */}
-          <div
-            ref={autoDownload ? null : previewRef}
-            className="bg-white p-8 border border-gray-300 rounded-lg"
-            style={{ minHeight: '297mm' }}
-          >
-            {/* 제목 */}
-            <div className="text-center mb-8">
-              <h1 className="text-3xl font-bold mb-2">내용증명</h1>
-            </div>
+          {/* 신청서 미리보기 영역 - 종이 문서 느낌 스타일 적용 */}
+          <div ref={containerRef} className="flex justify-center bg-gray-100 py-6 sm:py-10 rounded-xl overflow-hidden border border-gray-200">
+            <div
+              ref={autoDownload ? null : previewRef}
+              className="bg-white shadow-2xl origin-top transition-transform"
+              style={{
+                width: '100%',
+                maxWidth: '210mm',
+                minHeight: '297mm',
+                padding: '20mm 15mm',
+                transform: `scale(${scale})`,
+                marginBottom: scale < 1 ? `-${(1 - scale) * 100}%` : '0' // 스케일 축소 시 공백 제거
+              }}
+            >
+              {/* 제목 */}
+              <div className="text-center mb-8">
+                <h1 className="text-3xl font-bold mb-2">내용증명</h1>
+              </div>
 
-            {/* 신청서 표 */}
-            <table className="w-full border-collapse mb-6">
-              <tbody>
-                {personalInfo.company && (
+              {/* 신청서 표 */}
+              <table className="w-full border-collapse mb-6">
+                <tbody>
+                  {personalInfo.company && (
+                    <tr>
+                      <td className="border border-gray-800 bg-gray-100 px-4 py-3 font-semibold w-1/4 text-center">
+                        소속회사
+                      </td>
+                      <td className="border border-gray-800 px-4 py-3 text-center">
+                        {personalInfo.company}
+                      </td>
+                    </tr>
+                  )}
                   <tr>
-                    <td className="border border-gray-800 bg-gray-100 px-4 py-3 font-semibold w-1/4 text-center">
-                      소속회사
+                    <td className="border border-gray-800 bg-gray-100 px-4 py-3 font-semibold text-center">
+                      성명
                     </td>
                     <td className="border border-gray-800 px-4 py-3 text-center">
-                      {personalInfo.company}
+                      {personalInfo.name}
                     </td>
                   </tr>
-                )}
-                <tr>
-                  <td className="border border-gray-800 bg-gray-100 px-4 py-3 font-semibold text-center">
-                    성명
-                  </td>
-                  <td className="border border-gray-800 px-4 py-3 text-center">
-                    {personalInfo.name}
-                  </td>
-                </tr>
-                <tr>
-                  <td className="border border-gray-800 bg-gray-100 px-4 py-3 font-semibold text-center">
-                    주민번호
-                  </td>
-                  <td className="border border-gray-800 px-4 py-3 text-center">
-                    {formatResidentNumber(personalInfo.residentNumber)}
-                  </td>
-                </tr>
-                <tr>
-                  <td className="border border-gray-800 bg-gray-100 px-4 py-3 font-semibold text-center">
-                    주소
-                  </td>
-                  <td className="border border-gray-800 px-4 py-3 text-center">
-                    {personalInfo.address}
-                  </td>
-                </tr>
-                <tr>
-                  <td className="border border-gray-800 bg-gray-100 px-4 py-3 font-semibold text-center">
-                    전화번호
-                  </td>
-                  <td className="border border-gray-800 px-4 py-3 text-center">
-                    {formatPhoneNumber(personalInfo.phone)}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+                  <tr>
+                    <td className="border border-gray-800 bg-gray-100 px-4 py-3 font-semibold text-center">
+                      주민번호
+                    </td>
+                    <td className="border border-gray-800 px-4 py-3 text-center">
+                      {formatResidentNumber(personalInfo.residentNumber)}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-gray-800 bg-gray-100 px-4 py-3 font-semibold text-center">
+                      주소
+                    </td>
+                    <td className="border border-gray-800 px-4 py-3 text-center">
+                      {personalInfo.address}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="border border-gray-800 bg-gray-100 px-4 py-3 font-semibold text-center">
+                      전화번호
+                    </td>
+                    <td className="border border-gray-800 px-4 py-3 text-center">
+                      {formatPhoneNumber(personalInfo.phone)}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
 
-            {/* 신청 내용 */}
-            <div className="mb-8 text-center py-8">
-              <p className="text-lg leading-relaxed">
-                본인의 사정으로 귀사에 해촉처리를 요청하오니<br />
-                처리하여 주시기 바랍니다.
-              </p>
-            </div>
-
-            {/* 날짜 및 서명 */}
-            <div className="mb-8 text-right">
-              <p className="text-lg mb-2">내용증명 발송일자</p>
-              <p className="text-lg mb-4 font-semibold">
-                {personalInfo.submissionDate ? personalInfo.submissionDate.replace(/-/g, '년 ').replace(/(\d{4})년 (\d{2}) (\d{2})/, '$1년 $2월 $3일') : ''}
-              </p>
-              <p className="text-lg mb-8">
-                신청인: {personalInfo.name} (날인 또는 서명)
-              </p>
-            </div>
-
-            {/* 수신처 */}
-            {personalInfo.recipients && personalInfo.recipients.length > 0 && (
-              <div className="text-left">
-                <p className="text-lg font-semibold mb-2">수신처:</p>
-                {personalInfo.recipients.map((recipient, index) => (
-                  <p key={index} className="text-lg ml-4">
-                    {index + 1}. {recipient}
-                  </p>
-                ))}
+              {/* 신청 내용 */}
+              <div className="mb-8 text-center py-8">
+                <p className="text-lg leading-relaxed">
+                  본인의 사정으로 귀사에 해촉처리를 요청하오니<br />
+                  처리하여 주시기 바랍니다.
+                </p>
               </div>
-            )}
+
+              {/* 날짜 및 서명 */}
+              <div className="mb-8 text-right">
+                <p className="text-lg mb-2">내용증명 발송일자</p>
+                <p className="text-lg mb-4 font-semibold">
+                  {personalInfo.submissionDate ? personalInfo.submissionDate.replace(/-/g, '년 ').replace(/(\d{4})년 (\d{2}) (\d{2})/, '$1년 $2월 $3일') : ''}
+                </p>
+                <p className="text-lg mb-8">
+                  신청인: {personalInfo.name} (날인 또는 서명)
+                </p>
+              </div>
+
+              {/* 수신처 */}
+              {personalInfo.recipients && personalInfo.recipients.length > 0 && (
+                <div className="text-left">
+                  <p className="text-lg font-semibold mb-2">수신처:</p>
+                  {personalInfo.recipients.map((recipient, index) => (
+                    <p key={index} className="text-lg ml-4">
+                      {index + 1}. {recipient}
+                    </p>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
 
           {/* 버튼 영역 - 샘플 모드 또는 자동 다운로드 모드에서는 숨김 */}
           {!isSample && !autoDownload && (
-            <div className="flex gap-3 mt-6">
+            <div className="flex gap-3 mt-8">
               <Button
                 variant="outline"
                 onClick={onBack}
-                className="flex-1 transition-all duration-150 active:scale-95"
+                className="flex-1 transition-all duration-150 active:scale-95 border-gray-300 text-gray-600"
                 disabled={isGenerating}
               >
                 <ArrowLeft className="h-4 w-4 mr-2" />
-                이전으로
+                수정하기
               </Button>
               <Button
                 onClick={handleDownloadPdfClick}
-                className="flex-1 bg-blue-600 hover:bg-blue-700 transition-all duration-150 active:scale-95"
+                className="flex-1 bg-blue-600 hover:bg-blue-700 transition-all duration-150 active:scale-95 shadow-lg shadow-blue-200"
                 disabled={isGenerating}
               >
                 <Download className="h-4 w-4 mr-2" />
-                {isGenerating ? 'PDF 생성 중...' : 'PDF 다운로드'}
+                {isGenerating ? '생성 중...' : 'PDF 다운로드'}
               </Button>
             </div>
           )}

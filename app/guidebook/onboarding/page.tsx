@@ -40,6 +40,7 @@ export default function OnboardingPage() {
   const [isSendExpanded, setIsSendExpanded] = useState(false);
   const [isCancelExpanded, setIsCancelExpanded] = useState(false);
   const [isAppDownloadModalOpen, setIsAppDownloadModalOpen] = useState(false);
+  const [isAutoDownload, setIsAutoDownload] = useState(false);
 
   const openModal = (view: 'question' | 'sample' | 'personal-info' | 'blank-download') => {
     setModalView(view);
@@ -57,6 +58,15 @@ export default function OnboardingPage() {
     // Reset flow state
     setSelectedResults([]);
     setPersonalInfo(null);
+    setIsAutoDownload(false);
+  };
+
+  const handleModalClose = () => {
+    if (modalView === 'sample' || modalView === 'blank-download') {
+      setModalView('personal-info');
+    } else {
+      closeModal();
+    }
   };
 
   const handleQuestionsComplete = (results: string[]) => {
@@ -66,6 +76,7 @@ export default function OnboardingPage() {
 
   const handlePersonalInfoComplete = (info: PersonalInfo) => {
     setPersonalInfo(info);
+    setIsAutoDownload(false);
     setModalView('preview');
   };
 
@@ -173,23 +184,6 @@ export default function OnboardingPage() {
                           >
                             <div className="fade-in">
                               <div className="space-y-0 relative mt-2">
-                                {/* 내용증명 샘플 및 빈양식 다운로드 버튼 */}
-                                <div className="grid grid-cols-2 gap-3 mb-6 px-1">
-                                  <button
-                                    onClick={() => openModal('sample')}
-                                    className="flex items-center justify-center gap-2 p-3 bg-white border border-blue-200 rounded-lg text-sm text-blue-600 font-bold hover:bg-blue-50 text-center transition-colors shadow-sm"
-                                  >
-                                    <ExternalLink size={16} />
-                                    내용증명 샘플
-                                  </button>
-                                  <button
-                                    onClick={() => openModal('blank-download')}
-                                    className="flex items-center justify-center gap-2 p-3 bg-white border-orange-200 border rounded-lg text-sm text-orange-600 font-bold hover:bg-orange-50 text-center transition-colors shadow-sm"
-                                  >
-                                    <Download size={16} />
-                                    파일(빈양식) 다운
-                                  </button>
-                                </div>
 
                                 {/* Step 1 Button */}
                                 <div className="relative">
@@ -763,17 +757,17 @@ export default function OnboardingPage() {
       {/* Modal for Application Flow */}
       {
         isModalOpen && (
-          <div className="modal-overlay" onClick={closeModal}>
+          <div className="modal-overlay" onClick={handleModalClose}>
             <div className={modalView === 'blank-download' ? "" : "modal-content"} onClick={(e) => e.stopPropagation()}>
               <div className={modalView === 'blank-download' ? "hidden" : "modal-header"}>
                 <h2 className="modal-title">
                   {modalView === 'question' ? '협회 말소처리 안내' :
                     modalView === 'personal-info' ? '내용증명 작성하기' :
-                      modalView === 'sample' ? '' : '내용증명 샘플보기'}
+                      ''}
                 </h2>
                 <button
                   className="modal-close-button"
-                  onClick={closeModal}
+                  onClick={handleModalClose}
                   aria-label="닫기"
                 >
                   <X size={24} />
@@ -814,8 +808,8 @@ export default function OnboardingPage() {
                       recipients: []
                     }}
                     selectedResults={[]}
-                    onPdfDownloaded={closeModal}
-                    onBack={closeModal}
+                    onPdfDownloaded={() => setModalView('personal-info')}
+                    onBack={() => setModalView('personal-info')}
                     autoDownload={true}
                   />
                 )}
@@ -825,6 +819,8 @@ export default function OnboardingPage() {
                     onComplete={handlePersonalInfoComplete}
                     onBack={() => setModalView('sample')}
                     selectedResults={selectedResults}
+                    onOpenSample={() => setModalView('sample')}
+                    onOpenBlank={() => setModalView('blank-download')}
                   />
                 )}
 
@@ -834,6 +830,7 @@ export default function OnboardingPage() {
                     selectedResults={selectedResults}
                     onPdfDownloaded={() => setModalView('completed')}
                     onBack={() => setModalView('personal-info')}
+                    autoDownload={isAutoDownload}
                   />
                 )}
 

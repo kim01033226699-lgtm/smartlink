@@ -601,7 +601,34 @@ function ExperiencedGuide({ userInput, onDownloadApp }: { userInput: UserInput; 
                 </div>
             </StepCard>
 
-            <StepCard number={5} title="원수사 위촉안내" color="red">
+            {userInput.subsidies && userInput.subsidies.length > 0 && (
+                <StepCard
+                    number={5}
+                    title="지원금 재정보증"
+                    color="green"
+                    managers={[
+                        { role: "보증보험", name: "이인교", position: "과장" }
+                    ]}
+                >
+                    <p className="mb-3 font-semibold text-sm">선택하신 지원금({userInput.subsidies.join(", ")}) 수령을 위해 필수입니다.</p>
+                    <div className="space-y-4 text-sm">
+                        <div className="bg-blue-50 border border-blue-100 rounded-lg p-3">
+                            <p className="font-bold text-blue-900 mb-1">1. 보증보험 진행 (가장 일반적)</p>
+                            <ul className="space-y-1 text-xs text-blue-800">
+                                <li>• 주임단을 통해 한도조회 및 청약요청</li>
+                                <li>• SGI서울보증 문자 수신 시 앱에서 전자서명 완료</li>
+                                <li>• <span className="font-bold underline">청약 승인 후 14일 이내</span> 미발행 시 지급 불가</li>
+                            </ul>
+                        </div>
+                        <div className="bg-gray-50 border border-gray-200 rounded-lg p-3">
+                            <p className="font-bold text-gray-900 mb-1">2. 그외보증 (보증보험 불가 시)</p>
+                            <p className="text-xs text-gray-700">근저당 설정, 예금질권 설정, 공동발행 약속어음 공증 중 선택하여 진행 가능 (상세 내용은 가이드북 참조)</p>
+                        </div>
+                    </div>
+                </StepCard>
+            )}
+
+            <StepCard number={userInput.subsidies && userInput.subsidies.length > 0 ? 6 : 5} title="원수사 위촉안내" color="red">
                 <p className="text-sm text-gray-700">
                     2주에 걸쳐 각 생명보험사별 위촉동의 URL 발송 → 각 보험사 링크에서 동의 완료
                 </p>
@@ -719,7 +746,34 @@ function InexperiencedGuide({ userInput, onDownloadApp }: { userInput: UserInput
                 </div>
             </StepCard>
 
-            <StepCard number={5} title="원수사 위촉안내" color="red">
+            {userInput.subsidies && userInput.subsidies.length > 0 && (
+                <StepCard
+                    number={5}
+                    title="지원금 재정보증"
+                    color="green"
+                    managers={[
+                        { role: "보증보험", name: "이인교", position: "과장" }
+                    ]}
+                >
+                    <p className="mb-3 font-semibold text-sm">선택하신 지원금({userInput.subsidies.join(", ")}) 수령을 위해 필수입니다.</p>
+                    <div className="space-y-4 text-sm">
+                        <div className="bg-blue-50 border border-blue-100 rounded-lg p-3">
+                            <p className="font-bold text-blue-900 mb-1">1. 보증보험 진행 (가장 일반적)</p>
+                            <ul className="space-y-1 text-xs text-blue-800">
+                                <li>• 주임단을 통해 한도조회 및 청약요청</li>
+                                <li>• SGI서울보증 문자 수신 시 앱에서 전자서명 완료</li>
+                                <li>• <span className="font-bold underline">청약 승인 후 14일 이내</span> 미발행 시 지급 불가</li>
+                            </ul>
+                        </div>
+                        <div className="bg-gray-50 border border-gray-200 rounded-lg p-3">
+                            <p className="font-bold text-gray-900 mb-1">2. 그외보증 (보증보험 불가 시)</p>
+                            <p className="text-xs text-gray-700">근저당 설정, 예금질권 설정, 공동발행 약속어음 공증 중 선택하여 진행 가능 (상세 내용은 가이드북 참조)</p>
+                        </div>
+                    </div>
+                </StepCard>
+            )}
+
+            <StepCard number={userInput.subsidies && userInput.subsidies.length > 0 ? 6 : 5} title="원수사 위촉안내" color="red">
                 <p className="text-sm text-gray-700">
                     2주에 걸쳐 각 생명보험사별 위촉동의 URL 발송 → 각 보험사 링크에서 동의 완료
                 </p>

@@ -5,7 +5,7 @@ import { Button } from "@/app/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/components/ui/card";
 import { Popover, PopoverContent, PopoverTrigger } from "@/app/components/ui/popover";
 import { Calendar } from "@/app/components/ui/calendar";
-import { ArrowLeft, CalendarIcon } from "lucide-react";
+import { ArrowLeft, CalendarIcon, ExternalLink, Download, RotateCcw } from "lucide-react";
 import { format } from "date-fns";
 import { ko } from "date-fns/locale";
 import { cn } from "@/lib/utils";
@@ -27,6 +27,8 @@ interface PersonalInfoFormProps {
   onComplete: (info: PersonalInfo) => void;
   onBack: () => void;
   selectedResults: string[];
+  onOpenSample?: () => void;
+  onOpenBlank?: () => void;
 }
 
 interface Recipient {
@@ -34,7 +36,7 @@ interface Recipient {
   address: string;
 }
 
-export default function PersonalInfoForm({ onComplete, onBack, selectedResults }: PersonalInfoFormProps) {
+export default function PersonalInfoForm({ onComplete, onBack, selectedResults, onOpenSample, onOpenBlank }: PersonalInfoFormProps) {
   const [formData, setFormData] = useState<PersonalInfo>({
     company: '',
     companyAddress: '',
@@ -80,6 +82,36 @@ export default function PersonalInfoForm({ onComplete, onBack, selectedResults }
     if (errors[field]) {
       setErrors(prev => ({ ...prev, [field]: '' }));
     }
+  };
+
+  const handleReset = () => {
+    setFormData({
+      company: '',
+      companyAddress: '',
+      lifeAssociationAddress: '',
+      generalAssociationAddress: '',
+      residentNumber: '',
+      name: '',
+      address: '',
+      phone: '',
+      submissionDate: '',
+      recipients: [],
+    });
+    setSelectedDate(undefined);
+    setErrors({});
+  };
+
+  const isFormValid = () => {
+    const { name, residentNumber, address, phone, submissionDate } = formData;
+    return (
+      name.trim() !== '' &&
+      residentNumber.trim() !== '' &&
+      /^\d{6}-?\d{7}$/.test(residentNumber) &&
+      address.trim() !== '' &&
+      phone.trim() !== '' &&
+      /^[\d-]{10,14}$/.test(phone) &&
+      submissionDate !== ''
+    );
   };
 
   const validateForm = (): boolean => {
@@ -174,6 +206,28 @@ export default function PersonalInfoForm({ onComplete, onBack, selectedResults }
   return (
     <Card>
       <CardContent className="pt-6">
+        {/* 상단 샘플/양식 다운로드 버튼 (이동됨) */}
+        <div className="grid grid-cols-2 gap-3 mb-6">
+          <Button
+            type="button"
+            variant="outline"
+            onClick={onOpenSample}
+            className="flex items-center justify-center gap-2 h-10 border-blue-200 text-blue-600 font-bold hover:bg-blue-50 transition-colors shadow-sm"
+          >
+            <ExternalLink size={16} />
+            샘플
+          </Button>
+          <Button
+            type="button"
+            variant="outline"
+            onClick={onOpenBlank}
+            className="flex items-center justify-center gap-2 h-10 border-orange-200 text-orange-600 font-bold hover:bg-orange-50 transition-colors shadow-sm"
+          >
+            <Download size={16} />
+            양식다운
+          </Button>
+        </div>
+
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* 수신처 (삭제됨) */}
 
@@ -423,17 +477,23 @@ export default function PersonalInfoForm({ onComplete, onBack, selectedResults }
             <Button
               type="button"
               variant="outline"
-              onClick={onBack}
-              className="flex-1 transition-all duration-150 active:scale-95"
+              onClick={handleReset}
+              className="flex-1 transition-all duration-150 active:scale-95 text-gray-500 hover:text-gray-700"
             >
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              이전으로
+              <RotateCcw className="h-4 w-4 mr-2" />
+              새로고침
             </Button>
             <Button
               type="submit"
-              className="flex-1 bg-blue-600 hover:bg-blue-700 transition-all duration-150 active:scale-95"
+              disabled={!isFormValid()}
+              className={cn(
+                "flex-1 transition-all duration-150 active:scale-95",
+                isFormValid()
+                  ? "bg-blue-600 hover:bg-blue-700 shadow-md"
+                  : "bg-gray-200 text-gray-400 border-gray-100 cursor-not-allowed"
+              )}
             >
-              다음 단계로
+              미리보기
             </Button>
           </div>
         </form>
