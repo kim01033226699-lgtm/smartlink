@@ -57,7 +57,7 @@ export default function InfoGfePage() {
               <div className="info-section">
                 <h3>지원나이</h3>
                 <ul className="info-list">
-                  <li>만 20세~45세 (2026년 기준 1982년 출생까지)</li>
+                  <li>만 20세~45세 (2026년 기준 1981년 출생까지)</li>
                 </ul>
               </div>
 
@@ -166,7 +166,7 @@ export default function InfoGfePage() {
               <div className="info-section">
                 <h3>지원나이</h3>
                 <ul className="info-list">
-                  <li>만 20세~만 50세 (2026년 기준 1977년 출생까지)</li>
+                  <li>만 20세~만 50세 (2026년 기준 1976년 출생까지)</li>
                 </ul>
               </div>
 

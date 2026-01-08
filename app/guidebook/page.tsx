@@ -59,19 +59,19 @@ export default function GuidebookPage() {
       available: true
     },
     {
+      id: 7,
+      title: '문서파일',
+      description: '각종 업무 서식 및 문서 자료',
+      path: 'https://drive.google.com/drive/folders/1RwthlbiB-KXizdVB-RMtwM80cAUPO0aq?usp=sharing',
+      icon: CheckCircle,
+      available: true
+    },
+    {
       id: 5,
       title: '보험계약',
       description: '보험계약 관련 업무 안내',
       path: '/guidebook/insurance',
       icon: FileCheck,
-      available: false
-    },
-    {
-      id: 7,
-      title: '기타',
-      description: '기타 업무 안내',
-      path: '/guidebook/etc',
-      icon: CheckCircle,
       available: false
     },
     {
@@ -164,7 +164,11 @@ export default function GuidebookPage() {
                     className={cardClass}
                     onClick={() => {
                       if (category.available && !isInactive) {
-                        router.push(category.path);
+                        if (category.path.startsWith('http')) {
+                          window.open(category.path, '_blank');
+                        } else {
+                          router.push(category.path);
+                        }
                       }
                     }}
                   >
