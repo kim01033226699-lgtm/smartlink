@@ -1,6 +1,6 @@
 'use client';
 
-import { X, Search, ChevronDown, ChevronUp, Eye, EyeOff, Phone, ExternalLink } from 'lucide-react';
+import { X, Search, ChevronDown, ChevronUp, Eye, EyeOff, Phone, ExternalLink, Copy, Check } from 'lucide-react';
 import React, { useState, useMemo, useRef, useEffect } from 'react';
 
 interface Contact {
@@ -129,6 +129,7 @@ const managerData: Team[] = [
 export default function ManagerInfoModal({ isOpen, onClose }: ManagerInfoModalProps) {
     const [expandedTeams, setExpandedTeams] = useState<Set<number>>(new Set());
     const [activePopup, setActivePopup] = useState<{ teamIdx: number; contactIdx: number; rect: DOMRect } | null>(null);
+    const [isCopied, setIsCopied] = useState(false);
     const popupRef = useRef<HTMLDivElement>(null);
 
     const toggleTeam = (idx: number) => {
@@ -145,6 +146,20 @@ export default function ManagerInfoModal({ isOpen, onClose }: ManagerInfoModalPr
         if (!hasPhone) return;
         const rect = e.currentTarget.getBoundingClientRect();
         setActivePopup({ teamIdx, contactIdx, rect });
+    };
+
+    const handleCopy = async (teamIdx: number, contactIdx: number) => {
+        const team = managerData[teamIdx];
+        const contact = team.contacts[contactIdx];
+        const text = `[${team.title}] ${contact.role} - ${contact.name} ${contact.position || ''} (${contact.phone})`;
+
+        try {
+            await navigator.clipboard.writeText(text);
+            setIsCopied(true);
+            setTimeout(() => setIsCopied(false), 2000);
+        } catch (err) {
+            console.error('Failed to copy!', err);
+        }
     };
 
     const expandAll = () => {
@@ -170,6 +185,12 @@ export default function ManagerInfoModal({ isOpen, onClose }: ManagerInfoModalPr
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
+    }, [activePopup]);
+
+    useEffect(() => {
+        if (!activePopup) {
+            setIsCopied(false);
+        }
     }, [activePopup]);
 
     if (!isOpen) return null;
@@ -216,7 +237,7 @@ export default function ManagerInfoModal({ isOpen, onClose }: ManagerInfoModalPr
                     </div>
                 </div>
 
-                {/* Content */}
+                {/* Content Section */}
                 <div className="flex-1 overflow-y-auto p-4 bg-gray-50 relative">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {managerData.map((team, idx) => {
@@ -269,7 +290,6 @@ export default function ManagerInfoModal({ isOpen, onClose }: ManagerInfoModalPr
                             );
                         })}
 
-                        {/* Orange Contact Box */}
                         <div className="md:col-span-2 bg-white rounded-xl shadow-sm border border-gray-200 p-1 flex flex-col">
                             <div className="bg-orange-500 rounded-lg w-full h-full flex flex-col items-center justify-center p-6 text-center shadow-inner">
                                 <p className="text-white font-bold text-lg leading-relaxed">
@@ -291,38 +311,50 @@ export default function ManagerInfoModal({ isOpen, onClose }: ManagerInfoModalPr
 
                 {/* Contact Popup Overlay */}
                 {activePopup && (
-                    <div className="fixed inset-0 z-[60] flex items-center justify-center pointer-events-none">
+                    <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/20 pointer-events-auto">
                         <div
                             ref={popupRef}
-                            className="bg-white rounded-2xl shadow-2xl border border-gray-100 p-6 w-[300px] pointer-events-auto animate-in zoom-in-95 duration-200 flex flex-col items-center text-center gap-4"
+                            className="bg-white rounded-2xl shadow-2xl border border-gray-100 p-8 w-[320px] animate-in zoom-in-95 duration-200 flex flex-col items-center text-center gap-4 relative"
                         >
-                            <div className="space-y-1 w-full">
-                                <p className="text-xs text-gray-500 font-bold uppercase tracking-wider">
+                            {/* Close Button at Top Right */}
+                            <button
+                                onClick={() => setActivePopup(null)}
+                                className="absolute top-4 right-4 p-1.5 hover:bg-gray-100 rounded-full transition-colors group"
+                            >
+                                <X size={20} className="text-gray-400 group-hover:text-gray-600" />
+                            </button>
+
+                            <div className="space-y-1.5 w-full">
+                                <p className="text-[11px] text-teal-600 font-bold uppercase tracking-widest bg-teal-50 px-2 py-0.5 rounded-full inline-block mb-1">
                                     {managerData[activePopup.teamIdx].title}
                                 </p>
-                                <p className="text-sm font-semibold text-gray-700">
+                                <p className="text-sm font-semibold text-gray-500">
                                     {managerData[activePopup.teamIdx].contacts[activePopup.contactIdx].role}
                                 </p>
-                                <p className="text-xl font-black text-teal-800 pt-1">
+                                <p className="text-2xl font-black text-gray-900 pt-1">
                                     {managerData[activePopup.teamIdx].contacts[activePopup.contactIdx].name} {managerData[activePopup.teamIdx].contacts[activePopup.contactIdx].position}
                                 </p>
-                                <div className="pt-3 border-t border-gray-50 w-full mt-3">
-                                    <p className="text-2xl font-black text-gray-900 tracking-tight">
+                                <div className="pt-4 border-t border-gray-100 w-full mt-4">
+                                    <p className="text-2xl font-black text-teal-600 tracking-tight">
                                         {managerData[activePopup.teamIdx].contacts[activePopup.contactIdx].phone}
                                     </p>
                                 </div>
                             </div>
 
-                            <div className="grid grid-cols-2 gap-3 w-full mt-2">
+                            <div className="grid grid-cols-2 gap-3 w-full mt-4">
                                 <button
-                                    onClick={() => setActivePopup(null)}
-                                    className="px-4 py-3.5 rounded-xl bg-gray-100 text-gray-600 font-bold text-sm hover:bg-gray-200 transition-colors"
+                                    onClick={() => handleCopy(activePopup.teamIdx, activePopup.contactIdx)}
+                                    className={`flex items-center justify-center gap-2 px-4 py-3.5 rounded-xl font-bold text-sm transition-all border ${isCopied
+                                            ? 'bg-green-50 border-green-200 text-green-600'
+                                            : 'bg-white border-gray-200 text-gray-700 hover:bg-gray-50'
+                                        }`}
                                 >
-                                    취소
+                                    {isCopied ? <Check size={18} /> : <Copy size={18} />}
+                                    {isCopied ? '복사됨' : '복사'}
                                 </button>
                                 <a
                                     href={`tel:${formatPhoneForTel(managerData[activePopup.teamIdx].contacts[activePopup.contactIdx].phone || '')}`}
-                                    className="px-4 py-3.5 rounded-xl bg-teal-600 text-white font-bold text-sm hover:bg-teal-700 transition-colors flex items-center justify-center gap-2 shadow-lg shadow-teal-600/20"
+                                    className="px-4 py-3.5 rounded-xl bg-teal-600 text-white font-bold text-sm hover:bg-teal-700 transition-all flex items-center justify-center gap-2 shadow-lg shadow-teal-600/20 active:scale-95"
                                 >
                                     <Phone size={18} fill="currentColor" />
                                     전화 연결
