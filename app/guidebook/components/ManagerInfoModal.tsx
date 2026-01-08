@@ -51,77 +51,77 @@ const managerData: Team[] = [
     {
         title: '채권실',
         contacts: [
-            { role: '보증보험', name: '이인교', position: '과장', phone: '02-6288-5000(7943)' },
-            { role: '기타담보', name: '김나현', position: '과장', phone: '02-6288-5000(7145)' },
+            { role: '보증보험', name: '이인교', position: '과장', phone: '02-6410-7943' },
+            { role: '기타담보', name: '김나현', position: '과장', phone: '02-6410-7145' },
         ]
     },
     {
         title: '영업지원금관리팀',
         contacts: [
-            { role: '정착지원금', name: '박세현', position: '차장', phone: '02-6288-5000(7028)' },
-            { role: 'M-P, 활동수수료', name: '성현', position: '대리', phone: '02-6288-5000(7107)' },
-            { role: '금융캠퍼스', name: '이천영', position: '팀장', phone: '02-6288-5000(7264)', roleClass: 'text-blue-600', nameClass: 'text-blue-600' },
+            { role: '정착지원금', name: '박세현', position: '차장', phone: '02-6410-7028' },
+            { role: 'M-P, 활동수수료', name: '성현', position: '대리', phone: '02-6410-7107' },
+            { role: '금융캠퍼스', name: '이천영', position: '팀장', phone: '02-6410-7264', roleClass: 'text-blue-600', nameClass: 'text-blue-600' },
         ]
     },
     {
         title: '채널교육팀',
         contacts: [
-            { role: '금융캠퍼스', name: '정진래', position: '차장', phone: '02-6288-5000(7440)' },
-            { role: 'BASIC과정', name: '신지수', position: '과장', phone: '02-6288-5000(7064)' },
-            { role: '법인교육', name: '최인석', position: '과장', phone: '02-6288-5000(7427)' },
-            { role: '테마교육', name: '김현정', position: '과장', phone: '02-6288-5000(7313)' },
-            { role: '입문과정', name: '김석현', position: '대리', phone: '02-6288-5000(7429)' },
-            { role: '기타', name: '이철', position: '팀장', phone: '02-6288-5000(7421)', roleClass: 'text-blue-600', nameClass: 'text-blue-600' },
+            { role: '금융캠퍼스', name: '정진래', position: '차장', phone: '02-6410-7440' },
+            { role: 'BASIC과정', name: '신지수', position: '과장', phone: '02-6410-7064' },
+            { role: '법인교육', name: '최인석', position: '과장', phone: '02-6410-7427' },
+            { role: '테마교육', name: '김현정', position: '과장', phone: '02-6410-7313' },
+            { role: '입문과정', name: '김석현', position: '대리', phone: '02-6410-7429' },
+            { role: '기타', name: '이철', position: '팀장', phone: '02-6410-7421', roleClass: 'text-blue-600', nameClass: 'text-blue-600' },
         ]
     },
     {
         title: '금융캠퍼스',
         contacts: [
-            { role: '금융캠퍼스 교육 문의', name: '정진래', position: '차장', phone: '02-6288-5000(7440)' },
-            { role: '베이직과정 교육 문의', name: '최인석', position: '과장', phone: '02-6288-5000(7427)' },
-            { role: '지원금 지급 및 평가', name: '이천영', position: '팀장', phone: '02-6288-5000(7264)', roleClass: 'text-blue-600', nameClass: 'text-blue-600' },
-            { role: '지원안 제출', name: '박세현', position: '차장', phone: '02-6288-5000(7028)' },
+            { role: '금융캠퍼스 교육 문의', name: '정진래', position: '차장', phone: '02-6410-7440' },
+            { role: '베이직과정 교육 문의', name: '최인석', position: '과장', phone: '02-6410-7427' },
+            { role: '지원금 지급 및 평가', name: '이천영', position: '팀장', phone: '02-6410-7264', roleClass: 'text-blue-600', nameClass: 'text-blue-600' },
+            { role: '지원안 제출', name: '박세현', position: '차장', phone: '02-6410-7028' },
             { role: 'DB배정', name: '제영록', position: '과장', phone: '02-6410-7431' },
             { role: '규정 문의, DB평가', name: '고현진', position: '과장', phone: '02-6410-7380' },
         ]
     },
     {
-        title: 'DB사업팀',
+        title: 'DB문의',
         contacts: [
             { role: '미과금 DB', name: '제영록', position: '과장', phone: '02-6410-7431' },
             { role: '퍼미션, 인포DB', name: '고은서', position: '과장', phone: '02-6410-7431' },
             { role: '기계약DB', name: '안다솜', position: '과장', phone: '02-6410-7821' },
-            { role: '기타', name: '이지연', position: '팀장', phone: '02-6288-5000(7186)', roleClass: 'text-blue-600', nameClass: 'text-blue-600' },
+            { role: '기타', name: '이지연', position: '팀장', phone: '02-6410-7186', roleClass: 'text-blue-600', nameClass: 'text-blue-600' },
         ]
     },
     {
         title: '수수료',
         contacts: [
             { role: '중부, RP총괄직할', name: '한나라', position: '과장', phone: '02-6410-7317' },
-            { role: '동부, 총괄', name: '박소희', position: '대리', phone: '02-6288-5000(7265)' },
-            { role: '서부,영업마케팅,RMHY', name: '김진경', position: '과장', phone: '02-6288-5000(7110)' },
-            { role: '사업부(RC)', name: '김현정', position: '과장', phone: '02-6288-5000(7046)' },
-            { role: '기타', name: '고나연', position: '팀장', phone: '02-6288-5000(7496)', roleClass: 'text-blue-600', nameClass: 'text-blue-600' },
+            { role: '동부, 총괄', name: '박소희', position: '대리', phone: '02-6410-7265' },
+            { role: '서부,영업마케팅,RMHY', name: '김진경', position: '과장', phone: '02-6410-7110' },
+            { role: '사업부(RC)', name: '김현정', position: '과장', phone: '02-6410-7046' },
+            { role: '기타', name: '고나연', position: '팀장', phone: '02-6410-7496', roleClass: 'text-blue-600', nameClass: 'text-blue-600' },
         ]
     },
     {
         title: '시책 및 운영비',
         contacts: [
-            { role: '생보시책', name: '홍희지', position: '대리', phone: '02-6288-5000(7293)' },
-            { role: '손보시책', name: '방훈', position: '사원', phone: '02-6288-5000(7199)' },
-            { role: '운영비', name: '김정우', position: '대리', phone: '02-6288-5000(7267)' },
+            { role: '생보시책', name: '홍희지', position: '대리', phone: '02-6410-7293' },
+            { role: '손보시책', name: '방훈', position: '사원', phone: '02-6410-7199' },
+            { role: '운영비', name: '김정우', position: '대리', phone: '02-6410-7267' },
             { role: '규정 및 기타', name: '장흥석', position: '팀장', phone: '02-6288-5315', roleClass: 'text-blue-600', nameClass: 'text-blue-600' },
         ]
     },
     {
         title: '그 외 영업지원',
         contacts: [
-            { role: '마케팅임원, 프로모션 평가', name: '조준승', position: '차장', phone: '02-6288-5000(7258)' },
+            { role: '마케팅임원, 프로모션 평가', name: '조준승', position: '차장', phone: '02-6410-7258' },
             { role: '주임단 지원', name: '이서영', position: '차장', phone: '02-6410-7244' },
             { role: '금융캠퍼스(규정, 평가)', name: '고현진', position: '과장', phone: '02-6410-7380' },
             { role: '임차 및 인프라 지원', name: '김현철', position: '과장', phone: '02-6410-7245' },
-            { role: '자격유지평가,Rich315,MDRT 등', name: '서미해', position: '대리', phone: '02-6288-5000(7439)', isVertical: true },
-            { role: '기타', name: '김남헌', position: '팀장', phone: '02-6288-5000(7385)', roleClass: 'text-blue-600', nameClass: 'text-blue-600' },
+            { role: '자격유지평가,Rich315,MDRT 등', name: '서미해', position: '대리', phone: '02-6410-7439', isVertical: true },
+            { role: '기타', name: '김남헌', position: '팀장', phone: '02-6410-7385', roleClass: 'text-blue-600', nameClass: 'text-blue-600' },
         ]
     },
 ];
@@ -175,8 +175,7 @@ export default function ManagerInfoModal({ isOpen, onClose }: ManagerInfoModalPr
     if (!isOpen) return null;
 
     const formatPhoneForTel = (phone: string) => {
-        const clean = phone.replace(/[()]/g, ',');
-        return clean.replace(/[^0-9,]/g, '');
+        return phone.replace(/[^0-9]/g, '');
     };
 
     return (
@@ -295,39 +294,37 @@ export default function ManagerInfoModal({ isOpen, onClose }: ManagerInfoModalPr
                     <div className="fixed inset-0 z-[60] flex items-center justify-center pointer-events-none">
                         <div
                             ref={popupRef}
-                            className="bg-white rounded-2xl shadow-2xl border border-gray-100 p-5 w-[280px] pointer-events-auto animate-in zoom-in-95 duration-200 flex flex-col items-center text-center gap-4"
+                            className="bg-white rounded-2xl shadow-2xl border border-gray-100 p-6 w-[300px] pointer-events-auto animate-in zoom-in-95 duration-200 flex flex-col items-center text-center gap-4"
                         >
-                            <div className="w-12 h-12 bg-teal-50 rounded-full flex items-center justify-center">
-                                <Phone size={24} className="text-teal-600" fill="currentColor" />
-                            </div>
-
-                            <div className="space-y-1">
-                                <p className="text-xs text-gray-500 font-medium">
+                            <div className="space-y-1 w-full">
+                                <p className="text-xs text-gray-500 font-bold uppercase tracking-wider">
                                     {managerData[activePopup.teamIdx].title}
                                 </p>
-                                <p className="text-base font-bold text-gray-900">
+                                <p className="text-sm font-semibold text-gray-700">
                                     {managerData[activePopup.teamIdx].contacts[activePopup.contactIdx].role}
                                 </p>
-                                <p className="text-lg font-extrabold text-teal-700">
+                                <p className="text-xl font-black text-teal-800 pt-1">
                                     {managerData[activePopup.teamIdx].contacts[activePopup.contactIdx].name} {managerData[activePopup.teamIdx].contacts[activePopup.contactIdx].position}
                                 </p>
-                                <p className="text-xl font-black text-gray-800 tracking-tight pt-1">
-                                    {managerData[activePopup.teamIdx].contacts[activePopup.contactIdx].phone}
-                                </p>
+                                <div className="pt-3 border-t border-gray-50 w-full mt-3">
+                                    <p className="text-2xl font-black text-gray-900 tracking-tight">
+                                        {managerData[activePopup.teamIdx].contacts[activePopup.contactIdx].phone}
+                                    </p>
+                                </div>
                             </div>
 
-                            <div className="grid grid-cols-2 gap-2 w-full pt-1">
+                            <div className="grid grid-cols-2 gap-3 w-full mt-2">
                                 <button
                                     onClick={() => setActivePopup(null)}
-                                    className="px-4 py-3 rounded-xl bg-gray-100 text-gray-600 font-bold text-sm hover:bg-gray-200 transition-colors"
+                                    className="px-4 py-3.5 rounded-xl bg-gray-100 text-gray-600 font-bold text-sm hover:bg-gray-200 transition-colors"
                                 >
-                                    닫기
+                                    취소
                                 </button>
                                 <a
                                     href={`tel:${formatPhoneForTel(managerData[activePopup.teamIdx].contacts[activePopup.contactIdx].phone || '')}`}
-                                    className="px-4 py-3 rounded-xl bg-teal-600 text-white font-bold text-sm hover:bg-teal-700 transition-colors flex items-center justify-center gap-2 shadow-lg shadow-teal-600/20"
+                                    className="px-4 py-3.5 rounded-xl bg-teal-600 text-white font-bold text-sm hover:bg-teal-700 transition-colors flex items-center justify-center gap-2 shadow-lg shadow-teal-600/20"
                                 >
-                                    <Phone size={16} fill="currentColor" />
+                                    <Phone size={18} fill="currentColor" />
                                     전화 연결
                                 </a>
                             </div>

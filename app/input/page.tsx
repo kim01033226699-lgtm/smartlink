@@ -517,8 +517,8 @@ function ExperiencedGuide({ userInput, onDownloadApp }: { userInput: UserInput; 
                 title="협회 말소하기"
                 color="blue"
                 managers={[
-                    { role: "협회소속이동", name: "윤서하", position: "사원" },
-                    { role: "해촉담당", name: "이성연", position: "사원" }
+                    { role: "협회소속이동", name: "윤서하", position: "사원", phone: "02-6410-7417" },
+                    { role: "해촉담당", name: "이성연", position: "사원", phone: "02-6410-7410" }
                 ]}
             >
                 <p className="mb-3 font-semibold">내용증명 또는 해촉신청서로 협회 말소를 진행하세요.</p>
@@ -533,7 +533,7 @@ function ExperiencedGuide({ userInput, onDownloadApp }: { userInput: UserInput; 
                 title="서울보증보험 동의"
                 color="green"
                 managers={[
-                    { role: "보증보험", name: "이인교", position: "과장" }
+                    { role: "보증보험", name: "이인교", position: "과장", phone: "02-6410-7943" }
                 ]}
             >
                 <div className="text-sm text-gray-700 space-y-1">
@@ -559,8 +559,8 @@ function ExperiencedGuide({ userInput, onDownloadApp }: { userInput: UserInput; 
                 title="보험연수원 등록교육 수료"
                 color="purple"
                 managers={[
-                    { role: "금융캠퍼스", name: "신지수", position: "과장" },
-                    { role: "입문과정", name: "김석현", position: "대리" }
+                    { role: "금융캠퍼스", name: "신지수", position: "과장", phone: "02-6410-7064" },
+                    { role: "입문과정", name: "김석현", position: "대리", phone: "02-6410-7429" }
                 ]}
             >
                 <p className="mb-2 font-semibold text-sm">3-1. 경력 확인:</p>
@@ -578,7 +578,7 @@ function ExperiencedGuide({ userInput, onDownloadApp }: { userInput: UserInput; 
                 title="굿리치 위촉방법"
                 color="amber"
                 managers={[
-                    { role: "위촉심사", name: "김지열", position: "과장" }
+                    { role: "위촉심사", name: "김지열", position: "과장", phone: "02-6410-7817" }
                 ]}
             >
                 <div className="space-y-3 text-sm">
@@ -607,7 +607,7 @@ function ExperiencedGuide({ userInput, onDownloadApp }: { userInput: UserInput; 
                     title="지원금 재정보증"
                     color="green"
                     managers={[
-                        { role: "보증보험", name: "이인교", position: "과장" }
+                        { role: "보증보험", name: "이인교", position: "과장", phone: "02-6410-7943" }
                     ]}
                 >
                     <p className="mb-3 font-semibold text-sm">선택하신 지원금({userInput.subsidies.join(", ")}) 수령을 위해 필수입니다.</p>
@@ -647,7 +647,7 @@ function InexperiencedGuide({ userInput, onDownloadApp }: { userInput: UserInput
                 title="모집인 시험 접수"
                 color="blue"
                 managers={[
-                    { role: "시험응시", name: "방수현", position: "대리" }
+                    { role: "시험응시", name: "방수현", position: "대리", phone: "02-6410-7411" }
                 ]}
             >
                 <div className="space-y-3 text-sm">
@@ -677,7 +677,7 @@ function InexperiencedGuide({ userInput, onDownloadApp }: { userInput: UserInput
                 title="서울보증보험 동의"
                 color="green"
                 managers={[
-                    { role: "보증보험", name: "이인교", position: "과장" }
+                    { role: "보증보험", name: "이인교", position: "과장", phone: "02-6410-7943" }
                 ]}
             >
                 <div className="text-sm text-gray-700 space-y-1">
@@ -703,8 +703,8 @@ function InexperiencedGuide({ userInput, onDownloadApp }: { userInput: UserInput
                 title="보험연수원 등록교육 수료"
                 color="purple"
                 managers={[
-                    { role: "금융캠퍼스", name: "신지수", position: "과장" },
-                    { role: "입문과정", name: "김석현", position: "대리" }
+                    { role: "금융캠퍼스", name: "신지수", position: "과장", phone: "02-6410-7064" },
+                    { role: "입문과정", name: "김석현", position: "대리", phone: "02-6410-7429" }
                 ]}
             >
                 <div className="space-y-2 text-sm">
@@ -723,7 +723,7 @@ function InexperiencedGuide({ userInput, onDownloadApp }: { userInput: UserInput
                 title="굿리치 위촉방법"
                 color="amber"
                 managers={[
-                    { role: "위촉심사", name: "김지열", position: "과장" }
+                    { role: "위촉심사", name: "김지열", position: "과장", phone: "02-6410-7817" }
                 ]}
             >
                 <div className="space-y-3 text-sm">
@@ -752,7 +752,7 @@ function InexperiencedGuide({ userInput, onDownloadApp }: { userInput: UserInput
                     title="지원금 재정보증"
                     color="green"
                     managers={[
-                        { role: "보증보험", name: "이인교", position: "과장" }
+                        { role: "보증보험", name: "이인교", position: "과장", phone: "02-6410-7943" }
                     ]}
                 >
                     <p className="mb-3 font-semibold text-sm">선택하신 지원금({userInput.subsidies.join(", ")}) 수령을 위해 필수입니다.</p>
@@ -793,7 +793,7 @@ function StepCard({
     title: string;
     color: "blue" | "green" | "purple" | "amber" | "red";
     children: React.ReactNode;
-    managers?: { role: string; name: string; position: string }[];
+    managers?: { role: string; name: string; position: string; phone?: string }[];
 }) {
     return (
         <div className="bg-white border border-gray-200 rounded-lg p-5">
@@ -808,10 +808,19 @@ function StepCard({
                 {managers && managers.length > 0 && (
                     <div className="mt-4 pt-4 border-t border-gray-200">
                         <p className="text-xs font-semibold text-gray-600 mb-2">📞 담당자 문의</p>
-                        <div className="space-y-1">
+                        <div className="space-y-1.5">
                             {managers.map((manager, idx) => (
-                                <div key={idx} className="text-xs text-gray-700">
-                                    <span className="font-medium">{manager.role}:</span> {manager.name} {manager.position}
+                                <div key={idx} className="text-xs text-gray-700 flex flex-wrap items-center gap-x-2">
+                                    <span className="font-medium">{manager.role}:</span>
+                                    <span>{manager.name} {manager.position}</span>
+                                    {manager.phone && (
+                                        <a
+                                            href={`tel:${manager.phone.replace(/[^0-9]/g, '')}`}
+                                            className="text-blue-600 hover:text-blue-800 font-semibold underline decoration-blue-200 underline-offset-2"
+                                        >
+                                            {manager.phone}
+                                        </a>
+                                    )}
                                 </div>
                             ))}
                         </div>

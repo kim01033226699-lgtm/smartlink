@@ -57,7 +57,7 @@ export default function InfoGfePage() {
               <div className="info-section">
                 <h3>지원나이</h3>
                 <ul className="info-list">
-                  <li>만 20세~45세 (2025년 기준 1981년 출생까지)</li>
+                  <li>만 20세~45세 (2026년 기준 1982년 출생까지)</li>
                 </ul>
               </div>
 
@@ -94,11 +94,18 @@ export default function InfoGfePage() {
                     <li>1차 DB(1~6차월) : 월 10건 (3개월 최저보장 후 분기평가 시행) / 최대 지원DB 60건</li>
                     <li>2차 DB(7~12차월) : 월 10건 (업적 달성자에 한하여 3개월 지급 후 분기평가 시행) / 최대 지원DB 60건</li>
                     <li className="font-semibold">분기평가 기준</li>
-                    <div style={{ marginLeft: '1.5rem', marginTop: '0.5rem' }} className="space-y-1">
-                      <div className="text-sm text-gray-600">- 1차평가(4차월) 직전 3개월 평균 정산평가업적 30만원 이상</div>
-                      <div className="text-sm text-gray-600">- 2차평가(7차월) 직전 3개월 평균 정산평가업적 50만원 이상</div>
-                      <div className="text-sm text-gray-600">- 3차평가(10차월) 직전 3개월 평균 정산평가업적 50만원 이상</div>
-                    </div>
+                    <ul className="info-list" style={{ marginLeft: '1rem', marginTop: '0.2rem' }}>
+                      <li>1차평가(4차월) 직전 3개월 평균 정산평가업적 30만원 이상</li>
+                      <li>2차평가(7차월) 직전 3개월 평균 정산평가업적 50만원 이상</li>
+                      <li>3차평가(10차월) 직전 3개월 평균 정산평가업적 50만원 이상</li>
+                    </ul>
+                  </ul>
+
+                  <div className="sub-title">환수</div>
+                  <ul className="info-list">
+                    <li>1차 지원금 환수 : 목표업적(정산평가업적 420만원) 미달 시, 기지원금 대비 미달률만큼 6개월간 분할 환수</li>
+                    <li>2차 지원금 환수 : 목표업적(정산평가업적 600만원) 미달 시, 기지원금 대비 미달률만큼 6개월간 분할 환수</li>
+                    <li>해촉 환수 : 위촉의무기간(24개월) 이내 해촉 시, 지원금액 전액 환수 (해촉사유 불문) ※ 기지원금, 지원금액 : DB비용 제외한 지원금</li>
                   </ul>
                 </div>
 
@@ -128,6 +135,19 @@ export default function InfoGfePage() {
                   <li>지원 기간 종료 후 전체 계약에 대한 유지율 평가를 진행하여 환수합니다.</li>
                 </ul>
               </div>
+
+              {/* 문의 섹션 */}
+              <div className="info-section">
+                <h3 style={{ color: 'var(--secondary-color)' }}>문의</h3>
+                <ul className="info-list">
+                  <li><strong>금융캠퍼스 교육 문의</strong> : 정진래 차장 (02-6410-7440)</li>
+                  <li><strong>베이직과정 교육 문의</strong> : 최인석 과장 (02-6410-7427)</li>
+                  <li><strong>지원금 지급 및 평가</strong> : 이천영 팀장 (02-6410-7264)</li>
+                  <li><strong>지원안 제출</strong> : 박세현 차장 (02-6410-7028)</li>
+                  <li><strong>DB배정</strong> : 제영록 과장 (02-6410-7431)</li>
+                  <li><strong>규정 문의, DB평가</strong> : 고현진 과장 (02-6410-7380)</li>
+                </ul>
+              </div>
             </div>
 
             {/* 베이직 Content */}
@@ -146,7 +166,7 @@ export default function InfoGfePage() {
               <div className="info-section">
                 <h3>지원나이</h3>
                 <ul className="info-list">
-                  <li>만 20세~만 50세 (2025년 기준 1976년 출생까지)</li>
+                  <li>만 20세~만 50세 (2026년 기준 1977년 출생까지)</li>
                 </ul>
               </div>
 
@@ -163,8 +183,8 @@ export default function InfoGfePage() {
                 <ul className="info-list">
                   <li>월 7건 (3개월 최저보장 후 분기평가 시행) / 최대 지원DB 42건</li>
                   <li className="font-semibold">분기평가(4차월)</li>
-                  <div style={{ marginLeft: '1.5rem', marginTop: '0.5rem' }} className="space-y-1">
-                    <div className="text-sm text-gray-600">- 직전 3개월 평균 정산평가업적 30만원 이상자에 4~6차월 DB 지급</div>
+                  <div style={{ marginLeft: '1.5rem', marginTop: '0.2rem' }}>
+                    - 직전 3개월 평균 정산평가업적 30만원 이상자에 4~6차월 DB 지급
                   </div>
                 </ul>
 
@@ -180,6 +200,18 @@ export default function InfoGfePage() {
                 <ul className="info-list">
                   <li>지원 기간 종료 후 전체 계약에 대한 유지율 평가를 진행하여 환수합니다.</li>
                   <li>금융캠퍼스 베이직 신청 시 정착교육비, 활동수수료 등의 지원금 중복 신청은 불가합니다.</li>
+                </ul>
+              </div>
+
+              {/* 문의 섹션 */}
+              <div className="info-section">
+                <h3 style={{ color: 'var(--secondary-color)' }}>문의</h3>
+                <ul className="info-list">
+                  <li><strong>베이직과정 교육 문의</strong> : 최인석 과장 (02-6410-7427)</li>
+                  <li><strong>지원금 지급 및 평가</strong> : 이천영 팀장 (02-6410-7264)</li>
+                  <li><strong>지원안 제출</strong> : 박세현 차장 (02-6410-7028)</li>
+                  <li><strong>DB배정</strong> : 제영록 과장 (02-6410-7431)</li>
+                  <li><strong>규정 문의, DB평가</strong> : 고현진 과장 (02-6410-7380)</li>
                 </ul>
               </div>
             </div>
