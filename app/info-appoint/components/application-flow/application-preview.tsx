@@ -49,7 +49,7 @@ export default function ApplicationPreview({
   useEffect(() => {
     const handleResize = () => {
       if (containerRef.current) {
-        const containerWidth = containerRef.current.offsetWidth - 32; // padding 고려
+        const containerWidth = containerRef.current.offsetWidth;
         const docWidth = 210 * 3.78; // 210mm to px (approx)
         if (containerWidth < docWidth) {
           setScale(containerWidth / docWidth);
@@ -254,7 +254,7 @@ export default function ApplicationPreview({
   };
 
   return (
-    <div className="space-y-6 max-h-[80vh] overflow-y-auto px-1">
+    <div className="space-y-6 px-0 sm:px-1">
       {/* 확인 모달 */}
       {showConfirmModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
@@ -315,15 +315,15 @@ export default function ApplicationPreview({
         </div>
       )}
 
-      <Card className={autoDownload ? "hidden" : ""}>
+      <div className={autoDownload ? "hidden" : ""}>
         {!isSample && (
-          <CardHeader>
-            <CardDescription>
+          <div className="mb-4">
+            <p className="text-gray-500 text-sm">
               아래 내용을 확인하신 후 PDF로 다운로드하세요.
-            </CardDescription>
-          </CardHeader>
+            </p>
+          </div>
         )}
-        <CardContent className={isSample ? "pt-6" : ""}>
+        <div>
           {/* 일정 안내 - 샘플 모드 또는 자동 다운로드 모드에서는 숨김 */}
           {!isSample && !autoDownload && (
             <div className="mb-6 bg-blue-50 border border-blue-200 rounded-lg p-4 shadow-sm">
@@ -341,18 +341,20 @@ export default function ApplicationPreview({
             </div>
           )}
 
-          {/* 신청서 미리보기 영역 - 종이 문서 느낌 스타일 적용 */}
-          <div ref={containerRef} className="flex justify-center bg-gray-100 py-6 sm:py-10 rounded-xl overflow-hidden border border-gray-200">
+          {/* 신청서 미리보기 영역 - 종이 문서 느낌 스타일 제거 및 여백 최소화 */}
+          <div ref={containerRef} className="flex justify-center bg-white py-0 sm:py-4 overflow-hidden border-0">
             <div
               ref={autoDownload ? null : previewRef}
-              className="bg-white shadow-2xl origin-top transition-transform"
+              className="bg-white origin-top transition-transform"
               style={{
                 width: '100%',
                 maxWidth: '210mm',
                 minHeight: '297mm',
-                padding: '20mm 15mm',
+                padding: scale < 0.5 ? '4mm 2mm' : (scale < 0.7 ? '8mm 6mm' : '20mm 15mm'),
                 transform: `scale(${scale})`,
-                marginBottom: scale < 1 ? `-${(1 - scale) * 100}%` : '0' // 스케일 축소 시 공백 제거
+                marginBottom: scale < 1 ? `-${(1 - scale) * 100}%` : '0', // 스케일 축소 시 공백 제거
+                fontSize: scale < 0.6 ? '1.2em' : '1em', // 작은 화면에서 텍스트 시인성 극대화
+                border: '1px solid #eee' // 실제 종이 영역을 살짝 구분하기 위한 아주 연한 선 (선택 사항)
               }}
             >
               {/* 제목 */}
@@ -463,8 +465,8 @@ export default function ApplicationPreview({
               </Button>
             </div>
           )}
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
       {/* 자동 다운로드 모드에서의 숨겨진 정적 요소 (html2canvas용) */}
       {autoDownload && (

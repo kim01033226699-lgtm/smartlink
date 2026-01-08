@@ -106,10 +106,10 @@ function ApplicationFlowContent() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
       <NavigationHeader />
 
-      <div className="px-4 py-8">
+      <div className="px-0 sm:px-4 py-2 sm:py-8">
         <div className="mx-auto max-w-3xl">
           {searchParams.get('mode') !== 'blank-download' && (
-            <h1 className="mb-6 text-3xl font-bold text-gray-900 md:text-4xl">협회 말소처리 안내</h1>
+            <h1 className="mb-6 text-3xl font-bold text-gray-900 px-4 sm:px-0">협회 말소처리 안내</h1>
           )}
 
           {currentStep === "questions" && (

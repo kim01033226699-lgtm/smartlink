@@ -202,35 +202,35 @@ export default function ManagerInfoModal({ isOpen, onClose }: ManagerInfoModalPr
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
             <div className="bg-white rounded-2xl w-full max-w-3xl max-h-[90vh] overflow-hidden shadow-2xl flex flex-col animate-in zoom-in-95 duration-200 relative">
-                {/* Header */}
-                <div className="bg-white border-b border-gray-100 p-4 flex flex-col sm:flex-row items-center justify-between sticky top-0 z-10 gap-3">
-                    <div className="flex items-center gap-2">
+                {/* Header Section */}
+                <div className="bg-white border-b border-gray-100 p-4 flex items-center justify-between sticky top-0 z-10 gap-2">
+                    <div className="flex items-center gap-2 shrink-0">
                         <Search className="text-gray-800" size={24} />
                         <h2 className="text-xl font-bold text-gray-900">본사 담당자 안내</h2>
                     </div>
 
-                    <div className="flex items-center gap-2">
-                        <div className="flex rounded-lg border border-gray-200 p-1 bg-gray-50 mr-2">
+                    <div className="flex items-center gap-1.5 sm:gap-3 overflow-hidden">
+                        <div className="flex rounded-lg border border-gray-200 p-1 bg-gray-50 shrink-0">
                             <button
                                 onClick={expandAll}
-                                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold transition-all ${isAllExpanded ? 'bg-white shadow-sm text-blue-600' : 'text-gray-500 hover:text-gray-700'
+                                className={`flex items-center gap-1 px-2 py-0.5 sm:px-3 sm:py-1 rounded-md text-[11px] sm:text-xs font-semibold transition-all ${isAllExpanded ? 'bg-white shadow-sm text-blue-600' : 'text-gray-500 hover:text-gray-700'
                                     }`}
                             >
-                                <Eye size={14} />
-                                전체 펼치기
+                                <Eye size={14} className="hidden sm:block" />
+                                펼치기
                             </button>
                             <button
                                 onClick={collapseAll}
-                                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold transition-all ${expandedTeams.size === 0 ? 'bg-white shadow-sm text-blue-600' : 'text-gray-500 hover:text-gray-700'
+                                className={`flex items-center gap-1 px-2 py-0.5 sm:px-3 sm:py-1 rounded-md text-[11px] sm:text-xs font-semibold transition-all ${expandedTeams.size === 0 ? 'bg-white shadow-sm text-blue-600' : 'text-gray-500 hover:text-gray-700'
                                     }`}
                             >
-                                <EyeOff size={14} />
-                                전체 닫기
+                                <EyeOff size={14} className="hidden sm:block" />
+                                닫기
                             </button>
                         </div>
                         <button
                             onClick={onClose}
-                            className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                            className="p-1 sm:p-2 hover:bg-gray-100 rounded-full transition-colors shrink-0"
                         >
                             <X size={24} className="text-gray-500" />
                         </button>
