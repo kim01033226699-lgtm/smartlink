@@ -128,27 +128,34 @@ export default function ApplicationPreview({
       minWidth: previewRef.current.style.minWidth,
       maxWidth: previewRef.current.style.maxWidth,
       position: previewRef.current.style.position,
+      top: previewRef.current.style.top,
       left: previewRef.current.style.left,
       opacity: previewRef.current.style.opacity,
+      zIndex: previewRef.current.style.zIndex,
+      transform: previewRef.current.style.transform,
+      padding: previewRef.current.style.padding,
+      fontSize: previewRef.current.style.fontSize,
+      backgroundColor: previewRef.current.style.backgroundColor,
     };
 
     try {
       // 1. PDF 생성을 위해 강제로 A4 크기로 고정 및 렌더링 최적화
-      // 모바일 캡처 안정성을 위해 absolute 위치 조정 및 가시성 확보 (잠시만)
-      if (autoDownload) {
-        previewRef.current.style.position = 'fixed';
-        previewRef.current.style.left = '0';
-        previewRef.current.style.top = '0';
-        previewRef.current.style.opacity = '1';
-        previewRef.current.style.zIndex = '-100';
-      }
-
-      previewRef.current.style.width = '210mm';
-      previewRef.current.style.minWidth = '210mm';
+      // 모바일 화면의 제약을 받지 않도록 fixed로 화면 밖으로 빼서 렌더링
+      previewRef.current.style.position = 'fixed';
+      previewRef.current.style.top = '0';
+      previewRef.current.style.left = '-10000px'; // 화면 밖으로 이동
+      previewRef.current.style.width = '794px';   // A4 너비 (약 210mm)
+      previewRef.current.style.minWidth = '794px';
       previewRef.current.style.maxWidth = 'none';
+      previewRef.current.style.transform = 'none';
+      previewRef.current.style.padding = '75px 60px'; // 약 20mm 15mm
+      previewRef.current.style.fontSize = '16px';  // 16px (표준 폰트 크기)
+      previewRef.current.style.opacity = '1';
+      previewRef.current.style.zIndex = '9999';
+      previewRef.current.style.backgroundColor = 'white';
 
       // 스타일 변경이 브라우저에 리페인트 될 시간을 충분히 줌 (모바일 대응)
-      await new Promise(resolve => setTimeout(resolve, 500));
+      await new Promise(resolve => setTimeout(resolve, 600));
 
       // 2. 모바일 기기에 따라 자동 스케일 조정 (메모리 부족 방지)
       const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
@@ -160,19 +167,22 @@ export default function ApplicationPreview({
         useCORS: true,
         logging: false,
         width: 794, // 210mm to px (96dpi 기준 약 794px)
-        windowWidth: isMobile ? 1080 : undefined,
+        windowWidth: 1200, // PC 기준으로 캡처하기 위해 고정
       });
 
       // 스타일 즉시 복구
       previewRef.current.style.width = originalStyle.width;
       previewRef.current.style.minWidth = originalStyle.minWidth;
       previewRef.current.style.maxWidth = originalStyle.maxWidth;
-      if (autoDownload) {
-        previewRef.current.style.position = originalStyle.position;
-        previewRef.current.style.left = originalStyle.left;
-        previewRef.current.style.opacity = originalStyle.opacity;
-        previewRef.current.style.zIndex = '-50';
-      }
+      previewRef.current.style.position = originalStyle.position;
+      previewRef.current.style.top = originalStyle.top;
+      previewRef.current.style.left = originalStyle.left;
+      previewRef.current.style.opacity = originalStyle.opacity;
+      previewRef.current.style.zIndex = originalStyle.zIndex;
+      previewRef.current.style.transform = originalStyle.transform;
+      previewRef.current.style.padding = originalStyle.padding;
+      previewRef.current.style.fontSize = originalStyle.fontSize;
+      previewRef.current.style.backgroundColor = originalStyle.backgroundColor;
 
       // 4. 캔버스를 이미지로 변환
       const imgData = canvas.toDataURL('image/png');

@@ -203,37 +203,40 @@ export default function ManagerInfoModal({ isOpen, onClose }: ManagerInfoModalPr
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
             <div className="bg-white rounded-2xl w-full max-w-3xl max-h-[90vh] overflow-hidden shadow-2xl flex flex-col animate-in zoom-in-95 duration-200 relative">
                 {/* Header Section */}
-                <div className="bg-white border-b border-gray-100 p-4 flex items-center justify-between sticky top-0 z-10 gap-2">
-                    <div className="flex items-center gap-2 shrink-0">
-                        <Search className="text-gray-800" size={24} />
-                        <h2 className="text-xl font-bold text-gray-900">본사 담당자 안내</h2>
-                    </div>
-
-                    <div className="flex items-center gap-1.5 sm:gap-3 overflow-hidden">
-                        <div className="flex rounded-lg border border-gray-200 p-1 bg-gray-50 shrink-0">
-                            <button
-                                onClick={expandAll}
-                                className={`flex items-center gap-1 px-2 py-0.5 sm:px-3 sm:py-1 rounded-md text-[11px] sm:text-xs font-semibold transition-all ${isAllExpanded ? 'bg-white shadow-sm text-blue-600' : 'text-gray-500 hover:text-gray-700'
-                                    }`}
-                            >
-                                <Eye size={14} className="hidden sm:block" />
-                                펼치기
-                            </button>
-                            <button
-                                onClick={collapseAll}
-                                className={`flex items-center gap-1 px-2 py-0.5 sm:px-3 sm:py-1 rounded-md text-[11px] sm:text-xs font-semibold transition-all ${expandedTeams.size === 0 ? 'bg-white shadow-sm text-blue-600' : 'text-gray-500 hover:text-gray-700'
-                                    }`}
-                            >
-                                <EyeOff size={14} className="hidden sm:block" />
-                                닫기
-                            </button>
+                <div className="bg-white border-b border-gray-100 p-4 sticky top-0 z-10">
+                    <div className="flex items-center justify-between mb-3">
+                        <div className="flex items-center gap-2">
+                            <Search className="text-gray-800" size={24} />
+                            <h2 className="text-xl font-bold text-gray-900">본사 담당자 안내</h2>
                         </div>
                         <button
                             onClick={onClose}
-                            className="p-1 sm:p-2 hover:bg-gray-100 rounded-full transition-colors shrink-0"
+                            className="p-1 hover:bg-gray-100 rounded-full transition-colors shrink-0"
                         >
                             <X size={24} className="text-gray-500" />
                         </button>
+                    </div>
+
+                    <div className="flex items-center">
+                        <div className="flex items-center rounded-lg border border-gray-200 p-1 bg-gray-50 shrink-0">
+                            <button
+                                onClick={expandAll}
+                                className={`flex items-center gap-1.5 px-3 py-0.5 rounded-md text-xs font-semibold transition-all ${isAllExpanded ? 'bg-white shadow-sm text-blue-600 border border-gray-100' : 'text-gray-500 hover:text-gray-700'
+                                    }`}
+                            >
+                                <Eye size={14} />
+                                펼치기
+                            </button>
+                            <div className="w-[1px] h-3 bg-gray-300 mx-1" />
+                            <button
+                                onClick={collapseAll}
+                                className={`flex items-center gap-1.5 px-3 py-0.5 rounded-md text-xs font-semibold transition-all ${expandedTeams.size === 0 ? 'bg-white shadow-sm text-blue-600 border border-gray-100' : 'text-gray-500 hover:text-gray-700'
+                                    }`}
+                            >
+                                <EyeOff size={14} />
+                                닫기
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -357,7 +360,7 @@ export default function ManagerInfoModal({ isOpen, onClose }: ManagerInfoModalPr
                                     className="px-4 py-3.5 rounded-xl bg-teal-600 text-white font-bold text-sm hover:bg-teal-700 transition-all flex items-center justify-center gap-2 shadow-lg shadow-teal-600/20 active:scale-95"
                                 >
                                     <Phone size={18} fill="currentColor" />
-                                    전화 연결
+                                    통화
                                 </a>
                             </div>
                         </div>

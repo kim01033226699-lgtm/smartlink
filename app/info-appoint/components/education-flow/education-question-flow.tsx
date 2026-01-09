@@ -6,6 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app
 import { CheckCircle2, ExternalLink, X } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/app/components/ui/dialog";
 import { BASE_PATH } from "@/lib/utils";
+import "@/app/info-gfe/info-gfe.css";
 
 interface Question {
   id: string;
@@ -20,9 +21,9 @@ interface Question {
 const questions: Record<string, Question> = {
   q1: {
     id: 'q1',
-    text: '보험영업이 처음인 신규입사자 이신가요?',
-    yesNext: 'q2',
-    noNext: 'q3',
+    text: '입사 구분을 선택해 주세요.',
+    yesNext: 'q3', // 경력자 (기존 q1 아니오 -> q3 였으나 의미상 q3가 경력 질문이므로 yes로 유도)
+    noNext: 'q2',  // 무경력자 (기존 q1 네 -> q2)
   },
   q2: {
     id: 'q2',
@@ -1060,21 +1061,39 @@ export default function EducationQuestionFlow() {
             </CardTitle>
           </CardHeader>
           <CardContent className="pt-6">
-            <div className="flex flex-col sm:flex-row gap-3">
-              <Button
-                onClick={() => handleAnswer('yes')}
-                className="flex-1 bg-blue-600 hover:bg-blue-700 py-6 text-lg font-semibold transition-all duration-150 active:scale-95"
-              >
-                네
-              </Button>
-              <Button
-                onClick={() => handleAnswer('no')}
-                variant="outline"
-                className="flex-1 py-6 text-lg font-semibold border-2 hover:bg-gray-100 transition-all duration-150 active:scale-95"
-              >
-                아니오
-              </Button>
-            </div>
+            {currentQuestionId === 'q1' ? (
+              <div className="tab-nav main-tab-nav">
+                <button
+                  className="tab-button"
+                  onClick={() => handleAnswer('yes')}
+                  style={{ height: '60px' }}
+                >
+                  <div style={{ fontSize: '1.2rem', fontWeight: 700 }}>경력자</div>
+                </button>
+                <button
+                  className="tab-button"
+                  onClick={() => handleAnswer('no')}
+                  style={{ height: '60px' }}
+                >
+                  <div style={{ fontSize: '1.2rem', fontWeight: 700 }}>무경력자</div>
+                </button>
+              </div>
+            ) : (
+              <div className="flex flex-col sm:flex-row gap-3">
+                <button
+                  onClick={() => handleAnswer('yes')}
+                  className="flex-1 bg-blue-600 hover:bg-blue-700 text-white rounded-xl py-6 text-lg font-semibold transition-all duration-150 active:scale-95"
+                >
+                  네
+                </button>
+                <button
+                  onClick={() => handleAnswer('no')}
+                  className="flex-1 bg-white border-2 border-gray-200 hover:bg-gray-50 text-gray-700 rounded-xl py-6 text-lg font-semibold transition-all duration-150 active:scale-95"
+                >
+                  아니오
+                </button>
+              </div>
+            )}
 
             {history.length > 0 && (
               <Button
