@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect, useRef } from "react";
 import NavigationHeader from "@/app/components/NavigationHeader";
@@ -36,6 +36,7 @@ export default function PersonalizedGuidePage() {
         region: "",
     });
     const [isAppDownloadModalOpen, setIsAppDownloadModalOpen] = useState(false);
+    const [isManagerModalOpen, setIsManagerModalOpen] = useState(false);
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -87,6 +88,7 @@ export default function PersonalizedGuidePage() {
                             onPrint={handlePrint}
                             onReset={handleReset}
                             onDownloadApp={() => setIsAppDownloadModalOpen(true)}
+                            onOpenManagerCheck={() => setIsManagerModalOpen(true)}
                         />
                     )}
                 </div>
@@ -142,6 +144,58 @@ export default function PersonalizedGuidePage() {
                                 <span>App Store</span>
                             </a>
                         </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Manager Check Modal */}
+            {isManagerModalOpen && (
+                <div
+                    className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[100] p-4 animate-in fade-in duration-300"
+                    onClick={() => setIsManagerModalOpen(false)}
+                >
+                    <div
+                        className="bg-white rounded-3xl p-8 max-w-sm w-full shadow-2xl transform transition-all animate-in zoom-in-95 slide-in-from-bottom-4 duration-300"
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <div className="flex justify-between items-center mb-6">
+                            <div>
+                                <h3 className="text-xl font-bold text-gray-900">담당자 확인</h3>
+                                <p className="text-xs text-gray-500 mt-1">도움이 필요하시면 연락주세요.</p>
+                            </div>
+                            <button
+                                onClick={() => setIsManagerModalOpen(false)}
+                                className="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 text-gray-400 hover:text-gray-600 transition-colors text-2xl"
+                            >
+                                ×
+                            </button>
+                        </div>
+                        <div className="space-y-3">
+                            {[
+                                { role: "협회소속이동", name: "윤서하", pos: "사원", phone: "02-6410-7417" },
+                                { role: "보증보험 / 지원금", name: "이인교", pos: "과장", phone: "02-6410-7943" },
+                                { role: "위촉심사", name: "김지열", pos: "과장", phone: "02-6410-7817" }
+                            ].map((m, i) => (
+                                <div key={i} className="group p-4 rounded-2xl bg-gray-50 border border-gray-100 hover:border-blue-200 hover:bg-blue-50/30 transition-all">
+                                    <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">{m.role}</p>
+                                    <div className="flex justify-between items-center">
+                                        <div className="flex items-baseline gap-1">
+                                            <span className="font-bold text-gray-900">{m.name}</span>
+                                            <span className="text-xs text-gray-500">{m.pos}</span>
+                                        </div>
+                                        <a href={`tel:${m.phone.replace(/-/g, "")}`} className="text-blue-600 text-sm font-semibold hover:text-blue-700 transition-colors">
+                                            {m.phone}
+                                        </a>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                        <button
+                            onClick={() => setIsManagerModalOpen(false)}
+                            className="w-full mt-8 bg-gray-900 text-white py-4 rounded-2xl font-bold hover:bg-black transition-all shadow-lg hover:shadow-xl active:scale-[0.98]"
+                        >
+                            닫기
+                        </button>
                     </div>
                 </div>
             )}
@@ -407,7 +461,7 @@ function FormSection({
                         )}
 
                     {canSubmit && (
-                        <BotMessage text={`완료! 🎉<br/>${userInput.name}님의 맞춤형 위촉 절차를 준비했습니다.`} />
+                        <BotMessage text={`완료! 🎉<br/>${userInput.name}님의 맞춤형 위촉 가이드를 준비했습니다.`} />
                     )}
                 </div>
 
@@ -468,11 +522,13 @@ function ResultSection({
     onPrint,
     onReset,
     onDownloadApp,
+    onOpenManagerCheck,
 }: {
     userInput: UserInput;
     onPrint: () => void;
     onReset: () => void;
     onDownloadApp: () => void;
+    onOpenManagerCheck: () => void;
 }) {
     const isExperienced = userInput.experience === "experienced";
 
@@ -489,6 +545,7 @@ function ResultSection({
             logging: false,
             useCORS: true,
             windowWidth: 800,
+            ignoreElements: (element) => element.classList.contains('print-hidden'),
         });
 
         const imgData = canvas.toDataURL('image/png');
@@ -543,7 +600,7 @@ function ResultSection({
             </div>
 
             <div id="result-content" className="print-container space-y-6">
-                <div className="bg-gradient-to-r from-gray-700 to-gray-900 text-white rounded-xl p-6 shadow-lg">
+                <div className="bg-gradient-to-r from-gray-700 to-gray-900 text-white rounded-xl p-6 shadow-lg print-hidden">
                     <h2 className="text-2xl font-bold mb-3">{userInput.name}님의 위촉 절차</h2>
                     <div className="flex flex-wrap gap-2 text-sm">
                         <span className="bg-white/20 px-3 py-1 rounded-full">
@@ -567,11 +624,20 @@ function ResultSection({
                     </div>
                 </div>
 
-                <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-8">
+                <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-4 sm:p-8">
+                    {isExperienced && (
+                        <div className="mb-8 p-6 bg-blue-50/50 rounded-2xl border border-blue-100 print-hidden">
+                            <p className="text-gray-600 text-[15px] leading-relaxed text-left">
+                                새로운 시작을 앞두고 준비하실 게 조금 많으시죠?<br />
+                                아래 순서대로 진행해 주시면 가장 빠르고 정확하게 도움을 드릴 수 있습니다.<br />
+                                차근차근 준비해 보시고, 궁금한 점은 언제든 담당자에게 문의 바랍니다!
+                            </p>
+                        </div>
+                    )}
                     {isExperienced ? (
-                        <ExperiencedGuide userInput={userInput} onDownloadApp={onDownloadApp} />
+                        <ExperiencedGuide userInput={userInput} onDownloadApp={onDownloadApp} onOpenManagerCheck={onOpenManagerCheck} />
                     ) : (
-                        <InexperiencedGuide userInput={userInput} onDownloadApp={onDownloadApp} />
+                        <InexperiencedGuide userInput={userInput} onDownloadApp={onDownloadApp} onOpenManagerCheck={onOpenManagerCheck} />
                     )}
                 </div>
             </div>
@@ -579,10 +645,16 @@ function ResultSection({
     );
 }
 
-function ExperiencedGuide({ userInput, onDownloadApp }: { userInput: UserInput; onDownloadApp: () => void }) {
+function ExperiencedGuide({ userInput, onDownloadApp, onOpenManagerCheck }: { userInput: UserInput; onDownloadApp: () => void; onOpenManagerCheck: () => void }) {
     return (
         <div className="space-y-6">
-            <h3 className="text-2xl font-bold text-gray-900 mb-6">경력자 위촉 프로세스</h3>
+            <div className="inline-block mb-8">
+                <h3 className="text-2xl font-bold text-gray-900 mb-2">경력자 위촉 프로세스</h3>
+                <div className="flex flex-col gap-1">
+                    <div className="h-1 bg-gray-800 w-[70%] rounded-full" />
+                    <div className="h-1 bg-gray-800 w-[40%] rounded-full" />
+                </div>
+            </div>
 
             <StepCard
                 number={1}
@@ -627,7 +699,7 @@ function ExperiencedGuide({ userInput, onDownloadApp }: { userInput: UserInput; 
 
             <StepCard
                 number={3}
-                title="보험연수원 등록교육 수료증을 제출해 주세요"
+                title="보험연수원 등록교육은 미리 수료해 주세요."
                 color="purple"
                 managers={[
                     { role: "시험응시", name: "방수현", position: "대리", phone: "02-6410-7411" }
@@ -704,23 +776,36 @@ function ExperiencedGuide({ userInput, onDownloadApp }: { userInput: UserInput; 
                 title="원수사 코드발급을 위해 확인해 주세요."
                 color="red"
                 managers={[
-                    { role: "손보협회등록", name: "곽민서", position: "사원", phone: "02-6410-7188" },
-                    { role: "생보협회등록", name: "김보미", position: "사원", phone: "02-6410-7233" },
                     { role: "협회소속이동", name: "윤서하", position: "사원", phone: "02-6410-7417" }
                 ]}
+                footer={
+                    <div className="pt-4 border-t border-gray-100">
+                        <p className="text-[13px] text-gray-600 leading-relaxed italic">
+                            *자세한 내용 및 절차는 smartlink페이지 또는 담당자에게 문의바랍니다.
+                        </p>
+                    </div>
+                }
             >
-                <p className="text-sm text-gray-700">
-                    2주에 걸쳐 각 생명보험사별 위촉동의 URL 발송 → 각 보험사 링크에서 동의 완료
-                </p>
+                <div className="space-y-4">
+                    <p className="text-sm text-gray-700 leading-relaxed">
+                        2주에 걸쳐 각 생명보험사별 위촉동의 URL 발송 → 각 보험사 링크에서 동의 완료
+                    </p>
+                </div>
             </StepCard>
         </div>
     );
 }
 
-function InexperiencedGuide({ userInput, onDownloadApp }: { userInput: UserInput; onDownloadApp: () => void }) {
+function InexperiencedGuide({ userInput, onDownloadApp, onOpenManagerCheck }: { userInput: UserInput; onDownloadApp: () => void; onOpenManagerCheck: () => void }) {
     return (
         <div className="space-y-6">
-            <h3 className="text-2xl font-bold text-gray-900 mb-6">무경력자 위촉 프로세스</h3>
+            <div className="inline-block mb-8">
+                <h3 className="text-2xl font-bold text-gray-900 mb-2">무경력자 위촉 프로세스</h3>
+                <div className="flex flex-col gap-1">
+                    <div className="h-1 bg-gray-800 w-[70%] rounded-full" />
+                    <div className="h-1 bg-gray-800 w-[40%] rounded-full" />
+                </div>
+            </div>
 
             <StepCard
                 number={1}
@@ -780,7 +865,7 @@ function InexperiencedGuide({ userInput, onDownloadApp }: { userInput: UserInput
 
             <StepCard
                 number={3}
-                title="보험연수원 등록교육 수료증을 제출해 주세요"
+                title="보험연수원 등록교육은 미리 수료해 주세요."
                 color="purple"
                 managers={[
                     { role: "시험응시", name: "방수현", position: "대리", phone: "02-6410-7411" }
@@ -858,14 +943,21 @@ function InexperiencedGuide({ userInput, onDownloadApp }: { userInput: UserInput
                 title="원수사 코드발급을 위해 확인해 주세요."
                 color="red"
                 managers={[
-                    { role: "손보협회등록", name: "곽민서", position: "사원", phone: "02-6410-7188" },
-                    { role: "생보협회등록", name: "김보미", position: "사원", phone: "02-6410-7233" },
                     { role: "협회소속이동", name: "윤서하", position: "사원", phone: "02-6410-7417" }
                 ]}
+                footer={
+                    <div className="pt-4 border-t border-gray-100">
+                        <p className="text-[13px] text-gray-600 leading-relaxed italic">
+                            *자세한 내용 및 절차는 smartlink페이지 또는 담당자에게 문의바랍니다.
+                        </p>
+                    </div>
+                }
             >
-                <p className="text-sm text-gray-700">
-                    2주에 걸쳐 각 생명보험사별 위촉동의 URL 발송 → 각 보험사 링크에서 동의 완료
-                </p>
+                <div className="space-y-4">
+                    <p className="text-sm text-gray-700 leading-relaxed">
+                        2주에 걸쳐 각 생명보험사별 위촉동의 URL 발송 → 각 보험사 링크에서 동의 완료
+                    </p>
+                </div>
             </StepCard>
         </div>
     );
@@ -877,12 +969,14 @@ function StepCard({
     color,
     children,
     managers,
+    footer,
 }: {
     number: number;
     title: string;
     color: "blue" | "green" | "purple" | "amber" | "red";
     children: React.ReactNode;
     managers?: { role: string; name: string; position: string; phone?: string }[];
+    footer?: React.ReactNode;
 }) {
     return (
         <div className="bg-white border border-gray-200 rounded-lg p-5">
@@ -892,32 +986,33 @@ function StepCard({
                 </div>
                 <h4 className="text-lg font-bold text-gray-900">{title}</h4>
             </div>
-            <div className="pl-11">
+            <div className="pl-6 sm:pl-11">
                 {children}
                 {managers && managers.length > 0 && (
-                    <div className="mt-4 pt-4 border-t border-gray-200">
-                        <p className="text-xs font-semibold text-gray-600 mb-2">📞 담당자 문의</p>
-                        <div className="space-y-1.5">
+                    <div className="mt-2 pt-2 border-t border-gray-100">
+                        <p className="text-[11px] font-semibold text-gray-500 mb-1.5">📞 담당자 문의</p>
+                        <div className="space-y-0.5 sm:space-y-1">
                             {managers.map((manager, idx) => (
-                                <div key={idx} className="text-[13px] text-gray-700 flex flex-wrap items-center gap-x-2 gap-y-0.5 py-1.5 border-b border-gray-50 last:border-0">
-                                    <div className="flex items-center gap-2 shrink-0">
-                                        <span className="font-semibold text-gray-900 min-w-[65px]">{manager.role}</span>
-                                        <span className="text-gray-300">|</span>
-                                        <span className="text-gray-600">{manager.name} {manager.position}</span>
+                                <div key={idx} className="text-[13px] text-gray-700 flex flex-wrap sm:flex-nowrap items-baseline gap-x-2 py-0.5">
+                                    <span className="font-semibold text-gray-900 min-w-[65px] shrink-0 text-left">{manager.role}</span>
+                                    <span className="text-gray-300 shrink-0">|</span>
+                                    <div className="flex flex-wrap items-baseline gap-x-2">
+                                        <span className="text-gray-600 whitespace-nowrap">{manager.name} {manager.position}</span>
+                                        {manager.phone && (
+                                            <a
+                                                href={`tel:${manager.phone.replace(/-/g, "")}`}
+                                                className="text-blue-600 font-semibold hover:underline whitespace-nowrap"
+                                            >
+                                                {manager.phone}
+                                            </a>
+                                        )}
                                     </div>
-                                    {manager.phone && (
-                                        <a
-                                            href={`tel:${manager.phone.replace(/-/g, "")}`}
-                                            className="text-blue-600 font-medium hover:underline shrink-0"
-                                        >
-                                            {manager.phone}
-                                        </a>
-                                    )}
                                 </div>
                             ))}
                         </div>
                     </div>
                 )}
+                {footer && <div className="mt-2 text-gray-400">{footer}</div>}
             </div>
         </div>
     );
