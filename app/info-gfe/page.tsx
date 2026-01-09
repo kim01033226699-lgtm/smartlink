@@ -26,7 +26,7 @@ export default function InfoGfePage() {
         <main className="page-content">
           <div className="container">
             {/* Main Tab Navigation */}
-            <div className="tab-nav">
+            <div className="tab-nav main-tab-nav">
               <button
                 className={`tab-button ${mainTab === 'campus' ? 'active' : ''}`}
                 onClick={() => setMainTab('campus')}
@@ -66,7 +66,7 @@ export default function InfoGfePage() {
                 <h3>혜택</h3>
 
                 {/* DB 옵션 탭 */}
-                <div className="tab-nav">
+                <div className="tab-nav sub-tab-nav">
                   <button
                     className={`tab-button ${dbOption === 'db-select' ? 'active' : ''}`}
                     onClick={() => setDbOption('db-select')}
@@ -136,22 +136,10 @@ export default function InfoGfePage() {
                 </ul>
               </div>
 
-              {/* 문의 섹션 */}
-              <div className="info-section">
-                <h3 style={{ color: 'var(--secondary-color)' }}>문의</h3>
-                <ul className="info-list">
-                  <li><strong>금융캠퍼스 교육 문의</strong> : 정진래 차장 (02-6410-7440)</li>
-                  <li><strong>베이직과정 교육 문의</strong> : 최인석 과장 (02-6410-7427)</li>
-                  <li><strong>지원금 지급 및 평가</strong> : 이천영 팀장 (02-6410-7264)</li>
-                  <li><strong>지원안 제출</strong> : 박세현 차장 (02-6410-7028)</li>
-                  <li><strong>DB배정</strong> : 제영록 과장 (02-6410-7431)</li>
-                  <li><strong>규정 문의, DB평가</strong> : 고현진 과장 (02-6410-7380)</li>
-                </ul>
-              </div>
             </div>
 
             {/* 베이직 Content */}
-            <div className={`tab-content ${mainTab === 'basic' ? 'active' : ''}`}>
+            <div className={`tab-content basic-tab-content ${mainTab === 'basic' ? 'active' : ''}`}>
               {/* 조건 섹션 */}
               <div className="info-section">
                 <h3>조건</h3>
@@ -203,17 +191,6 @@ export default function InfoGfePage() {
                 </ul>
               </div>
 
-              {/* 문의 섹션 */}
-              <div className="info-section">
-                <h3 style={{ color: 'var(--secondary-color)' }}>문의</h3>
-                <ul className="info-list">
-                  <li><strong>베이직과정 교육 문의</strong> : 최인석 과장 (02-6410-7427)</li>
-                  <li><strong>지원금 지급 및 평가</strong> : 이천영 팀장 (02-6410-7264)</li>
-                  <li><strong>지원안 제출</strong> : 박세현 차장 (02-6410-7028)</li>
-                  <li><strong>DB배정</strong> : 제영록 과장 (02-6410-7431)</li>
-                  <li><strong>규정 문의, DB평가</strong> : 고현진 과장 (02-6410-7380)</li>
-                </ul>
-              </div>
             </div>
           </div>
         </main>

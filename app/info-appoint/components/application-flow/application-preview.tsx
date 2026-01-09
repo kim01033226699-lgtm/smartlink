@@ -347,14 +347,14 @@ export default function ApplicationPreview({
               ref={autoDownload ? null : previewRef}
               className="bg-white origin-top transition-transform"
               style={{
-                width: '100%',
-                maxWidth: '210mm',
+                width: '210mm',
                 minHeight: '297mm',
                 padding: scale < 0.5 ? '4mm 2mm' : (scale < 0.7 ? '8mm 6mm' : '20mm 15mm'),
                 transform: `scale(${scale})`,
-                marginBottom: scale < 1 ? `-${(1 - scale) * 100}%` : '0', // 스케일 축소 시 공백 제거
-                fontSize: scale < 0.6 ? '1.2em' : '1em', // 작은 화면에서 텍스트 시인성 극대화
-                border: '1px solid #eee' // 실제 종이 영역을 살짝 구분하기 위한 아주 연한 선 (선택 사항)
+                transformOrigin: 'top center',
+                marginBottom: scale < 1 ? `-${Math.ceil((1 - scale) * 297 * 3.78)}px` : '0', // 스케일 축소 시 발생하는 공백만큼 하단 여백 제거
+                fontSize: scale < 0.6 ? '1.25em' : '1em', // 작은 화면에서 텍스트 시인성 극대화
+                border: 'none'
               }}
             >
               {/* 제목 */}

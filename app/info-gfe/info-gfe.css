@@ -148,15 +148,24 @@ body {
   background: #d1d5db;
 }
 
-/* DB 선택형 전용 색상 (클래스 기반 또는 순서 기반) */
-.tab-nav button:nth-child(1).active {
+/* 메인 탭: 주황/초록 유지 */
+.main-tab-nav button:nth-child(1).active {
   background: var(--primary-color) !important;
-  /* 주황 */
 }
 
-.tab-nav button:nth-child(2).active {
+.main-tab-nav button:nth-child(2).active {
   background: var(--secondary-color) !important;
-  /* 녹색 */
+}
+
+/* DB 선택 서브 탭: 검정/그레이 계열 (채도/밝기 차이) */
+.sub-tab-nav button:nth-child(1).active {
+  background: #111827 !important;
+  /* 매우 어두운 검정 */
+}
+
+.sub-tab-nav button:nth-child(2).active {
+  background: #4b5563 !important;
+  /* 중간 톤의 그레이 */
 }
 
 /* ==================== Tab Content ==================== */
@@ -166,6 +175,16 @@ body {
 
 .tab-content.active {
   display: block;
+}
+
+/* 베이직 탭 전용 테마 (녹색) */
+.basic-tab-content h3,
+.basic-tab-content .sub-title {
+  color: var(--secondary-color) !important;
+}
+
+.basic-tab-content .info-list li::before {
+  color: var(--secondary-color) !important;
 }
 
 /* ==================== Info Section ==================== */
