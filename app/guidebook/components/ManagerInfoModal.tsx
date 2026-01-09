@@ -31,9 +31,6 @@ const managerData: Team[] = [
             { role: '동부', name: '김소은', position: '과장', phone: '02-6410-7398' },
             { role: '서부', name: '공기택', position: '대리', phone: '02-6410-7437' },
             { role: 'RP총괄직할, 사업부', name: '안다솜', position: '과장', phone: '02-6410-7821' },
-            { role: '영업마케팅', name: '김예지', position: '대리' },
-            { role: 'RM-HY', name: '임진우', position: '팀장', roleClass: 'text-blue-600', nameClass: 'text-blue-600' },
-            { role: '총괄', name: '백승호', position: '대리' },
         ]
     },
     {

@@ -235,7 +235,6 @@
   cursor: pointer;
   display: flex;
   flex-direction: column;
-  align-self: stretch;
   min-height: 120px;
   height: auto;
   justify-content: center;
@@ -994,7 +993,7 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 0.8rem;
-    padding: 0.5rem 1rem;
+    padding: 0;
     margin: 1rem auto;
     width: 100%;
     box-sizing: border-box;
@@ -1004,6 +1003,7 @@
     min-height: auto;
     aspect-ratio: 2.1 / 1;
     height: auto;
+    min-width: 0;
   }
 
   .onboarding-page .category-icon {
