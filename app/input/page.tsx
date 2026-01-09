@@ -69,11 +69,9 @@ export default function PersonalizedGuidePage() {
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
-            <NavigationHeader />
-
             <div className="px-4 py-8">
                 <div className="mx-auto max-w-4xl">
-                    <h1 className="mb-8 text-3xl font-bold text-gray-900 md:text-4xl">
+                    <h1 className="mb-8 text-3xl font-bold text-gray-900 md:text-4xl print-hidden">
                         Smart One Page
                     </h1>
 
@@ -94,7 +92,9 @@ export default function PersonalizedGuidePage() {
                 </div>
             </div>
 
-            <BottomNavigation />
+            <div className="print-hidden">
+                <BottomNavigation />
+            </div>
 
             {/* App Download Modal */}
             {isAppDownloadModalOpen && (
@@ -167,17 +167,21 @@ function FormSection({
     useEffect(() => {
         if (scrollContainerRef.current) {
             const container = scrollContainerRef.current;
-            const scrollHeight = container.scrollHeight;
-            const clientHeight = container.clientHeight;
 
-            // Calculate position to center the latest content higher in viewport
-            // Subtract more from clientHeight to push content higher
-            const scrollPosition = scrollHeight - (clientHeight * 0.7);
+            // Short delay to allow new content to render and update scrollHeight
+            setTimeout(() => {
+                const scrollHeight = container.scrollHeight;
+                const clientHeight = container.clientHeight;
 
-            container.scrollTo({
-                top: Math.max(0, scrollPosition),
-                behavior: 'smooth'
-            });
+                // Calculate position to push latest content higher (around top 20-30% of viewport)
+                // We subtract less from scrollHeight to set a higher scrollTop
+                const scrollPosition = scrollHeight - (clientHeight * 0.4);
+
+                container.scrollTo({
+                    top: Math.max(0, scrollPosition),
+                    behavior: 'smooth'
+                });
+            }, 100);
         }
     }, [currentStep]);
 
@@ -204,8 +208,11 @@ function FormSection({
 
     return (
         <div className="max-w-2xl mx-auto">
-            <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-8 md:p-12 min-h-[500px] flex flex-col">
-                <div ref={scrollContainerRef} className="flex-1 space-y-6 overflow-y-auto max-h-[600px] scroll-smooth scrollbar-hide">
+            <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-8 md:p-12 min-h-[500px] flex flex-col relative overflow-hidden">
+                {/* Top fade overlay */}
+                <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-white via-white/80 to-transparent z-10 pointer-events-none" />
+
+                <div ref={scrollContainerRef} className="flex-1 space-y-6 overflow-y-auto max-h-[600px] scroll-smooth scrollbar-hide pb-60 pt-8">
                     <BotMessage text="성함을 알려주세요." isOld={currentStep > 1} />
                     {currentStep >= 1 && (
                         <UserInput isOld={currentStep > 1}>
@@ -405,13 +412,22 @@ function FormSection({
                 </div>
 
                 {canSubmit && (
-                    <div className="mt-6 pt-6 border-t border-gray-200">
+                    <div className="mt-6 pt-6 border-t border-gray-200 flex gap-3">
+                        <button
+                            onClick={(e) => {
+                                e.preventDefault();
+                                window.location.reload(); // Simple way to reset everything for this specific flow
+                            }}
+                            className="flex-1 px-4 py-4 rounded-xl font-medium bg-white border-2 border-gray-300 text-gray-700 hover:border-gray-400 transition-all"
+                        >
+                            처음으로
+                        </button>
                         <button
                             onClick={(e) => {
                                 e.preventDefault();
                                 onSubmit(e);
                             }}
-                            className="w-full bg-gray-800 hover:bg-gray-900 text-white py-4 rounded-xl font-semibold transition-colors"
+                            className="flex-[2] bg-gray-800 hover:bg-gray-900 text-white py-4 rounded-xl font-semibold transition-colors"
                         >
                             내 위촉 절차 확인하기 →
                         </button>
@@ -424,12 +440,12 @@ function FormSection({
 
 function BotMessage({ text, isOld }: { text: string; isOld?: boolean }) {
     return (
-        <div className={`flex gap-3 items-start transition-all duration-500 ${isOld ? 'opacity-40 blur-[2px] -translate-y-2' : 'opacity-100 blur-0 translate-y-0'}`}>
-            <div className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-white font-bold flex-shrink-0">
+        <div className={`flex gap-3 items-start transition-all duration-700 ease-out ${isOld ? 'opacity-25 blur-[4px] -translate-y-4 scale-95 pointer-events-none' : 'opacity-100 blur-0 translate-y-0 scale-100'}`}>
+            <div className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-white font-bold flex-shrink-0 shadow-sm">
                 AI
             </div>
             <div className="flex-1">
-                <div className="bg-gray-100 rounded-2xl rounded-tl-none px-4 py-3 inline-block">
+                <div className="bg-gray-100 rounded-2xl rounded-tl-none px-4 py-3 inline-block shadow-sm">
                     <p className="text-gray-800" dangerouslySetInnerHTML={{ __html: text }} />
                 </div>
             </div>
@@ -439,7 +455,7 @@ function BotMessage({ text, isOld }: { text: string; isOld?: boolean }) {
 
 function UserInput({ children, isOld }: { children: React.ReactNode; isOld?: boolean }) {
     return (
-        <div className={`flex gap-3 items-start justify-end transition-all duration-500 ${isOld ? 'opacity-40 blur-[2px] -translate-y-2' : 'opacity-100 blur-0 translate-y-0'}`}>
+        <div className={`flex gap-3 items-start justify-end transition-all duration-700 ease-out ${isOld ? 'opacity-25 blur-[4px] -translate-y-4 scale-95 pointer-events-none' : 'opacity-100 blur-0 translate-y-0 scale-100'}`}>
             <div className="flex-1 max-w-md">
                 {children}
             </div>
@@ -460,48 +476,104 @@ function ResultSection({
 }) {
     const isExperienced = userInput.experience === "experienced";
 
+    const handlePdfDownload = async () => {
+        const { jsPDF } = await import('jspdf');
+        const html2canvas = (await import('html2canvas')).default;
+
+        const element = document.getElementById('result-content');
+        if (!element) return;
+
+        // Clone element to set fixed width for PDF generation
+        const canvas = await html2canvas(element, {
+            scale: 2,
+            logging: false,
+            useCORS: true,
+            windowWidth: 800,
+        });
+
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jsPDF({
+            orientation: 'portrait',
+            unit: 'mm',
+            format: 'a4',
+        });
+
+        const imgWidth = 210;
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+        pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+        pdf.save(`${userInput.name}님_맞춤위촉가이드.pdf`);
+    };
+
     return (
         <div className="space-y-6">
-            <div className="flex gap-3 print:hidden">
+            <style jsx global>{`
+                @media print {
+                    header, footer, nav, .print-hidden {
+                        display: none !important;
+                    }
+                    body {
+                        background: white !important;
+                    }
+                    .print-container {
+                        margin: 0 !important;
+                        padding: 0 !important;
+                        box-shadow: none !important;
+                        border: none !important;
+                    }
+                    /* Ensure print starts from result-content */
+                    #result-content {
+                        display: block !important;
+                    }
+                }
+            `}</style>
+
+            <div className="flex gap-3 print-hidden">
+                <Button onClick={onReset} variant="outline" className="flex-1">
+                    처음으로
+                </Button>
+                <Button onClick={handlePdfDownload} variant="outline" className="flex-1 gap-2">
+                    <Download size={20} />
+                    PDF 저장
+                </Button>
                 <Button onClick={onPrint} variant="outline" className="flex-1 gap-2">
                     <Printer size={20} />
                     인쇄하기
                 </Button>
-                <Button onClick={onReset} variant="outline" className="flex-1">
-                    처음으로
-                </Button>
             </div>
 
-            <div className="bg-gradient-to-r from-gray-700 to-gray-900 text-white rounded-xl p-6 shadow-lg">
-                <h2 className="text-2xl font-bold mb-3">{userInput.name}님의 위촉 절차</h2>
-                <div className="flex flex-wrap gap-2 text-sm">
-                    <span className="bg-white/20 px-3 py-1 rounded-full">
-                        {isExperienced ? "경력자" : "무경력자"}
-                    </span>
-                    {isExperienced && userInput.qualifications && userInput.qualifications.length > 0 && (
+            <div id="result-content" className="print-container space-y-6">
+                <div className="bg-gradient-to-r from-gray-700 to-gray-900 text-white rounded-xl p-6 shadow-lg">
+                    <h2 className="text-2xl font-bold mb-3">{userInput.name}님의 위촉 절차</h2>
+                    <div className="flex flex-wrap gap-2 text-sm">
                         <span className="bg-white/20 px-3 py-1 rounded-full">
-                            {userInput.qualifications.join(", ")}
+                            {isExperienced ? "경력자" : "무경력자"}
                         </span>
-                    )}
-                    {!isExperienced && userInput.examRegion && (
-                        <span className="bg-white/20 px-3 py-1 rounded-full">
-                            응시지역: {userInput.examRegion}
-                        </span>
-                    )}
-                    {userInput.subsidies && userInput.subsidies.length > 0 && (
-                        <span className="bg-white/20 px-3 py-1 rounded-full">
-                            지원금: {userInput.subsidies.join(", ")}
-                        </span>
+                        {isExperienced && userInput.qualifications && userInput.qualifications.length > 0 && (
+                            <span className="bg-white/20 px-3 py-1 rounded-full">
+                                {userInput.qualifications.join(", ") ?? ""}
+                            </span>
+                        )}
+                        {!isExperienced && userInput.examRegion && (
+                            <span className="bg-white/20 px-3 py-1 rounded-full">
+                                응시지역: {userInput.examRegion}
+                            </span>
+                        )}
+                        {userInput.subsidies && userInput.subsidies.length > 0 && (
+                            <span className="bg-white/20 px-3 py-1 rounded-full">
+                                지원금: {userInput.subsidies.join(", ") ?? ""}
+                            </span>
+                        )}
+                    </div>
+                </div>
+
+                <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-8">
+                    {isExperienced ? (
+                        <ExperiencedGuide userInput={userInput} onDownloadApp={onDownloadApp} />
+                    ) : (
+                        <InexperiencedGuide userInput={userInput} onDownloadApp={onDownloadApp} />
                     )}
                 </div>
-            </div>
-
-            <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-8">
-                {isExperienced ? (
-                    <ExperiencedGuide userInput={userInput} onDownloadApp={onDownloadApp} />
-                ) : (
-                    <InexperiencedGuide userInput={userInput} onDownloadApp={onDownloadApp} />
-                )}
             </div>
         </div>
     );
@@ -514,11 +586,10 @@ function ExperiencedGuide({ userInput, onDownloadApp }: { userInput: UserInput; 
 
             <StepCard
                 number={1}
-                title="협회 말소하기"
+                title="협회 말소를 해주세요"
                 color="blue"
                 managers={[
-                    { role: "협회소속이동", name: "윤서하", position: "사원", phone: "02-6410-7417" },
-                    { role: "해촉담당", name: "이성연", position: "사원", phone: "02-6410-7410" }
+                    { role: "협회소속이동", name: "윤서하", position: "사원", phone: "02-6410-7417" }
                 ]}
             >
                 <p className="mb-3 font-semibold">내용증명 또는 해촉신청서로 협회 말소를 진행하세요.</p>
@@ -530,7 +601,7 @@ function ExperiencedGuide({ userInput, onDownloadApp }: { userInput: UserInput; 
 
             <StepCard
                 number={2}
-                title="서울보증보험 동의"
+                title="서울보증보험에 개인정보제공동의를 해주세요"
                 color="green"
                 managers={[
                     { role: "보증보험", name: "이인교", position: "과장", phone: "02-6410-7943" }
@@ -556,11 +627,10 @@ function ExperiencedGuide({ userInput, onDownloadApp }: { userInput: UserInput; 
 
             <StepCard
                 number={3}
-                title="보험연수원 등록교육 수료"
+                title="보험연수원 등록교육 수료증을 제출해 주세요"
                 color="purple"
                 managers={[
-                    { role: "금융캠퍼스", name: "신지수", position: "과장", phone: "02-6410-7064" },
-                    { role: "입문과정", name: "김석현", position: "대리", phone: "02-6410-7429" }
+                    { role: "시험응시", name: "방수현", position: "대리", phone: "02-6410-7411" }
                 ]}
             >
                 <p className="mb-2 font-semibold text-sm">3-1. 경력 확인:</p>
@@ -575,7 +645,7 @@ function ExperiencedGuide({ userInput, onDownloadApp }: { userInput: UserInput; 
 
             <StepCard
                 number={4}
-                title="굿리치 위촉방법"
+                title="굿리치 위촉을 아래와 같이 진행해 주세요"
                 color="amber"
                 managers={[
                     { role: "위촉심사", name: "김지열", position: "과장", phone: "02-6410-7817" }
@@ -604,10 +674,11 @@ function ExperiencedGuide({ userInput, onDownloadApp }: { userInput: UserInput; 
             {userInput.subsidies && userInput.subsidies.length > 0 && (
                 <StepCard
                     number={5}
-                    title="지원금 재정보증"
+                    title="지원금 재정보증을 확인해 주세요."
                     color="green"
                     managers={[
-                        { role: "보증보험", name: "이인교", position: "과장", phone: "02-6410-7943" }
+                        { role: "보증보험", name: "이인교", position: "과장", phone: "02-6410-7943" },
+                        { role: "기타보증", name: "김나현", position: "과장", phone: "02-6410-7145" }
                     ]}
                 >
                     <p className="mb-3 font-semibold text-sm">선택하신 지원금({userInput.subsidies.join(", ")}) 수령을 위해 필수입니다.</p>
@@ -628,7 +699,16 @@ function ExperiencedGuide({ userInput, onDownloadApp }: { userInput: UserInput; 
                 </StepCard>
             )}
 
-            <StepCard number={userInput.subsidies && userInput.subsidies.length > 0 ? 6 : 5} title="원수사 위촉안내" color="red">
+            <StepCard
+                number={userInput.subsidies && userInput.subsidies.length > 0 ? 6 : 5}
+                title="원수사 코드발급을 위해 확인해 주세요."
+                color="red"
+                managers={[
+                    { role: "손보협회등록", name: "곽민서", position: "사원", phone: "02-6410-7188" },
+                    { role: "생보협회등록", name: "김보미", position: "사원", phone: "02-6410-7233" },
+                    { role: "협회소속이동", name: "윤서하", position: "사원", phone: "02-6410-7417" }
+                ]}
+            >
                 <p className="text-sm text-gray-700">
                     2주에 걸쳐 각 생명보험사별 위촉동의 URL 발송 → 각 보험사 링크에서 동의 완료
                 </p>
@@ -644,7 +724,7 @@ function InexperiencedGuide({ userInput, onDownloadApp }: { userInput: UserInput
 
             <StepCard
                 number={1}
-                title="모집인 시험 접수"
+                title="모집인 시험 접수를 해주세요"
                 color="blue"
                 managers={[
                     { role: "시험응시", name: "방수현", position: "대리", phone: "02-6410-7411" }
@@ -674,7 +754,7 @@ function InexperiencedGuide({ userInput, onDownloadApp }: { userInput: UserInput
 
             <StepCard
                 number={2}
-                title="서울보증보험 동의"
+                title="서울보증보험에 개인정보제공동의를 해주세요"
                 color="green"
                 managers={[
                     { role: "보증보험", name: "이인교", position: "과장", phone: "02-6410-7943" }
@@ -700,11 +780,10 @@ function InexperiencedGuide({ userInput, onDownloadApp }: { userInput: UserInput
 
             <StepCard
                 number={3}
-                title="보험연수원 등록교육 수료"
+                title="보험연수원 등록교육 수료증을 제출해 주세요"
                 color="purple"
                 managers={[
-                    { role: "금융캠퍼스", name: "신지수", position: "과장", phone: "02-6410-7064" },
-                    { role: "입문과정", name: "김석현", position: "대리", phone: "02-6410-7429" }
+                    { role: "시험응시", name: "방수현", position: "대리", phone: "02-6410-7411" }
                 ]}
             >
                 <div className="space-y-2 text-sm">
@@ -720,7 +799,7 @@ function InexperiencedGuide({ userInput, onDownloadApp }: { userInput: UserInput
 
             <StepCard
                 number={4}
-                title="굿리치 위촉방법"
+                title="굿리치 위촉을 아래와 같이 진행해 주세요"
                 color="amber"
                 managers={[
                     { role: "위촉심사", name: "김지열", position: "과장", phone: "02-6410-7817" }
@@ -749,10 +828,11 @@ function InexperiencedGuide({ userInput, onDownloadApp }: { userInput: UserInput
             {userInput.subsidies && userInput.subsidies.length > 0 && (
                 <StepCard
                     number={5}
-                    title="지원금 재정보증"
+                    title="지원금 재정보증을 확인해 주세요."
                     color="green"
                     managers={[
-                        { role: "보증보험", name: "이인교", position: "과장", phone: "02-6410-7943" }
+                        { role: "보증보험", name: "이인교", position: "과장", phone: "02-6410-7943" },
+                        { role: "기타보증", name: "김나현", position: "과장", phone: "02-6410-7145" }
                     ]}
                 >
                     <p className="mb-3 font-semibold text-sm">선택하신 지원금({userInput.subsidies.join(", ")}) 수령을 위해 필수입니다.</p>
@@ -773,7 +853,16 @@ function InexperiencedGuide({ userInput, onDownloadApp }: { userInput: UserInput
                 </StepCard>
             )}
 
-            <StepCard number={userInput.subsidies && userInput.subsidies.length > 0 ? 6 : 5} title="원수사 위촉안내" color="red">
+            <StepCard
+                number={userInput.subsidies && userInput.subsidies.length > 0 ? 6 : 5}
+                title="원수사 코드발급을 위해 확인해 주세요."
+                color="red"
+                managers={[
+                    { role: "손보협회등록", name: "곽민서", position: "사원", phone: "02-6410-7188" },
+                    { role: "생보협회등록", name: "김보미", position: "사원", phone: "02-6410-7233" },
+                    { role: "협회소속이동", name: "윤서하", position: "사원", phone: "02-6410-7417" }
+                ]}
+            >
                 <p className="text-sm text-gray-700">
                     2주에 걸쳐 각 생명보험사별 위촉동의 URL 발송 → 각 보험사 링크에서 동의 완료
                 </p>
@@ -810,13 +899,16 @@ function StepCard({
                         <p className="text-xs font-semibold text-gray-600 mb-2">📞 담당자 문의</p>
                         <div className="space-y-1.5">
                             {managers.map((manager, idx) => (
-                                <div key={idx} className="text-xs text-gray-700 flex flex-wrap items-center gap-x-2">
-                                    <span className="font-medium">{manager.role}:</span>
-                                    <span>{manager.name} {manager.position}</span>
+                                <div key={idx} className="text-[13px] text-gray-700 flex flex-wrap items-center gap-x-2 gap-y-0.5 py-1.5 border-b border-gray-50 last:border-0">
+                                    <div className="flex items-center gap-2 shrink-0">
+                                        <span className="font-semibold text-gray-900 min-w-[65px]">{manager.role}</span>
+                                        <span className="text-gray-300">|</span>
+                                        <span className="text-gray-600">{manager.name} {manager.position}</span>
+                                    </div>
                                     {manager.phone && (
                                         <a
-                                            href={`tel:${manager.phone.replace(/[^0-9]/g, '')}`}
-                                            className="text-blue-600 hover:text-blue-800 font-semibold underline decoration-blue-200 underline-offset-2"
+                                            href={`tel:${manager.phone.replace(/-/g, "")}`}
+                                            className="text-blue-600 font-medium hover:underline shrink-0"
                                         >
                                             {manager.phone}
                                         </a>
