@@ -226,6 +226,13 @@
   text-align: center;
   word-break: keep-all;
   /* Prevent awkward breaks in Korean */
+  white-space: pre-line;
+}
+
+.title-sub {
+  font-size: 0.8em;
+  display: block;
+  margin-top: 0.2rem;
 }
 
 .category-box.disabled .category-title {

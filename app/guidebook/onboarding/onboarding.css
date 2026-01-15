@@ -264,18 +264,8 @@
   white-space: nowrap;
 }
 
-.process-detail {
-  background: white;
-  border-radius: 12px;
-  padding: 2rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  margin-top: 0;
-  animation: fadeIn 0.3s ease-in;
-}
-
-/* 경력자/무경력자 위촉 프로세스 - 흰색 박스 제거, 회색 배경만 */
-.process-detail.experienced-process,
-.process-detail.inexperienced-process {
+/* Process Detail Styles - Refactored to Tailwind in page.tsx */
+.process-detail.experienced-process {
   background: transparent;
   border-radius: 0;
   padding: 0;
@@ -360,17 +350,6 @@
   position: relative;
 }
 
-.detail-header::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 40%;
-  height: 2px;
-  background: #A8D5FF;
-}
-
 .detail-title {
   font-size: 1.4rem;
   font-weight: 700;
@@ -378,33 +357,12 @@
   margin: 0 0 1rem 0;
 }
 
-/* Vertical Step Styles */
+/* Vertical Step Accordion Styles - Legacy */
 .step-accordion {
   position: relative;
   padding-left: 0;
   margin-bottom: 2rem;
   transition: all 0.3s ease;
-}
-
-/* Centered Vertical Line Connector - Toned down */
-.step-accordion::after {
-  content: '';
-  position: absolute;
-  left: 50%;
-  bottom: -2rem;
-  transform: translateX(-50%);
-  width: 2px;
-  height: 2rem;
-  background: linear-gradient(180deg, #BBDEFB 0%, #E0E0E0 100%);
-  z-index: 0;
-}
-
-.step-accordion:last-child {
-  margin-bottom: 0;
-}
-
-.step-accordion:last-child::after {
-  display: none;
 }
 
 /* Vertical Line Connector removed */
@@ -580,9 +538,9 @@
 }
 
 .sub-step-content {
-  background: #FAFBFC;
-  padding: 1rem 1.5rem 1.5rem 1.5rem;
-  border-top: 1px solid #E0E0E0;
+  background: transparent;
+  padding: 0.75rem 1.5rem 1.5rem 1.5rem;
+  border-top: none;
   animation: expandDown 0.2s ease-out;
 }
 
@@ -673,10 +631,14 @@
 }
 
 .course-option {
-  background: white;
-  padding: 0.875rem;
-  border-radius: 6px;
+  background: transparent;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #f0f0f0;
   margin-top: 0.5rem;
+}
+
+.course-option:last-of-type {
+  border-bottom: none;
 }
 
 .course-title {
@@ -1168,4 +1130,220 @@
     margin-bottom: 0.75rem;
     line-height: 1.6;
   }
+}
+
+/* Step 1 Malso Method Selection - Card Based */
+.malso-container {
+  padding: 0.5rem 0.25rem;
+}
+
+.malso-header {
+  margin-bottom: 1.5rem;
+}
+
+.malso-main-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #1D2939;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.02em;
+}
+
+.malso-subtitle {
+  font-size: 0.875rem;
+  color: #667085;
+  line-height: 1.5;
+}
+
+.malso-cards-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+.malso-card {
+  position: relative;
+  background: white;
+  border: 1.5px solid #EAECF0;
+  border-radius: 20px;
+  padding: 1.25rem 1rem;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  min-height: 160px;
+}
+
+.malso-card.active {
+  border-color: #FF6B00;
+  background-color: #FFF9F5;
+  box-shadow: 0 4px 12px rgba(255, 107, 0, 0.08);
+}
+
+.malso-card-icon-wrapper {
+  width: 44px;
+  height: 44px;
+  background: #F9FAFB;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  transition: background-color 0.2s;
+}
+
+.malso-card.active .malso-card-icon-wrapper {
+  background: white;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.malso-card-icon {
+  color: #667085;
+}
+
+.malso-card.active .malso-card-icon {
+  color: #FF6B00;
+}
+
+.malso-card-label {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #1D2939;
+  margin-bottom: 0.5rem;
+}
+
+.malso-card-desc {
+  font-size: 0.8rem;
+  color: #667085;
+  line-height: 1.4;
+  word-break: keep-all;
+}
+
+.malso-card.active .malso-check-tag {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 20px;
+  height: 20px;
+  background: #FF6B00;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+/* Malso Detail Content */
+.malso-detail-view {
+  animation: fadeIn 0.3s ease-out;
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+/* .malso-step-row:not(:last-child)::after removed - connecting line deleted */
+
+.malso-step-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.malso-step-num {
+  width: 28px;
+  height: 28px;
+  background: #F2F4F7;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #667085;
+  flex-shrink: 0;
+  z-index: 2;
+}
+
+.malso-step-body {
+  flex: 1;
+}
+
+.malso-step-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.malso-step-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #1D2939;
+}
+
+.malso-step-link {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #FF6B00;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.malso-step-desc {
+  font-size: 0.875rem;
+  color: #667085;
+  line-height: 1.6;
+}
+
+.malso-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.malso-info-box {
+  background: #F9FAFB;
+  border-radius: 12px;
+  padding: 1rem;
+}
+
+.malso-info-label {
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: #98A2B3;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.malso-info-content {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #344054;
+  line-height: 1.5;
+}
+
+.malso-info-content ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.malso-info-content li {
+  position: relative;
+  padding-left: 0.65rem;
+}
+
+.malso-info-content li::before {
+  content: '·';
+  position: absolute;
+  left: 0;
+  color: #D0D5DD;
+  font-weight: bold;
 }

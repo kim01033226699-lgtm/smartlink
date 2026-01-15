@@ -206,7 +206,7 @@ export default function QuestionFlow({ onComplete }: QuestionFlowProps) {
                         🔗 생명보험협회 인터넷말소신청 바로가기
                       </a>
                       <a
-                        href="https://isi.knia.or.kr/confirm/login.do"
+                        href="https://isi.knia.or.kr/cancellation/cancelInfo.do"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="block px-4 py-3 bg-green-50 hover:bg-green-100 border border-green-200 rounded-lg text-green-900 font-medium transition-all duration-150 active:scale-95"
@@ -343,7 +343,7 @@ export default function QuestionFlow({ onComplete }: QuestionFlowProps) {
                             🔗 생명보험협회 인터넷말소신청 바로가기
                           </a>
                           <a
-                            href="https://isi.knia.or.kr/confirm/login.do"
+                            href="https://isi.knia.or.kr/cancellation/cancelInfo.do"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="block px-4 py-3 bg-green-50 hover:bg-green-100 border border-green-200 rounded-lg text-green-900 font-medium transition-all duration-150 active:scale-95"
@@ -428,11 +428,10 @@ export default function QuestionFlow({ onComplete }: QuestionFlowProps) {
                         <p className="text-gray-700 font-medium">{questions[h.questionId].text}</p>
                       </div>
                       <div className="ml-4">
-                        <span className={`px-4 py-2 rounded-full text-sm font-semibold ${
-                          h.answer === 'yes'
-                            ? 'bg-blue-100 text-blue-700'
-                            : 'bg-gray-200 text-gray-700'
-                        }`}>
+                        <span className={`px-4 py-2 rounded-full text-sm font-semibold ${h.answer === 'yes'
+                          ? 'bg-blue-100 text-blue-700'
+                          : 'bg-gray-200 text-gray-700'
+                          }`}>
                           {h.answer === 'yes' ? '네' : '아니오'}
                         </span>
                       </div>
@@ -456,7 +455,7 @@ export default function QuestionFlow({ onComplete }: QuestionFlowProps) {
           <CardHeader className="bg-green-50">
             <CardTitle>제출처 안내</CardTitle>
             <CardDescription>
-              
+
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -527,11 +526,10 @@ export default function QuestionFlow({ onComplete }: QuestionFlowProps) {
                       <p className="text-gray-700 font-medium">{questions[h.questionId].text}</p>
                     </div>
                     <div className="ml-4">
-                      <span className={`px-4 py-2 rounded-full text-sm font-semibold ${
-                        h.answer === 'yes'
-                          ? 'bg-blue-100 text-blue-700'
-                          : 'bg-gray-200 text-gray-700'
-                      }`}>
+                      <span className={`px-4 py-2 rounded-full text-sm font-semibold ${h.answer === 'yes'
+                        ? 'bg-blue-100 text-blue-700'
+                        : 'bg-gray-200 text-gray-700'
+                        }`}>
                         {h.answer === 'yes' ? '네' : '아니오'}
                       </span>
                     </div>
@@ -565,34 +563,34 @@ export default function QuestionFlow({ onComplete }: QuestionFlowProps) {
               {currentQuestion.text}
             </CardTitle>
           </CardHeader>
-        <CardContent className="pt-6 px-6 pb-6">
-          <div className="flex flex-col sm:flex-row gap-3">
-            <Button
-              onClick={() => handleAnswer('yes')}
-              className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-4 text-base font-medium rounded-lg transition-all duration-150 active:scale-95 shadow-sm"
-            >
-              네
-            </Button>
-            <Button
-              onClick={() => handleAnswer('no')}
-              variant="outline"
-              className="flex-1 py-4 text-base font-medium border border-gray-300 bg-white hover:bg-gray-50 text-gray-700 rounded-lg transition-all duration-150 active:scale-95 shadow-sm"
-            >
-              아니오
-            </Button>
-          </div>
+          <CardContent className="pt-6 px-6 pb-6">
+            <div className="flex flex-col sm:flex-row gap-3">
+              <Button
+                onClick={() => handleAnswer('yes')}
+                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-4 text-base font-medium rounded-lg transition-all duration-150 active:scale-95 shadow-sm"
+              >
+                네
+              </Button>
+              <Button
+                onClick={() => handleAnswer('no')}
+                variant="outline"
+                className="flex-1 py-4 text-base font-medium border border-gray-300 bg-white hover:bg-gray-50 text-gray-700 rounded-lg transition-all duration-150 active:scale-95 shadow-sm"
+              >
+                아니오
+              </Button>
+            </div>
 
-          {history.length > 0 && (
-            <Button
-              variant="ghost"
-              onClick={handleGoBack}
-              className="w-full mt-4 transition-all duration-150 active:scale-95"
-            >
-              이전 질문으로
-            </Button>
-          )}
-        </CardContent>
-      </Card>
+            {history.length > 0 && (
+              <Button
+                variant="ghost"
+                onClick={handleGoBack}
+                className="w-full mt-4 transition-all duration-150 active:scale-95"
+              >
+                이전 질문으로
+              </Button>
+            )}
+          </CardContent>
+        </Card>
       </div>
     </div>
   );

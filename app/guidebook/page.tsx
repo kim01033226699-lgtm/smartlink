@@ -1,7 +1,13 @@
 'use client';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
-import { ArrowLeft, FileText, Shield, DollarSign, GraduationCap, FileCheck, Laptop, CheckCircle, Users } from 'lucide-react';
+import {
+  ArrowLeft, ChevronDown, ChevronUp, ExternalLink,
+  UserCheck, UserPlus, X, Download, ChevronRight,
+  FileText, ClipboardList, Check, Building2, Play,
+  Plane, Laptop, HelpCircle, FileCheck, Terminal,
+  DollarSign, GraduationCap, Shield, CheckCircle, Users
+} from "lucide-react";
 import BottomNavigation from '@/app/components/BottomNavigation';
 import { SupportCard } from '@/app/components/SupportCard';
 import ManagerInfoModal from './components/ManagerInfoModal';
@@ -27,8 +33,16 @@ export default function GuidebookPage() {
 
   const categories = [
     {
+      id: 6,
+      title: '2026\n윈터페스티벌',
+      description: '2026 윈터페스티벌 가이드',
+      path: '/guidebook/winter-2026',
+      icon: Plane,
+      available: true
+    },
+    {
       id: 1,
-      title: '위촉 관리', // Updated Title
+      title: '위촉 관리',
       description: '위촉 및 해촉 프로세스 안내',
       path: '/guidebook/onboarding',
       icon: FileText,
@@ -68,18 +82,10 @@ export default function GuidebookPage() {
     },
     {
       id: 5,
-      title: '보험계약',
-      description: '보험계약 관련 업무 안내',
-      path: '/guidebook/insurance',
+      title: '제규정',
+      description: '사내 주요 규정 가이드',
+      path: '/guidebook/regulations',
       icon: FileCheck,
-      available: false
-    },
-    {
-      id: 6,
-      title: '굿리치플래너GP',
-      description: 'GP시스템 사용 가이드',
-      path: '/guidebook/gp',
-      icon: Laptop,
       available: false
     },
     {
@@ -124,9 +130,6 @@ export default function GuidebookPage() {
         {/* Main Content */}
         <main className="guidebook-content">
           <div className="w-full max-w-[700px] mx-auto px-4">
-            {/* Notice Text Section - Left Aligned with top margin */}
-            {/* Notice Text Removed from here */}
-
             <div className="category-grid">
               {categories.map(category => {
                 // Empty spacer
@@ -134,13 +137,13 @@ export default function GuidebookPage() {
                   return <div key={category.id} className="empty-spacer"></div>;
                 }
 
-                // Contact Action Button - Designed like a Category Box (Tile)
+                // Contact Action Button
                 if (category.isContactAction) {
                   return (
                     <div
                       key={category.id}
                       className="category-box bg-orange-500 border-none"
-                      style={{ background: '#FF9800' }} // Explicit orange to override white default
+                      style={{ background: '#FF9800' }}
                       onClick={() => {
                         setIsManagerModalOpen(true);
                       }}
@@ -150,18 +153,22 @@ export default function GuidebookPage() {
                   );
                 }
 
-                // Custom Styling Logic based on Title
+                // Custom Styling Logic
+                const isWinter = category.title === '2026\n윈터페스티벌';
                 const isCommission = category.title === '위촉 관리';
-                const isInactive = ['보험계약', '기타', '굿리치플래너GP'].includes(category.title);
+                const isInactive = ['제규정', '기타', '굿리치플래너GP'].includes(category.title);
 
                 let cardClass = "category-box";
-                if (isCommission) cardClass += " active-commission"; // Orange style
-                if (isInactive) cardClass += " disabled-blur"; // Blur style
+                if (isCommission) cardClass += " active-commission";
+                if (isInactive) cardClass += " disabled-blur";
+
+                const isSolidOrange = isWinter;
 
                 return (
                   <div
                     key={category.id}
                     className={cardClass}
+                    style={isSolidOrange ? { background: '#FF9800', border: 'none' } : {}}
                     onClick={() => {
                       if (category.available && !isInactive) {
                         if (category.path.startsWith('http')) {
@@ -172,8 +179,13 @@ export default function GuidebookPage() {
                       }
                     }}
                   >
-                    {/* Icon Removed - Title Only */}
-                    <h3 className="category-title">{category.title}</h3>
+                    <h3 className="category-title" style={isSolidOrange ? { color: 'white', fontWeight: 'bold' } : {}}>
+                      {category.title.split('\n').map((line, i) => (
+                        <span key={i} className={i > 0 ? "title-sub" : ""}>
+                          {line}
+                        </span>
+                      ))}
+                    </h3>
                   </div>
                 );
               })}

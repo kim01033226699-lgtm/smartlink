@@ -1,0 +1,263 @@
+.winter-page {
+    min-height: 100vh;
+    background: #f8fafc;
+    padding-bottom: 80px;
+}
+
+.winter-header {
+    background: white;
+    padding: 3.5rem 1rem;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    margin: 0 0 0.5rem 0;
+    position: relative;
+}
+
+.back-button {
+    background: transparent;
+    border: none;
+    color: #333;
+    cursor: pointer;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.3s;
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+}
+
+.back-button:hover {
+    opacity: 0.6;
+}
+
+@media (min-width: 769px) {
+    .back-button {
+        left: calc((100% - 700px) / 2 + 1rem);
+    }
+}
+
+.winter-logo-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.winter-logo {
+    height: 20px;
+    width: auto;
+    transition: transform 0.3s ease;
+}
+
+.winter-logo:hover {
+    transform: scale(1.05);
+}
+
+.winter-badge {
+    display: inline-block;
+    background: transparent;
+    color: #888;
+    font-size: 1.5rem;
+    font-weight: 700;
+    padding: 0.5rem 2rem;
+    margin-bottom: 0.3rem;
+    text-shadow:
+        1px 1px 0px rgba(255, 255, 255, 0.8),
+        2px 2px 4px rgba(0, 0, 0, 0.15);
+    letter-spacing: 0.05em;
+}
+
+.winter-content {
+    padding: 0 1rem;
+}
+
+.winter-notice {
+    background: #f0f9ff;
+    border: 1px solid #e0f2fe;
+    padding: 1rem;
+    border-radius: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.winter-notice p {
+    font-size: 0.875rem;
+    color: #0369a1;
+    font-weight: 600;
+}
+
+.winter-table-container {
+    overflow-x: auto;
+    margin: 1rem 0;
+    border-radius: 0.5rem;
+    border: 1px solid #e2e8f0;
+}
+
+.winter-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8125rem;
+    background: white;
+}
+
+.winter-table th {
+    background: #f1f5f9;
+    color: #475569;
+    font-weight: 700;
+    padding: 0.75rem;
+    text-align: center;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.winter-table td {
+    padding: 0.75rem;
+    border-bottom: 1px solid #e2e8f0;
+    color: #1e293b;
+    text-align: center;
+}
+
+.winter-table tr:last-child td {
+    border-bottom: none;
+}
+
+
+.winter-card {
+    background: white;
+    padding: 1.25rem;
+    border-radius: 1rem;
+    border: 1px solid #e2e8f0;
+}
+
+.winter-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.winter-list li {
+    position: relative;
+    padding-left: 1.25rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+    color: #475569;
+    line-height: 1.5;
+}
+
+.winter-list li::before {
+    content: "•";
+    position: absolute;
+    left: 0.25rem;
+    color: #0ea5e9;
+    font-weight: bold;
+}
+
+.winter-highlight {
+    color: #ef4444;
+    font-weight: 700;
+}
+
+/* Interactive Tabs/Boxes for Selection Criteria */
+.winter-tabs-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.winter-tab-box {
+    background: white;
+    border: 2px solid #e2e8f0;
+    padding: 1rem;
+    border-radius: 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 80px;
+}
+
+.winter-tab-box.active {
+    border-color: #0ea5e9;
+    background: #f0f9ff;
+    box-shadow: 0 4px 12px rgba(14, 165, 233, 0.15);
+}
+
+.winter-tab-box:hover:not(.active) {
+    border-color: #cbd5e1;
+    background: #f8fafc;
+}
+
+.winter-tab-label {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #475569;
+    line-height: 1.4;
+    word-break: keep-all;
+}
+
+.active .winter-tab-label {
+    color: #0369a1;
+}
+
+.winter-sub-box {
+    background: #f8fafc;
+    border: 1px dashed #cbd5e1;
+    border-radius: 12px;
+    padding: 1.25rem;
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Refund Specialized Boxes */
+.refund-highlight-box {
+    background: #fffafa;
+    border: 1px solid #fee2e2;
+    border-radius: 12px;
+    padding: 1.25rem;
+    margin-top: 1rem;
+}
+
+.refund-highlight-title {
+    font-weight: 800;
+    color: #b91c1c;
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+/* Split OR Table Styles */
+.split-or-table thead th {
+    padding: 0.75rem 0.25rem;
+    font-size: 0.8rem;
+    vertical-align: middle;
+}
+
+.split-or-table .or-cell {
+    width: 44px;
+    background: white;
+    text-align: center;
+    vertical-align: middle;
+    font-weight: 800;
+    color: #475569;
+    font-size: 0.95rem;
+    border-left: 1px solid #e2e8f0;
+    border-right: 1px solid #e2e8f0;
+    padding: 0 !important;
+    white-space: nowrap;
+}
