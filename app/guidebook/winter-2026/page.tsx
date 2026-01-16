@@ -151,7 +151,7 @@ export default function WinterFestivalPage() {
                                 </div>
                             </div>
 
-                            <div className="winter-sub-box">
+                            <div className={`${activeSelectionTab === 'performance' ? 'winter-sub-box' : ''} winter-animate`}>
                                 {activeSelectionTab === 'performance' ? (
                                     <div>
                                         <p className="text-slate-800 font-bold leading-relaxed">
@@ -159,29 +159,33 @@ export default function WinterFestivalPage() {
                                         </p>
                                     </div>
                                 ) : (
-                                    <div className="winter-table-container mt-0 border-none shadow-none">
-                                        <table className="winter-table split-or-table">
+                                    <div className="winter-table-container mt-0">
+                                        <table className="winter-table split-or-table no-border">
                                             <tbody>
                                                 <tr>
                                                     <th className="text-center font-bold">직급</th>
                                                     <th className="text-center font-bold">신계약 정상평가업적 목표</th>
-                                                    <th rowSpan={4} className="or-cell text-center font-bold">OR</th>
+                                                    <th rowSpan={4} className="or-cell text-center font-bold">
+                                                        <span className="or-text">
+                                                            <span>O</span><span>R</span>
+                                                        </span>
+                                                    </th>
                                                     <th className="text-center font-bold">산하 달성자 배출 인원</th>
                                                 </tr>
                                                 <tr>
                                                     <td className="font-bold text-center border-t border-slate-200">지점장</td>
                                                     <td className="text-[0.75rem] leading-tight text-center border-t border-slate-200 font-normal">산하 조직 2개월 통산 1,800만 원 이상</td>
-                                                    <td className="text-sky-600 text-center whitespace-nowrap border-t border-slate-200 font-normal">5명 이상</td>
+                                                    <td className="text-sky-600 text-center whitespace-nowrap border-t border-slate-200 font-normal">5명 <span className="wrap-target">이상</span></td>
                                                 </tr>
                                                 <tr>
                                                     <td className="font-bold text-center font-bold">사업단장</td>
                                                     <td className="text-[0.75rem] leading-tight text-center font-normal">산하 조직 2개월 통산 3,000만 원 이상</td>
-                                                    <td className="text-sky-600 text-center whitespace-nowrap font-normal">8명 이상</td>
+                                                    <td className="text-sky-600 text-center whitespace-nowrap font-normal">8명 <span className="wrap-target">이상</span></td>
                                                 </tr>
                                                 <tr>
                                                     <td className="font-bold text-center font-bold">본부장</td>
                                                     <td className="text-[0.75rem] leading-tight text-center font-normal">산하 조직 2개월 통산 5,000만 원 이상</td>
-                                                    <td className="text-sky-600 text-center whitespace-nowrap font-normal">15명 이상</td>
+                                                    <td className="text-sky-600 text-center whitespace-nowrap font-normal">15명 <span className="wrap-target">이상</span></td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -204,49 +208,51 @@ export default function WinterFestivalPage() {
                                         <p className="font-bold text-red-600 mt-1">→ 여행가액 전액 환수</p>
                                     </div>
                                 </div>
-                                <div className="refund-highlight-box border-dashed">
-                                    <span className="refund-highlight-title">2) 재평가</span>
-                                    <p className="text-[0.85rem] text-slate-600 leading-relaxed mb-4">
-                                        2026년 8월 수금 마감 기준으로 실적 재평가 후 환수 진행
-                                    </p>
+                                <div>
+                                    <h4 className="font-bold text-slate-800 mb-2 underline underline-offset-4 decoration-slate-200">2) 재평가</h4>
+                                    <div className="space-y-6">
+                                        <p className="text-[0.85rem] text-slate-600 leading-relaxed">
+                                            2026년 8월 수금 마감 기준으로 실적 재평가 후 환수 진행
+                                        </p>
 
-                                    <div className="space-y-5 border-t border-slate-100 pt-5">
-                                        <div>
-                                            <h5 className="font-bold text-slate-800 text-sm mb-3">● 업적 환수기준</h5>
-                                            <div className="winter-table-container mt-0 bg-white">
-                                                <table className="winter-table text-[0.75rem]">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>달성률</th>
-                                                            <th>환수 금액</th>
-                                                            <th>환수 방법</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr>
-                                                            <td className="text-center">95% 이상</td>
-                                                            <td className="winter-highlight text-center">가액 × 15%</td>
-                                                            <td rowSpan={3} className="text-center font-medium bg-slate-50/50">수수료에서<br />3개월간<br />균등 환수</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td className="text-center">90% 이상</td>
-                                                            <td className="winter-highlight text-center">가액 × 30%</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td className="text-center">90% 미만</td>
-                                                            <td className="winter-highlight text-center">가액 × 100%</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
+                                        <div className="space-y-5 border-t border-slate-100 pt-5">
+                                            <div>
+                                                <h5 className="font-bold text-slate-800 text-sm mb-3">● 업적 환수기준</h5>
+                                                <div className="winter-table-container mt-0 border border-slate-100 shadow-sm bg-white">
+                                                    <table className="winter-table text-[0.75rem]">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>달성률</th>
+                                                                <th>환수 금액</th>
+                                                                <th>환수 방법</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td className="text-center">95% 이상</td>
+                                                                <td className="winter-highlight text-center">가액 × 15%</td>
+                                                                <td rowSpan={3} className="text-center font-medium bg-slate-50/50">수수료에서<br />3개월간<br />균등 환수</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td className="text-center">90% 이상</td>
+                                                                <td className="winter-highlight text-center">가액 × 30%</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td className="text-center">90% 미만</td>
+                                                                <td className="winter-highlight text-center">가액 × 100%</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
-                                        </div>
 
-                                        <div>
-                                            <h5 className="font-bold text-slate-800 text-sm mb-2">● 영업관리자 환수</h5>
-                                            <div className="winter-card bg-orange-50/30 border-orange-100/50 py-3 px-4">
-                                                <p className="text-slate-700 text-sm font-medium">
-                                                    미달분만큼 여행금액에서 환수
-                                                </p>
+                                            <div>
+                                                <h5 className="font-bold text-slate-800 text-sm mb-2">● 영업관리자 환수</h5>
+                                                <div className="winter-card bg-orange-50/30 border-orange-100/50 py-3 px-4">
+                                                    <p className="text-slate-700 text-sm font-medium">
+                                                        미달분만큼 여행금액에서 환수
+                                                    </p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
