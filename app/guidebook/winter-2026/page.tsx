@@ -83,7 +83,7 @@ export default function WinterFestivalPage() {
                                     </h4>
                                     <ul className="winter-list">
                                         <li><span className="font-bold">기간</span>: 2026.04.08 ~ 04.11</li>
-                                        <li className="text-sky-600 font-semibold !list-none !pl-0">→ 2박 3일, 2회차 진행</li>
+                                        <li className="no-bullet text-sky-600 font-semibold !list-none !pl-0">→ 2박 3일, 2회차 진행</li>
                                     </ul>
                                 </div>
 
@@ -93,7 +93,7 @@ export default function WinterFestivalPage() {
                                     </h4>
                                     <ul className="winter-list">
                                         <li><span className="font-bold">기간</span>: 2026.04.14 ~ 04.21</li>
-                                        <li className="text-sky-600 font-semibold !list-none !pl-0">→ 서울 3회차, 부산 2회차 진행</li>
+                                        <li className="no-bullet text-sky-600 font-semibold !list-none !pl-0">→ 서울 3회차, 부산 2회차 진행</li>
                                     </ul>
                                 </div>
                             </div>
@@ -160,7 +160,7 @@ export default function WinterFestivalPage() {
                                     </div>
                                 ) : (
                                     <div className="winter-table-container mt-0">
-                                        <table className="winter-table split-or-table no-border">
+                                        <table className="winter-table split-or-table">
                                             <tbody>
                                                 <tr>
                                                     <th className="text-center font-bold">직급</th>
@@ -173,9 +173,9 @@ export default function WinterFestivalPage() {
                                                     <th className="text-center font-bold">산하 달성자 배출 인원</th>
                                                 </tr>
                                                 <tr>
-                                                    <td className="font-bold text-center border-t border-slate-200">지점장</td>
-                                                    <td className="text-[0.75rem] leading-tight text-center border-t border-slate-200 font-normal">산하 조직 2개월 통산 1,800만 원 이상</td>
-                                                    <td className="text-sky-600 text-center whitespace-nowrap border-t border-slate-200 font-normal">5명 <span className="wrap-target">이상</span></td>
+                                                    <td className="font-bold text-center">지점장</td>
+                                                    <td className="text-[0.75rem] leading-tight text-center font-normal">산하 조직 2개월 통산 1,800만 원 이상</td>
+                                                    <td className="text-sky-600 text-center whitespace-nowrap font-normal">5명 <span className="wrap-target">이상</span></td>
                                                 </tr>
                                                 <tr>
                                                     <td className="font-bold text-center font-bold">사업단장</td>
